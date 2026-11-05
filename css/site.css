@@ -132,7 +132,7 @@ html:not(.js) .painel { margin-bottom: 48px; }
 .lista-cab { color: var(--cinza); padding: 0 12px 6px 28px; border-bottom: 1px solid var(--traco); }
 .lista summary { padding: 8px 12px 8px 28px; cursor: pointer; list-style: none; position: relative; border-bottom: 1px solid #222a32; }
 .lista summary::-webkit-details-marker { display: none; }
-.lista summary::before { content: "+"; position: absolute; left: 10px; color: var(--cinza); }
+.lista summary::before { content: "+"; position: absolute; left: 10px; top: 8px; color: var(--cinza); }
 .lista details[open] summary::before { content: "-"; color: var(--verde); }
 .lista summary b { font-weight: 700; color: var(--verde); }
 .lista summary span { color: var(--cinza); }
