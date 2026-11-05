@@ -1,0 +1,4 @@
+Contact: https://www.instagram.com/mileumalinhas/
+Expires: 2027-11-05T00:00:00.000Z
+Preferred-Languages: pt-BR, en
+Canonical: https://mileumalinhas.com.br/.well-known/security.txt
