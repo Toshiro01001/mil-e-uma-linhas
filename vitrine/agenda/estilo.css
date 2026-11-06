@@ -1,10 +1,9 @@
-@font-face{font-family:Atkinson;src:url(fontes/atkinson-hyperlegible-latin-400-normal.woff2) format("woff2");font-weight:400;font-display:swap}
-@font-face{font-family:Atkinson;src:url(fontes/atkinson-hyperlegible-latin-700-normal.woff2) format("woff2");font-weight:700;font-display:swap}
+@font-face{font-family:Familjen;src:url(fontes/familjen-grotesk-latin-wght-normal.woff2) format("woff2");font-weight:400 700;font-display:swap}
 :root{--lilas:#f3eefb;--branco:#fff;--tinta:#22163b;--suave:#54486f;--ipe:#5a2a8c;--ipe2:#d9c8f0;--sol:#ffc93c;--verde:#14614a;--erro:#9c1c36}
 *{box-sizing:border-box}
 html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
-body{margin:0;background:var(--lilas);color:var(--tinta);font:400 1.0625rem/1.5 Atkinson,system-ui,sans-serif;overflow-wrap:break-word}
+body{margin:0;background:var(--lilas);color:var(--tinta);font:400 1.0625rem/1.5 Familjen,system-ui,sans-serif;overflow-wrap:break-word}
 [hidden]{display:none!important}
 h1,h2,h3{line-height:1.15;margin:0}
 :focus-visible{outline:3px solid var(--tinta);outline-offset:2px;box-shadow:0 0 0 2px var(--sol)}
@@ -104,9 +103,6 @@ section>h2,.agendar h2,.consultas h2,.recepcao h2,.como h2{font-size:clamp(1.6re
 .como h3{font-size:1.15rem;color:var(--sol);margin-bottom:.4rem}
 .como p{margin:0;max-width:60ch}
 .como :focus-visible{outline-color:var(--sol)}
-.rodape{display:flex;flex-wrap:wrap;gap:.3rem 1.5rem;justify-content:space-between;padding:1rem clamp(1rem,4vw,3rem);background:var(--branco)}
-.rodape p{margin:0}
-.rodape a{color:var(--ipe);display:inline-block;padding:.45rem 0}
 @media (min-width:901px){.bloqueio{position:sticky;top:.8rem}}
 @media (max-width:900px){
   .agendar-grade,.rec-grade{grid-template-columns:minmax(0,1fr)}

@@ -1,9 +1,8 @@
-@font-face{font-family:Atkinson;src:url(fontes/atkinson-hyperlegible-latin-400-normal.woff2) format("woff2");font-weight:400;font-display:swap}
-@font-face{font-family:Atkinson;src:url(fontes/atkinson-hyperlegible-latin-700-normal.woff2) format("woff2");font-weight:700;font-display:swap}
+@font-face{font-family:Familjen;src:url(fontes/familjen-grotesk-latin-wght-normal.woff2) format("woff2");font-weight:400 700;font-display:swap}
 @font-face{font-family:JetBrains;src:url(fontes/jetbrains-400.woff2) format("woff2");font-display:swap}
 :root{--papel:#f7f8fa;--aco:#16324f;--aco2:#25496f;--alerta:#b3122a;--ok:#0b6b46;--tinta:#121a24;--apoio:#475569;--linha:#c9d2dc;--cifra:#7ef0c8}
 *{box-sizing:border-box}
-body{margin:0;background:var(--papel);color:var(--tinta);font:400 1.0625rem/1.55 Atkinson,system-ui,sans-serif;overflow-wrap:break-word}
+body{margin:0;background:var(--papel);color:var(--tinta);font:400 1.0625rem/1.55 Familjen,system-ui,sans-serif;overflow-wrap:break-word}
 h1,h2,h3{margin:0;line-height:1.12;font-weight:700}
 p{margin:0}
 button,input,textarea{font:inherit;color:inherit}
@@ -51,7 +50,6 @@ dd{margin:0;font:400 .92rem/1.4 JetBrains,ui-monospace,monospace;word-break:brea
 .colunas li{margin:.3rem 0}
 .colunas p+p{margin-top:.7rem}
 .como p{margin-top:.8rem;max-width:72ch}
-.rodape{padding:1.2rem clamp(1rem,3vw,2.5rem);background:var(--aco);color:#fff}
-.rodape a{color:#fff;display:inline-block;padding:.3rem .5rem .3rem 0}
-.rodape :focus-visible{outline-color:#fff}
 @media (max-width:760px){.duelo,.provas ol,.colunas{grid-template-columns:minmax(0,1fr)}}
+
+input[type=password]{font-family:system-ui,sans-serif;letter-spacing:.08em}
