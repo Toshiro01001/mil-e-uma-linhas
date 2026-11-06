@@ -309,7 +309,8 @@ window.MUL_ORC = (function () {
     });
     var T = totais();
     $('#orc-n').textContent = carrinho.length ? '(' + carrinho.length + (carrinho.length === 1 ? ' item)' : ' itens)') : '';
-    $('#orc-total').textContent = carrinho.length ? 'Total estimado: ' + valorTxt(T) + (carrinho.length > 1 ? '. Um depois do outro: ' + diasTxt(T.dias) + '.' : '. Prazo: ' + diasTxt(T.dias) + '.') : '';
+    // Com um item só, o total repetiria a linha do item: mostro o total a partir de dois itens.
+    $('#orc-total').textContent = carrinho.length > 1 ? 'Total estimado: ' + valorTxt(T) + '. Um depois do outro: ' + diasTxt(T.dias) + '.' : '';
     var a = $('#orc-email'), copia = $('#orc-copiar'), fin = $('#orc-finalizar');
     a.href = 'mailto:' + EMAIL + '?subject=' + encodeURIComponent('Pedido de orçamento') + '&body=' + encodeURIComponent(carrinho.length ? texto() : 'Olá! Quero um orçamento para o meu projeto:\n\n');
     copia.disabled = !carrinho.length; $('#orc-esvaziar').disabled = !carrinho.length;
@@ -335,7 +336,10 @@ window.MUL_ORC = (function () {
     $('#orc-add').addEventListener('click', function () {
       if (carrinho.length >= MAX_ITENS) return;
       carrinho.push(atual()); renderCarrinho();
-      $('#orc-total').textContent = 'Adicionado. ' + $('#orc-total').textContent;
+      // Aviso curto (lido por leitores de tela) que some e volta ao total.
+      var n = carrinho.length;
+      $('#orc-total').textContent = 'Adicionado ao pedido.';
+      setTimeout(function () { if (carrinho.length === n) renderCarrinho(); }, 2500);
     });
     $('#orc-esvaziar').addEventListener('click', function () {
       var b = $('#orc-esvaziar');
