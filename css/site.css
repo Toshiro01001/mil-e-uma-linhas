@@ -502,6 +502,8 @@ textarea { display: block; width: 100%; padding: 8px 10px; background: var(--pai
   .marca { padding: 0 14px; min-height: 44px; }
   .temas-abrir { display: block; order: -1; margin: 0; background: none; border: 0; border-left: 1px solid var(--traco); color: var(--cinza); font-family: var(--ui); font-size: 13px; padding: 0 14px; min-height: 44px; cursor: pointer; }
   .temas-abrir[aria-expanded="true"] { color: var(--verde); }
+  .carrinho-topo { order: -1; margin: 6px 10px 6px 0; }
+  .carrinho-rot { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
   .temas { display: none; }
   .temas.aberto { display: flex; }
   .abas nav { order: 1; border-top: 1px solid var(--traco); }
@@ -572,8 +574,12 @@ textarea { display: block; width: 100%; padding: 8px 10px; background: var(--pai
 .proj .links { margin: 0; }
 
 /* carrinho e finalização do pedido */
-.orc-conta { color: var(--verde); font-weight: 700; }
-.abas nav a[aria-current="page"] .orc-conta { color: inherit; }
+.carrinho-topo { display: flex; align-items: center; gap: 7px; flex: none; margin: 6px 10px 6px 0; padding: 0 12px; min-height: 30px; align-self: center; border: 1px solid var(--verde); border-radius: var(--raio); color: var(--verde); font-weight: 700; text-decoration: none; white-space: nowrap; }
+.carrinho-topo[hidden] { display: none; }
+.carrinho-topo:hover, .carrinho-topo:focus-visible { background: var(--verde); color: var(--fundo); }
+.orc-conta { display: inline-block; min-width: 20px; padding: 0 6px; border-radius: 999px; background: var(--verde); color: var(--fundo); text-align: center; line-height: 20px; font-size: 12.5px; }
+.carrinho-topo:hover .orc-conta, .carrinho-topo:focus-visible .orc-conta { background: var(--fundo); color: var(--verde); }
+@media (min-width: 901px) { [data-tema="painel"] .carrinho-topo { position: fixed; top: 10px; right: 16px; z-index: 30; margin: 0; background: var(--painel); } }
 button.link { background: none; border: 0; padding: 0; color: var(--verde); text-decoration: underline; cursor: pointer; font: inherit; min-height: 24px; }
 button.link:disabled { color: var(--cinza); text-decoration: none; cursor: not-allowed; }
 .orc-outros { line-height: 28px; }

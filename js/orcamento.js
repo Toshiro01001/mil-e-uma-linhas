@@ -290,9 +290,19 @@ window.MUL_ORC = (function () {
     });
   }
   function contador() {
-    var n = carrinho.length, b = $('#orc-conta');
-    if (b) { b.hidden = !n; b.textContent = n ? ' (' + n + ')' : ''; b.setAttribute('aria-label', n ? n + (n === 1 ? ' item no pedido' : ' itens no pedido') : ''); }
+    var n = carrinho.length, b = $('#orc-conta'), a = $('#carrinho-topo');
+    if (b) b.textContent = n ? String(n) : '';
+    if (a) {
+      a.hidden = !n;
+      a.setAttribute('aria-label', n ? 'Meu pedido: ' + n + (n === 1 ? ' item' : ' itens') + '. Abrir o pedido.' : '');
+    }
   }
+  /* o botão do topo leva ao pedido e rola até a lista, mesmo já estando na aba */
+  document.addEventListener('click', function (ev) {
+    var a = ev.target.closest && ev.target.closest('#carrinho-topo');
+    if (!a) return;
+    setTimeout(function () { var t = $('#t-carrinho'); if (t && !t.closest('[hidden]')) t.scrollIntoView({ block: 'start' }); }, 60);
+  });
   function mudou() { guardar(); contador(); ouvintes.forEach(function (f) { f(); }); }
   function renderCarrinho() {
     var ul = $('#orc-carrinho'); ul.textContent = '';
