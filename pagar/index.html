@@ -19,52 +19,55 @@
 </header>
 <main id="conteudo">
   <h1>Pagar uma etapa por Pix</h1>
-  <p class="intro">Use esta página só para pagar uma etapa de um orçamento que você já aprovou por escrito comigo. O código é gerado aqui no seu navegador: nada do que você digita sai desta página.</p>
 
-  <div class="grade">
-    <section class="cartao" aria-labelledby="t-dados">
-      <h2 id="t-dados">1. Dados da etapa</h2>
-      <label for="valor">Valor da etapa (R$)</label>
-      <input id="valor" inputmode="decimal" autocomplete="off" placeholder="Ex.: 1.200,00" aria-describedby="valor-ajuda valor-erro">
-      <p class="ajuda" id="valor-ajuda">Está no orçamento que enviei. Se deixar em branco, você digita o valor no app do seu banco.</p>
-      <p class="erro" id="valor-erro" role="alert"></p>
-      <label for="ref">Referência do orçamento (opcional)</label>
-      <input id="ref" autocomplete="off" maxlength="25" placeholder="Ex.: MUL0001" aria-describedby="ref-ajuda">
-      <p class="ajuda" id="ref-ajuda">Só letras e números, até 25. Ajuda a identificar o pagamento.</p>
-      <dl class="recebedor">
-        <dt>Recebedor</dt><dd>Rodrigo de Sousa Terroso Junior</dd>
-        <dt>Chave Pix (e-mail)</dt><dd>contato@mileumalinhas.com.br</dd>
-        <dt>Instituição</dt><dd>Mercado Pago</dd>
-      </dl>
-    </section>
+  <section class="cartao alerta" id="sem-valor" hidden aria-labelledby="t-sem">
+    <h2 id="t-sem">Este endereço não traz o valor da etapa</h2>
+    <p>O valor vem pronto no link que envio depois que você aprova o orçamento. Abra o link que recebeu por e-mail ou mensagem, ou me escreva em <a href="mailto:contato@mileumalinhas.com.br">contato@mileumalinhas.com.br</a> pedindo o link da etapa.</p>
+  </section>
 
-    <section class="cartao" aria-labelledby="t-pagar">
-      <h2 id="t-pagar">2. Pague pelo app do seu banco</h2>
-      <p class="resumo" id="resumo" aria-live="polite"></p>
-      <div class="qr" id="qr"></div>
-      <label for="codigo">Pix copia e cola</label>
-      <textarea id="codigo" readonly rows="5" spellcheck="false"></textarea>
-      <div class="acoes">
-        <button type="button" id="copiar" class="botao cheio">Copiar código Pix</button>
-      </div>
-      <p class="aviso-copia" id="aviso-copia" aria-live="polite"></p>
+  <div id="etapa">
+    <p class="intro">O valor abaixo veio do link que enviei para o seu orçamento aprovado. O código é gerado aqui no seu navegador: nada sai desta página.</p>
+    <div class="grade">
+      <section class="cartao" aria-labelledby="t-dados">
+        <h2 id="t-dados">1. Confira a etapa</h2>
+        <dl class="recebedor dados">
+          <dt>Valor</dt><dd class="valor" id="mostra-valor"></dd>
+          <dt>Referência</dt><dd id="mostra-ref"></dd>
+          <dt>Recebedor</dt><dd>Rodrigo de Sousa Terroso Junior</dd>
+          <dt>Chave Pix (e-mail)</dt><dd>contato@mileumalinhas.com.br</dd>
+          <dt>Instituição</dt><dd>Mercado Pago</dd>
+        </dl>
+        <p class="ajuda">Se o valor ou a referência não batem com o orçamento que você aprovou, não pague e me escreva.</p>
+      </section>
+
+      <section class="cartao" aria-labelledby="t-pagar">
+        <h2 id="t-pagar">2. Pague pelo app do seu banco</h2>
+        <div class="qr" id="qr"></div>
+        <label for="codigo">Pix copia e cola</label>
+        <textarea id="codigo" readonly rows="5" spellcheck="false"></textarea>
+        <div class="acoes">
+          <button type="button" id="copiar" class="botao cheio">Copiar código Pix</button>
+        </div>
+        <p class="aviso-copia" id="aviso-copia" aria-live="polite"></p>
+      </section>
+    </div>
+
+    <section class="cartao passos" aria-labelledby="t-passos">
+      <h2 id="t-passos">Como pagar</h2>
+      <ol>
+        <li><b>No celular:</b> toque em Copiar código Pix, abra o app do seu banco, entre em Pix e escolha Pix copia e cola.</li>
+        <li><b>No computador:</b> abra o app do banco no celular, entre em Pix, escolha Ler QR Code e aponte para a imagem.</li>
+        <li><b>Antes de confirmar:</b> confira se o recebedor é Rodrigo de Sousa Terroso Junior, no Mercado Pago, e se o valor é o mesmo desta página. Se algo for diferente, não confirme e me escreva.</li>
+        <li><b>Depois de pagar:</b> envie o comprovante para <a href="mailto:contato@mileumalinhas.com.br">contato@mileumalinhas.com.br</a> com a referência do orçamento.</li>
+      </ol>
     </section>
   </div>
-
-  <section class="cartao passos" aria-labelledby="t-passos">
-    <h2 id="t-passos">Como pagar</h2>
-    <ol>
-      <li><b>No celular:</b> toque em Copiar código Pix, abra o app do seu banco, entre em Pix e escolha Pix copia e cola.</li>
-      <li><b>No computador:</b> abra o app do banco no celular, entre em Pix, escolha Ler QR Code e aponte para a imagem.</li>
-      <li><b>Antes de confirmar:</b> confira se o recebedor é Rodrigo de Sousa Terroso Junior, no Mercado Pago, e se o valor é o da etapa. Se algo for diferente, não confirme e me escreva.</li>
-      <li><b>Depois de pagar:</b> envie o comprovante para <a href="mailto:contato@mileumalinhas.com.br">contato@mileumalinhas.com.br</a> com a referência do orçamento.</li>
-    </ol>
-  </section>
 </main>
 <footer class="rodape">
   <p>Mil e Uma Linhas! · Rodrigo Terroso Junior, Cuiabá, MT · <a href="/">voltar ao site</a></p>
 </footer>
 <script src="qrcode.min.js"></script>
+<script src="pix-core.js"></script>
 <script src="pix.js"></script>
 </body>
 </html>

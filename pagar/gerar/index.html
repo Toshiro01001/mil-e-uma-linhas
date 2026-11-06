@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'none'; manifest-src 'none'; media-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'; upgrade-insecure-requests">
+<meta name="referrer" content="no-referrer">
+<meta name="robots" content="noindex, nofollow">
+<title>Gerar link de pagamento | Mil e Uma Linhas!</title>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../pagar.css">
+</head>
+<body>
+<header class="topo">
+  <a class="marca" href="/">mil e uma linhas<b>!</b></a>
+  <span class="topo-nota">gerador de link</span>
+</header>
+<main id="conteudo">
+  <h1>Gerar link de pagamento</h1>
+  <p class="intro">Uso esta tela para montar o link de cada etapa de um orçamento aprovado. O link abre a página de pagamento com o valor já travado. Nada daqui é salvo nem enviado.</p>
+  <div class="grade">
+    <section class="cartao" aria-labelledby="t-dados">
+      <h2 id="t-dados">1. Dados da etapa</h2>
+      <label for="valor">Valor da etapa (R$)</label>
+      <input id="valor" inputmode="decimal" autocomplete="off" placeholder="Ex.: 1.200,00" aria-describedby="valor-erro">
+      <p class="erro" id="valor-erro" role="alert"></p>
+      <label for="ref">Referência do orçamento</label>
+      <input id="ref" autocomplete="off" maxlength="25" placeholder="Ex.: MUL0001" aria-describedby="ref-ajuda">
+      <p class="ajuda" id="ref-ajuda">Só letras e números, até 25. Vai junto no Pix e aparece no comprovante.</p>
+      <label for="etapa">Etapa</label>
+      <input id="etapa" autocomplete="off" maxlength="40" placeholder="Ex.: entrada" value="entrada">
+    </section>
+    <section class="cartao" aria-labelledby="t-link">
+      <h2 id="t-link">2. Link e mensagem</h2>
+      <label for="link">Link para o cliente</label>
+      <textarea id="link" readonly rows="3" spellcheck="false"></textarea>
+      <div class="acoes duas">
+        <button type="button" class="botao cheio" id="copiar-link" disabled>Copiar link</button>
+        <a class="botao" id="abrir" href="../" target="_blank" rel="noopener">Abrir para conferir</a>
+      </div>
+      <label for="msg">Mensagem pronta</label>
+      <textarea id="msg" readonly rows="7"></textarea>
+      <div class="acoes">
+        <button type="button" class="botao" id="copiar-msg" disabled>Copiar mensagem</button>
+      </div>
+      <p class="aviso-copia" id="aviso" aria-live="polite"></p>
+    </section>
+  </div>
+</main>
+<script src="../pix-core.js"></script>
+<script src="gerar.js"></script>
+</body>
+</html>
