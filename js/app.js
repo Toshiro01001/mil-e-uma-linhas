@@ -5,11 +5,13 @@
   var $ = function (s, r) { return (r || document).querySelector(s); };
   var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
   var calmo = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var ABAS = ['inicio', 'servicos', 'projetos', 'demos', 'contato'];
-  var ROTULO = { inicio: '1:início', servicos: '2:serviços', projetos: '3:projetos', demos: '4:demos', contato: '5:contato' };
+  var ABAS = ['inicio', 'servicos', 'projetos', 'demos', 'orcamento', 'contato'];
+  var ROTULO = { inicio: '1:início', servicos: '2:serviços', projetos: '3:projetos', demos: '4:demos', orcamento: '5:orçamento', contato: '6:contato' };
   var main = $('main');
   var calha = $('.calha');
   var abaAtual = null;
+
+  function temaAscii() { return document.documentElement.getAttribute('data-tema') === 'ascii'; }
 
   /* ---------- abas e endereço ---------- */
   function rota() {
@@ -25,7 +27,7 @@
     abaAtual = r.aba;
     $$('.folha').forEach(function (f) { f.classList.toggle('ativa', f.id === r.aba); });
     $$('.abas nav a').forEach(function (a) {
-      if (a.dataset.aba === r.aba) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current');
+      if (a.dataset.aba === r.aba) { a.setAttribute('aria-current', 'page'); if (a.scrollIntoView && a.parentNode.scrollWidth > a.parentNode.clientWidth) a.parentNode.scrollLeft = a.offsetLeft - 40; } else a.removeAttribute('aria-current');
     });
     $('#st-aba').textContent = ROTULO[r.aba];
     if (r.aba === 'servicos') abrirServico(r.sub || servicoAtual);
@@ -36,8 +38,9 @@
       document.title = (r.aba === 'inicio' ? '' : tituloDa(r.aba) + ' | ') + 'Mil e Uma Linhas!' + (r.aba === 'inicio' ? ' | Meu código, seu site.' : '');
       if (foco) { var t = $('#' + r.aba + ' h1, #' + r.aba + ' h2'); if (t) { t.setAttribute('tabindex', '-1'); t.focus({ preventScroll: true }); } }
     }
-    if (r.aba === 'inicio') campo.mostrar(); else campo.parar();
-    if (r.aba === 'contato') iniciarObra(); else pararObra();
+    if (window.MUL_ORC && r.aba === 'orcamento') window.MUL_ORC.rota(r.sub);
+    if (r.aba === 'inicio' && temaAscii()) campo.mostrar(); else campo.parar();
+    if (r.aba === 'contato' && temaAscii()) iniciarObra(); else pararObra();
     numerar();
     atualizarLinha();
   }
@@ -408,7 +411,8 @@
     ecos: 'Ecos das Ruínas: arquivo que funciona offline', orfeu: 'Terminal ORFEU: site que se usa por comandos',
     parede: 'Parede de Desejos: site com IA e chave protegida', nex: 'Calculadora de NEX: ferramenta de mesa'
   };
-  var DEMOS = { pedidos: 1, atendimento: 1, funil: 1, pagina: 1, ascii: 1 };
+  var DEMOS = { pedidos: 1, atendimento: 1, funil: 1, pagina: 1, banco: 1, linguagens: 1, ascii: 1 };
+  var TEMAS = { ascii: 1, empresa: 1, loja: 1, painel: 1, agenda: 1 };
 
   function linha(txt, cls) {
     var d = document.createElement('div');
@@ -436,11 +440,14 @@
   var AJUDA = [
     'ajuda              esta lista',
     'ls                 o que tem neste site',
-    'cd <aba>           vai para início, serviços, projetos, demos ou contato',
+    'tema <nome>        ascii, empresa, loja, painel ou agenda',
+    'orcamento          abre o montador de orçamento',
+    'linguagens         a mesma regra em 7 linguagens',
+    'cd <aba>           vai para início, serviços, projetos, demos, orçamento ou contato',
     'servicos           lista o que a gente faz',
     'projetos           lista os projetos',
     'abrir <projeto>    abre os detalhes de um projeto',
-    'demo <nome>        pedidos, atendimento, funil, pagina ou ascii',
+    'demo <nome>        pedidos, atendimento, funil, pagina, banco ou ascii',
     'contato            onde falar com a gente',
     'whatsapp           situação do WhatsApp',
     'seguranca          como este site cuida dos seus dados',
@@ -458,7 +465,7 @@
     historico.push(txt); hPos = historico.length;
     var t = semAcento(txt), p = t.split(/\s+/), c = p[0], a = p[1] || '';
     if (c === 'ajuda' || c === 'help' || c === '?') return void linha(AJUDA);
-    if (c === 'ls' || c === 'dir') return void linha('inicio/  servicos/  projetos/  demos/  contato/');
+    if (c === 'ls' || c === 'dir') return void linha('inicio/  servicos/  projetos/  demos/  orcamento/  contato/');
     if (c === 'cd') {
       var alvo = a.replace(/\/$/, '');
       if (alvo === '..' || alvo === '~' || alvo === '') alvo = 'inicio';
@@ -466,6 +473,11 @@
       return void linha('Essa aba não existe. Tente: ' + ABAS.join(', ') + '.', 'err');
     }
     if (ABAS.indexOf(c) >= 0 && c !== 'contato' && c !== 'servicos' && c !== 'projetos') { ir('#' + c); return void linha('Aba ' + ROTULO[c] + ' aberta.'); }
+    if (c === 'tema') {
+      if (TEMAS[a] && window.MUL_TEMAS) { window.MUL_TEMAS.trocar(a); return void linha('Aparência: ' + a + '.'); }
+      return void linha('Aparências: ascii, empresa, loja, painel e agenda.', 'err');
+    }
+    if (c === 'linguagens') { ir('#demos/linguagens'); return void linha('SQL  Python  C  C++  Java  JavaScript  PHP'); }
     if (c === 'servicos') { ir('#servicos'); return void linha('sites  sistemas  sob-medida  vendas  trafego  freelance'); }
     if (c === 'projetos') {
       ir('#projetos');
@@ -481,8 +493,9 @@
       if (!a) { ir('#demos'); return void linha('pedidos  atendimento  funil  pagina  ascii'); }
       return void linha('Demonstração não encontrada. Tente: pedidos, atendimento, funil, pagina ou ascii.', 'err');
     }
-    if (c === 'contato') { ir('#contato'); linkT('instagram', LINKS.instagram); linkT('linkedin', LINKS.linkedin); return void linkT('github', LINKS.github); }
+    if (c === 'contato') { ir('#contato'); linha('e-mail: contato@mileumalinhas.com.br'); linkT('instagram', LINKS.instagram); linkT('linkedin', LINKS.linkedin); return void linkT('github', LINKS.github); }
     if (c === 'whatsapp' || c === 'zap') return void linha('Work in Progress!!');
+    if (c === 'email') return void linha('contato@mileumalinhas.com.br');
     if (c === 'seguranca') return void linha('Sem cookies. Sem rastreadores. Sem scripts de terceiros.\nSem login e sem banco de dados.\nNenhum site é 100% seguro: este foi feito para ter o mínimo possível a ser roubado.');
     if (c === 'sobre' || c === 'whoami') return void linha('Mil e Uma Linhas!, de Rodrigo Terroso Junior.\nMeu código, seu site. Cuiabá e região.\nO Claude, da Anthropic, foi usado como ferramenta durante o desenvolvimento.');
     if (c === 'onda') { if (abaAtual !== 'inicio') ir('#inicio'); setTimeout(campo.onda, 120); return void linha('Clique no logo para fazer outra.'); }
@@ -520,10 +533,16 @@
     var a = document.activeElement, tag = a && a.tagName;
     if (e.ctrlKey || e.metaKey || e.altKey) return;
     if (tag === 'INPUT' || tag === 'SELECT' || tag === 'TEXTAREA') return;
-    if (e.key === '/' || e.key === ':') { e.preventDefault(); abrirT(); return; }
+    if ((e.key === '/' || e.key === ':') && temaAscii()) { e.preventDefault(); abrirT(); return; }
     if (e.key === 'Escape' && !term.hidden) { fecharT(); return; }
     var n = parseInt(e.key, 10);
-    if (n >= 1 && n <= 5) { location.hash = '#' + ABAS[n - 1]; }
+    if (temaAscii() && n >= 1 && n <= 6) { location.hash = '#' + ABAS[n - 1]; }
+  });
+
+  /* ---------- troca de aparência ---------- */
+  window.addEventListener('mul:tema', function () {
+    if (!temaAscii() && !term.hidden) fecharT();
+    aplicarRota(false);
   });
 
   /* ---------- partida ---------- */

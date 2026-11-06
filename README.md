@@ -2,7 +2,7 @@
 
 Meu código, seu site. Site principal em [mileumalinhas.com.br](https://mileumalinhas.com.br).
 
-Site estático em HTML, CSS e JavaScript puro, sem dependências, sem cookies e sem nenhuma requisição a terceiros.
+Site estático em HTML, CSS e JavaScript puro, sem dependências, sem cookies e sem nenhuma requisição a terceiros. O navegador guarda só a aparência escolhida.
 
 | Pasta ou arquivo | Para que serve |
 |---|---|
@@ -10,7 +10,10 @@ Site estático em HTML, CSS e JavaScript puro, sem dependências, sem cookies e 
 | `css/site.css` | Aparência |
 | `js/boot.js` | Prepara as abas e impede que o site seja embutido em outro |
 | `js/app.js` | Abas, logo em ASCII, números de linha e terminal |
-| `js/demos.js` | As cinco demonstrações. Tudo roda no navegador de quem usa |
+| `js/temas.js` | As 5 aparências e suas capas interativas |
+| `js/orcamento.js` | Montador de orçamento. **Os preços ficam na lista `PEDIDOS`, no início do arquivo** |
+| `js/demos.js` | As demonstrações. Tudo roda no navegador de quem usa |
+| `js/linguagens.js` | A mesma regra em 7 linguagens; cada programa foi executado de verdade |
 | `fonts/` | Bricolage Grotesque e JetBrains Mono, servidas daqui (licença OFL) |
 
 Para rodar no computador, sirva a pasta com qualquer servidor local, como `python3 -m http.server`.

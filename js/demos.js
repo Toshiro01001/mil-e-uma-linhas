@@ -256,8 +256,129 @@ window.MUL_DEMOS = (function () {
     f.catch(function () {}).then(logo);
   }
 
-  var MAPA = { pedidos: pedidos, atendimento: atendimento, funil: funil, pagina: pagina, ascii: ascii };
+  /* ---------- banco de dados no navegador (SQL simplificado) ---------- */
+  var BASE = [
+    [101, 'Ana', 'X-Salada', 2, 36, 'em preparo'], [102, 'Bruno', 'Suco de cupuaçu', 1, 9, 'novo'],
+    [103, 'Carla', 'X-Bacon', 3, 72, 'entregue'], [104, 'Diego', 'Batata frita', 2, 30, 'entregue'],
+    [105, 'Elisa', 'Guaraná', 4, 24, 'novo'], [106, 'Fábio', 'X-Salada', 1, 18, 'em preparo'],
+    [107, 'Gabi', 'X-Bacon', 2, 48, 'entregue'], [108, 'Hugo', 'Batata frita', 1, 15, 'novo'],
+    [109, 'Iara', 'Suco de cupuaçu', 3, 27, 'entregue'], [110, 'João', 'X-Bacon', 1, 24, 'em preparo'],
+    [111, 'Karen', 'Guaraná', 2, 12, 'entregue'], [112, 'Lucas', 'X-Salada', 5, 90, 'novo']
+  ];
+  var COLS = ['id', 'cliente', 'item', 'qtd', 'valor', 'situacao'];
+  window.MUL_DADOS = { base: BASE, cols: COLS };
+
+  function semAc(t) { return String(t).normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase(); }
+  function tabelaTexto(cab, linhas) {
+    var w = cab.map(function (c, i) { return linhas.reduce(function (m, l) { return Math.max(m, String(l[i]).length); }, String(c).length); });
+    var sep = '+' + w.map(function (n) { return new Array(n + 3).join('-'); }).join('+') + '+';
+    var fmt = function (l) { return '| ' + l.map(function (v, i) { var t = String(v); return t + new Array(w[i] - t.length + 1).join(' '); }).join(' | ') + ' |'; };
+    return [sep, fmt(cab), sep].concat(linhas.map(fmt)).concat(linhas.length ? [sep] : []).join('\n');
+  }
+  function lerValor(t) {
+    t = t.trim();
+    var m = t.match(/^'([^']*)'$/);
+    if (m) return m[1];
+    if (/^-?\d+(\.\d+)?$/.test(t)) return parseFloat(t);
+    throw new Error('Valor não entendido: ' + t + '. Texto vai entre aspas simples.');
+  }
+  function coluna(n) { n = String(n).trim(); var i = COLS.indexOf(semAc(n)); if (i < 0) throw new Error('A coluna "' + n + '" não existe. Colunas: ' + COLS.join(', ') + '.'); return i; }
+  function filtro(where) {
+    if (!where) return function () { return true; };
+    var conds = where.split(/\s+and\s+/i).map(function (c) {
+      var m = c.trim().match(/^(\w+)\s*(<=|>=|<>|!=|=|<|>|like)\s*(.+)$/i);
+      if (!m) throw new Error('Condição não entendida: ' + c.trim() + '.');
+      var i = coluna(m[1]), op = m[2].toLowerCase(), v = lerValor(m[3]);
+      return function (l) {
+        var a = l[i];
+        if (op === 'like') return new RegExp('^' + semAc(v).replace(/[.*+?^${}()|[\]\\]/g, '\\$&').replace(/%/g, '.*') + '$').test(semAc(a));
+        if (typeof a === 'string') { a = semAc(a); var b = semAc(v); return op === '=' ? a === b : (op === '<>' || op === '!=') ? a !== b : op === '<' ? a < b : op === '>' ? a > b : op === '<=' ? a <= b : a >= b; }
+        return op === '=' ? a === v : (op === '<>' || op === '!=') ? a !== v : op === '<' ? a < v : op === '>' ? a > v : op === '<=' ? a <= v : a >= v;
+      };
+    });
+    return function (l) { return conds.every(function (f) { return f(l); }); };
+  }
+  function executarSQL(q, dados) {
+    q = q.trim().replace(/;\s*$/, '');
+    var m;
+    if ((m = q.match(/^select\s+(.+?)\s+from\s+pedidos(?:\s+where\s+(.+?))?(?:\s+order\s+by\s+(\w+)(?:\s+(asc|desc))?)?(?:\s+limit\s+(\d+))?$/i))) {
+      var f = dados.filter(filtro(m[2]));
+      if (m[3]) { var oi = coluna(m[3]), dir = /desc/i.test(m[4] || '') ? -1 : 1; f = f.slice().sort(function (a, b) { return (a[oi] > b[oi] ? 1 : a[oi] < b[oi] ? -1 : 0) * dir; }); }
+      var ag = m[1].trim().match(/^(count|sum|avg|max|min)\((\*|\w+)\)$/i);
+      if (ag) {
+        var nome = ag[1].toLowerCase(), r;
+        if (nome === 'count') r = f.length;
+        else {
+          var ci = coluna(ag[2]), vals = f.map(function (l) { return l[ci]; });
+          if (vals.some(function (v) { return typeof v !== 'number'; })) throw new Error(ag[1].toUpperCase() + ' só funciona em colunas de número: id, qtd ou valor.');
+          var soma = vals.reduce(function (s, v) { return s + v; }, 0);
+          r = nome === 'sum' ? soma : !vals.length ? 0 : nome === 'avg' ? Math.round(soma / vals.length * 100) / 100 : nome === 'max' ? Math.max.apply(null, vals) : Math.min.apply(null, vals);
+        }
+        return tabelaTexto([m[1].trim()], [[r]]) + '\n1 linha retornada';
+      }
+      if (m[5]) f = f.slice(0, parseInt(m[5], 10));
+      var idx = m[1].trim() === '*' ? COLS.map(function (c, i) { return i; }) : m[1].split(',').map(coluna);
+      return tabelaTexto(idx.map(function (i) { return COLS[i]; }), f.map(function (l) { return idx.map(function (i) { return l[i]; }); })) + '\n' + f.length + (f.length === 1 ? ' linha retornada' : ' linhas retornadas');
+    }
+    if ((m = q.match(/^insert\s+into\s+pedidos\s*\(([^)]+)\)\s*values\s*\(([^)]+)\)$/i))) {
+      var cs = m[1].split(',').map(coluna), vs = m[2].split(',').map(lerValor);
+      if (cs.length !== vs.length) throw new Error('A quantidade de colunas e de valores precisa ser igual.');
+      if (dados.length >= 200) throw new Error('Limite de 200 linhas nesta demonstração. Use Restaurar dados.');
+      var nova = [dados.reduce(function (x, l) { return Math.max(x, l[0]); }, 100) + 1, '', '', 1, 0, 'novo'];
+      cs.forEach(function (c, i) { nova[c] = vs[i]; });
+      dados.push(nova);
+      return '1 linha inserida com id ' + nova[0] + '.\nExecute SELECT * FROM pedidos para ver.';
+    }
+    if ((m = q.match(/^delete\s+from\s+pedidos\s+where\s+(.+)$/i))) {
+      var fx = filtro(m[1]), antes = dados.length;
+      for (var i = dados.length - 1; i >= 0; i--) if (fx(dados[i])) dados.splice(i, 1);
+      return (antes - dados.length) + ' linha(s) apagada(s). Use Restaurar dados para voltar ao início.';
+    }
+    if (/^delete/i.test(q)) throw new Error('Use DELETE com WHERE, para não apagar tudo por engano.');
+    throw new Error('Esta demonstração entende SELECT, INSERT e DELETE na tabela pedidos.');
+  }
+  function banco() {
+    var dados = BASE.map(function (l) { return l.slice(); });
+    var ta = $('#db-consulta'), saida = $('#db-saida');
+    var EX = [
+      ['Todos os pedidos', 'SELECT * FROM pedidos'],
+      ['Só os novos', "SELECT cliente, item, valor FROM pedidos WHERE situacao = 'novo'"],
+      ['Maiores vendas', 'SELECT cliente, valor FROM pedidos ORDER BY valor DESC LIMIT 3'],
+      ['Total entregue', "SELECT SUM(valor) FROM pedidos WHERE situacao = 'entregue'"],
+      ['Novo pedido', "INSERT INTO pedidos (cliente, item, qtd, valor) VALUES ('Marina', 'X-Bacon', 1, 24)"]
+    ];
+    function rodar() {
+      try { saida.classList.remove('com-erro'); saida.textContent = executarSQL(ta.value, dados); }
+      catch (e) { saida.classList.add('com-erro'); saida.textContent = 'Erro: ' + e.message; }
+    }
+    EX.forEach(function (e) {
+      var b = el('button', 'pilula', e[0]); b.type = 'button';
+      b.addEventListener('click', function () { ta.value = e[1]; rodar(); });
+      $('#db-exemplos').appendChild(b);
+    });
+    $('#db-form').addEventListener('submit', function (e) { e.preventDefault(); rodar(); });
+    ta.addEventListener('keydown', function (e) { if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') { e.preventDefault(); rodar(); } });
+    $('#db-restaurar').addEventListener('click', function () { dados = BASE.map(function (l) { return l.slice(); }); ta.value = EX[0][1]; rodar(); });
+    ta.value = EX[0][1]; rodar();
+  }
+
+  /* ---------- a mesma regra em 7 linguagens (cada programa foi compilado e executado) ---------- */
+  function linguagens() {
+    var L = window.MUL_LINGUAGENS, box = $('#lg-botoes');
+    function abrir(i) {
+      Array.prototype.forEach.call(box.children, function (b, j) { b.setAttribute('aria-pressed', i === j ? 'true' : 'false'); });
+      $('#lg-uso').textContent = L[i].uso; $('#lg-codigo').textContent = L[i].codigo; $('#lg-saida').textContent = L[i].saida;
+    }
+    L.forEach(function (l, i) {
+      var b = el('button', 'pilula', l.nome); b.type = 'button';
+      b.addEventListener('click', function () { abrir(i); }); box.appendChild(b);
+    });
+    abrir(0);
+  }
+
+  var MAPA = { pedidos: pedidos, atendimento: atendimento, funil: funil, pagina: pagina, ascii: ascii, banco: banco, linguagens: linguagens };
   return {
-    abrir: function (id) { if (!iniciado[id] && MAPA[id]) { iniciado[id] = true; MAPA[id](); } }
+    abrir: function (id) { if (!iniciado[id] && MAPA[id]) { iniciado[id] = true; MAPA[id](); } },
+    dados: function () { return window.MUL_DADOS; }
   };
 })();

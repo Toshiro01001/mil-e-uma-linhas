@@ -23,7 +23,10 @@
 <link rel="stylesheet" href="css/site.css">
 <script src="js/boot.js"></script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"ProfessionalService","name":"Mil e Uma Linhas!","slogan":"Meu código, seu site.","url":"https://mileumalinhas.com.br/","areaServed":"Cuiabá e região","founder":{"@type":"Person","name":"Rodrigo Terroso Junior"},"sameAs":["https://www.instagram.com/mileumalinhas/","https://www.linkedin.com/in/rodrigo-terroso-junior-9b900935b","https://github.com/Toshiro01001"]}</script>
+<script src="js/linguagens.js" defer></script>
 <script src="js/demos.js" defer></script>
+<script src="js/orcamento.js" defer></script>
+<script src="js/temas.js" defer></script>
 <script src="js/app.js" defer></script>
 </head>
 <body>
@@ -36,8 +39,17 @@
     <a href="#servicos" data-aba="servicos"><i>2:</i>serviços</a>
     <a href="#projetos" data-aba="projetos"><i>3:</i>projetos</a>
     <a href="#demos" data-aba="demos"><i>4:</i>demos</a>
-    <a href="#contato" data-aba="contato"><i>5:</i>contato</a>
+    <a href="#orcamento" data-aba="orcamento"><i>5:</i>orçamento</a>
+    <a href="#contato" data-aba="contato"><i>6:</i>contato</a>
   </nav>
+  <div class="temas" role="radiogroup" aria-label="Aparência do site">
+    <span class="temas-rot" aria-hidden="true">aparência</span>
+    <button type="button" role="radio" data-t="ascii">ASCII</button>
+    <button type="button" role="radio" data-t="empresa">Empresa</button>
+    <button type="button" role="radio" data-t="loja">Loja</button>
+    <button type="button" role="radio" data-t="painel">Painel</button>
+    <button type="button" role="radio" data-t="agenda">Agenda</button>
+  </div>
 </header>
 
 <main id="conteudo" tabindex="-1">
@@ -46,11 +58,11 @@
     <div class="folhas">
 
 <!-- ============ início ============ -->
-<section id="inicio" class="folha" aria-labelledby="t-inicio">
+<section id="inicio" class="folha" aria-label="Início">
   <div class="hero">
     <canvas id="campo" aria-hidden="true"></canvas>
     <div class="hero-texto">
-      <h1 id="t-inicio">Meu código, seu site.</h1>
+      <h1>Meu código, seu site.</h1>
       <p>Sites, sistemas e projetos sob medida para empresas de Cuiabá e região. Também vendas automatizadas, tráfego pago e programação freelance.</p>
       <div class="acoes">
         <a class="botao cheio" href="#demos">Testar uma demonstração</a>
@@ -59,21 +71,78 @@
       <p class="dica"><span class="so-mouse">Passe o mouse no logo e clique nele. Aperte <kbd>/</kbd> para abrir o terminal.</span><span class="so-toque">Toque no logo. O terminal fica no botão lá embaixo.</span></p>
     </div>
   </div>
+
+  <div class="capa" data-capa="empresa">
+    <div class="capa-texto">
+      <p class="amostra">Amostra: é assim que o site da sua empresa pode ficar.</p>
+      <h1>Meu código, seu site.</h1>
+      <p>Sites, sistemas e projetos sob medida para empresas de Cuiabá e região. Diga qual é o seu negócio e veja por onde começar.</p>
+    </div>
+    <div class="guia">
+      <h2 class="h-peq" id="t-guia">Qual é o seu negócio?</h2>
+      <div class="pilulas" id="em-negocios" role="group" aria-labelledby="t-guia"></div>
+      <div class="guia-saida" id="em-saida" aria-live="polite"></div>
+    </div>
+  </div>
+
+  <div class="capa" data-capa="loja">
+    <div class="capa-texto">
+      <p class="amostra">Amostra: é assim que uma loja pode ficar. Aqui os produtos são os nossos serviços.</p>
+      <h1>Meu código, seu site.</h1>
+    </div>
+    <div class="pilulas" id="lj-filtros" role="group" aria-label="Filtrar produtos"></div>
+    <div class="vitrine" id="lj-vitrine"></div>
+    <div class="sacola" id="lj-sacola" aria-live="polite"></div>
+  </div>
+
+  <div class="capa" data-capa="painel">
+    <div class="capa-texto">
+      <p class="amostra">Amostra: é assim que um sistema pode ficar. Pedidos e clientes fictícios.</p>
+      <h1>Meu código, seu site.</h1>
+    </div>
+    <div class="kpis" id="pn-kpis" aria-live="polite"></div>
+    <div class="linha-form">
+      <label>Buscar cliente ou item <input id="pn-busca" maxlength="30" autocomplete="off" placeholder="Ex.: Ana"></label>
+      <label>Situação <select id="pn-status"><option value="">Todas</option><option>novo</option><option>em preparo</option><option>entregue</option></select></label>
+    </div>
+    <div class="tabela-rolagem"><table class="tabela" id="pn-tabela"></table></div>
+    <p class="legenda">A consulta que o banco de dados faria agora:</p>
+    <pre class="sql-gerado" id="pn-sql"></pre>
+    <p><a class="botao" href="#demos/banco">Abrir o console SQL completo</a></p>
+  </div>
+
+  <div class="capa" data-capa="agenda">
+    <div class="capa-texto">
+      <p class="amostra">Amostra: é assim que um site com hora marcada pode ficar.</p>
+      <h1>Meu código, seu site.</h1>
+      <p>Clínicas, salões, escritórios e consultórios ganham agenda no próprio site. Teste agora: sugira um horário para conversar sobre o seu projeto.</p>
+    </div>
+    <div class="agenda-caixa">
+      <h2 class="h-peq" id="t-dia">Escolha o dia</h2>
+      <div class="pilulas" id="ag-dias" role="group" aria-labelledby="t-dia"></div>
+      <h2 class="h-peq" id="t-hora">Escolha a hora</h2>
+      <div class="pilulas" id="ag-horas" role="group" aria-labelledby="t-hora"></div>
+      <label>Seu nome <input id="ag-nome" maxlength="40" autocomplete="name" placeholder="Como devemos chamar você"></label>
+      <p class="totais" id="ag-resumo" aria-live="polite"></p>
+      <a class="botao cheio" id="ag-enviar" href="#inicio">Sugerir horário por e-mail</a>
+      <p class="nota">Abre o seu programa de e-mail com a mensagem pronta. O horário só vale depois da nossa confirmação.</p>
+    </div>
+  </div>
 </section>
 
 <!-- ============ serviços ============ -->
 <section id="servicos" class="folha" aria-labelledby="t-servicos">
   <h2 id="t-servicos">O que a gente faz</h2>
-  <p class="intro">Seis arquivos abertos neste projeto. Escolha um para ler.</p>
+  <p class="intro"><span class="so-ascii">Seis arquivos abertos neste projeto. Escolha um para ler.</span><span class="sem-ascii">Escolha um serviço para ver como funciona.</span></p>
   <div class="arvore-grade">
     <div class="arvore" role="tablist" aria-label="Serviços" aria-orientation="vertical">
       <span class="raiz" aria-hidden="true">servicos/</span>
-      <button role="tab" data-svc="sites" id="s-sites" aria-controls="p-sites">sites.html</button>
-      <button role="tab" data-svc="sistemas" id="s-sistemas" aria-controls="p-sistemas">sistemas.sql</button>
-      <button role="tab" data-svc="sob-medida" id="s-sob-medida" aria-controls="p-sob-medida">sob-medida.md</button>
-      <button role="tab" data-svc="vendas" id="s-vendas" aria-controls="p-vendas">vendas.bot</button>
-      <button role="tab" data-svc="trafego" id="s-trafego" aria-controls="p-trafego">trafego.ads</button>
-      <button role="tab" data-svc="freelance" id="s-freelance" aria-controls="p-freelance">freelance.sh</button>
+      <button role="tab" data-svc="sites" id="s-sites" aria-controls="p-sites"><span class="so-ascii">sites.html</span><span class="sem-ascii">Sites</span></button>
+      <button role="tab" data-svc="sistemas" id="s-sistemas" aria-controls="p-sistemas"><span class="so-ascii">sistemas.sql</span><span class="sem-ascii">Sistemas</span></button>
+      <button role="tab" data-svc="sob-medida" id="s-sob-medida" aria-controls="p-sob-medida"><span class="so-ascii">sob-medida.md</span><span class="sem-ascii">Projetos sob medida</span></button>
+      <button role="tab" data-svc="vendas" id="s-vendas" aria-controls="p-vendas"><span class="so-ascii">vendas.bot</span><span class="sem-ascii">Vendas automatizadas</span></button>
+      <button role="tab" data-svc="trafego" id="s-trafego" aria-controls="p-trafego"><span class="so-ascii">trafego.ads</span><span class="sem-ascii">Tráfego pago</span></button>
+      <button role="tab" data-svc="freelance" id="s-freelance" aria-controls="p-freelance"><span class="so-ascii">freelance.sh</span><span class="sem-ascii">Programação freelance</span></button>
     </div>
     <div class="paineis">
       <article class="painel" id="p-sites" role="tabpanel" aria-labelledby="s-sites" data-svc="sites">
@@ -107,12 +176,13 @@
 +--------+----------+------------+
 3 linhas retornadas</pre>
         <p>Controle de pedidos, agendamento, portal do cliente, painel interno. O que hoje vive em planilha e mensagem solta passa a ter lugar certo. Escopo e prazo são definidos antes de começar.</p>
+        <p class="pilha">Banco de dados com SQL. Back-end em PHP, Python, Java ou JavaScript. C e C++ quando o projeto pede desempenho.</p>
         <ul class="check">
           <li>Acesso certo para cada usuário</li>
           <li>Pede só os dados necessários</li>
           <li>Testado no computador e no celular</li>
         </ul>
-        <a class="botao" href="#demos/pedidos">Testar um sistema de pedidos</a>
+        <a class="botao" href="#demos/pedidos">Testar um sistema de pedidos</a> <a class="botao" href="#demos/banco">Testar um banco de dados</a>
       </article>
       <article class="painel" id="p-sob-medida" role="tabpanel" aria-labelledby="s-sob-medida" data-svc="sob-medida">
         <h3>Projetos sob medida</h3>
@@ -162,11 +232,11 @@ $ ./resolver-o-que-esta-parado.sh
 <!-- ============ projetos ============ -->
 <section id="projetos" class="folha" aria-labelledby="t-projetos">
   <h2 id="t-projetos">Projetos prontos</h2>
-  <p class="intro">Tudo aqui está publicado e dá para abrir. Os desenhos são esquemas do que cada projeto faz. A maioria nasceu para mesas de RPG, que cobram tempo real, permissões e desempenho de verdade.</p>
+  <p class="intro">Tudo aqui está publicado e dá para abrir. <span class="so-ascii">Os desenhos são esquemas do que cada projeto faz.</span> A maioria nasceu para mesas de RPG, que cobram tempo real, permissões e desempenho de verdade.</p>
   <div class="lista-cab" aria-hidden="true"><span>nome</span><span>o que é</span></div>
   <div class="lista">
     <details name="proj" data-proj="planta" open>
-      <summary><b>planta-da-caixa/</b><span>mapa 3D em tempo real</span></summary>
+      <summary><b><span class="so-ascii">planta-da-caixa/</span><span class="sem-ascii">Planta da Caixa</span></b><span>mapa 3D em tempo real</span></summary>
       <div class="det">
         <pre class="arte" aria-hidden="true">      ______________
      /  5  /  []   /|
@@ -186,7 +256,7 @@ $ ./resolver-o-que-esta-parado.sh
       </div>
     </details>
     <details name="proj" data-proj="cartao">
-      <summary><b>cartao-resposta/</b><span>plataforma de estudos</span></summary>
+      <summary><b><span class="so-ascii">cartao-resposta/</span><span class="sem-ascii">Cartão Resposta</span></b><span>plataforma de estudos</span></summary>
       <div class="det">
         <pre class="arte" aria-hidden="true">01 ( ) ( ) (#) ( ) ( )
 02 (#) ( ) ( ) ( ) ( )
@@ -204,7 +274,7 @@ aulas  questões  simulados</pre>
       </div>
     </details>
     <details name="proj" data-proj="crowsrest">
-      <summary><b>siic-crowsrest/</b><span>terminal estilo Windows 95</span></summary>
+      <summary><b><span class="so-ascii">siic-crowsrest/</span><span class="sem-ascii">SIIC Crowsrest</span></b><span>terminal estilo Windows 95</span></summary>
       <div class="det">
         <pre class="arte" aria-hidden="true">+=[ SIIC ]=============[_][X]+
 | Casos   Mapa   Fichas       |
@@ -224,7 +294,7 @@ aulas  questões  simulados</pre>
       </div>
     </details>
     <details name="proj" data-proj="hub">
-      <summary><b>hub-de-campanhas/</b><span>menu estilo jogo</span></summary>
+      <summary><b><span class="so-ascii">hub-de-campanhas/</span><span class="sem-ascii">Hub de Campanhas</span></b><span>menu estilo jogo</span></summary>
       <div class="det">
         <pre class="arte" aria-hidden="true">  PRESSIONE QUALQUER TECLA
 
@@ -242,7 +312,7 @@ aulas  questões  simulados</pre>
       </div>
     </details>
     <details name="proj" data-proj="ecos">
-      <summary><b>ecos-das-ruinas/</b><span>arquivo que funciona offline</span></summary>
+      <summary><b><span class="so-ascii">ecos-das-ruinas/</span><span class="sem-ascii">Ecos das Ruínas</span></b><span>arquivo que funciona offline</span></summary>
       <div class="det">
         <pre class="arte" aria-hidden="true">.-----------------------.
 | arquivo/              |
@@ -261,7 +331,7 @@ aulas  questões  simulados</pre>
       </div>
     </details>
     <details name="proj" data-proj="orfeu">
-      <summary><b>terminal-orfeu/</b><span>site que se usa por comandos</span></summary>
+      <summary><b><span class="so-ascii">terminal-orfeu/</span><span class="sem-ascii">Terminal ORFEU</span></b><span>site que se usa por comandos</span></summary>
       <div class="det">
         <pre class="arte" aria-hidden="true">ORFEU&gt; ls
 [ ARQUIVOS ]
@@ -279,7 +349,7 @@ ORFEU&gt; _</pre>
       </div>
     </details>
     <details name="proj" data-proj="parede">
-      <summary><b>parede-de-desejos/</b><span>site com IA e chave protegida</span></summary>
+      <summary><b><span class="so-ascii">parede-de-desejos/</span><span class="sem-ascii">Parede de Desejos</span></b><span>site com IA e chave protegida</span></summary>
       <div class="det">
         <pre class="arte" aria-hidden="true">navegador ---&gt; worker ---&gt; IA
               [ a chave da API
@@ -296,7 +366,7 @@ preço: gerado na hora</pre>
       </div>
     </details>
     <details name="proj" data-proj="nex">
-      <summary><b>calculadora-de-nex/</b><span>ferramenta de mesa</span></summary>
+      <summary><b><span class="so-ascii">calculadora-de-nex/</span><span class="sem-ascii">Calculadora de NEX</span></b><span>ferramenta de mesa</span></summary>
       <div class="det">
         <pre class="arte" aria-hidden="true">NEX  [######........] 45%
 +5%  registrado
@@ -333,6 +403,8 @@ histórico
     <button role="tab" data-demo="atendimento" id="d-atendimento" aria-controls="v-atendimento">Atendimento automático</button>
     <button role="tab" data-demo="funil" id="d-funil" aria-controls="v-funil">Simulador de funil</button>
     <button role="tab" data-demo="pagina" id="d-pagina" aria-controls="v-pagina">Monte uma página</button>
+    <button role="tab" data-demo="banco" id="d-banco" aria-controls="v-banco">Banco de dados</button>
+    <button role="tab" data-demo="linguagens" id="d-linguagens" aria-controls="v-linguagens">7 linguagens</button>
     <button role="tab" data-demo="ascii" id="d-ascii" aria-controls="v-ascii">Foto em ASCII</button>
   </div>
 
@@ -401,6 +473,25 @@ histórico
     </div>
   </div>
 
+  <div class="demo" id="v-banco" role="tabpanel" aria-labelledby="d-banco" data-demo="banco">
+    <p class="legenda">Exemplo: um banco de dados de pedidos fictícios que roda no seu navegador. Aceita SELECT, INSERT e DELETE em uma versão simplificada de SQL.</p>
+    <div class="pilulas" id="db-exemplos" role="group" aria-label="Consultas de exemplo"></div>
+    <form id="db-form" class="db-form">
+      <label for="db-consulta">Consulta</label>
+      <textarea id="db-consulta" rows="3" maxlength="400" spellcheck="false" autocapitalize="off"></textarea>
+      <div class="acoes"><button class="botao cheio" type="submit">Executar consulta</button><button class="botao" type="button" id="db-restaurar">Restaurar dados</button></div>
+    </form>
+    <pre class="db-saida" id="db-saida" tabindex="0" aria-live="polite"></pre>
+  </div>
+
+  <div class="demo" id="v-linguagens" role="tabpanel" aria-labelledby="d-linguagens" data-demo="linguagens">
+    <p class="legenda">A mesma regra de negócio, escrita em sete linguagens: somar o pedido e dar 10% de desconto acima de R$ 100. A linguagem certa depende do projeto.</p>
+    <div class="pilulas" id="lg-botoes" role="group" aria-label="Linguagem"></div>
+    <p id="lg-uso" class="pilha" aria-live="polite"></p>
+    <pre class="codigo" id="lg-codigo" tabindex="0" aria-label="Código de exemplo"></pre>
+    <p class="totais">Saída: <span id="lg-saida"></span></p>
+  </div>
+
   <div class="demo" id="v-ascii" role="tabpanel" aria-labelledby="d-ascii" data-demo="ascii">
     <p class="legenda">Escolha uma imagem e veja em caracteres. A conversão acontece no seu aparelho e a imagem não é enviada para lugar nenhum.</p>
     <div class="linha-form">
@@ -415,12 +506,56 @@ histórico
   </div>
 </section>
 
+<!-- ============ orçamento ============ -->
+<section id="orcamento" class="folha" aria-labelledby="t-orcamento">
+  <h2 id="t-orcamento">Monte seu orçamento</h2>
+  <p class="intro">Escolha o tipo de pedido e o plano. O preço muda conforme o que você marca. É uma estimativa: o valor final sai por escrito depois de conversarmos sobre o projeto.</p>
+  <div class="orc-tipos" id="orc-tipos" role="tablist" aria-label="Tipo de pedido"></div>
+  <div class="orc-grade">
+    <div class="orc-monta">
+      <h3 class="h-peq">Plano</h3>
+      <div class="orc-planos" id="orc-planos" role="radiogroup" aria-label="Plano"></div>
+      <div id="orc-horas-caixa" hidden><label>Horas de trabalho <output id="orc-horas-val"></output><input id="orc-horas" type="range" min="5" max="160" step="5" value="20"></label></div>
+      <h3 class="h-peq">Adicionais</h3>
+      <div class="orc-extras" id="orc-extras"></div>
+      <div class="linha-form orc-opcoes">
+        <label>Linguagem principal <select id="orc-tec"></select></label>
+        <label>Prazo <select id="orc-prazo"><option value="1">Normal</option><option value="1.25">Urgente (+25%)</option></select></label>
+      </div>
+    </div>
+    <aside class="orc-resumo" aria-label="Resumo do orçamento">
+      <h3 class="h-peq">Esta estimativa</h3>
+      <p class="orc-valor" id="orc-valor" aria-live="polite"></p>
+      <p class="nota" id="orc-nota"></p>
+      <button class="botao cheio" type="button" id="orc-add">Adicionar ao pedido</button>
+      <h3 class="h-peq">Seu pedido</h3>
+      <ul class="orc-carrinho" id="orc-carrinho"></ul>
+      <p class="orc-total" id="orc-total" aria-live="polite"></p>
+      <div class="acoes">
+        <a class="botao cheio" id="orc-email" href="#orcamento">Enviar por e-mail</a>
+        <button class="botao" type="button" id="orc-copiar">Copiar resumo</button>
+      </div>
+      <p class="nota">O envio abre o seu programa de e-mail com o resumo pronto. Nada sai desta página antes disso.</p>
+    </aside>
+  </div>
+</section>
+
 <!-- ============ contato ============ -->
 <section id="contato" class="folha" aria-labelledby="t-contato">
-  <h2 id="t-contato" class="wip">Work in Progress!!</h2>
-  <pre class="arte obra" id="obra" aria-hidden="true"></pre>
-  <p class="intro">O WhatsApp da Mil e Uma Linhas! ainda está sendo configurado. Enquanto isso, fale pelo Instagram ou pelo LinkedIn.</p>
-  <p><span class="botao desligado" aria-disabled="true">WhatsApp: Work in Progress!!</span></p>
+  <h2 id="t-contato">Fale com a gente</h2>
+  <div class="canais">
+    <div class="canal canal-wip">
+      <h3>WhatsApp Business</h3>
+      <p class="wip">Work in Progress!!</p>
+      <pre class="arte obra so-ascii" id="obra" aria-hidden="true"></pre>
+      <p class="nota">O número ainda está sendo configurado. Enquanto isso, use o e-mail ao lado.</p>
+    </div>
+    <div class="canal">
+      <h3>E-mail</h3>
+      <p><a class="email" href="mailto:contato@mileumalinhas.com.br">contato@mileumalinhas.com.br</a></p>
+      <p class="nota">Conte o que você precisa. Se quiser, monte um <a href="#orcamento">orçamento</a> antes e envie o resumo.</p>
+    </div>
+  </div>
 
   <ul class="contatos">
     <li><a rel="noopener noreferrer" target="_blank" href="https://www.instagram.com/mileumalinhas/"><b>Instagram</b><span>@mileumalinhas</span></a></li>
@@ -430,8 +565,8 @@ histórico
 
   <h3 class="sub">Como este site cuida dos seus dados</h3>
   <ul class="check">
-    <li>Não tem cookies, rastreadores nem scripts de terceiros</li>
-    <li>Não tem login, formulário de envio nem banco de dados para invadir</li>
+    <li>Não tem cookies, rastreadores nem scripts de terceiros. O navegador guarda só a aparência escolhida</li>
+    <li>Não tem login nem banco de dados no servidor para invadir. As demonstrações rodam só no seu aparelho</li>
     <li>Fontes e arquivos saem daqui mesmo, por conexão segura</li>
     <li>Uma política de segurança bloqueia código que não seja deste site</li>
   </ul>
