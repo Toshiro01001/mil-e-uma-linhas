@@ -68,7 +68,7 @@
     }) };
   }
   function lerSalvo() {
-    try { var d = JSON.parse(localStorage.getItem(CHAVE)); return d && d.v === 1 && Array.isArray(d.contatos) ? d : null; } catch (e) { return null; }
+    try { var d = JSON.parse(localStorage.getItem(CHAVE)); return d && d.v === 1 && Array.isArray(d.contatos) && d.contatos.every(function (c) { return c && typeof c === 'object'; }) ? d : null; } catch (e) { return null; }
   }
   function gravar() { try { localStorage.setItem(CHAVE, JSON.stringify(E)); } catch (e) { /* segue só na memória */ } }
   var E = lerSalvo();

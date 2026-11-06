@@ -93,10 +93,10 @@
       var a = i * 30 * Math.PI / 180;
       marcas.push(s('text', { x: 200 + Math.sin(a) * 136, y: 200 - Math.cos(a) * 136 + 7, 'text-anchor': 'middle', class: 'd-num' }, d, String(i === 0 ? 12 : i)));
     });
-    s('text', { x: 200, y: 122, 'text-anchor': 'middle', class: 'd-marca' }, d, 'Ponteiro Alto');
-    s('text', { x: 200, y: 142, 'text-anchor': 'middle', class: 'd-sub' }, d, 'Cuiabá');
+    s('text', { x: 200, y: 262, 'text-anchor': 'middle', class: 'd-marca' }, d, 'Ponteiro Alto');
+    s('text', { x: 200, y: 280, 'text-anchor': 'middle', class: 'd-sub' }, d, 'Cuiabá');
     ponteiro = s('g', { class: 'd-ponteiro' }, d);
-    s('rect', { x: 195, y: 72, width: 10, height: 148, rx: 4, class: 'd-ph' }, ponteiro);
+    s('rect', { x: 196, y: 92, width: 8, height: 128, rx: 4, class: 'd-ph' }, ponteiro);
     seg = s('g', { class: 'd-ponteiro seg' }, d);
     s('line', { x1: 200, y1: 232, x2: 200, y2: 44, class: 'd-ps' }, seg);
     s('circle', { cx: 200, cy: 200, r: 9, class: 'd-eixo' }, d);
@@ -105,7 +105,7 @@
   function girar() {
     var p = Math.max(est.passo, 0);
     ponteiro.style.transform = 'rotate(' + (volta * 360 + p * 30) + 'deg)';
-    seg.style.transform = 'rotate(' + (volta * 360 + (p * 30) + 180) + 'deg)';
+    seg.style.transform = 'rotate(' + (volta * 360 + (p * 30) + 120) + 'deg)';
     marcas.forEach(function (m, i) { m.classList.toggle('atual', i === est.passo); m.classList.toggle('feito', i < est.passo); });
   }
 

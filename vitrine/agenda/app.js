@@ -201,7 +201,7 @@
     }
     var outra = E.consultas.find(function (c) { return c.status !== 'cancelada' && c.data === sel.dia && normal(c.paciente) === normal(nome) && sel.ini < c.ini + c.dur && c.ini < sel.ini + dur; });
     if (outra) { erro.textContent = nome + ' já tem consulta às ' + hhmm(outra.ini) + ' nesse dia, com ' + prof(outra.prof).nome + '. Escolha outro horário.'; return; }
-    var c = { id: novoId(), prof: sel.prof, data: sel.dia, ini: sel.ini, dur: dur, paciente: nome, status: 'marcada', codigo: 'IPE-' + Math.random().toString(36).slice(2, 6).toUpperCase(), minha: true };
+    var c = { id: novoId(), prof: sel.prof, data: sel.dia, ini: sel.ini, dur: dur, paciente: nome, status: 'marcada', codigo: 'IPE-' + Array.prototype.map.call(crypto.getRandomValues(new Uint8Array(4)), function (b) { return 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789'[b % 32]; }).join(''), minha: true };
     E.consultas.push(c);
     gravar();
     ultimo = c;
