@@ -1,6 +1,7 @@
 /* Página de pagamento do cliente. O link traz só um código aleatório (?c=...).
    O valor, a referência e a situação vêm do meu servidor de cobranças; nada disso pode ser mudado pelo link.
-   Com a resposta, gero aqui no navegador o QR Code e o Pix copia e cola. */
+   Com a resposta, gero aqui no navegador o QR Code e o Pix copia e cola.
+   Com o Pix automático ligado, o código vem do Mercado Pago e a página confere sozinha quando o pagamento chega. */
 (function () {
   'use strict';
   var API = 'https://cobrancas.contato-aea.workers.dev';
@@ -30,15 +31,50 @@
     svg.appendChild(caminho);
     eQr.textContent = ''; eQr.appendChild(svg);
   }
-  function mostrarCobranca(x) {
+  function modoAutomatico(sim) {
+    var i, a;
+    a = document.querySelectorAll('.so-manual'); for (i = 0; i < a.length; i++) a[i].hidden = sim;
+    a = document.querySelectorAll('.so-auto'); for (i = 0; i < a.length; i++) a[i].hidden = !sim;
+    $('intro-manual').hidden = sim; $('intro-auto').hidden = !sim;
+  }
+  /* Pix automático: peço ao meu servidor um Pix do Mercado Pago para esta cobrança. Se falhar, uso o Pix de sempre. */
+  async function pixAutomatico() {
+    try {
+      var r = await fetch(API + '/api/c/' + encodeURIComponent(codigoUrl) + '/pix', { method: 'POST', credentials: 'omit', cache: 'no-store', referrerPolicy: 'no-referrer' });
+      if (!r.ok) return null;
+      var j = await r.json();
+      return j && typeof j.qr_code === 'string' && /^0002[\x20-\x7E]{30,700}$/.test(j.qr_code) ? j : null;
+    } catch (e) { return null; }
+  }
+  var timer = null, inicio = 0;
+  function vigiar() {
+    clearTimeout(timer); inicio = inicio || Date.now();
+    var espera = Date.now() - inicio < 10 * 60 * 1000 ? 5000 : 15000;
+    if (Date.now() - inicio > 60 * 60 * 1000) return;
+    timer = setTimeout(async function () {
+      try {
+        var r = await fetch(API + '/api/c/' + encodeURIComponent(codigoUrl), { credentials: 'omit', cache: 'no-store', referrerPolicy: 'no-referrer' });
+        var x = r.ok ? await r.json() : null;
+        if (x && x.situacao === 'paga') { clearTimeout(timer); return estado('Pagamento confirmado', 'Recebi o seu pagamento' + (x.referencia ? ' do orçamento ' + P.limparRef(x.referencia) : '') + '. Obrigado! Vou seguir com a próxima etapa e te aviso por e-mail ou WhatsApp.'); }
+        if (x && x.situacao === 'vencida') { clearTimeout(timer); return estado('Este link venceu', 'Me escreva para eu enviar um link novo para esta etapa.'); }
+      } catch (e) { /* tento de novo no próximo ciclo */ }
+      vigiar();
+    }, espera);
+  }
+  async function mostrarCobranca(x) {
     var ref = P.limparRef(x.referencia);
     var codigo = P.payload(x.valor_centavos / 100, ref);
+    var auto = x.pix_automatico === true ? await pixAutomatico() : null;
+    if (auto) codigo = auto.qr_code;
+    modoAutomatico(Boolean(auto));
     $('mostra-valor').textContent = P.reais(x.valor_centavos / 100);
     $('mostra-ref').textContent = ref || 'sem referência';
     $('mostra-etapa').textContent = x.etapa || 'sem etapa';
     eCod.value = codigo;
     desenharQr(codigo, 'QR Code Pix de ' + P.reais(x.valor_centavos / 100) + (ref ? ', referência ' + ref : ''));
     $('carregando').hidden = true; $('estado').hidden = true; $('etapa').hidden = false;
+    clearTimeout(timer); inicio = 0;
+    if (auto) vigiar();
   }
   async function carregar() {
     if (!/^[A-Za-z0-9_-]{22}$/.test(codigoUrl)) return estado('Este link de pagamento não é válido', 'Abra o link que enviei depois que você aprovou o orçamento, ou me escreva pedindo o link da etapa.');
@@ -54,7 +90,7 @@
     if (x.situacao === 'paga') return estado('Esta etapa já foi paga', 'Recebi o pagamento' + (x.referencia ? ' do orçamento ' + P.limparRef(x.referencia) : '') + '. Não pague de novo. Se tiver dúvida, me escreva.');
     if (x.situacao === 'vencida') return estado('Este link venceu', 'Me escreva para eu enviar um link novo para esta etapa.');
     if (x.situacao !== 'pendente' || !Number.isInteger(x.valor_centavos) || x.valor_centavos < 1 || x.valor_centavos > 99999999) return estado('Não consegui buscar a cobrança', 'Me escreva para conferirmos o pagamento.');
-    mostrarCobranca(x);
+    await mostrarCobranca(x);
   }
   $('tentar').addEventListener('click', carregar);
   eCopiar.addEventListener('click', function () {

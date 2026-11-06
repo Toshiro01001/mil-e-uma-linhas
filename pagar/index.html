@@ -10,7 +10,7 @@
 <meta name="description" content="Página de pagamento por Pix das etapas de um orçamento aprovado com a Mil e Uma Linhas!">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="preload" href="/fonts/jetbrains-400.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="pagar.css?v=20261106c">
+<link rel="stylesheet" href="pagar.css?v=20261106d">
 </head>
 <body>
 <header class="topo">
@@ -30,7 +30,7 @@
   </section>
 
   <div id="etapa" hidden>
-    <p class="intro">O valor abaixo vem do meu sistema de cobranças, ligado ao seu orçamento aprovado. O link não carrega o valor, então ninguém consegue mudá-lo. O código Pix é gerado aqui no seu navegador.</p>
+    <p class="intro">O valor abaixo vem do meu sistema de cobranças, ligado ao seu orçamento aprovado. O link não carrega o valor, então ninguém consegue mudá-lo. <span id="intro-manual">O código Pix é gerado aqui no seu navegador.</span><span id="intro-auto" hidden>O código Pix é gerado pelo Mercado Pago para esta cobrança, e esta página avisa quando o pagamento chegar.</span></p>
     <div class="grade">
       <section class="cartao" aria-labelledby="t-dados">
         <h2 id="t-dados">1. Confira a etapa</h2>
@@ -39,7 +39,7 @@
           <dt>Referência</dt><dd id="mostra-ref"></dd>
           <dt>Etapa</dt><dd id="mostra-etapa"></dd>
           <dt>Recebedor</dt><dd>Rodrigo de Sousa Terroso Junior</dd>
-          <dt>Chave Pix (e-mail)</dt><dd>contato@mileumalinhas.com.br</dd>
+          <dt class="so-manual">Chave Pix (e-mail)</dt><dd class="so-manual">contato@mileumalinhas.com.br</dd>
           <dt>Instituição</dt><dd>Mercado Pago</dd>
         </dl>
         <p class="ajuda">Se o valor ou a referência não batem com o orçamento que você aprovou, não pague e me escreva.</p>
@@ -63,7 +63,8 @@
         <li><b>No celular:</b> toque em Copiar código Pix, abra o app do seu banco, entre em Pix e escolha Pix copia e cola.</li>
         <li><b>No computador:</b> abra o app do banco no celular, entre em Pix, escolha Ler QR Code e aponte para a imagem.</li>
         <li><b>Antes de confirmar:</b> confira se o recebedor é Rodrigo de Sousa Terroso Junior, no Mercado Pago, e se o valor é o mesmo desta página. Se algo for diferente, não confirme e me escreva.</li>
-        <li><b>Depois de pagar:</b> envie o comprovante para <a href="mailto:contato@mileumalinhas.com.br">contato@mileumalinhas.com.br</a> com a referência do orçamento.</li>
+        <li class="so-manual"><b>Depois de pagar:</b> envie o comprovante para <a href="mailto:contato@mileumalinhas.com.br">contato@mileumalinhas.com.br</a> com a referência do orçamento.</li>
+        <li class="so-auto" hidden><b>Depois de pagar:</b> deixe esta página aberta. Em poucos segundos ela mostra que o pagamento foi confirmado. Se não confirmar em alguns minutos, envie o comprovante para <a href="mailto:contato@mileumalinhas.com.br">contato@mileumalinhas.com.br</a> com a referência do orçamento.</li>
       </ol>
     </section>
   </div>
@@ -71,8 +72,8 @@
 <footer class="rodape">
   <p>Mil e Uma Linhas! · Rodrigo Terroso Junior, Cuiabá, MT · <a href="/">voltar ao site</a></p>
 </footer>
-<script src="qrcode.min.js?v=20261106c"></script>
-<script src="pix-core.js?v=20261106c"></script>
-<script src="pix.js?v=20261106c"></script>
+<script src="qrcode.min.js?v=20261106d"></script>
+<script src="pix-core.js?v=20261106d"></script>
+<script src="pix.js?v=20261106d"></script>
 </body>
 </html>
