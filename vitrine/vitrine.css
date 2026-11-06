@@ -1,0 +1,31 @@
+@font-face{font-family:Atkinson;src:url(agenda/fontes/atkinson-hyperlegible-latin-700-normal.woff2) format("woff2");font-weight:700;font-display:swap}
+@font-face{font-family:Atkinson;src:url(agenda/fontes/atkinson-hyperlegible-latin-400-normal.woff2) format("woff2");font-weight:400;font-display:swap}
+@font-face{font-family:Bowlby;src:url(cardapio/fontes/bowlby-one-latin-400-normal.woff2) format("woff2");font-display:swap}
+@font-face{font-family:Archivo;src:url(funil/fontes/archivo-latin-wdth-normal.woff2) format("woff2");font-weight:100 900;font-stretch:62% 125%;font-display:swap}
+@font-face{font-family:Plex;src:url(trafego/fontes/ibm-plex-sans-latin-400-normal.woff2) format("woff2");font-weight:400;font-display:swap}
+*{box-sizing:border-box}
+body{margin:0;background:#fff;color:#14141c;font:400 1.0625rem/1.5 Atkinson,system-ui,sans-serif;overflow-wrap:break-word}
+h1,h2{margin:0;line-height:1.05}
+.v-topo{padding:clamp(1.4rem,4vw,3rem) clamp(1rem,4vw,3rem)}
+.v-topo h1{font-size:clamp(2rem,5.4vw,3.8rem);max-width:17ch}
+.v-topo p{max-width:62ch;margin:.8rem 0 0}
+.v-topo a{color:#14141c;display:inline-block;padding:.3rem 0}
+:focus-visible{outline:3px solid #14141c;outline-offset:2px}
+main{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}
+.v-item{display:flex;flex-direction:column;gap:.7rem;padding:clamp(1.4rem,4vw,3rem);min-height:clamp(240px,34vw,420px);text-decoration:none;color:inherit}
+.v-item h2{font-size:clamp(2rem,5vw,4.2rem);font-weight:700}
+.o-que{margin:0;max-width:46ch;font-size:1.1rem}
+.abrir{margin-top:auto;font-weight:700;text-decoration:underline;text-underline-offset:4px}
+.v-item:hover .abrir{text-decoration-thickness:3px}
+.v-item:focus-visible{outline-offset:-6px;outline-color:currentColor}
+.agenda{background:#5a2a8c;color:#fff;font-family:Atkinson,system-ui,sans-serif}
+.cardapio{background:#f6bd16;color:#24140a}
+.cardapio h2{font-family:Bowlby,sans-serif;font-weight:400}
+.funil{background:#1238b8;color:#fff;font-family:Archivo,system-ui,sans-serif}
+.funil h2{font-stretch:125%;font-weight:900;letter-spacing:-.02em}
+.trafego{background:#20352a;color:#fff;font-family:Plex,system-ui,sans-serif}
+.trafego h2{font-weight:400}
+.v-rodape{padding:1rem clamp(1rem,4vw,3rem)}
+.v-rodape p{margin:0}
+.v-rodape a{color:#14141c;display:inline-block;padding:.3rem 0}
+@media (max-width:720px){main{grid-template-columns:minmax(0,1fr)}.v-item{min-height:0}.abrir{padding-top:.6rem}}

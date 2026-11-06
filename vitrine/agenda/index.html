@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'none'; base-uri 'none'; form-action 'none'">
+<title>Clínica Ipê de Agosto, agendamento (demonstração)</title>
+<meta name="description" content="Demonstração de site e agendamento para clínica. Empresa e dados fictícios.">
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="estilo.css">
+<script src="app.js" defer></script>
+</head>
+<body>
+<div class="faixa">
+  <p>Sistema de demonstração. Empresa e dados fictícios.</p>
+  <button type="button" id="restaurar">Restaurar dados de exemplo</button>
+</div>
+<header class="topo">
+  <a class="marca" href="#inicio">
+    <svg viewBox="0 0 40 40" width="30" height="30" aria-hidden="true"><g fill="#ffc93c"><circle cx="20" cy="9" r="8"/><circle cx="30.5" cy="16.6" r="8"/><circle cx="26.5" cy="29" r="8"/><circle cx="13.5" cy="29" r="8"/><circle cx="9.5" cy="16.6" r="8"/></g><circle cx="20" cy="20" r="4.5" fill="#22163b"/></svg>
+    Clínica Ipê de Agosto
+  </a>
+  <nav aria-label="Seções">
+    <a href="#agendar">Agendar</a>
+    <a href="#consultas">Minhas consultas</a>
+    <a href="#recepcao">Recepção</a>
+    <a href="#como">Como isto funciona</a>
+  </nav>
+</header>
+<main id="inicio">
+  <div id="vista-paciente">
+    <section class="abertura">
+      <div>
+        <h1>Sua consulta, marcada em quatro escolhas.</h1>
+        <p>Especialidade, profissional, dia e horário. A agenda só oferece o que está livre, e o que você marca aparece na mesma hora para a recepção.</p>
+        <p class="endereco">Rua Inventada das Flores, 100, Cuiabá. Segunda a sábado, das 8h às 18h. Endereço fictício.</p>
+      </div>
+      <svg class="flor" viewBox="0 0 200 200" aria-hidden="true"><g fill="#ffc93c"><ellipse cx="100" cy="48" rx="38" ry="46"/><ellipse cx="100" cy="48" rx="38" ry="46" transform="rotate(72 100 100)"/><ellipse cx="100" cy="48" rx="38" ry="46" transform="rotate(144 100 100)"/><ellipse cx="100" cy="48" rx="38" ry="46" transform="rotate(216 100 100)"/><ellipse cx="100" cy="48" rx="38" ry="46" transform="rotate(288 100 100)"/></g><circle cx="100" cy="100" r="19" fill="#5a2a8c"/></svg>
+    </section>
+
+    <section id="agendar" class="agendar" aria-labelledby="t-agendar">
+      <h2 id="t-agendar">Marcar consulta</h2>
+      <div class="agendar-grade">
+        <div class="passos">
+          <section class="passo" aria-labelledby="p1"><h3 id="p1"><span class="n">1</span>Especialidade</h3><div id="lista-esp" class="op-esp"></div></section>
+          <section class="passo" aria-labelledby="p2"><h3 id="p2"><span class="n">2</span>Profissional</h3><div id="lista-prof" class="op-prof"></div></section>
+          <section class="passo" aria-labelledby="p3"><h3 id="p3"><span class="n">3</span>Dia</h3><div id="lista-dia" class="op-dia"></div></section>
+          <section class="passo" aria-labelledby="p4"><h3 id="p4"><span class="n">4</span>Horário</h3><div id="lista-hora"></div></section>
+        </div>
+        <aside class="ficha" aria-labelledby="t-ficha">
+          <h3 id="t-ficha">Sua ficha</h3>
+          <dl id="resumo"></dl>
+          <form id="form-confirmar" novalidate>
+            <label for="paciente">Nome do paciente</label>
+            <input id="paciente" name="paciente" autocomplete="off" maxlength="60">
+            <p class="ajuda">Pode inventar. Nada sai deste navegador.</p>
+            <p id="erro" class="erro" role="alert"></p>
+            <button type="submit" class="primario" id="confirmar">Confirmar consulta</button>
+          </form>
+          <div id="comprovante" class="comprovante" tabindex="-1" hidden></div>
+        </aside>
+      </div>
+    </section>
+
+    <section id="consultas" class="consultas" aria-labelledby="t-consultas">
+      <h2 id="t-consultas">Minhas consultas</h2>
+      <div id="lista-minhas"></div>
+    </section>
+  </div>
+
+  <section id="recepcao" class="recepcao" aria-labelledby="t-recepcao" hidden>
+    <h2 id="t-recepcao">Recepção</h2>
+    <p class="sub">Na versão real, esta tela pediria login. Aqui ela usa os mesmos dados da tela do paciente, mesmo em outra aba.</p>
+    <div class="rec-barra">
+      <button type="button" id="dia-ant" aria-label="Dia anterior">&#8249;</button>
+      <label for="rec-data" class="so-leitor">Dia da agenda</label>
+      <input type="date" id="rec-data">
+      <button type="button" id="dia-prox" aria-label="Próximo dia">&#8250;</button>
+      <button type="button" id="dia-hoje">Hoje</button>
+      <p id="rec-resumo" aria-live="polite"></p>
+    </div>
+    <div class="rec-grade">
+      <div id="rec-raias" class="raias"></div>
+      <form id="form-bloqueio" class="bloqueio" novalidate>
+        <h3>Bloquear horários</h3>
+        <label for="b-prof">Profissional</label><select id="b-prof"></select>
+        <div class="dupla">
+          <div><label for="b-ini">De</label><select id="b-ini"></select></div>
+          <div><label for="b-fim">Até</label><select id="b-fim"></select></div>
+        </div>
+        <label for="b-motivo">Motivo</label><input id="b-motivo" maxlength="50" autocomplete="off">
+        <p id="b-erro" class="erro" role="alert"></p>
+        <button type="submit" class="primario">Bloquear neste dia</button>
+      </form>
+    </div>
+  </section>
+
+  <section id="como" class="como" aria-labelledby="t-como">
+    <h2 id="t-como">Como isto funciona</h2>
+    <div class="como-col">
+      <div>
+        <h3>O que acontece aqui</h3>
+        <p>Cada profissional tem dias, turnos e duração de consulta escritos em uma lista. O sistema calcula os horários e, antes de confirmar, lê a agenda de novo para garantir que ninguém pegou a vaga enquanto você escolhia. Tudo fica guardado só neste navegador.</p>
+      </div>
+      <div>
+        <h3>O que dá para adaptar</h3>
+        <p>Especialidades, profissionais, durações, turnos, textos, cores, regras de antecedência e os dados que a ficha pede.</p>
+      </div>
+      <div>
+        <h3>O que a versão real precisaria a mais</h3>
+        <p>Servidor e banco de dados compartilhados entre todos os aparelhos, login da recepção, lembretes por e-mail ou WhatsApp, cuidados de privacidade com dados de saúde conforme a LGPD e cópias de segurança.</p>
+      </div>
+    </div>
+  </section>
+</main>
+<footer class="rodape">
+  <p>Demonstração feita por <a href="https://mileumalinhas.com.br/">Mil e Uma Linhas!</a></p>
+  <p><a href="../index.html">Ver as outras demonstrações</a></p>
+</footer>
+<p id="aviso" class="so-leitor" aria-live="polite"></p>
+</body>
+</html>

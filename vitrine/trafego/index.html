@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'none'; base-uri 'none'; form-action 'none'">
+<title>Móveis Cerrado Alto, painel de anúncios (demonstração)</title>
+<meta name="description" content="Demonstração de painel de tráfego pago com dados simulados. Empresa e dados fictícios.">
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="estilo.css">
+<script src="app.js" defer></script>
+</head>
+<body>
+<div class="faixa">
+  <p>Sistema de demonstração. Empresa e dados fictícios.</p>
+  <button type="button" id="restaurar">Restaurar dados de exemplo</button>
+</div>
+<header class="cab">
+  <p class="dono">Móveis Cerrado Alto, painel de anúncios</p>
+  <h1 id="frase">Carregando o painel.</h1>
+  <p class="simulado">Todos os números são simulados por uma fórmula. Nenhum vem de conta real de anúncios.</p>
+  <div class="filtros" role="group" aria-label="Período">
+    <span class="f-rot">Período</span>
+    <div id="periodos" class="periodos"></div>
+    <div class="datas">
+      <label for="de">De</label><input type="date" id="de">
+      <label for="ate">até</label><input type="date" id="ate">
+    </div>
+    <p id="erro-data" class="erro" role="alert"></p>
+  </div>
+</header>
+<main>
+  <dl id="kpis" class="kpis"></dl>
+  <section class="campanhas-sel" aria-labelledby="t-camp">
+    <h2 id="t-camp" class="leve">Campanhas no painel</h2>
+    <div id="legenda" class="legenda" role="group" aria-labelledby="t-camp"></div>
+  </section>
+  <div class="graficos">
+    <section class="folha larga" aria-labelledby="t-linha">
+      <div class="folha-topo">
+        <div><h2 id="t-linha"></h2><p class="sub">Dados simulados. Passe o cursor, toque, ou foque e use as setas.</p></div>
+        <div><label for="metrica">Mostrar</label>
+        <select id="metrica"><option value="gasto">Gasto</option><option value="receita">Receita</option><option value="cliques">Cliques</option><option value="conv">Vendas</option></select></div>
+      </div>
+      <div id="g-linha" class="grafico"></div>
+    </section>
+    <section class="folha" aria-labelledby="t-roas">
+      <h2 id="t-roas">ROAS por campanha</h2>
+      <p class="sub">Reais de receita para cada real gasto. Abaixo de 1, a campanha gasta mais do que traz. Dados simulados.</p>
+      <div id="g-roas" class="grafico"></div>
+    </section>
+    <section class="folha" aria-labelledby="t-cpa">
+      <h2 id="t-cpa">CPA por campanha</h2>
+      <p class="sub">Quanto custa, em média, cada venda. Quanto menor, melhor. Dados simulados.</p>
+      <div id="g-cpa" class="grafico"></div>
+    </section>
+  </div>
+  <section class="folha" aria-labelledby="t-tab">
+    <h2 id="t-tab">Campanha por campanha</h2>
+    <p class="sub">Clique no título de uma coluna para ordenar. Dados simulados.</p>
+    <div class="tab-rola" tabindex="0" role="region" aria-labelledby="t-tab"><table id="tabela"></table></div>
+  </section>
+  <section class="calc" id="calc" aria-labelledby="t-calc">
+    <div class="calc-txt">
+      <h2 id="t-calc">Calculadora de verba</h2>
+      <p>Mude os números para estimar o que uma verba mensal poderia trazer. É uma conta de cabeça em forma de página, não uma promessa de resultado.</p>
+      <button type="button" id="usar-medias" class="botao">Usar as médias do período</button>
+    </div>
+    <form id="form-calc" class="calc-campos" novalidate>
+      <div><label for="c-verba">Verba mensal (R$)</label><input id="c-verba" type="number" min="1" step="50" inputmode="decimal"></div>
+      <div><label for="c-cpc">CPC esperado (R$)</label><input id="c-cpc" type="number" min="0.01" step="0.05" inputmode="decimal"></div>
+      <div><label for="c-tx">Taxa de conversão (%)</label><input id="c-tx" type="number" min="0.01" step="0.05" inputmode="decimal"></div>
+      <div><label for="c-ticket">Valor médio da venda (R$)</label><input id="c-ticket" type="number" min="1" step="10" inputmode="decimal"></div>
+      <div><label for="c-meta">Meta de vendas por mês</label><input id="c-meta" type="number" min="1" step="1" inputmode="numeric"></div>
+    </form>
+    <div class="calc-res">
+      <p id="c-erro" class="erro" role="alert"></p>
+      <dl id="c-res" aria-live="polite"></dl>
+    </div>
+  </section>
+  <section id="como" class="como" aria-labelledby="t-como">
+    <h2 id="t-como">Como isto funciona</h2>
+    <div class="como-col">
+      <div><h3>O que acontece aqui</h3><p>Uma fórmula gera 180 dias de números por campanha, sempre iguais para a mesma data. O painel soma o período escolhido e calcula CPC (gasto dividido por cliques), CPA (gasto dividido por vendas) e ROAS (receita dividida por gasto). Os gráficos são desenhados em SVG, sem biblioteca. Suas escolhas ficam guardadas neste navegador.</p></div>
+      <div><h3>O que dá para adaptar</h3><p>Campanhas, métricas, períodos, gráficos, faixas de alerta, marca do cliente e a fórmula da calculadora.</p></div>
+      <div><h3>O que a versão real precisaria a mais</h3><p>Conexão autorizada com as plataformas de anúncios e com o sistema de vendas, um servidor que busque e guarde os dados, login por cliente e uma regra combinada de como cada venda é atribuída a uma campanha.</p></div>
+    </div>
+  </section>
+</main>
+<footer class="rodape">
+  <p>Demonstração feita por <a href="https://mileumalinhas.com.br/">Mil e Uma Linhas!</a></p>
+  <p><a href="../index.html">Ver as outras demonstrações</a></p>
+</footer>
+<div id="dica" class="dica" hidden></div>
+<p id="aviso" class="so-leitor" aria-live="polite"></p>
+</body>
+</html>

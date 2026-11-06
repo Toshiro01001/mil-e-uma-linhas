@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'none'; base-uri 'none'; form-action 'none'">
+<title>Sol a Pino, atendimento e funil (demonstração)</title>
+<meta name="description" content="Demonstração de atendimento automático por regras com quadro de funil. Empresa e dados fictícios.">
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="estilo.css">
+<script src="app.js" defer></script>
+</head>
+<body>
+<div class="faixa">
+  <p>Sistema de demonstração. Empresa e dados fictícios.</p>
+  <button type="button" id="restaurar">Restaurar dados de exemplo</button>
+</div>
+<header class="capa">
+  <h1>Sol a Pino</h1>
+  <p>Energia solar em Cuiabá e região. Quem chama é atendido na hora por regras escritas pela equipe, e cada conversa vira um contato no quadro de vendas.</p>
+  <nav aria-label="Seções"><a href="#conversa">Conversa</a><a href="#quadro">Quadro de vendas</a><a href="#relatorio">Relatório</a><a href="#como">Como isto funciona</a></nav>
+</header>
+<main>
+  <section id="conversa" class="conversa" aria-labelledby="t-conv">
+    <div class="chat">
+      <div class="chat-topo">
+        <svg id="arco" viewBox="0 0 320 96" role="img" aria-labelledby="progresso-txt">
+          <path d="M10 90 A150 80 0 0 1 310 90" fill="none" stroke="#b7c3e8" stroke-width="3"/>
+          <path id="arco-feito" d="" fill="none" stroke="#ffb000" stroke-width="5" stroke-linecap="round"/>
+          <circle id="sol" cx="10" cy="90" r="11" fill="#ffb000" stroke="#0e1730" stroke-width="2"/>
+        </svg>
+        <h2 id="t-conv">Fale com a Sol a Pino</h2>
+        <p id="progresso-txt" class="prog"></p>
+      </div>
+      <div id="mensagens" class="mensagens" role="log" aria-live="polite" aria-label="Conversa" tabindex="0"></div>
+      <div id="entrada" class="entrada"></div>
+    </div>
+    <aside class="regras" aria-labelledby="t-regras">
+      <h2 id="t-regras">O que as regras estão lendo</h2>
+      <p class="nota">Sem inteligência artificial. Cada resposta soma pontos em uma tabela, e a pontuação decide o próximo passo.</p>
+      <p class="pontos"><span id="pontos">0</span> pontos</p>
+      <p id="temperatura" class="temp-grande"></p>
+      <ol id="log" class="log"></ol>
+    </aside>
+  </section>
+
+  <section id="quadro" class="quadro-sec" aria-labelledby="t-quadro">
+    <h2 id="t-quadro">Quadro de vendas</h2>
+    <p class="nota">Arraste pela alça com o mouse ou o dedo. No teclado, foque a alça e use as setas para a esquerda e a direita. Enter abre os detalhes.</p>
+    <div id="quadro-colunas" class="quadro"></div>
+  </section>
+
+  <section id="relatorio" class="relatorio" aria-labelledby="t-rel">
+    <h2 id="t-rel">Relatório de conversão</h2>
+    <p class="nota">Calculado na hora a partir dos contatos fictícios do quadro.</p>
+    <dl id="numeros" class="numeros"></dl>
+    <div id="funil-barras" class="barras"></div>
+  </section>
+
+  <section id="como" class="como" aria-labelledby="t-como">
+    <h2 id="t-como">Como isto funciona</h2>
+    <div class="como-col">
+      <div><h3>O que acontece aqui</h3><p>A conversa é um roteiro: cada resposta aponta para a próxima pergunta e soma pontos. No fim, a pontuação escolhe a coluna, o valor estimado e o próximo passo do contato. O quadro e o relatório ficam guardados só neste navegador.</p></div>
+      <div><h3>O que dá para adaptar</h3><p>Perguntas, caminhos da conversa, palavras-chave, pontuação, colunas do funil, fórmula do valor e os próximos passos.</p></div>
+      <div><h3>O que a versão real precisaria a mais</h3><p>Ligação com WhatsApp ou Instagram pelas plataformas oficiais, servidor com banco de dados, login da equipe, aviso ao vendedor, consentimento conforme a LGPD e integração com o seu cadastro de clientes.</p></div>
+    </div>
+  </section>
+</main>
+<footer class="rodape">
+  <p>Demonstração feita por <a href="https://mileumalinhas.com.br/">Mil e Uma Linhas!</a></p>
+  <p><a href="../index.html">Ver as outras demonstrações</a></p>
+</footer>
+<dialog id="detalhe" aria-labelledby="d-nome">
+  <form id="form-detalhe" novalidate>
+    <h2 id="d-nome"></h2>
+    <p id="d-resumo"></p>
+    <label for="d-etapa">Coluna</label><select id="d-etapa"></select>
+    <label for="d-valor">Valor estimado em reais</label><input id="d-valor" type="number" min="0" step="100" inputmode="numeric">
+    <label for="d-passo">Próximo passo</label><input id="d-passo" maxlength="80" autocomplete="off">
+    <p id="d-erro" class="erro" role="alert"></p>
+    <div class="d-acoes">
+      <button type="button" class="botao-claro" id="d-fechar">Fechar sem salvar</button>
+      <button type="submit" class="botao-cheio">Salvar contato</button>
+    </div>
+  </form>
+</dialog>
+<p id="aviso" class="so-leitor" aria-live="polite"></p>
+</body>
+</html>

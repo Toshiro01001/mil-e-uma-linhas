@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'none'; base-uri 'none'; form-action 'none'">
+<title>Pacu Gordo, cardápio e pedidos (demonstração)</title>
+<meta name="description" content="Demonstração de cardápio digital com pedido e tela da cozinha. Empresa e dados fictícios.">
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="estilo.css">
+<script src="comum.js" defer></script>
+<script src="cliente.js" defer></script>
+</head>
+<body class="salao">
+<div class="faixa">
+  <p>Sistema de demonstração. Empresa e dados fictícios.</p>
+  <button type="button" id="restaurar">Restaurar dados de exemplo</button>
+</div>
+<div class="toldo" aria-hidden="true"></div>
+<header class="placa">
+  <div>
+    <h1>Pacu Gordo</h1>
+    <p>Boteco de beira de rio em Cuiabá. Peça da mesa, a cozinha recebe na hora.</p>
+    <a class="ir-cozinha" href="cozinha.html" target="_blank" rel="noopener">Abrir a tela da cozinha em outra aba</a>
+  </div>
+  <svg class="peixe" viewBox="0 0 260 170" aria-hidden="true">
+    <path d="M196 85 L256 28 Q244 85 256 142 Z" fill="#b92d14"/>
+    <path d="M100 18 Q128 -6 164 26 L136 40 Z" fill="#b92d14"/>
+    <path d="M112 150 Q134 172 152 142 Z" fill="#b92d14"/>
+    <ellipse cx="108" cy="85" rx="104" ry="72" fill="#24140a"/>
+    <path d="M150 34 Q172 85 150 136" fill="none" stroke="#f6bd16" stroke-width="5" stroke-linecap="round"/>
+    <path d="M124 26 Q146 85 124 144" fill="none" stroke="#f6bd16" stroke-width="5" stroke-linecap="round"/>
+    <circle cx="52" cy="66" r="16" fill="#fff6dc"/><circle cx="48" cy="66" r="7" fill="#24140a"/>
+    <path d="M10 98 Q30 112 46 100" fill="none" stroke="#fff6dc" stroke-width="5" stroke-linecap="round"/>
+  </svg>
+</header>
+<nav class="categorias" id="categorias" aria-label="Categorias do cardápio"></nav>
+<main class="salao-grade">
+  <div id="menu" class="menu"></div>
+  <aside id="pedido" class="pedido" aria-labelledby="t-pedido">
+    <h2 id="t-pedido">Seu pedido</h2>
+    <div id="carrinho"></div>
+    <form id="form-pedido" novalidate>
+      <label for="mesa">Mesa</label>
+      <select id="mesa"></select>
+      <label for="nome">Nome para chamar (opcional)</label>
+      <input id="nome" maxlength="30" autocomplete="off">
+      <p id="erro" class="erro" role="alert"></p>
+      <button type="submit" class="botao-tomate" id="enviar">Enviar para a cozinha</button>
+      <p class="nota">Preços inventados. Nenhum pagamento acontece aqui.</p>
+    </form>
+    <h2 class="acomp">Acompanhar</h2>
+    <div id="acompanhar" aria-live="polite"></div>
+  </aside>
+</main>
+<a class="barra-pedido" id="barra" href="#pedido" hidden></a>
+<section id="como" class="como" aria-labelledby="t-como">
+  <h2 id="t-como">Como isto funciona</h2>
+  <div class="como-col">
+    <div><h3>O que acontece aqui</h3><p>O cardápio é uma lista de pratos com preços e adicionais. Ao enviar, o pedido é salvo neste navegador e avisado à tela da cozinha por um canal entre abas chamado BroadcastChannel. Quando a cozinha muda a etapa, esta página acompanha sozinha.</p></div>
+    <div><h3>O que dá para adaptar</h3><p>Pratos, categorias, adicionais, preços, número de mesas, etapas da cozinha, textos e aparência.</p></div>
+    <div><h3>O que a versão real precisaria a mais</h3><p>Servidor para ligar aparelhos diferentes, já que este canal só funciona no mesmo navegador, além de login da equipe, impressora de comanda, pagamento online e controle de estoque.</p></div>
+  </div>
+</section>
+<footer class="rodape">
+  <p>Demonstração feita por <a href="https://mileumalinhas.com.br/">Mil e Uma Linhas!</a></p>
+  <p><a href="../index.html">Ver as outras demonstrações</a></p>
+</footer>
+<dialog id="prato" aria-labelledby="d-nome">
+  <form id="form-prato" novalidate>
+    <h2 id="d-nome"></h2>
+    <p id="d-desc"></p>
+    <div class="qtd" role="group" aria-label="Quantidade">
+      <button type="button" id="d-menos" aria-label="Diminuir quantidade">-</button>
+      <output id="d-qtd" aria-live="polite">1</output>
+      <button type="button" id="d-mais" aria-label="Aumentar quantidade">+</button>
+    </div>
+    <fieldset id="d-adic"><legend>Adicionais</legend><div id="d-adic-lista"></div></fieldset>
+    <label for="d-obs">Observações</label>
+    <textarea id="d-obs" rows="2" maxlength="140" placeholder="Ex.: sem cebola, bem passado"></textarea>
+    <div class="d-acoes">
+      <button type="button" class="botao-claro" id="d-fechar">Voltar ao cardápio</button>
+      <button type="submit" class="botao-tomate" id="d-add"></button>
+    </div>
+  </form>
+</dialog>
+<p id="aviso" class="so-leitor" aria-live="polite"></p>
+</body>
+</html>

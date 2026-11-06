@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'none'; base-uri 'none'; form-action 'none'">
+<title>Pacu Gordo, cozinha (demonstração)</title>
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="estilo.css">
+<script src="comum.js" defer></script>
+<script src="cozinha.js" defer></script>
+</head>
+<body class="cozinha">
+<div class="faixa">
+  <p>Sistema de demonstração. Empresa e dados fictícios.</p>
+  <button type="button" id="restaurar">Restaurar dados de exemplo</button>
+</div>
+<header class="coz-topo">
+  <h1>Cozinha do Pacu Gordo</h1>
+  <p id="coz-resumo" aria-live="polite"></p>
+  <a href="index.html">Voltar ao cardápio</a>
+</header>
+<main id="trilhos" class="trilhos"></main>
+<section class="como" aria-labelledby="t-como">
+  <h2 id="t-como">Como isto funciona</h2>
+  <div class="como-col">
+    <div><h3>O que acontece aqui</h3><p>Cada pedido é uma comanda. Os botões movem a comanda de coluna, e a mudança é salva e avisada ao cardápio aberto em outra aba. O tempo em cada comanda conta desde que o pedido chegou.</p></div>
+    <div><h3>O que dá para adaptar</h3><p>Colunas, tempo de alerta para pedido atrasado, separação por setor, como bar e chapa, e o que aparece em cada comanda.</p></div>
+    <div><h3>O que a versão real precisaria a mais</h3><p>Servidor para receber pedidos de outros aparelhos, login da equipe, som de aviso, impressão e histórico para relatórios de vendas.</p></div>
+  </div>
+</section>
+<footer class="rodape">
+  <p>Demonstração feita por <a href="https://mileumalinhas.com.br/">Mil e Uma Linhas!</a></p>
+  <p><a href="../index.html">Ver as outras demonstrações</a></p>
+</footer>
+</body>
+</html>
