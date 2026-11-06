@@ -317,6 +317,7 @@ html.js:not([data-tema="ascii"]) .ascii-saida { background: var(--papel); color:
 .vitrine { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
 .produto { background: var(--painel); border-radius: var(--raio); padding: 18px; display: flex; flex-direction: column; align-items: flex-start; gap: 8px; }
 .produto p { margin: 0; font-size: 15.5px; line-height: 21px; }
+.produto-prazo { font-family: var(--ui); font-size: 14px !important; color: var(--cinza); }
 .produto-preco { font-family: var(--titulo); font-weight: 800; font-size: 20px !important; margin-top: auto !important; padding-top: 8px; }
 .produto .botao { width: 100%; text-align: center; }
 .sacola { position: sticky; bottom: 0; margin-top: var(--lin); background: var(--papel); color: var(--fundo); padding: 12px 16px; border-radius: var(--raio); display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; font-family: var(--ui); font-size: 15px; }
@@ -365,6 +366,10 @@ textarea { display: block; width: 100%; padding: 8px 10px; background: var(--pai
 #orc-horas-caixa output { float: right; color: var(--papel); }
 .orc-resumo { position: sticky; top: 12px; background: var(--painel); border: 1px solid var(--traco); border-radius: var(--raio); padding: 4px 18px 18px; }
 .orc-valor { font-family: var(--titulo); font-weight: 800; font-size: 24px; line-height: 28px; margin: 0 0 8px; color: var(--verde); }
+
+.lg-grupo { flex: 0 0 100%; font-family: var(--ui); font-size: 13px; line-height: 18px; color: var(--cinza); }
+.lg-grupo:not(:first-child) { margin-top: 8px; }
+.orc-dias { font-family: var(--ui); font-weight: 700; font-size: 15px; line-height: 20px; margin: 0 0 8px; }
 .orc-carrinho { list-style: none; margin: 0 0 10px; padding: 0; font-size: 14.5px; line-height: 20px; }
 .orc-carrinho li { padding: 8px 0; border-bottom: 1px solid var(--traco); }
 .orc-carrinho li b { display: block; font-family: var(--ui); font-size: 13px; }

@@ -14,7 +14,7 @@ Site estático em HTML, CSS e JavaScript puro, sem dependências, sem cookies e 
 | `js/orcamento.js` | Montador de orçamento. **Os preços ficam na lista `PEDIDOS` e as regras de linguagens em `LINGUAGENS`, no início do arquivo** |
 | `js/guia.js` | Aba que explica o que cada linguagem faz |
 | `js/demos.js` | As demonstrações. Tudo roda no navegador de quem usa |
-| `js/linguagens.js` | A mesma regra em 7 linguagens; cada programa foi executado de verdade |
+| `js/linguagens.js` | A mesma regra em 16 linguagens; cada programa foi compilado ou executado de verdade |
 | `fonts/` | Bricolage Grotesque e JetBrains Mono, servidas daqui (licença OFL) |
 
 Para rodar no computador, sirva a pasta com qualquer servidor local, como `python3 -m http.server`.

@@ -159,7 +159,7 @@
 |  [ Chamar no WhatsApp ]          |
 |                                  |
 +----------------------------------+</pre>
-        <p>Uma página que explica o que sua empresa faz e leva o cliente até você. Fica pronta em 7 dias, contados depois que você envia textos e fotos.</p>
+        <p>Uma página que explica o que sua empresa faz e leva o cliente até você. Uma página fica pronta em até 14 dias, contados depois que você envia textos e fotos. Outros projetos têm o prazo calculado no orçamento.</p>
         <ul class="check">
           <li>Funciona bem no celular</li>
           <li>Botões e formulários testados</li>
@@ -406,7 +406,7 @@ histórico
     <button role="tab" data-demo="funil" id="d-funil" aria-controls="v-funil">Simulador de funil</button>
     <button role="tab" data-demo="pagina" id="d-pagina" aria-controls="v-pagina">Monte uma página</button>
     <button role="tab" data-demo="banco" id="d-banco" aria-controls="v-banco">Banco de dados</button>
-    <button role="tab" data-demo="linguagens" id="d-linguagens" aria-controls="v-linguagens">7 linguagens</button>
+    <button role="tab" data-demo="linguagens" id="d-linguagens" aria-controls="v-linguagens">16 linguagens</button>
     <button role="tab" data-demo="ascii" id="d-ascii" aria-controls="v-ascii">Foto em ASCII</button>
   </div>
 
@@ -487,7 +487,7 @@ histórico
   </div>
 
   <div class="demo" id="v-linguagens" role="tabpanel" aria-labelledby="d-linguagens" data-demo="linguagens">
-    <p class="legenda">A mesma regra de negócio, escrita em sete linguagens: somar o pedido e dar 10% de desconto acima de R$ 100. A linguagem certa depende do projeto.</p>
+    <p class="legenda">A mesma regra de negócio, escrita em dezesseis linguagens: somar o pedido e dar 10% de desconto acima de R$ 100. A linguagem certa depende do projeto.</p>
     <div class="pilulas" id="lg-botoes" role="group" aria-label="Linguagem"></div>
     <p id="lg-uso" class="pilha" aria-live="polite"></p>
     <pre class="codigo" id="lg-codigo" tabindex="0" aria-label="Código de exemplo"></pre>
@@ -515,13 +515,13 @@ histórico
   <div class="pilulas" id="gl-areas" role="group" aria-label="Filtrar por tipo de projeto"></div>
   <p class="totais" id="gl-conta" aria-live="polite"></p>
   <div class="guia-lista" id="gl-lista"></div>
-  <p><a class="botao cheio" href="#orcamento">Continuar para o orçamento</a> <a class="botao" href="#demos/linguagens">Comparar código em 7 linguagens</a></p>
+  <p><a class="botao cheio" href="#orcamento">Continuar para o orçamento</a> <a class="botao" href="#demos/linguagens">Comparar código em 16 linguagens</a></p>
 </section>
 
 <!-- ============ orçamento ============ -->
 <section id="orcamento" class="folha" aria-labelledby="t-orcamento">
   <h2 id="t-orcamento">Monte seu orçamento</h2>
-  <p class="intro">Escolha o tipo de pedido e o plano. O preço muda conforme o que você marca. É uma estimativa: o valor final sai por escrito depois de conversarmos sobre o projeto.</p>
+  <p class="intro">Escolha o tipo de pedido e o plano. Preço e prazo mudam conforme o que você marca. É uma estimativa: os valores finais saem por escrito depois de conversarmos sobre o projeto.</p>
   <div class="orc-tipos" id="orc-tipos" role="tablist" aria-label="Tipo de pedido"></div>
   <div class="orc-grade">
     <div class="orc-monta">
@@ -537,12 +537,13 @@ histórico
         <p class="nota" id="orc-ling-conta" aria-live="polite"></p>
       </div>
       <div class="linha-form orc-opcoes">
-        <label>Prazo <select id="orc-prazo"><option value="1">Normal</option><option value="1.25">Urgente (+25%)</option></select></label>
+        <label>Urgência <select id="orc-prazo"><option value="1">Normal</option><option value="1.25">Urgente (+25%)</option></select></label>
       </div>
     </div>
     <aside class="orc-resumo" aria-label="Resumo do orçamento">
       <h3 class="h-peq">Esta estimativa</h3>
       <p class="orc-valor" id="orc-valor" aria-live="polite"></p>
+      <p class="orc-dias" id="orc-dias" aria-live="polite"></p>
       <p class="nota" id="orc-nota"></p>
       <button class="botao cheio" type="button" id="orc-add">Adicionar ao pedido</button>
       <h3 class="h-peq">Seu pedido</h3>

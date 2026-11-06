@@ -73,6 +73,7 @@ window.MUL_TEMAS = (function () {
         c.appendChild(el('h3', null, P[k].nome));
         c.appendChild(el('p', null, pl.desc));
         c.appendChild(el('p', 'produto-preco', 'A partir de ' + O.reais(pl.faixa[0]) + (cl === 'mensal' ? ' por mês' : cl === 'hora' ? ' por hora' : '')));
+        if (pl.dias) c.appendChild(el('p', 'produto-prazo', 'Prazo: ' + O.diasTxt(pl.dias)));
         var b = el('button', 'botao cheio', 'Adicionar ao pedido'); b.type = 'button';
         b.addEventListener('click', function () { O.adicionar(k); });
         c.appendChild(b);

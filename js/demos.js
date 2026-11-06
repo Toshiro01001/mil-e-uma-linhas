@@ -362,15 +362,18 @@ window.MUL_DEMOS = (function () {
     ta.value = EX[0][1]; rodar();
   }
 
-  /* ---------- a mesma regra em 7 linguagens (cada programa foi compilado e executado) ---------- */
+  /* ---------- a mesma regra em 16 linguagens (cada programa foi compilado e executado) ---------- */
   function linguagens() {
-    var L = window.MUL_LINGUAGENS, box = $('#lg-botoes');
+    var L = window.MUL_LINGUAGENS, box = $('#lg-botoes'), botoes = [], grupo = null;
     function abrir(i) {
-      Array.prototype.forEach.call(box.children, function (b, j) { b.setAttribute('aria-pressed', i === j ? 'true' : 'false'); });
-      $('#lg-uso').textContent = L[i].uso; $('#lg-codigo').textContent = L[i].codigo; $('#lg-saida').textContent = L[i].saida;
+      botoes.forEach(function (b, j) { b.setAttribute('aria-pressed', i === j ? 'true' : 'false'); });
+      $('#lg-uso').textContent = L[i].uso + (L[i].consulta ? ' Disponível sob consulta.' : '');
+      $('#lg-codigo').textContent = L[i].codigo; $('#lg-saida').textContent = L[i].saida;
     }
     L.forEach(function (l, i) {
-      var b = el('button', 'pilula', l.nome); b.type = 'button';
+      var g = l.consulta ? 'Sob consulta' : 'Principais';
+      if (g !== grupo) { grupo = g; box.appendChild(el('span', 'lg-grupo', g)); }
+      var b = el('button', 'pilula', l.nome); b.type = 'button'; botoes.push(b);
       b.addEventListener('click', function () { abrir(i); }); box.appendChild(b);
     });
     abrir(0);
