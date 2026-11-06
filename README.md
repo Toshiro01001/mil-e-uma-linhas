@@ -19,6 +19,7 @@ Site estático em HTML, CSS e JavaScript puro, sem dependências, sem cookies e 
 | `js/linguagens.js` | A mesma regra em 16 linguagens; cada programa foi compilado ou executado de verdade |
 | `vitrine/` | Sistemas de demonstração, cada um em sua pasta, com aviso e rodapé comuns em `assinatura.css` |
 | `fonts/` | Bricolage Grotesque e JetBrains Mono, servidas daqui (licença OFL) |
+| `pagar/` | Página de pagamento por Pix: gera o QR Code e o código copia e cola no navegador, no padrão BR Code do Banco Central |
 
 Para rodar no computador, sirva a pasta com qualquer servidor local, como `python3 -m http.server`.
 
@@ -29,6 +30,8 @@ Desenvolvido por Rodrigo Terroso Junior. O Claude, da Anthropic, foi usado como 
 ## Vistoria de segurança
 
 Cada alteração passa por conferência de segredos no código, política de segurança de conteúdo (CSP), tratamento de texto digitado e dependências externas. O GitHub Pages não permite definir cabeçalhos HTTP, então a CSP fica em uma etiqueta meta. As demonstrações rodam só no navegador e não enviam dados.
+
+Na página de pagamento, a chave Pix, o nome e a cidade ficam fixos no código. Do endereço da página só leio o valor e a referência do orçamento, e a referência passa por um filtro que aceita só letras e números. Assim, um link adulterado não muda para quem o dinheiro vai.
 
 ## Projetos com imagens
 
