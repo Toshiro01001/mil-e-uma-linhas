@@ -2,7 +2,9 @@
 
 Meu código, seu site. Site principal em [mileumalinhas.com.br](https://mileumalinhas.com.br).
 
-Site estático em HTML, CSS e JavaScript puro, sem dependências, sem cookies e sem nenhuma requisição a terceiros. O navegador guarda só a aparência escolhida.
+![Início do site Mil e Uma Linhas!](img/site.webp)
+
+Site estático em HTML, CSS e JavaScript puro, sem dependências, sem cookies e sem nenhuma requisição a terceiros. O navegador guarda só a aparência escolhida e, nas demonstrações, os dados de teste.
 
 | Pasta ou arquivo | Para que serve |
 |---|---|
@@ -15,6 +17,7 @@ Site estático em HTML, CSS e JavaScript puro, sem dependências, sem cookies e 
 | `js/guia.js` | Aba que explica o que cada linguagem faz |
 | `js/demos.js` | As demonstrações. Tudo roda no navegador de quem usa |
 | `js/linguagens.js` | A mesma regra em 16 linguagens; cada programa foi compilado ou executado de verdade |
+| `vitrine/` | Sistemas de demonstração, cada um em sua pasta, com aviso e rodapé comuns em `assinatura.css` |
 | `fonts/` | Bricolage Grotesque e JetBrains Mono, servidas daqui (licença OFL) |
 
 Para rodar no computador, sirva a pasta com qualquer servidor local, como `python3 -m http.server`.
