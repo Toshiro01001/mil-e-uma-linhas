@@ -90,7 +90,7 @@ window.MUL_TEMAS = (function () {
       var r = O.resumoCarrinho(); sac.textContent = '';
       if (!r.n) { sac.appendChild(el('span', null, 'Seu pedido está vazio.')); return; }
       sac.appendChild(el('span', null, r.n + (r.n === 1 ? ' item' : ' itens') + ': ' + r.txt));
-      var a = el('a', 'botao cheio', 'Revisar e enviar'); a.href = '#orcamento'; sac.appendChild(a);
+      var a = el('a', 'botao cheio', 'Revisar e enviar'); a.href = '#orcamento/finalizar'; sac.appendChild(a);
     }
     F.forEach(function (f) {
       var b = el('button', 'pilula', f[1]); b.type = 'button';

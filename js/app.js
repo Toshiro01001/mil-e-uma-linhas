@@ -42,6 +42,7 @@
     if (window.MUL_GUIA && r.aba === 'linguagens') window.MUL_GUIA.abrir(r.sub);
     if (r.aba === 'inicio' && temaAscii()) campo.mostrar(); else campo.parar();
     if (r.aba === 'contato' && temaAscii()) iniciarObra(); else pararObra();
+    if (r.aba === 'contato' && r.sub === 'dados') { var dd = document.getElementById('dados'); if (dd) setTimeout(function () { dd.setAttribute('tabindex', '-1'); dd.scrollIntoView({ block: 'start' }); dd.focus({ preventScroll: true }); }, 30); }
     numerar();
     atualizarLinha();
   }

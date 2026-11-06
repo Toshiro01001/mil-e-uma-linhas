@@ -13,7 +13,8 @@ Site estático em HTML, CSS e JavaScript puro, sem dependências, sem cookies e 
 | `js/boot.js` | Prepara as abas e impede que o site seja embutido em outro |
 | `js/app.js` | Abas, logo em ASCII, números de linha e terminal |
 | `js/temas.js` | As 5 aparências e suas capas interativas |
-| `js/orcamento.js` | Montador de orçamento. **Os preços ficam na lista `PEDIDOS` e as regras de linguagens em `LINGUAGENS`, no início do arquivo** |
+| `js/orcamento.js` | Montador de orçamento e carrinho (fica salvo no aparelho do cliente). **Os preços ficam na lista `PEDIDOS` e as regras de linguagens em `LINGUAGENS`, no início do arquivo. Mudou preço aqui? Gere de novo o catálogo do servidor de cobranças (veja o README dele)** |
+| `js/pedido.js` | Tela de finalização: confere o carrinho, pede nome, e-mail e WhatsApp, e uma descrição de 500 a 3.000 caracteres do que o cliente quer. Envia ao meu servidor; se ele estiver fora, oferece o e-mail com tudo escrito |
 | `js/guia.js` | Aba que explica o que cada linguagem faz |
 | `js/demos.js` | As demonstrações. Tudo roda no navegador de quem usa |
 | `js/linguagens.js` | A mesma regra em 16 linguagens; cada programa foi compilado ou executado de verdade |
@@ -27,11 +28,26 @@ Para rodar no computador, sirva a pasta com qualquer servidor local, como `pytho
 
 Desenvolvido por Rodrigo Terroso Junior. O Claude, da Anthropic, foi usado como ferramenta durante o desenvolvimento.
 
+## Como o cliente faz um pedido
+
+![Carrinho do orçamento](img/pedido-carrinho.webp)
+
+1. Na aba orçamento, o cliente escolhe o tipo, o plano e os adicionais e clica em **Adicionar ao pedido**. Cada item mostra valor e prazo; o total aparece na hora. Cabem até 10 itens e o carrinho fica salvo no aparelho (`localStorage`, só as escolhas, nunca dados pessoais).
+2. Em **Finalizar pedido** ele confere os itens, informa nome, e-mail e WhatsApp (todos obrigatórios) e escreve, com no mínimo 500 e no máximo 3.000 caracteres, exatamente o que quer. A tela traz perguntas para guiar o texto, e o rascunho fica só na aba aberta.
+3. Ao enviar, o navegador manda ao meu servidor apenas as **escolhas**, não os preços. O servidor refaz a conta com o mesmo catálogo, então mexer no navegador não muda o valor. Se o valor que o cliente viu for diferente do calculado, o pedido chega marcado.
+4. O cliente recebe um protocolo (`PED2611...`) para citar na conversa. O pedido aparece no meu painel de cobranças com os itens e o texto exatamente como foram enviados.
+
+<img src="img/pedido-texto-celular.webp" alt="Etapa de descrição do pedido no celular" width="300">
+
+A verificação contra robôs (Turnstile) só é carregada na tela de finalização.
+
 ## Vistoria de segurança
 
 Cada alteração passa por conferência de segredos no código, política de segurança de conteúdo (CSP), tratamento de texto digitado e dependências externas. O GitHub Pages não permite definir cabeçalhos HTTP, então a CSP fica em uma etiqueta meta. As demonstrações rodam só no navegador e não enviam dados.
 
 Na página de pagamento, a chave Pix, o nome e a cidade ficam fixos no código. O link leva só um código aleatório de 128 bits; o valor vem do servidor de cobranças, então mexer no link não muda o valor nem o recebedor. A página só conversa com esse servidor (CSP `connect-src`), sem cookies.
+
+No pedido, nome, e-mail, WhatsApp e texto do cliente vão por HTTPS direto ao meu servidor, que os cifra (AES-256-GCM) antes de gravar. A CSP agora permite só o script do Turnstile (`challenges.cloudflare.com`) além do próprio site.
 
 ## Projetos com imagens
 

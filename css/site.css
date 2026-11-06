@@ -570,3 +570,39 @@ textarea { display: block; width: 100%; padding: 8px 10px; background: var(--pai
 .proj p { margin: 0 0 10px; }
 .proj .pilha { margin-top: auto; padding-top: 2px; }
 .proj .links { margin: 0; }
+
+/* carrinho e finalização do pedido */
+.orc-conta { color: var(--verde); font-weight: 700; }
+.abas nav a[aria-current="page"] .orc-conta { color: inherit; }
+button.link { background: none; border: 0; padding: 0; color: var(--verde); text-decoration: underline; cursor: pointer; font: inherit; min-height: 24px; }
+button.link:disabled { color: var(--cinza); text-decoration: none; cursor: not-allowed; }
+.orc-outros { line-height: 28px; }
+.botao.desligado[aria-disabled="true"] { pointer-events: none; }
+.fin-grade { max-width: 760px; }
+.fin-bloco { margin-bottom: 28px; }
+.fin input[type="text"], .fin input[type="email"], .fin input[type="tel"] {
+  display: block; width: 100%; margin-top: 4px; padding: 8px 10px; background: var(--painel);
+  border: 1px solid var(--traco); border-radius: var(--raio); font-family: var(--ui); font-size: 16px; line-height: 22px; color: var(--papel);
+}
+.fin label { margin-top: 12px; }
+.fin [aria-invalid="true"] { border-color: var(--coral); }
+.fin .erro { margin: 4px 0 0; min-height: 0; }
+.fin .erro:empty { display: none; }
+.fin textarea { min-height: 260px; margin: 4px 0 6px; }
+.fin-guia { margin: 0 0 8px; padding-left: 20px; color: var(--cinza); font-size: 14.5px; line-height: 22px; }
+.fin-conta { font-family: var(--ui); font-size: 13.5px; color: var(--coral); margin: 0; }
+.fin-conta.ok { color: var(--verde); }
+.fin-aceite { display: flex; align-items: flex-start; gap: 10px; margin: 0; font-family: var(--texto); font-size: 15px; line-height: 22px; }
+.fin-aceite input { margin-top: 4px; width: 18px; height: 18px; flex: none; }
+.fin-robo { min-height: 70px; margin: 14px 0 6px; }
+.fin-enviar { min-width: 220px; min-height: 44px; }
+.fin-estado { font-family: var(--ui); font-size: 14px; margin: 10px 0 0; }
+.fin-estado.erro { color: var(--coral); }
+.fin-itens { margin-bottom: 6px; }
+.fin-ok { background: var(--painel); border: 1px solid var(--traco); border-radius: var(--raio); padding: 4px 18px 18px; max-width: 760px; }
+.fin-protocolo { font-family: var(--ui); font-size: 22px; color: var(--verde); letter-spacing: 1px; margin-right: 8px; }
+.armadilha { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+@media (max-width: 900px) {
+  .fin-enviar { width: 100%; }
+  .fin textarea { min-height: 220px; }
+}

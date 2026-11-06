@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'none'; manifest-src 'none'; media-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'; upgrade-insecure-requests">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' https://challenges.cloudflare.com; frame-src https://challenges.cloudflare.com; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src https://cobrancas.contato-aea.workers.dev; manifest-src 'none'; media-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'; upgrade-insecure-requests">
 <meta name="referrer" content="no-referrer">
 <title>Sites e sistemas em Cuiabá | Mil e Uma Linhas!</title>
 <meta name="description" content="Faço sites, sistemas e automação de vendas para empresas de Cuiabá e região, com vistoria de segurança em cada entrega. Teste as demonstrações.">
@@ -20,15 +20,16 @@
 <link rel="canonical" href="https://mileumalinhas.com.br/">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="preload" href="fonts/bricolage.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="css/site.css">
+<link rel="stylesheet" href="css/site.css?v=20261106p">
 <script src="js/boot.js"></script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"ProfessionalService","name":"Mil e Uma Linhas!","slogan":"Meu código, seu site.","url":"https://mileumalinhas.com.br/","description":"Sites, sistemas, automação de vendas e redes sociais, tráfego pago e programação freelance.","email":"contato@mileumalinhas.com.br","image":"https://mileumalinhas.com.br/og.png","address":{"@type":"PostalAddress","addressLocality":"Cuiabá","addressRegion":"MT","addressCountry":"BR"},"areaServed":"Cuiabá e região","founder":{"@type":"Person","name":"Rodrigo Terroso Junior"},"sameAs":["https://www.instagram.com/mileumalinhas/","https://www.linkedin.com/in/rodrigo-terroso-junior-9b900935b","https://github.com/Toshiro01001"]}</script>
 <script src="js/linguagens.js" defer></script>
 <script src="js/demos.js" defer></script>
-<script src="js/orcamento.js" defer></script>
+<script src="js/orcamento.js?v=20261106p" defer></script>
+<script src="js/pedido.js?v=20261106p" defer></script>
 <script src="js/guia.js" defer></script>
 <script src="js/temas.js" defer></script>
-<script src="js/app.js" defer></script>
+<script src="js/app.js?v=20261106p" defer></script>
 </head>
 <body>
 <a class="pular" href="#conteudo">Pular para o conteúdo</a>
@@ -42,7 +43,7 @@
     <a href="#projetos" data-aba="projetos"><i>3:</i>projetos</a>
     <a href="#demos" data-aba="demos"><i>4:</i>demos</a>
     <a href="#linguagens" data-aba="linguagens"><i>5:</i>linguagens</a>
-    <a href="#orcamento" data-aba="orcamento"><i>6:</i>orçamento</a>
+    <a href="#orcamento" data-aba="orcamento"><i>6:</i>orçamento<span class="orc-conta" id="orc-conta" hidden></span></a>
     <a href="#contato" data-aba="contato"><i>7:</i>contato</a>
   </nav>
   <div class="temas" id="temas" role="radiogroup" aria-label="Aparência do site">
@@ -675,7 +676,8 @@ histórico
 <!-- ============ orçamento ============ -->
 <section id="orcamento" class="folha" aria-labelledby="t-orcamento">
   <h2 id="t-orcamento">Monte seu orçamento</h2>
-  <p class="intro">Escolha o tipo de pedido e o plano. Preço e prazo mudam conforme o que você marca. É uma estimativa: os valores finais saem por escrito depois de conversarmos sobre o projeto.</p>
+  <div id="orc-montar">
+  <p class="intro">Escolha o tipo de pedido e o plano e adicione ao seu pedido. Preço e prazo mudam conforme o que você marca. É uma estimativa: os valores finais saem por escrito depois de conversarmos sobre o projeto.</p>
   <div class="orc-tipos" id="orc-tipos" role="tablist" aria-label="Tipo de pedido"></div>
   <div class="orc-grade">
     <div class="orc-monta">
@@ -700,17 +702,81 @@ histórico
       <p class="orc-dias" id="orc-dias" aria-live="polite"></p>
       <p class="nota" id="orc-nota"></p>
       <button class="botao cheio" type="button" id="orc-add">Adicionar ao pedido</button>
-      <h3 class="h-peq">Seu pedido</h3>
-      <ul class="orc-carrinho" id="orc-carrinho"></ul>
+      <h3 class="h-peq" id="t-carrinho">Seu pedido <span id="orc-n"></span></h3>
+      <ul class="orc-carrinho" id="orc-carrinho" aria-labelledby="t-carrinho"></ul>
       <p class="orc-total" id="orc-total" aria-live="polite"></p>
       <div class="acoes">
-        <a class="botao cheio" id="orc-email" href="#orcamento">Enviar por e-mail</a>
-        <button class="botao" type="button" id="orc-copiar">Copiar resumo</button>
+        <a class="botao cheio" id="orc-finalizar" href="#orcamento/finalizar">Finalizar pedido</a>
       </div>
-      <p class="nota">O envio abre o seu programa de e-mail com o resumo pronto. Nada sai desta página antes disso.</p>
+      <p class="nota">Na finalização você confere tudo, conta em detalhes o que quer e envia. O pedido fica salvo neste aparelho até você enviar.</p>
+      <p class="nota orc-outros"><a id="orc-email" href="#orcamento">Prefiro enviar por e-mail</a> · <button class="link" type="button" id="orc-copiar">Copiar resumo</button> · <button class="link" type="button" id="orc-esvaziar">Esvaziar</button></p>
       <h3 class="h-peq">Como você paga</h3>
-      <p class="nota">O site não cobra nada sozinho. Depois que você aprova o orçamento por escrito, envio para cada etapa (entrada, versão de teste e entrega) um link da minha página de pagamento. O valor fica guardado no meu sistema de cobranças, não no link, e você paga por Pix, com QR Code ou código copia e cola, sem digitar nada. Se preferir cartão, mando um link de pagamento do Mercado Pago. Nos planos mensais, envio um link por mês.</p>
+      <p class="nota">Enviar o pedido não cobra nada. Depois que você aprova o orçamento por escrito, envio para cada etapa (entrada, versão de teste e entrega) um link da minha página de pagamento. O valor fica guardado no meu sistema de cobranças, não no link, e você paga por Pix, com QR Code ou código copia e cola, sem digitar nada. Se preferir cartão, mando um link de pagamento do Mercado Pago. Nos planos mensais, envio um link por mês.</p>
     </aside>
+  </div>
+  </div>
+
+  <div class="fin" id="fin" hidden>
+    <p class="intro"><a href="#orcamento">&larr; Voltar e mudar o pedido</a></p>
+    <div class="fin-grade">
+      <div class="fin-form">
+        <section aria-labelledby="t-fin-revisa" class="fin-bloco">
+          <h3 class="sub" id="t-fin-revisa">1. Confira o seu pedido</h3>
+          <ul class="orc-carrinho fin-itens" id="fin-itens"></ul>
+          <p class="orc-total" id="fin-total"></p>
+          <p class="nota">Valores estimados pela tabela do site. O valor final sai por escrito depois de conversarmos.</p>
+        </section>
+        <div id="fin-campos">
+        <section aria-labelledby="t-fin-dados" class="fin-bloco">
+          <h3 class="sub" id="t-fin-dados">2. Seus dados para eu responder</h3>
+          <label for="fin-nome">Nome</label>
+          <input id="fin-nome" type="text" autocomplete="name" maxlength="80" required aria-describedby="fin-nome-erro">
+          <p class="erro" id="fin-nome-erro"></p>
+          <label for="fin-email">E-mail</label>
+          <input id="fin-email" type="email" autocomplete="email" inputmode="email" maxlength="120" spellcheck="false" required aria-describedby="fin-email-erro">
+          <p class="erro" id="fin-email-erro"></p>
+          <label for="fin-whats">WhatsApp com DDD</label>
+          <input id="fin-whats" type="tel" autocomplete="tel-national" inputmode="tel" maxlength="20" placeholder="(65) 99999-9999" required aria-describedby="fin-whats-erro">
+          <p class="erro" id="fin-whats-erro"></p>
+          <div class="armadilha" aria-hidden="true"><label for="fin-site">Não preencha</label><input id="fin-site" type="text" tabindex="-1" autocomplete="off"></div>
+        </section>
+        <section aria-labelledby="t-fin-texto" class="fin-bloco">
+          <h3 class="sub" id="t-fin-texto">3. Conte exatamente o que você quer</h3>
+          <p class="nota">De 500 a 3.000 caracteres. Quanto mais detalhe, mais certo fica o orçamento. Algumas perguntas para guiar:</p>
+          <ul class="fin-guia">
+            <li>O que a sua empresa faz e para quem?</li>
+            <li>O que o site ou sistema precisa fazer, passo a passo?</li>
+            <li>Quem vai usar, e mais no celular ou no computador?</li>
+            <li>Já tem logotipo, textos, fotos e domínio?</li>
+            <li>Tem algum site que você gosta como exemplo?</li>
+            <li>Tem data limite? Por quê?</li>
+          </ul>
+          <label for="fin-texto">Descrição do pedido</label>
+          <textarea id="fin-texto" rows="12" maxlength="3000" required aria-describedby="fin-conta fin-texto-erro"></textarea>
+          <p class="fin-conta" id="fin-conta" aria-live="polite"></p>
+          <p class="erro" id="fin-texto-erro"></p>
+        </section>
+        <section aria-labelledby="t-fin-envio" class="fin-bloco">
+          <h3 class="sub" id="t-fin-envio">4. Enviar</h3>
+          <label class="radio fin-aceite"><input type="checkbox" id="fin-aceite" aria-describedby="fin-aceite-erro"> <span>Concordo que a Mil e Uma Linhas! use meu nome, e-mail, WhatsApp e esta descrição só para responder este pedido, como explico em <a href="#contato/dados">Como cuido dos seus dados</a>.</span></label>
+          <p class="erro" id="fin-aceite-erro"></p>
+          <div class="fin-robo" id="fin-robo"></div>
+          <button class="botao cheio fin-enviar" type="button" id="fin-enviar">Enviar pedido</button>
+          <p class="fin-estado" id="fin-estado" role="status" aria-live="polite"></p>
+          <p class="nota" id="fin-alternativa" hidden><a class="botao" id="fin-email" href="#orcamento/finalizar">Enviar por e-mail</a></p>
+        </section>
+        </div>
+      </div>
+    </div>
+    <section class="fin-ok" id="fin-ok" hidden tabindex="-1" aria-labelledby="t-fin-ok">
+      <h3 class="sub" id="t-fin-ok">Pedido recebido</h3>
+      <p>Protocolo <b class="fin-protocolo" id="fin-protocolo"></b> <button class="botao botao-mini" type="button" id="fin-copiar-prot">Copiar</button></p>
+      <ul class="orc-carrinho" id="fin-ok-itens"></ul>
+      <p class="orc-total" id="fin-ok-total"></p>
+      <p class="nota" id="fin-ok-aviso" hidden></p>
+      <p>Guarde o protocolo. Vou ler o seu pedido e responder pelo e-mail ou WhatsApp que você informou. Para corrigir alguma coisa, escreva para <a href="mailto:contato@mileumalinhas.com.br">contato@mileumalinhas.com.br</a> citando o protocolo.</p>
+      <p><a class="botao" href="#orcamento">Montar outro pedido</a></p>
+    </section>
   </div>
 </section>
 
@@ -738,13 +804,15 @@ histórico
     <li><a rel="noopener noreferrer" target="_blank" href="https://github.com/Toshiro01001"><b>GitHub</b><span>Toshiro01001</span></a></li>
   </ul>
 
-  <h3 class="sub">Como este site cuida dos seus dados</h3>
+  <h3 class="sub" id="dados">Como cuido dos seus dados</h3>
   <ul class="check">
-    <li>Não tem cookies, rastreadores nem scripts de terceiros. O navegador guarda só a aparência escolhida e, nas demonstrações, os dados de teste</li>
-    <li>Não tem login nem banco de dados no servidor para invadir. As demonstrações rodam só no seu aparelho</li>
-    <li>Fontes e arquivos saem daqui mesmo, por conexão segura</li>
-    <li>Uma política de segurança bloqueia código que não seja deste site</li>
-    <li>Se você me escrever, uso seu e-mail só para responder sobre o seu pedido. A caixa fica na Zoho Mail. Para corrigir ou apagar seus dados, é só pedir em contato@mileumalinhas.com.br</li>
+    <li>Não tem cookies nem rastreadores. O navegador guarda só a aparência escolhida, os itens do seu pedido até você enviar e, nas demonstrações, os dados de teste</li>
+    <li>As demonstrações rodam só no seu aparelho. Nada do que você digita nelas sai daqui</li>
+    <li>Quando você envia um pedido, nome, e-mail, WhatsApp e a descrição vão por conexão segura para o meu sistema de pedidos, na Cloudflare, e ficam guardados cifrados (AES-256). Só eu leio, pelo meu painel, e cada leitura fica registrada</li>
+    <li>Uso esses dados só para responder e fazer o orçamento. Não vendo, não empresto e não mando propaganda</li>
+    <li>Na finalização do pedido, a Cloudflare confere se quem envia é uma pessoa (Turnstile). É o único código de fora que este site carrega, e só nessa tela</li>
+    <li>Se o pedido não virar trabalho, apago o contato e a descrição em até 180 dias depois de encerrar a conversa</li>
+    <li>Se você me escrever por e-mail, a caixa fica na Zoho Mail. Para ver, corrigir ou apagar seus dados, é só pedir em contato@mileumalinhas.com.br</li>
   </ul>
   <p class="nota">Nenhum site é 100% seguro. Este foi feito para ter o mínimo possível a ser roubado.</p>
   <p class="nota">Feito por Rodrigo Terroso Junior, com o Claude, da Anthropic, usado como ferramenta durante o desenvolvimento.</p>

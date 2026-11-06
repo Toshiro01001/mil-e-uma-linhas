@@ -1,5 +1,7 @@
-/* Montador de orçamento. Para mudar preços ou prazos, edite só a lista PEDIDOS abaixo.
-   faixa = [mínimo, máximo] em reais. dias = [mínimo, máximo] em dias corridos. Nada é enviado: o resumo só sai se a pessoa abrir o e-mail. */
+/* Montador de orçamento e carrinho. Para mudar preços ou prazos, edite só a lista PEDIDOS abaixo e depois gere o
+   catálogo do servidor (tests/gerar-catalogo.cjs no sistema de cobranças): o servidor refaz a conta com a mesma tabela.
+   faixa = [mínimo, máximo] em reais. dias = [mínimo, máximo] em dias corridos.
+   O carrinho fica só neste aparelho (localStorage) até o cliente enviar o pedido em js/pedido.js. */
 window.MUL_ORC = (function () {
   'use strict';
   var EMAIL = 'contato@mileumalinhas.com.br';
@@ -133,6 +135,7 @@ window.MUL_ORC = (function () {
   var redondo = function (v) { return Math.round(v / 10) * 10; };
 
   var tipo = 'site', plano = 0, marcados = {}, carrinho = [], pronto = false, ouvintes = [], escolhidas = [];
+  var GUARDA = 'mul-pedido', MAX_ITENS = 10;
   var ling = function (id) { return LINGUAGENS.filter(function (l) { return l.id === id; })[0]; };
   function multiplicador(ids) {
     var maior = ids.reduce(function (m, id) { return Math.max(m, ling(id).fator); }, 1);
@@ -266,6 +269,31 @@ window.MUL_ORC = (function () {
     if (pronto) { renderLinguagens(); atualizar(); }
     ouvintes.forEach(function (f) { f(); });
   }
+  /* guarda só as escolhas; o preço é refeito com a tabela atual ao abrir de novo */
+  function guardar() {
+    try { localStorage.setItem(GUARDA, JSON.stringify(carrinho.map(function (it) { return { tipo: it.tipo, plano: it.plano, marc: it.marc, horas: it.horas, ids: it.ids, prazo: it.prazo }; }))); } catch (e) { /* sem armazenamento: o pedido vale até fechar a página */ }
+  }
+  function recuperar() {
+    var lista = [];
+    try { lista = JSON.parse(localStorage.getItem(GUARDA) || '[]'); } catch (e) { lista = []; }
+    if (!Array.isArray(lista)) return;
+    lista.slice(0, MAX_ITENS).forEach(function (x) {
+      if (!x || !Object.prototype.hasOwnProperty.call(PEDIDOS, x.tipo)) return;
+      var P = PEDIDOS[x.tipo];
+      if (!(x.plano >= 0 && x.plano < P.planos.length && x.plano % 1 === 0)) return;
+      var marc = {};
+      Object.keys(x.marc || {}).forEach(function (k) { if (x.marc[k] === true && +k >= 0 && +k < (P.extras || []).length) marc[+k] = true; });
+      var horas = P.horas && x.horas >= 5 && x.horas <= 160 && x.horas % 5 === 0 ? x.horas : 20;
+      var ids = Array.isArray(x.ids) ? validasPara(x.tipo, x.ids.filter(function (id, i, a) { var l = ling(id); return l && !l.consulta && a.indexOf(id) === i; })) : [];
+      var prazo = x.prazo === 1.25 ? 1.25 : 1;
+      carrinho.push({ tipo: x.tipo, plano: x.plano, marc: marc, horas: horas, ids: ids, prazo: prazo, valor: calcular(x.tipo, x.plano, marc, horas, multiplicador(ids), prazo) });
+    });
+  }
+  function contador() {
+    var n = carrinho.length, b = $('#orc-conta');
+    if (b) { b.hidden = !n; b.textContent = n ? ' (' + n + ')' : ''; b.setAttribute('aria-label', n ? n + (n === 1 ? ' item no pedido' : ' itens no pedido') : ''); }
+  }
+  function mudou() { guardar(); contador(); ouvintes.forEach(function (f) { f(); }); }
   function renderCarrinho() {
     var ul = $('#orc-carrinho'); ul.textContent = '';
     if (!carrinho.length) ul.appendChild(el('li', 'vazio', 'Nada adicionado ainda. Monte um item e clique em Adicionar ao pedido.'));
@@ -274,16 +302,25 @@ window.MUL_ORC = (function () {
       li.appendChild(el('span', null, descrever(it)));
       li.appendChild(el('b', null, valorTxt(it.valor) + '. Prazo: ' + diasTxt(it.valor.dias)));
       var x = el('button', 'botao botao-mini', 'Remover'); x.type = 'button';
+      x.setAttribute('aria-label', 'Remover ' + descrever(it));
       x.addEventListener('click', function () { carrinho.splice(i, 1); renderCarrinho(); });
       li.appendChild(x);
       ul.appendChild(li);
     });
     var T = totais();
+    $('#orc-n').textContent = carrinho.length ? '(' + carrinho.length + (carrinho.length === 1 ? ' item)' : ' itens)') : '';
     $('#orc-total').textContent = carrinho.length ? 'Total estimado: ' + valorTxt(T) + (carrinho.length > 1 ? '. Um depois do outro: ' + diasTxt(T.dias) + '.' : '. Prazo: ' + diasTxt(T.dias) + '.') : '';
-    var a = $('#orc-email'), copia = $('#orc-copiar');
+    var a = $('#orc-email'), copia = $('#orc-copiar'), fin = $('#orc-finalizar');
     a.href = 'mailto:' + EMAIL + '?subject=' + encodeURIComponent('Pedido de orçamento') + '&body=' + encodeURIComponent(carrinho.length ? texto() : 'Olá! Quero um orçamento para o meu projeto:\n\n');
-    copia.disabled = !carrinho.length;
-    ouvintes.forEach(function (f) { f(); });
+    copia.disabled = !carrinho.length; $('#orc-esvaziar').disabled = !carrinho.length;
+    fin.classList.toggle('desligado', !carrinho.length);
+    if (carrinho.length) { fin.removeAttribute('aria-disabled'); fin.href = '#orcamento/finalizar'; } else { fin.setAttribute('aria-disabled', 'true'); fin.removeAttribute('href'); }
+    $('#orc-add').disabled = carrinho.length >= MAX_ITENS;
+    mudou();
+  }
+  function mostrarFinalizar(sim) {
+    $('#orc-montar').hidden = sim; $('#fin').hidden = !sim;
+    if (sim && window.MUL_PEDIDO) window.MUL_PEDIDO.abrir();
   }
   function escolher(k, p) {
     if (!PEDIDOS[k]) k = 'site';
@@ -295,7 +332,16 @@ window.MUL_ORC = (function () {
     pronto = true;
     $('#orc-prazo').addEventListener('change', atualizar);
     $('#orc-horas').addEventListener('input', atualizar);
-    $('#orc-add').addEventListener('click', function () { carrinho.push(atual()); renderCarrinho(); });
+    $('#orc-add').addEventListener('click', function () {
+      if (carrinho.length >= MAX_ITENS) return;
+      carrinho.push(atual()); renderCarrinho();
+      $('#orc-total').textContent = 'Adicionado. ' + $('#orc-total').textContent;
+    });
+    $('#orc-esvaziar').addEventListener('click', function () {
+      var b = $('#orc-esvaziar');
+      if (b.dataset.armado !== '1') { b.dataset.armado = '1'; b.textContent = 'Clique de novo para esvaziar'; setTimeout(function () { b.dataset.armado = ''; b.textContent = 'Esvaziar'; }, 4000); return; }
+      b.dataset.armado = ''; b.textContent = 'Esvaziar'; carrinho = []; renderCarrinho();
+    });
     $('#orc-copiar').addEventListener('click', function () {
       var b = $('#orc-copiar');
       if (!navigator.clipboard) { b.textContent = 'Copie pelo e-mail'; return; }
@@ -306,17 +352,37 @@ window.MUL_ORC = (function () {
     escolher(tipo, 0);
     renderCarrinho();
   }
+  recuperar();
+  contador();
   return {
-    PEDIDOS: PEDIDOS, diasTxt: diasTxt, faixaTxt: faixaTxt, reais: reais, EMAIL: EMAIL, LINGUAGENS: LINGUAGENS, AREAS: AREAS, INCLUSAS: INCLUSAS, POR_EXTRA: POR_EXTRA,
+    PEDIDOS: PEDIDOS, AREAS_DO_PEDIDO: AREAS_DO_PEDIDO, diasTxt: diasTxt, faixaTxt: faixaTxt, reais: reais, EMAIL: EMAIL, LINGUAGENS: LINGUAGENS, AREAS: AREAS, INCLUSAS: INCLUSAS, POR_EXTRA: POR_EXTRA,
     alternar: alternar, escolhidas: function () { return escolhidas.slice(); },
-    rota: function (sub) { iniciar(); if (sub && PEDIDOS[sub] && sub !== tipo) escolher(sub, 0); },
+    rota: function (sub) {
+      iniciar();
+      if (sub === 'finalizar') return mostrarFinalizar(true);
+      mostrarFinalizar(false);
+      if (sub && Object.prototype.hasOwnProperty.call(PEDIDOS, sub) && sub !== tipo) escolher(sub, 0);
+    },
     adicionar: function (k) { // usado pela vitrine da aparência Loja
       iniciar();
+      if (carrinho.length >= MAX_ITENS) return;
       var v = calcular(k, 0, {}, 20, 1, 1);
       carrinho.push({ tipo: k, plano: 0, marc: {}, horas: 20, ids: [], prazo: 1, valor: v });
       renderCarrinho();
     },
     resumoCarrinho: function () { return { n: carrinho.length, txt: carrinho.length ? valorTxt(totais()) : '' }; },
+    /* usado pela finalização (js/pedido.js) */
+    linhas: function () { return carrinho.map(function (it) { return { descricao: descrever(it), valor: valorTxt(it.valor), prazo: diasTxt(it.valor.dias) }; }); },
+    total: function () { var T = totais(); return { valor: valorTxt(T), prazo: diasTxt(T.dias) }; },
+    paraEnvio: function () {
+      return carrinho.map(function (it) {
+        var o = { tipo: it.tipo, plano: it.plano, extras: Object.keys(it.marc).filter(function (k) { return it.marc[k]; }).map(Number), linguagens: it.ids.slice(), urgente: it.prazo > 1, valor_visto: valorTxt(it.valor) };
+        if (PEDIDOS[it.tipo].horas) o.horas = it.horas;
+        return o;
+      });
+    },
+    textoEmail: texto,
+    esvaziar: function () { carrinho = []; if (pronto) renderCarrinho(); else mudou(); },
     aoMudar: function (f) { ouvintes.push(f); }
   };
 })();
