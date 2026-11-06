@@ -382,7 +382,7 @@ textarea { display: block; width: 100%; padding: 8px 10px; background: var(--pai
 .lang p { margin: 0; font-size: 16px; line-height: 22px; }
 .lang .lang-q { font-size: 15px; line-height: 21px; color: var(--cinza); }
 .lang .lang-q b { color: var(--papel); }
-.lang-tags { font-family: var(--ui); font-size: 12.5px; line-height: 18px; color: var(--cinza); }
+.lang p.lang-tags { font-family: var(--ui); font-size: 13px; line-height: 18px; color: var(--cinza); }
 .lang .botao { margin-top: auto; }
 .lang .botao[aria-pressed="true"] { background: var(--verde); border-color: var(--verde); color: var(--fundo); font-weight: 700; }
 .orc-ling-nota { margin: 0 0 10px; font-size: 14.5px; }

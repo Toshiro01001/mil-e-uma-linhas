@@ -15,11 +15,17 @@ window.MUL_GUIA = (function () {
       c.appendChild(el('p', null, l.faz));
       c.appendChild(linha('Quando usar:', l.quando));
       c.appendChild(linha('Exemplo:', l.exemplo));
-      c.appendChild(el('p', 'lang-tags', l.areas.map(function (a) { return O.AREAS[a]; }).join(', ') + (l.fator > 1 ? '. Acrescenta ' + Math.round((l.fator - 1) * 100) + '% ao projeto.' : '.')));
-      var b = el('button', 'botao', on ? 'Marcada no orçamento' : 'Marcar no orçamento'); b.type = 'button';
-      b.setAttribute('aria-pressed', on ? 'true' : 'false');
-      b.addEventListener('click', function () { O.alternar(l.id); });
-      c.appendChild(b);
+      c.appendChild(el('p', 'lang-tags', l.areas.map(function (a) { return O.AREAS[a]; }).join(', ') + (l.consulta ? '. Disponível sob consulta.' : l.fator > 1 ? '. Acrescenta ' + Math.round((l.fator - 1) * 100) + '% ao projeto.' : '.')));
+      if (l.consulta) {
+        var q = el('a', 'botao', 'Sob consulta: perguntar por e-mail');
+        q.href = 'mailto:' + O.EMAIL + '?subject=' + encodeURIComponent('Projeto em ' + l.nome) + '&body=' + encodeURIComponent('Olá! Quero conversar sobre um projeto em ' + l.nome + ':\n\n');
+        c.appendChild(q);
+      } else {
+        var b = el('button', 'botao', on ? 'Marcada no orçamento' : 'Marcar no orçamento'); b.type = 'button';
+        b.setAttribute('aria-pressed', on ? 'true' : 'false');
+        b.addEventListener('click', function () { O.alternar(l.id); });
+        c.appendChild(b);
+      }
       lista.appendChild(c);
     });
     var n = ch.length;

@@ -67,7 +67,8 @@ window.MUL_ORC = (function () {
       ]
     }
   };
-  /* Linguagens. fator = quanto a linguagem encarece o trabalho; vale só o maior fator escolhido. */
+  /* Linguagens. fator = quanto a linguagem encarece o trabalho; vale só o maior fator escolhido.
+     consulta: true = aparece na aba de linguagens, mas não entra no orçamento automático. */
   var INCLUSAS = 2, POR_EXTRA = 0.15;
   var LINGUAGENS = [
     { id: 'javascript', nome: 'JavaScript', fator: 1, areas: ['site', 'sistema', 'automacao', 'app'],
@@ -88,25 +89,25 @@ window.MUL_ORC = (function () {
     { id: 'java', nome: 'Java', fator: 1.1, areas: ['sistema', 'app', 'desempenho'],
       faz: 'Muito usada em empresas grandes e bancos. Estável e feita para sistemas que duram muitos anos.',
       quando: 'Sistemas corporativos grandes ou uma base que já está em Java.', exemplo: 'Sistema interno com muitos usuários e regras.' },
-    { id: 'csharp', nome: 'C#', fator: 1.1, areas: ['sistema', 'site', 'desempenho'],
+    { id: 'csharp', consulta: true, nome: 'C#', fator: 1.1, areas: ['sistema', 'site', 'desempenho'],
       faz: 'Linguagem da plataforma .NET, da Microsoft. Forte em sistemas empresariais, APIs e programas para Windows.',
       quando: 'Empresas que já usam produtos Microsoft ou precisam de programa para Windows.', exemplo: 'Sistema de gestão instalado nos computadores da loja.' },
-    { id: 'go', nome: 'Go', fator: 1.1, areas: ['sistema', 'automacao', 'desempenho'],
+    { id: 'go', consulta: true, nome: 'Go', fator: 1.1, areas: ['sistema', 'automacao', 'desempenho'],
       faz: 'Criada para serviços de internet rápidos e simples de manter, que aguentam muitos acessos ao mesmo tempo.',
       quando: 'APIs e serviços que recebem muito tráfego.', exemplo: 'Serviço que recebe milhares de pedidos por minuto.' },
-    { id: 'ruby', nome: 'Ruby', fator: 1.1, areas: ['site', 'sistema'],
+    { id: 'ruby', consulta: true, nome: 'Ruby', fator: 1.1, areas: ['site', 'sistema'],
       faz: 'Com o Ruby on Rails, permite levantar uma plataforma web completa com pouco código.',
       quando: 'Testar uma ideia de produto rápido ou manter um sistema que já usa Rails.', exemplo: 'Primeira versão de uma plataforma por assinatura.' },
-    { id: 'dart', nome: 'Dart (Flutter)', fator: 1.1, areas: ['app'],
+    { id: 'dart', consulta: true, nome: 'Dart (Flutter)', fator: 1.1, areas: ['app'],
       faz: 'Com o Flutter, um único código gera aplicativo para Android e iPhone.',
       quando: 'Aplicativo nas duas lojas gastando menos do que fazer dois separados.', exemplo: 'App de pedidos para clientes de uma rede de lojas.' },
-    { id: 'kotlin', nome: 'Kotlin', fator: 1.1, areas: ['app'],
+    { id: 'kotlin', consulta: true, nome: 'Kotlin', fator: 1.1, areas: ['app'],
       faz: 'Linguagem recomendada pelo Google para aplicativos nativos de Android.',
       quando: 'App só para Android que precisa aproveitar bem o aparelho.', exemplo: 'App para a equipe de entregas, com câmera e GPS.' },
-    { id: 'swift', nome: 'Swift', fator: 1.1, areas: ['app'],
+    { id: 'swift', consulta: true, nome: 'Swift', fator: 1.1, areas: ['app'],
       faz: 'Linguagem da Apple para aplicativos nativos de iPhone e iPad.',
       quando: 'App só para iPhone que precisa aproveitar bem o aparelho.', exemplo: 'App de atendimento para clientes de iPhone.' },
-    { id: 'r', nome: 'R', fator: 1.1, areas: ['dados'],
+    { id: 'r', consulta: true, nome: 'R', fator: 1.1, areas: ['dados'],
       faz: 'Feita para estatística: gera análises e gráficos a partir de muitos dados.',
       quando: 'Pesquisas, indicadores e estudos estatísticos.', exemplo: 'Painel que compara o desempenho das filiais.' },
     { id: 'c', nome: 'C', fator: 1.2, areas: ['desempenho'],
@@ -115,7 +116,7 @@ window.MUL_ORC = (function () {
     { id: 'cpp', nome: 'C++', fator: 1.2, areas: ['desempenho', 'sistema'],
       faz: 'Alto desempenho em programas maiores, como jogos, simulações e processamento pesado.',
       quando: 'Programas grandes que exigem muito do computador.', exemplo: 'Ferramenta que processa imagens ou cálculos pesados.' },
-    { id: 'rust', nome: 'Rust', fator: 1.2, areas: ['desempenho', 'sistema'],
+    { id: 'rust', consulta: true, nome: 'Rust', fator: 1.2, areas: ['desempenho', 'sistema'],
       faz: 'Desempenho parecido com o de C++, com verificações que evitam muitos erros de memória.',
       quando: 'Serviços críticos em que falha e segurança custam caro.', exemplo: 'Serviço que processa pagamentos ou muitos dados.' }
   ];
@@ -237,7 +238,7 @@ window.MUL_ORC = (function () {
     var areas = AREAS_DO_PEDIDO[tipo], caixa = $('#orc-ling-caixa'), box = $('#orc-langs');
     caixa.hidden = !areas.length;
     box.textContent = '';
-    LINGUAGENS.filter(function (l) { return l.areas.some(function (x) { return areas.indexOf(x) >= 0; }); }).forEach(function (l) {
+    LINGUAGENS.filter(function (l) { return !l.consulta && l.areas.some(function (x) { return areas.indexOf(x) >= 0; }); }).forEach(function (l) {
       var on = escolhidas.indexOf(l.id) >= 0, b = el('button', 'pilula', l.nome + (l.fator > 1 ? ' +' + Math.round((l.fator - 1) * 100) + '%' : ''));
       b.type = 'button'; b.setAttribute('aria-pressed', on ? 'true' : 'false');
       b.addEventListener('click', function () { alternar(l.id); });
