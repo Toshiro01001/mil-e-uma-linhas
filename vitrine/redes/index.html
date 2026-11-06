@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'none'; base-uri 'none'; form-action 'none'">
+<meta name="referrer" content="no-referrer">
+<title>Ateliê Seriema: automação de redes sociais</title>
+<meta name="description" content="Demonstração de automação de redes sociais: calendário com aprovação, publicação agendada e respostas automáticas por regra, para um ateliê fictício.">
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+<div class="faixa">
+  <p>Sistema de demonstração. O Ateliê Seriema é fictício e nada é publicado no Instagram de verdade.</p>
+  <button type="button" id="restaurar">Restaurar dados de exemplo</button>
+</div>
+<header class="cab">
+  <p class="marca">Ateliê Seriema, cerâmica em Cuiabá</p>
+  <h1>A semana do Instagram resolvida antes de segunda</h1>
+  <p class="lead">A equipe escreve, a dona aprova e o sistema publica no horário. Quem manda mensagem recebe resposta na hora, e o que exige uma pessoa vai para uma pessoa.</p>
+</header>
+<main>
+  <section class="semana" aria-labelledby="t-sem">
+    <div class="sem-cab">
+      <h2 id="t-sem">Calendário da semana</h2>
+      <div class="sem-acoes">
+        <p id="hoje" role="status"></p>
+        <button type="button" id="amanha" class="forte">Avançar para o próximo dia</button>
+      </div>
+    </div>
+    <ol id="dias" class="dias"></ol>
+  </section>
+
+  <section class="novo" aria-labelledby="t-novo">
+    <div class="form">
+      <h2 id="t-novo">Novo post</h2>
+      <label for="legenda">Legenda</label>
+      <textarea id="legenda" rows="4" maxlength="2300"></textarea>
+      <p id="conta-leg" class="conta-leg"></p>
+      <div class="linha">
+        <div><label for="tipo">Formato</label><select id="tipo"><option>Foto</option><option>Carrossel</option><option>Reels</option><option>Story</option></select></div>
+        <div><label for="dia">Dia</label><select id="dia"></select></div>
+        <div><label for="hora">Hora</label><input id="hora" type="time" value="18:00"></div>
+      </div>
+      <button type="button" id="agendar" class="forte">Enviar para aprovação</button>
+      <p id="erro-post" class="erro" role="alert"></p>
+    </div>
+    <div class="regua">
+      <h3>O caminho de cada post</h3>
+      <ol class="caminho">
+        <li><b>Aguardando aprovação.</b> A equipe escreveu, ninguém publica ainda.</li>
+        <li><b>Aprovado.</b> Fica na fila do dia e da hora escolhidos.</li>
+        <li><b>Publicado.</b> Sai sozinho quando chega a data.</li>
+      </ol>
+      <p>Um post que chega à data sem aprovação não vai ao ar. Ele aparece como atrasado, porque é melhor atrasar do que publicar errado.</p>
+    </div>
+  </section>
+
+  <section class="caixa" aria-labelledby="t-caixa">
+    <h2 id="t-caixa">Mensagens e respostas automáticas</h2>
+    <p class="sub">Simule a mensagem de um cliente. O robô se apresenta como automático, responde pelas regras e passa para a equipe o que não souber resolver. A plataforma oficial só deixa responder quem escreveu primeiro, em até 24 horas.</p>
+    <div class="caixa-grade">
+      <div>
+        <label for="msg">Mensagem do cliente</label>
+        <input id="msg" maxlength="300" autocomplete="off">
+        <label for="idade">Há quanto tempo chegou?</label>
+        <select id="idade"><option value="0">Agora</option><option value="12">Há 12 horas</option><option value="23">Há 23 horas</option><option value="30">Há 30 horas</option></select>
+        <button type="button" id="receber" class="forte">Receber mensagem</button>
+        <p class="atalhos">Exemplos:
+          <button type="button" class="atalho" data-t="Quanto custa a caneca azul?">preço</button>
+          <button type="button" class="atalho" data-t="Vocês entregam em Várzea Grande?">entrega</button>
+          <button type="button" class="atalho" data-t="Minha peça chegou com defeito">reclamação</button>
+          <button type="button" class="atalho" data-t="Bom dia!">outra</button>
+        </p>
+        <h3>Regras ligadas</h3>
+        <ul id="regras" class="regras"></ul>
+        <details class="nova-regra">
+          <summary>Criar regra</summary>
+          <label for="r-pal">Palavras separadas por vírgula</label>
+          <input id="r-pal" maxlength="120" autocomplete="off">
+          <label for="r-txt">Resposta</label>
+          <textarea id="r-txt" rows="2" maxlength="300"></textarea>
+          <button type="button" id="r-add">Salvar regra</button>
+          <p id="r-erro" class="erro" role="alert"></p>
+        </details>
+      </div>
+      <div class="telefone">
+        <h3>Conversas de hoje</h3>
+        <ol id="conversas" aria-live="polite"></ol>
+        <p id="sem-conv" class="vazio">Nenhuma mensagem ainda. Use um dos exemplos ao lado.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="numeros" aria-labelledby="t-num">
+    <h2 id="t-num">O relatório sai sozinho</h2>
+    <p class="sub">Estes números vêm do que você fez nesta tela. Na versão real, alcance e cliques chegam pela API oficial.</p>
+    <dl id="relatorio" class="relatorio"></dl>
+  </section>
+
+  <section class="como" aria-labelledby="t-como">
+    <h2 id="t-como">Como isto funciona, e o que não fazemos</h2>
+    <div class="duas">
+      <div>
+        <h3>Na versão real</h3>
+        <p>Usamos a API oficial do Instagram, com conta profissional e permissão concedida pelo próprio cliente, sem pedir a senha dele. Um servidor guarda o token criptografado, publica no horário e recebe as mensagens por webhook.</p>
+        <p>Nesta demonstração, tudo roda no seu navegador e fica guardado só neste aparelho.</p>
+      </div>
+      <div>
+        <h3>O que fica de fora</h3>
+        <ul>
+          <li>Seguir e deixar de seguir em massa</li>
+          <li>Comprar seguidores ou curtidas</li>
+          <li>Mandar a primeira mensagem para quem não falou com a marca</li>
+          <li>Fingir que o robô é uma pessoa</li>
+        </ul>
+        <p>Essas práticas colocam a conta do cliente em risco e não trazem compradores.</p>
+      </div>
+    </div>
+  </section>
+</main>
+<footer class="rodape"><p>Demonstração feita por <a href="https://mileumalinhas.com.br/">Mil e Uma Linhas!</a> <a href="../index.html">Ver a vitrine</a></p></footer>
+<script src="app.js"></script>
+</body>
+</html>

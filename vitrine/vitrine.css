@@ -31,4 +31,9 @@ main{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}
 .cine{background:#061a2c;color:#f7e9c4}
 .cine h2{color:#e8c46a}
 .friagem{background:#0f6283;color:#fff}
+.relogios{background:#10294a;color:#fff}
+.relogios h2{font-weight:500;color:#ecd27a}
+.redes{background:#ffd23f;color:#3a1248}
+.anuncios{background:#0d4a91;color:#fff}
+.cofre{background:#121a24;color:#7ef0c8}
 @media (max-width:720px){main{grid-template-columns:minmax(0,1fr)}.v-item{min-height:0}.abrir{padding-top:.6rem}}

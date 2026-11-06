@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'none'; base-uri 'none'; form-action 'none'">
+<meta name="referrer" content="no-referrer">
+<title>Ponteiro Alto: automação de vendas para relojoaria</title>
+<meta name="description" content="Demonstração de automação de vendas para uma relojoaria fictícia: atendimento que recomenda modelos, regras de mensagem e consentimento do cliente.">
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+<div class="faixa">
+  <p>Sistema de demonstração. Loja, modelos e preços são fictícios. Nenhuma mensagem é enviada.</p>
+  <button type="button" id="restaurar">Restaurar dados de exemplo</button>
+</div>
+
+<header class="cab">
+  <p class="marca">Ponteiro Alto, relojoaria em Cuiabá</p>
+  <nav aria-label="Seções">
+    <a href="#ciclo">O ciclo</a>
+    <a href="#atendimento">Atendimento</a>
+    <a href="#regras">Regras</a>
+    <a href="#conta">A conta</a>
+    <a href="#como">Como funciona</a>
+  </nav>
+</header>
+
+<main>
+  <section id="ciclo" class="ciclo" aria-labelledby="t-ciclo">
+    <div class="ciclo-texto">
+      <h1 id="t-ciclo">Do anúncio à troca da bateria, a loja não esquece nenhum cliente</h1>
+      <p>Um relógio não é venda de uma vez só: tem ajuste de pulseira, bateria, revisão e presente de aniversário. Avance o ponteiro e veja o que o sistema faz sozinho em cada momento.</p>
+      <div class="controles">
+        <button type="button" id="avancar" class="principal">Avançar o ponteiro</button>
+        <button type="button" id="zerar">Voltar ao início</button>
+      </div>
+      <p id="passo-atual" class="passo-atual"></p>
+    </div>
+    <figure class="mostrador" aria-hidden="true">
+      <svg id="dial" viewBox="0 0 400 400" role="presentation"></svg>
+    </figure>
+    <div class="conversa" aria-labelledby="t-conversa">
+      <h2 id="t-conversa">Conversa com <span id="nome-conversa"></span></h2>
+      <ol id="mensagens" aria-live="polite"></ol>
+      <p id="sem-msg" class="vazio">Toque em "Avançar o ponteiro" para começar pelo anúncio.</p>
+    </div>
+  </section>
+
+  <section id="atendimento" class="bloco" aria-labelledby="t-atend">
+    <h2 id="t-atend">Atendimento que recomenda o modelo certo</h2>
+    <p class="sub">Três perguntas filtram o catálogo pelo uso, pelo orçamento e pelo estilo. O modelo escolhido passa a aparecer nas mensagens do ciclo.</p>
+    <div class="perguntas">
+      <label for="cliente">Nome do cliente fictício</label>
+      <input id="cliente" maxlength="30" autocomplete="off">
+      <label for="uso">Para que é o relógio?</label>
+      <select id="uso">
+        <option value="dia">Dia a dia</option>
+        <option value="trabalho">Trabalho e reuniões</option>
+        <option value="esporte">Esporte</option>
+        <option value="presente">Presente</option>
+      </select>
+      <label for="verba">Quanto quer gastar?</label>
+      <select id="verba">
+        <option value="400">Até R$ 400</option>
+        <option value="900" selected>Até R$ 900</option>
+        <option value="2000">Até R$ 2.000</option>
+        <option value="99999">Sem limite</option>
+      </select>
+      <label for="estilo">Qual estilo agrada mais?</label>
+      <select id="estilo">
+        <option value="classico">Clássico</option>
+        <option value="moderno">Moderno</option>
+        <option value="robusto">Robusto</option>
+      </select>
+    </div>
+    <p id="resumo-rec" class="resumo-rec" role="status"></p>
+    <ul id="recomendados" class="modelos"></ul>
+  </section>
+
+  <section id="regras" class="bloco claro" aria-labelledby="t-regras">
+    <h2 id="t-regras">Regras que o lojista liga e desliga</h2>
+    <p class="sub">Mensagens de serviço, como confirmação de compra, saem sempre. As de relacionamento só saem com a autorização do cliente, um cuidado com a LGPD.</p>
+    <label class="consent"><input type="checkbox" id="consentimento"> O cliente autorizou receber novidades e lembretes</label>
+    <ul id="lista-regras" class="regras"></ul>
+  </section>
+
+  <section id="conta" class="bloco" aria-labelledby="t-conta">
+    <h2 id="t-conta">Quanto trabalho manual isso substitui</h2>
+    <p class="sub">Coloque os números da sua loja. A conta usa só o que está ligado na lista de regras e não é promessa de venda.</p>
+    <div class="conta">
+      <label for="vendas">Vendas por mês</label>
+      <input id="vendas" type="number" min="0" max="5000" step="1" inputmode="numeric">
+      <label for="minutos">Minutos para escrever cada mensagem à mão</label>
+      <input id="minutos" type="number" min="0" max="60" step="1" inputmode="numeric">
+    </div>
+    <p class="resultado" role="status"><b id="r-msgs"></b> mensagens por venda ligadas, <b id="r-mes"></b> mensagens por mês e cerca de <b id="r-horas"></b> de digitação a menos.</p>
+    <p id="conta-erro" class="erro" hidden></p>
+  </section>
+
+  <section id="como" class="bloco claro" aria-labelledby="t-como">
+    <h2 id="t-como">Como isto funciona</h2>
+    <div class="duas">
+      <div>
+        <h3>Nesta demonstração</h3>
+        <p>Tudo roda no seu navegador, em JavaScript puro. O ciclo é uma lista de 12 eventos, e cada evento consulta duas condições antes de gerar a mensagem: a regra está ligada? O tipo da mensagem permite envio sem autorização?</p>
+        <p>As regras e a autorização ficam guardadas no próprio aparelho. Nada sai dele.</p>
+      </div>
+      <div>
+        <h3>Na versão de verdade</h3>
+        <p>Liga com a sua loja virtual e com a API oficial do WhatsApp, usa um banco de dados com acesso restrito e guarda quando cada cliente autorizou ou cancelou. Dados pessoais trafegam por HTTPS e ficam criptografados no banco.</p>
+        <p>Funciona para outros nichos: basta trocar o catálogo, as perguntas e o calendário de eventos. Em uma ótica, por exemplo, o lembrete vira a revisão do grau.</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="rodape">
+  <p>Demonstração feita por <a href="https://mileumalinhas.com.br/">Mil e Uma Linhas!</a> <a href="../index.html">Ver a vitrine</a></p>
+</footer>
+<script src="app.js"></script>
+</body>
+</html>

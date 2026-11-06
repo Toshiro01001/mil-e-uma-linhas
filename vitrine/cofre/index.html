@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'none'; base-uri 'none'; form-action 'none'">
+<meta name="referrer" content="no-referrer">
+<title>Cofre de Dados: criptografia na prática</title>
+<meta name="description" content="Demonstração de criptografia AES-256-GCM com chave derivada por PBKDF2, executada no navegador. Nada é enviado nem guardado.">
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+<div class="faixa"><p>Demonstração com dados fictícios. Não use dados reais nem senhas que você usa de verdade. Nada sai deste navegador nem fica guardado.</p></div>
+<header class="cab">
+  <h1>O que o seu sistema mostra e o que um invasor veria</h1>
+  <p>Se alguém copiar o banco de dados, só leva a coluna da direita. Escreva, cifre e tente abrir com a senha errada.</p>
+</header>
+<main>
+  <section class="duelo" aria-label="Texto aberto e texto cifrado">
+    <div class="aberto">
+      <h2>O que a equipe vê</h2>
+      <label for="texto">Ficha do cliente</label>
+      <textarea id="texto" rows="6" maxlength="2000" autocomplete="off" spellcheck="false"></textarea>
+      <label for="senha">Senha do cofre</label>
+      <input id="senha" type="password" autocomplete="off" maxlength="128">
+      <label class="ver"><input type="checkbox" id="ver-senha"> Mostrar a senha</label>
+      <p id="forca" class="forca" role="status"></p>
+      <button type="button" id="cifrar">Cifrar a ficha</button>
+    </div>
+    <div class="cifrado">
+      <h2>O que fica no banco</h2>
+      <pre id="saida" tabindex="0" aria-label="Texto cifrado">Ainda não há nada cifrado.</pre>
+      <dl>
+        <div><dt>Salt, 16 bytes</dt><dd id="salt">vazio</dd></div>
+        <div><dt>IV, 12 bytes</dt><dd id="iv">vazio</dd></div>
+      </dl>
+      <p id="tempo" class="tempo" role="status"></p>
+    </div>
+  </section>
+
+  <section class="provas" aria-labelledby="t-provas">
+    <h2 id="t-provas">Quatro testes que você mesmo pode fazer</h2>
+    <ol>
+      <li>
+        <h3>Abrir com a senha</h3>
+        <label for="tentativa">Senha para abrir</label>
+        <input id="tentativa" type="password" autocomplete="off" maxlength="128">
+        <button type="button" id="abrir" disabled>Abrir a ficha</button>
+        <p id="r-abrir" class="res" role="status"></p>
+      </li>
+      <li>
+        <h3>Alterar um único byte</h3>
+        <p>Um invasor muda um bit no banco, sem a senha. O GCM percebe, porque cada ficha leva uma etiqueta de autenticação.</p>
+        <button type="button" id="violar" disabled>Alterar o primeiro byte</button>
+        <p id="r-violar" class="res" role="status"></p>
+      </li>
+      <li>
+        <h3>Cifrar a mesma ficha de novo</h3>
+        <p>O resultado precisa mudar a cada vez. Se fosse igual, daria para saber que dois clientes têm os mesmos dados.</p>
+        <button type="button" id="repetir" disabled>Cifrar de novo e comparar</button>
+        <p id="r-repetir" class="res" role="status"></p>
+      </li>
+      <li>
+        <h3>Medir o custo de adivinhar</h3>
+        <p>A chave passa por 600.000 rodadas de PBKDF2-SHA-256. Cada palpite de um invasor precisa pagar esse custo.</p>
+        <button type="button" id="medir">Medir neste aparelho</button>
+        <p id="r-medir" class="res" role="status"></p>
+      </li>
+    </ol>
+  </section>
+
+  <section class="vistoria" aria-labelledby="t-vis">
+    <h2 id="t-vis">O que conferimos em cada sistema que entregamos</h2>
+    <div class="colunas">
+      <div>
+        <h3>Vistoria de segurança</h3>
+        <ul>
+          <li>Nenhuma senha ou chave no código nem no histórico do Git</li>
+          <li>HTTPS e política de segurança de conteúdo (CSP)</li>
+          <li>Texto digitado tratado como texto, contra XSS</li>
+          <li>Consultas parametrizadas no banco, contra injeção de SQL</li>
+          <li>Senhas com hash lento, em vez de cifra reversível</li>
+          <li>Sessão, permissão por papel e proteção contra CSRF no servidor</li>
+          <li>Coleta só dos dados pessoais necessários, princípio da LGPD</li>
+        </ul>
+      </div>
+      <div>
+        <h3>O que esta tela não resolve</h3>
+        <p>Criptografia protege o dado copiado, mas não um computador já invadido nem uma senha fraca. Quem perde a senha do cofre perde a ficha, porque não existe chave reserva nesta demonstração.</p>
+        <p>Em um sistema real, a chave fica fora do banco, em um cofre de chaves do servidor, e as senhas de login usam hash próprio para senha, como o Argon2id, em vez de cifra. Nenhum sistema é impossível de invadir, e a vistoria reduz o risco, sem eliminá-lo.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="como" aria-labelledby="t-como">
+    <h2 id="t-como">Como isto funciona</h2>
+    <p>O navegador gera 16 bytes aleatórios (salt) e transforma senha e salt em uma chave de 256 bits com PBKDF2-SHA-256, em 600.000 rodadas. Depois gera 12 bytes aleatórios (IV) e cifra com AES-256-GCM. Tudo usa a Web Crypto, a criptografia nativa do navegador, sem biblioteca externa. Salt e IV não são segredo e ficam ao lado do texto cifrado.</p>
+  </section>
+</main>
+<footer class="rodape"><p>Demonstração feita por <a href="https://mileumalinhas.com.br/">Mil e Uma Linhas!</a> <a href="../index.html">Ver a vitrine</a></p></footer>
+<script src="app.js"></script>
+</body>
+</html>

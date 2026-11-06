@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'none'; base-uri 'none'; form-action 'none'">
+<meta name="referrer" content="no-referrer">
+<title>Prancheta de Tráfego: simulador de anúncios</title>
+<meta name="description" content="Simulador de funil de anúncios, cálculo de ponto de equilíbrio, gerador de links com UTM e teste A/B com estatística.">
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+<div class="faixa"><p>Ferramenta de demonstração. Os números partem do que você digitar e são hipóteses, não promessa de resultado.</p></div>
+<header class="cab">
+  <h1>Antes de gastar em anúncio, faça a conta</h1>
+  <p>Tráfego pago é uma sequência de contas: quanto custa aparecer, quantos clicam, quantos chamam, quantos compram. Mude os valores e veja onde o dinheiro se perde.</p>
+</header>
+<main>
+  <section class="prancha" aria-labelledby="t-funil">
+    <h2 id="t-funil">O caminho da verba</h2>
+    <div class="grade-funil">
+      <div class="entradas">
+        <fieldset class="cenarios">
+          <legend>Cenário</legend>
+          <label><input type="radio" name="cen" value="0.7"> Cauteloso</label>
+          <label><input type="radio" name="cen" value="1" checked> Como digitei</label>
+          <label><input type="radio" name="cen" value="1.2"> Otimista</label>
+        </fieldset>
+        <div class="campos" id="campos"></div>
+        <p id="erro-funil" class="erro" role="alert"></p>
+      </div>
+      <div class="saidas">
+        <ol id="funil" class="funil"></ol>
+        <p class="nota">Barras em escala comprimida, para a última etapa continuar visível. O cenário multiplica a taxa de cliques e a de fechamento.</p>
+      </div>
+    </div>
+    <dl id="indicadores" class="indicadores" aria-live="polite"></dl>
+    <p id="veredito" class="veredito" role="status"></p>
+  </section>
+
+  <section class="folha" aria-labelledby="t-utm">
+    <h2 id="t-utm">Link rastreado, para saber de onde veio cada venda</h2>
+    <p class="sub">Sem isso, o relatório só diz que houve visitas. Com UTM, ele diz qual anúncio trouxe quem comprou.</p>
+    <div class="grade-utm">
+      <div class="campo larga"><label for="u-url">Endereço da página</label><input id="u-url" type="url" inputmode="url" autocomplete="off" value="https://exemplo.com.br/relogios"></div>
+      <div class="campo"><label for="u-src">Origem</label><select id="u-src"><option>instagram</option><option>facebook</option><option>google</option><option>youtube</option><option>tiktok</option></select></div>
+      <div class="campo"><label for="u-med">Tipo</label><select id="u-med"><option value="cpc">Clique pago</option><option value="social">Post orgânico</option><option value="email">E-mail</option></select></div>
+      <div class="campo"><label for="u-cam">Campanha</label><input id="u-cam" maxlength="60" autocomplete="off" value="Dia dos Pais 2026"></div>
+      <div class="campo"><label for="u-con">Anúncio</label><input id="u-con" maxlength="60" autocomplete="off" value="Vídeo do mostrador"></div>
+    </div>
+    <p id="u-erro" class="erro" role="alert"></p>
+    <output id="u-saida" class="saida-utm" for="u-url u-cam u-con"></output>
+    <button type="button" id="u-copiar">Copiar o link</button>
+    <p id="u-ok" class="ok" role="status"></p>
+  </section>
+
+  <section class="folha alt" aria-labelledby="t-ab">
+    <h2 id="t-ab">Qual anúncio ganhou de verdade?</h2>
+    <p class="sub">Uma diferença pequena pode ser só sorte. Este teste compara duas taxas e só declara vencedor com 95% de confiança.</p>
+    <div class="grade-ab">
+      <fieldset><legend>Anúncio A</legend>
+        <label for="a-v">Visitas</label><input id="a-v" type="number" min="0" step="1" value="1200">
+        <label for="a-c">Vendas</label><input id="a-c" type="number" min="0" step="1" value="36">
+      </fieldset>
+      <fieldset><legend>Anúncio B</legend>
+        <label for="b-v">Visitas</label><input id="b-v" type="number" min="0" step="1" value="1180">
+        <label for="b-c">Vendas</label><input id="b-c" type="number" min="0" step="1" value="58">
+      </fieldset>
+    </div>
+    <p id="ab-saida" class="ab-saida" role="status"></p>
+  </section>
+
+  <section class="folha" aria-labelledby="t-entrega">
+    <h2 id="t-entrega">O que fazemos para o cliente, nesta ordem</h2>
+    <ol class="etapas">
+      <li><h3>Conta do negócio</h3><p>Margem, ticket e quanto dá para pagar por cliente. É o que esta prancheta faz.</p></li>
+      <li><h3>Página e medição</h3><p>Página rápida, pixel de conversão, eventos de compra e aviso de cookies.</p></li>
+      <li><h3>Campanhas</h3><p>Público, criativos e orçamento no Meta Ads e no Google Ads, com um link rastreado para cada anúncio.</p></li>
+      <li><h3>Teste e ajuste</h3><p>Testes A/B, corte do que não vende e reforço do que vende, com cálculo em vez de palpite.</p></li>
+      <li><h3>Relatório</h3><p>Painel com gasto, vendas, custo por venda e retorno, como o da <a href="../trafego/index.html">Móveis Cerrado Alto</a>.</p></li>
+    </ol>
+    <p class="sub">O valor dos anúncios é pago direto às plataformas. Nenhum profissional sério garante resultado de venda: garantimos medição correta e decisões com base nela.</p>
+  </section>
+
+  <section class="folha alt" aria-labelledby="t-como">
+    <h2 id="t-como">Como isto funciona</h2>
+    <p class="sub">Tudo é JavaScript no seu navegador, sem envio de dados. Impressões saem de verba e CPM; cliques, de impressões e CTR; depois vêm conversas, vendas e receita. O teste A/B usa o teste Z para duas proporções. O gerador de links usa a API URL do navegador, que trata os caracteres especiais e recusa endereços fora de http e https.</p>
+  </section>
+</main>
+<footer class="rodape"><p>Demonstração feita por <a href="https://mileumalinhas.com.br/">Mil e Uma Linhas!</a> <a href="../index.html">Ver a vitrine</a></p></footer>
+<script src="app.js"></script>
+</body>
+</html>

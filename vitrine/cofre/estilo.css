@@ -1,0 +1,57 @@
+@font-face{font-family:Atkinson;src:url(fontes/atkinson-hyperlegible-latin-400-normal.woff2) format("woff2");font-weight:400;font-display:swap}
+@font-face{font-family:Atkinson;src:url(fontes/atkinson-hyperlegible-latin-700-normal.woff2) format("woff2");font-weight:700;font-display:swap}
+@font-face{font-family:JetBrains;src:url(fontes/jetbrains-400.woff2) format("woff2");font-display:swap}
+:root{--papel:#f7f8fa;--aco:#16324f;--aco2:#25496f;--alerta:#b3122a;--ok:#0b6b46;--tinta:#121a24;--apoio:#475569;--linha:#c9d2dc;--cifra:#7ef0c8}
+*{box-sizing:border-box}
+body{margin:0;background:var(--papel);color:var(--tinta);font:400 1.0625rem/1.55 Atkinson,system-ui,sans-serif;overflow-wrap:break-word}
+h1,h2,h3{margin:0;line-height:1.12;font-weight:700}
+p{margin:0}
+button,input,textarea{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--aco);outline-offset:2px}
+.faixa{background:#000;color:#fff;padding:.5rem clamp(1rem,3vw,2.5rem);font-size:.92rem}
+.cab{padding:clamp(1.6rem,4vw,3.2rem) clamp(1rem,3vw,2.5rem)}
+.cab h1{font-size:clamp(2rem,5vw,4.2rem);max-width:19ch;letter-spacing:-.015em}
+.cab p{margin-top:.9rem;max-width:62ch;font-size:1.15rem}
+.duelo{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}
+.aberto,.cifrado{padding:clamp(1.2rem,3vw,2.5rem);min-width:0}
+.aberto{background:#fff;border-top:6px solid var(--aco)}
+.cifrado{background:var(--aco);color:#fff;border-top:6px solid var(--cifra)}
+.duelo h2{font-size:1.6rem;margin-bottom:1rem}
+label{display:block;font-weight:700;margin:.8rem 0 .25rem}
+textarea,input:not([type=checkbox]){display:block;width:100%;min-height:46px;padding:.5rem .6rem;background:#fff;border:1px solid #64748b;border-radius:3px}
+.ver{display:flex;align-items:center;gap:.5rem;font-weight:400;min-height:44px;margin:.2rem 0}
+input[type=checkbox]{width:22px;height:22px;accent-color:var(--aco)}
+.forca{min-height:1.6em;font-weight:700}
+.fraca{color:var(--alerta)}
+.media{color:#7b4a00}
+.boa{color:var(--ok)}
+button{min-height:48px;margin-top:.8rem;padding:.4rem 1.1rem;background:var(--aco);color:#fff;border:1px solid var(--aco);border-radius:3px;cursor:pointer;font-weight:700}
+button:hover:not(:disabled){background:var(--aco2)}
+button:disabled{background:#e2e8f0;color:#475569;border-color:#94a3b8;cursor:not-allowed}
+#saida{margin:0;min-height:12em;padding:.8rem;background:#0b1c2e;color:var(--cifra);font:400 .95rem/1.5 JetBrains,ui-monospace,monospace;white-space:pre-wrap;word-break:break-all;border-radius:3px}
+#saida:focus-visible{outline-color:#fff}
+dl{margin:1rem 0 0}
+dl div{margin-top:.5rem}
+dt{font-weight:700}
+dd{margin:0;font:400 .92rem/1.4 JetBrains,ui-monospace,monospace;word-break:break-all;color:var(--cifra)}
+.tempo{margin-top:.8rem;min-height:1.6em}
+.provas,.vistoria,.como{padding:clamp(2rem,5vw,4rem) clamp(1rem,3vw,2.5rem)}
+.provas h2,.vistoria h2,.como h2{font-size:clamp(1.7rem,3.4vw,2.8rem);max-width:24ch}
+.provas ol{list-style:none;counter-reset:p;margin:1.5rem 0 0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:2.2rem clamp(1.5rem,4vw,4rem);max-width:1180px}
+.provas li{counter-increment:p;position:relative;padding-left:3rem;min-width:0}
+.provas li::before{content:counter(p);position:absolute;left:0;top:-.2rem;font-size:2.2rem;font-weight:700;color:var(--aco)}
+.provas h3{font-size:1.25rem;margin-bottom:.35rem}
+.res{margin-top:.6rem;font-weight:700;white-space:pre-line}
+.res.bom{color:var(--ok)}
+.res.ruim{color:var(--alerta)}
+.vistoria{background:#e8edf3}
+.colunas{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:2rem clamp(1.5rem,4vw,4rem);margin-top:1.4rem;max-width:1180px}
+.colunas h3{font-size:1.3rem;margin-bottom:.5rem}
+.colunas ul{margin:0;padding-left:1.2rem}
+.colunas li{margin:.3rem 0}
+.colunas p+p{margin-top:.7rem}
+.como p{margin-top:.8rem;max-width:72ch}
+.rodape{padding:1.2rem clamp(1rem,3vw,2.5rem);background:var(--aco);color:#fff}
+.rodape a{color:#fff;display:inline-block;padding:.3rem .5rem .3rem 0}
+.rodape :focus-visible{outline-color:#fff}
+@media (max-width:760px){.duelo,.provas ol,.colunas{grid-template-columns:minmax(0,1fr)}}
