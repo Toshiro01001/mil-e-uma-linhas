@@ -26,3 +26,14 @@ Desenvolvido por Rodrigo Terroso Junior. O Claude, da Anthropic, foi usado como 
 ## Vistoria de segurança
 
 Cada alteração passa por conferência de segredos no código, política de segurança de conteúdo (CSP), tratamento de texto digitado e dependências externas. O GitHub Pages não permite definir cabeçalhos HTTP, então a CSP fica em uma etiqueta meta. As demonstrações rodam só no navegador e não enviam dados.
+
+## Projetos com imagens
+
+Fiz estas demonstrações para mostrar o que entrego. As empresas e os dados são fictícios. A lista completa, com os links, está na [aba Projetos](https://mileumalinhas.com.br/#projetos).
+
+| | | |
+|---|---|---|
+| <img src="img/projetos/pinhosos.webp" alt="Pinhoso's Kicks" width="260"><br>Pinhoso's Kicks | <img src="img/projetos/friagem.webp" alt="Friagem" width="260"><br>Friagem | <img src="img/projetos/atacado.webp" alt="Atacado Digital" width="260"><br>Atacado Digital |
+| <img src="img/projetos/cinelumen.webp" alt="CineLumen" width="260"><br>CineLumen | <img src="img/projetos/clinica.webp" alt="Clínica Ipê de Agosto" width="260"><br>Clínica Ipê de Agosto | <img src="img/projetos/pacu.webp" alt="Pacu Gordo" width="260"><br>Pacu Gordo |
+| <img src="img/projetos/solapino.webp" alt="Sol a Pino" width="260"><br>Sol a Pino | <img src="img/projetos/moveis.webp" alt="Móveis Cerrado Alto" width="260"><br>Móveis Cerrado Alto | <img src="img/projetos/relogios.webp" alt="Ponteiro Alto" width="260"><br>Ponteiro Alto |
+| <img src="img/projetos/redes.webp" alt="Ateliê Seriema" width="260"><br>Ateliê Seriema | <img src="img/projetos/anuncios.webp" alt="Prancheta de Tráfego" width="260"><br>Prancheta de Tráfego | <img src="img/projetos/cofre.webp" alt="Cofre de Dados" width="260"><br>Cofre de Dados |
