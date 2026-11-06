@@ -21,8 +21,12 @@ window.MUL_TEMAS = (function () {
     if (CAPAS[t] && !feitas[t]) { feitas[t] = true; CAPAS[t](); }
     if (!inicial) window.dispatchEvent(new Event('mul:tema'));
   }
+  /* No celular o seletor fica recolhido para a marca e as abas caberem na primeira tela. */
+  var abrirTemas = $('#temas-abrir'), caixaTemas = $('#temas');
+  function mostrarTemas(on) { caixaTemas.classList.toggle('aberto', on); abrirTemas.setAttribute('aria-expanded', on ? 'true' : 'false'); }
+  abrirTemas.addEventListener('click', function () { mostrarTemas(!caixaTemas.classList.contains('aberto')); });
   botoes.forEach(function (b, i) {
-    b.addEventListener('click', function () { trocar(b.dataset.t); });
+    b.addEventListener('click', function (e) { trocar(b.dataset.t); if (e.detail > 0) mostrarTemas(false); });
     b.addEventListener('keydown', function (e) {
       var d = e.key === 'ArrowRight' || e.key === 'ArrowDown' ? 1 : e.key === 'ArrowLeft' || e.key === 'ArrowUp' ? -1 : 0;
       if (!d) return;

@@ -35,8 +35,8 @@
     if (r.aba === 'projetos' && r.sub) abrirProjeto(r.sub);
     if (mudou) {
       main.scrollTop = 0;
-      document.title = (r.aba === 'inicio' ? '' : tituloDa(r.aba) + ' | ') + 'Mil e Uma Linhas!' + (r.aba === 'inicio' ? ' | Meu código, seu site.' : '');
-      if (foco) { var t = $('#' + r.aba + ' h1, #' + r.aba + ' h2'); if (t) { t.setAttribute('tabindex', '-1'); t.focus({ preventScroll: true }); } }
+      document.title = (r.aba === 'inicio' ? '' : tituloDa(r.aba) + ' | ') + (r.aba === 'inicio' ? 'Sites e sistemas em Cuiabá | ' : '') + 'Mil e Uma Linhas!';
+      if (foco) { var t = Array.prototype.filter.call(document.querySelectorAll('#' + r.aba + ' h2'), function (x) { return x.offsetParent; })[0]; if (t) { t.setAttribute('tabindex', '-1'); t.focus({ preventScroll: true }); } }
     }
     if (window.MUL_ORC && r.aba === 'orcamento') window.MUL_ORC.rota(r.sub);
     if (window.MUL_GUIA && r.aba === 'linguagens') window.MUL_GUIA.abrir(r.sub);
@@ -67,6 +67,8 @@
 
   /* ---------- projetos ---------- */
   function abrirProjeto(id) {
+    var g = $('#projetos [data-grupo="' + id + '"]');
+    if (g) { setTimeout(function () { g.scrollIntoView({ block: 'start' }); }, 30); return true; }
     var d = $('details[data-proj="' + id + '"]');
     if (!d) return false;
     d.open = true;
@@ -445,11 +447,11 @@
     'orcamento          abre o montador de orçamento',
     'linguagens         o que cada linguagem faz',
     'cd <aba>           vai para início, serviços, projetos, demos, linguagens, orçamento ou contato',
-    'servicos           lista o que a gente faz',
+    'servicos           lista o que eu faço',
     'projetos           lista os projetos',
     'abrir <projeto>    abre os detalhes de um projeto',
     'demo <nome>        pedidos, atendimento, funil, pagina, banco ou ascii',
-    'contato            onde falar com a gente',
+    'contato            onde falar comigo',
     'whatsapp           situação do WhatsApp',
     'seguranca          como este site cuida dos seus dados',
     'sobre              quem fez e com quais ferramentas',
@@ -502,7 +504,7 @@
     if (c === 'onda') { if (abaAtual !== 'inicio') ir('#inicio'); setTimeout(campo.onda, 120); return void linha('Clique no logo para fazer outra.'); }
     if (c === 'limpar' || c === 'clear' || c === 'cls') { saida.textContent = ''; return; }
     if (c === 'sudo') return void linha('Aqui ninguém precisa de sudo. Mas boa tentativa.');
-    if (c === 'rm') return void linha('Negado. Antes de apagar qualquer coisa, a gente faz backup.', 'err');
+    if (c === 'rm') return void linha('Negado. Antes de apagar qualquer coisa, eu faço backup.', 'err');
     if (c === 'hello' || c === 'oi' || c === 'ola') return void linha('Olá! Digite ajuda para ver o que dá para fazer.');
     if (c === '1001' || c === 'linhas') return void linha('Faltam poucas. Sempre faltam poucas.');
     if (c === '404') return void linha('404: conserto: escrever a linha que faltava.');

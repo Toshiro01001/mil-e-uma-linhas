@@ -256,7 +256,7 @@ window.MUL_ORC = (function () {
       box.appendChild(b);
     });
     var n = validasPara(tipo, escolhidas).length;
-    $('#orc-ling-conta').textContent = !n ? 'Nenhuma marcada: a escolha fica com a gente, sem acréscimo.' : n + (n === 1 ? ' escolhida' : ' escolhidas') + '. Até 2 estão incluídas; cada uma a mais soma ' + Math.round(POR_EXTRA * 100) + '%.';
+    $('#orc-ling-conta').textContent = !n ? 'Nenhuma marcada: a escolha fica comigo, sem acréscimo.' : n + (n === 1 ? ' escolhida' : ' escolhidas') + '. Até 2 estão incluídas; cada uma a mais soma ' + Math.round(POR_EXTRA * 100) + '%.';
   }
   function alternar(id) {
     var i = escolhidas.indexOf(id);
