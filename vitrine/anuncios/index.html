@@ -5,13 +5,25 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'none'; base-uri 'none'; form-action 'none'">
 <meta name="referrer" content="no-referrer">
-<title>Prancheta de Tráfego: simulador de anúncios</title>
-<meta name="description" content="Simulador de funil de anúncios, cálculo de ponto de equilíbrio, gerador de links com UTM e teste A/B com estatística.">
-<link rel="icon" href="data:,">
+<title>Simulador de tráfego pago | Mil e Uma Linhas!</title>
+<meta name="description" content="Simule o funil de anúncios, o custo máximo por venda, links rastreados e teste A/B com estatística. Os números são hipóteses, não promessa de resultado.">
+<link rel="canonical" href="https://mileumalinhas.com.br/vitrine/anuncios/">
+<meta name="theme-color" content="#101418">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:site_name" content="Mil e Uma Linhas!">
+<meta property="og:title" content="Simulador de tráfego pago | Mil e Uma Linhas!">
+<meta property="og:description" content="Simule o funil de anúncios, o custo máximo por venda, links rastreados e teste A/B com estatística. Os números são hipóteses, não promessa de resultado.">
+<meta property="og:url" content="https://mileumalinhas.com.br/vitrine/anuncios/">
+<meta property="og:image" content="https://mileumalinhas.com.br/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<link rel="preload" href="fontes/ibm-plex-sans-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="estilo.css">
+<link rel="stylesheet" href="../assinatura.css">
 </head>
 <body>
-<div class="faixa"><p>Ferramenta de demonstração. Os números partem do que você digitar e são hipóteses, não promessa de resultado.</p></div>
+<aside class="faixa" aria-label="Aviso de demonstração"><p>Ferramenta de demonstração. Os números partem do que você digitar e são hipóteses, não promessa de resultado. <a href="../index.html">Ver outros sistemas</a></p></aside>
 <header class="cab">
   <h1>Antes de gastar em anúncio, faça a conta</h1>
   <p>Tráfego pago é uma sequência de contas: quanto custa aparecer, quantos clicam, quantos chamam, quantos compram. Mude os valores e veja onde o dinheiro se perde.</p>
@@ -88,7 +100,13 @@
     <p class="sub">Tudo é JavaScript no seu navegador, sem envio de dados. Impressões saem de verba e CPM; cliques, de impressões e CTR; depois vêm conversas, vendas e receita. O teste A/B usa o teste Z para duas proporções. O gerador de links usa a API URL do navegador, que trata os caracteres especiais e recusa endereços fora de http e https.</p>
   </section>
 </main>
-<footer class="rodape"><p>Demonstração feita por <a href="https://mileumalinhas.com.br/">Mil e Uma Linhas!</a> <a href="../index.html">Ver a vitrine</a></p></footer>
+<footer class="rodape-mil">
+  <div>
+    <p class="rm-marca"><a href="../../">mil e uma linhas<b>!</b></a></p>
+    <p class="rm-texto">Fiz esta demonstração para mostrar como o sistema funciona. Posso adaptar a ideia ao seu negócio.</p>
+  </div>
+  <nav class="rm-links" aria-label="Próximos passos"><a class="cheio" href="../../#orcamento/trafego">Montar um orçamento</a><a href="../index.html">Ver outros sistemas</a><a href="mailto:contato@mileumalinhas.com.br?subject=Quero%20um%20sistema%20assim">Escrever um e-mail</a></nav>
+</footer>
 <script src="app.js"></script>
 </body>
 </html>

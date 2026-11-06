@@ -79,8 +79,6 @@ input[type=checkbox]{width:22px;height:22px;flex:none;accent-color:var(--esmalte
 .duas{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:2rem;margin-top:1.4rem;max-width:1000px}
 .duas h3{font-size:1.4rem;margin-bottom:.5rem}
 .duas p+p{margin-top:.7rem}
-.rodape{padding:1.2rem clamp(1rem,3vw,2.5rem)}
-.rodape a{display:inline-block;padding:.3rem .5rem .3rem 0}
 @media (max-width:1100px){.ciclo{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}.ciclo-texto{grid-column:1/-1}.ciclo h1{max-width:20ch}}
 @media (max-width:720px){.ciclo{grid-template-columns:minmax(0,1fr)}.conversa{max-height:440px}.perguntas,.conta{grid-template-columns:minmax(0,1fr)}.duas{grid-template-columns:minmax(0,1fr)}.regras label{grid-template-columns:22px minmax(0,1fr);row-gap:0}.r-quando,.r-tipo{grid-column:2;text-align:left}.modelos li{width:calc(50% - .5rem)}}
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}

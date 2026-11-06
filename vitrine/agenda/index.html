@@ -4,17 +4,30 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'none'; base-uri 'none'; form-action 'none'">
-<title>Clínica Ipê de Agosto, agendamento (demonstração)</title>
-<meta name="description" content="Demonstração de site e agendamento para clínica. Empresa e dados fictícios.">
-<link rel="icon" href="data:,">
+<meta name="referrer" content="no-referrer">
+<title>Agenda on-line para clínica, demonstração | Mil e Uma Linhas!</title>
+<meta name="description" content="Demonstração de site com agendamento para clínica: especialidade, profissional, dia e horário, com tela da recepção. Empresa e dados fictícios.">
+<link rel="canonical" href="https://mileumalinhas.com.br/vitrine/agenda/">
+<meta name="theme-color" content="#101418">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:site_name" content="Mil e Uma Linhas!">
+<meta property="og:title" content="Agenda on-line para clínica, demonstração | Mil e Uma Linhas!">
+<meta property="og:description" content="Demonstração de site com agendamento para clínica: especialidade, profissional, dia e horário, com tela da recepção. Empresa e dados fictícios.">
+<meta property="og:url" content="https://mileumalinhas.com.br/vitrine/agenda/">
+<meta property="og:image" content="https://mileumalinhas.com.br/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<link rel="preload" href="fontes/familjen-grotesk-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="estilo.css">
+<link rel="stylesheet" href="../assinatura.css">
 <script src="app.js" defer></script>
 </head>
 <body>
-<div class="faixa">
-  <p>Sistema de demonstração. Empresa e dados fictícios.</p>
+<aside class="faixa" aria-label="Aviso de demonstração">
+  <p>Sistema de demonstração. Empresa e dados fictícios. <a href="../index.html">Ver outros sistemas</a></p>
   <button type="button" id="restaurar">Restaurar dados de exemplo</button>
-</div>
+</aside>
 <header class="topo">
   <a class="marca" href="#inicio">
     <svg viewBox="0 0 40 40" width="30" height="30" aria-hidden="true"><g fill="#ffc93c"><circle cx="20" cy="9" r="8"/><circle cx="30.5" cy="16.6" r="8"/><circle cx="26.5" cy="29" r="8"/><circle cx="13.5" cy="29" r="8"/><circle cx="9.5" cy="16.6" r="8"/></g><circle cx="20" cy="20" r="4.5" fill="#22163b"/></svg>
@@ -113,9 +126,12 @@
     </div>
   </section>
 </main>
-<footer class="rodape">
-  <p>Demonstração feita por <a href="https://mileumalinhas.com.br/">Mil e Uma Linhas!</a></p>
-  <p><a href="../index.html">Ver as outras demonstrações</a></p>
+<footer class="rodape-mil">
+  <div>
+    <p class="rm-marca"><a href="../../">mil e uma linhas<b>!</b></a></p>
+    <p class="rm-texto">Fiz esta demonstração para mostrar como o sistema funciona. Posso adaptar a ideia ao seu negócio.</p>
+  </div>
+  <nav class="rm-links" aria-label="Próximos passos"><a class="cheio" href="../../#orcamento/sistema">Montar um orçamento</a><a href="../index.html">Ver outros sistemas</a><a href="mailto:contato@mileumalinhas.com.br?subject=Quero%20um%20sistema%20assim">Escrever um e-mail</a></nav>
 </footer>
 <p id="aviso" class="so-leitor" aria-live="polite"></p>
 </body>

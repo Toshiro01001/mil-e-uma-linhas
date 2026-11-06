@@ -25,7 +25,7 @@ button{cursor:pointer}
 .conversa{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:clamp(1rem,2.5vw,2rem);padding:clamp(1.2rem,3vw,2.4rem) clamp(1rem,4vw,3rem);align-items:start}
 .chat{background:var(--branco);border:2px solid var(--tinta);display:flex;flex-direction:column;min-width:0}
 .chat-topo{text-align:center;padding:.8rem 1rem .6rem;border-bottom:2px solid var(--tinta)}
-.chat-topo svg{display:block;width:min(100%,260px);height:auto;margin:0 auto -.2rem}
+.chat-topo svg{display:block;width:min(100%,220px);height:auto;margin:0 auto .3rem}
 .chat-topo h2{font-size:1.2rem;font-stretch:112%}
 .prog{margin:.15rem 0 0;color:var(--suave);font-size:.95rem}
 .mensagens{height:360px;overflow-y:auto;padding:1rem;display:flex;flex-direction:column;gap:.5rem}
@@ -85,9 +85,6 @@ body.arrastando{cursor:grabbing;user-select:none;-webkit-user-select:none}
 .como-col{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:1.4rem 2rem;margin-top:1rem}
 .como h3{font-size:1.15rem;color:var(--sol);margin-bottom:.3rem}
 .como p{margin:0;max-width:60ch}
-.rodape{display:flex;flex-wrap:wrap;gap:.2rem 1.5rem;justify-content:space-between;padding:.8rem clamp(1rem,4vw,3rem);background:var(--branco)}
-.rodape p{margin:0}
-.rodape a{color:var(--cobalto);display:inline-block;padding:.45rem 0;font-weight:600}
 dialog{border:2px solid var(--tinta);padding:1.1rem;width:min(92vw,460px);max-height:90vh;color:var(--tinta);background:var(--branco);border-radius:0}
 dialog::backdrop{background:rgb(14 23 48 / .6)}
 dialog h2{font-size:1.4rem;font-stretch:112%}

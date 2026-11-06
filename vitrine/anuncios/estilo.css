@@ -64,9 +64,6 @@ button:disabled{background:#dfe6ee;color:#44566c;border-color:#8ea0b3;cursor:not
 .etapas li{margin:.8rem 0;padding-left:.3rem}
 .etapas li::marker{font-weight:600;color:var(--azul)}
 .etapas h3{font-size:1.2rem}
-.rodape{padding:1.2rem clamp(1rem,3vw,2.5rem);background:var(--azul2);color:#fff}
-.rodape a{color:#fff;display:inline-block;padding:.3rem .5rem .3rem 0}
-.rodape :focus-visible{outline-color:var(--marca)}
 @media (max-width:1100px){.indicadores{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @media (max-width:760px){.grade-funil,.grade-utm{grid-template-columns:minmax(0,1fr)}.campos{grid-template-columns:minmax(0,1fr)}.indicadores{grid-template-columns:repeat(2,minmax(0,1fr))}.grade-ab{grid-template-columns:minmax(0,1fr)}}
 .etapas a{display:inline-block}

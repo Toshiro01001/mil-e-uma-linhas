@@ -80,9 +80,6 @@ legend{font-weight:700;padding:0;margin-bottom:.2rem}
 .como-col{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:1.4rem 2rem;margin-top:1rem}
 .como h3{font-family:Familjen,sans-serif;font-weight:700;font-size:1.15rem;color:#ffdc6b;margin-bottom:.3rem}
 .como p{margin:0;max-width:60ch}
-.rodape{color:var(--tinta);display:flex;flex-wrap:wrap;gap:.2rem 1.5rem;justify-content:space-between;padding:.8rem clamp(1rem,4vw,3rem);background:var(--amarelo)}
-.rodape p{margin:0}
-.rodape a{color:var(--tinta);font-weight:700;display:inline-block;padding:.45rem 0}
 /* Cozinha: trilho de comandas em fundo escuro, para ler de longe */
 body.cozinha{background:#20302f;color:#fff}
 .coz-topo{display:flex;flex-wrap:wrap;gap:.3rem 1.6rem;align-items:baseline;padding:1rem clamp(1rem,3vw,2rem) .4rem}
@@ -117,7 +114,7 @@ body.cozinha{background:#20302f;color:#fff}
   .barra-pedido{display:block;position:fixed;left:0;right:0;bottom:0;z-index:6;background:var(--tomate);color:#fff;font-weight:700;text-align:center;padding:.9rem 1rem;text-decoration:none}
   .barra-pedido[hidden]{display:none!important}
   .barra-pedido:focus-visible{outline-color:#fff;outline-offset:-5px}
-  body.tem-itens .rodape{padding-bottom:4.4rem}
+  body.tem-itens .rodape-mil{padding-bottom:4.4rem}
   .trilhos{grid-template-columns:repeat(2,minmax(0,1fr))}
 }
 @media (max-width:560px){

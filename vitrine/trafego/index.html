@@ -4,17 +4,30 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'none'; base-uri 'none'; form-action 'none'">
-<title>Móveis Cerrado Alto, painel de anúncios (demonstração)</title>
-<meta name="description" content="Demonstração de painel de tráfego pago com dados simulados. Empresa e dados fictícios.">
-<link rel="icon" href="data:,">
+<meta name="referrer" content="no-referrer">
+<title>Painel de anúncios, demonstração | Mil e Uma Linhas!</title>
+<meta name="description" content="Demonstração de painel de tráfego pago com gasto, cliques, CPC, CPA e ROAS por campanha, filtro de período e gráficos. Todos os dados são simulados.">
+<link rel="canonical" href="https://mileumalinhas.com.br/vitrine/trafego/">
+<meta name="theme-color" content="#101418">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:site_name" content="Mil e Uma Linhas!">
+<meta property="og:title" content="Painel de anúncios, demonstração | Mil e Uma Linhas!">
+<meta property="og:description" content="Demonstração de painel de tráfego pago com gasto, cliques, CPC, CPA e ROAS por campanha, filtro de período e gráficos. Todos os dados são simulados.">
+<meta property="og:url" content="https://mileumalinhas.com.br/vitrine/trafego/">
+<meta property="og:image" content="https://mileumalinhas.com.br/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<link rel="preload" href="fontes/ibm-plex-sans-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="estilo.css">
+<link rel="stylesheet" href="../assinatura.css">
 <script src="app.js" defer></script>
 </head>
 <body>
-<div class="faixa">
-  <p>Sistema de demonstração. Empresa e dados fictícios.</p>
+<aside class="faixa" aria-label="Aviso de demonstração">
+  <p>Sistema de demonstração. Empresa e dados fictícios. <a href="../index.html">Ver outros sistemas</a></p>
   <button type="button" id="restaurar">Restaurar dados de exemplo</button>
-</div>
+</aside>
 <header class="cab">
   <p class="dono">Móveis Cerrado Alto, painel de anúncios</p>
   <h1 id="frase">Carregando o painel.</h1>
@@ -58,7 +71,7 @@
   <section class="folha" aria-labelledby="t-tab">
     <h2 id="t-tab">Campanha por campanha</h2>
     <p class="sub">Clique no título de uma coluna para ordenar. Dados simulados.</p>
-    <div class="tab-rola" tabindex="0" role="region" aria-labelledby="t-tab"><table id="tabela"></table></div>
+    <div class="tab-rola" tabindex="0" role="group" aria-label="Tabela de campanhas, role para o lado"><table id="tabela"></table></div>
   </section>
   <section class="calc" id="calc" aria-labelledby="t-calc">
     <div class="calc-txt">
@@ -87,9 +100,12 @@
     </div>
   </section>
 </main>
-<footer class="rodape">
-  <p>Demonstração feita por <a href="https://mileumalinhas.com.br/">Mil e Uma Linhas!</a></p>
-  <p><a href="../index.html">Ver as outras demonstrações</a></p>
+<footer class="rodape-mil">
+  <div>
+    <p class="rm-marca"><a href="../../">mil e uma linhas<b>!</b></a></p>
+    <p class="rm-texto">Fiz esta demonstração para mostrar como o sistema funciona. Posso adaptar a ideia ao seu negócio.</p>
+  </div>
+  <nav class="rm-links" aria-label="Próximos passos"><a class="cheio" href="../../#orcamento/trafego">Montar um orçamento</a><a href="../index.html">Ver outros sistemas</a><a href="mailto:contato@mileumalinhas.com.br?subject=Quero%20um%20sistema%20assim">Escrever um e-mail</a></nav>
 </footer>
 <div id="dica" class="dica" hidden></div>
 <p id="aviso" class="so-leitor" aria-live="polite"></p>

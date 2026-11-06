@@ -97,8 +97,5 @@ textarea,select,input{display:block;width:100%;min-height:46px;padding:.45rem .6
 .duas h3{font-size:1.35rem;margin-bottom:.5rem}
 .duas p+p,.duas ul+p{margin-top:.7rem}
 .duas ul{margin:0;padding-left:1.2rem}
-.rodape{padding:1.2rem clamp(1rem,3vw,2.5rem);background:var(--jabuticaba);color:#fff}
-.rodape a{color:#fff;display:inline-block;padding:.3rem .5rem .3rem 0}
-.rodape :focus-visible{outline-color:var(--milho)}
 @media (max-width:1180px){.dias{grid-template-columns:repeat(4,minmax(0,1fr))}.relatorio{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @media (max-width:760px){.dias{grid-template-columns:minmax(0,1fr)}.dia{min-height:0}.novo,.caixa-grade,.duas{grid-template-columns:minmax(0,1fr)}.relatorio{grid-template-columns:repeat(2,minmax(0,1fr))}.linha{grid-template-columns:repeat(2,minmax(0,1fr))}.linha>div:first-child{grid-column:1/-1}}
