@@ -8,22 +8,24 @@ window.MUL_ORC = (function () {
       nome: 'Site', planos: [
         { nome: 'Essencial', desc: 'Uma página com seus serviços e botão de contato. Pronta em até 14 dias depois de receber textos e fotos.', dias: [7, 14], faixa: [600, 1200] },
         { nome: 'Profissional', desc: 'Até 5 páginas, formulário e aparência própria da sua marca.', dias: [21, 30], faixa: [1500, 3000] },
-        { nome: 'Completo', desc: 'Loja virtual ou área do cliente simples.', dias: [30, 60], faixa: [3500, 8000] }
+        { nome: 'Completo', desc: 'Loja virtual ou área do cliente simples.', dias: [45, 75], faixa: [5000, 12000] }
       ],
       extras: [
         { nome: 'Página a mais', dias: [1, 2], faixa: [150, 300] }, { nome: 'Agendamento online', dias: [3, 5], faixa: [400, 900] },
-        { nome: 'Escrita dos textos', dias: [2, 4], faixa: [200, 500] }, { nome: 'Otimização para o Google', dias: [1, 2], faixa: [150, 400] }
+        { nome: 'Escrita dos textos', dias: [2, 4], faixa: [200, 500] }, { nome: 'Otimização para o Google', dias: [1, 2], faixa: [150, 400] },
+        { nome: 'Manutenção e segurança', dias: [0, 0], faixa: [150, 400], mensal: true }
       ]
     },
     sistema: {
       nome: 'Sistema', planos: [
         { nome: 'Pequeno', desc: 'Um cadastro principal, como pedidos ou clientes, com busca e relatório simples.', dias: [30, 45], faixa: [2500, 5000] },
         { nome: 'Médio', desc: 'Vários cadastros, login e permissões por usuário, relatórios.', dias: [60, 90], faixa: [6000, 15000] },
-        { nome: 'Grande', desc: 'Regras complexas, integrações e muitos perfis de acesso.', dias: [120, 180], faixa: [18000, 40000] }
+        { nome: 'Grande', desc: 'Regras complexas, integrações e muitos perfis de acesso. Começa pelo Diagnóstico pago, que define o valor final.', dias: [120, 180], faixa: [18000, 40000], aPartir: true }
       ],
       extras: [
         { nome: 'Integração com outro sistema', dias: [7, 14], faixa: [1000, 4000] }, { nome: 'Importar planilhas ou banco antigo', dias: [3, 7], faixa: [500, 2000] },
-        { nome: 'Relatórios em PDF ou Excel', dias: [2, 5], faixa: [400, 1500] }, { nome: 'Versão instalável no celular', dias: [14, 30], faixa: [1500, 5000] }
+        { nome: 'Relatórios em PDF ou Excel', dias: [2, 5], faixa: [400, 1500] }, { nome: 'Versão instalável no celular', dias: [14, 30], faixa: [1500, 5000] },
+        { nome: 'Manutenção e segurança', dias: [0, 0], faixa: [150, 400], mensal: true }
       ]
     },
     vendas: {
@@ -49,9 +51,9 @@ window.MUL_ORC = (function () {
     },
     freelance: {
       nome: 'Programação freelance', horas: true, planos: [
-        { nome: 'Ajustes', desc: 'Correções e manutenção em um código que já existe.', faixa: [60, 90] },
-        { nome: 'Novas funções', desc: 'Partes novas em um projeto da sua equipe.', faixa: [80, 120] },
-        { nome: 'Especializado', desc: 'Banco de dados, integrações, C ou C++.', faixa: [100, 150] }
+        { nome: 'Ajustes', desc: 'Correções e manutenção em um código que já existe.', faixa: [50, 70] },
+        { nome: 'Novas funções', desc: 'Partes novas em um projeto da sua equipe.', faixa: [60, 90] },
+        { nome: 'Especializado', desc: 'Banco de dados, integrações, C ou C++.', faixa: [80, 120] }
       ],
       extras: [],
       nota: 'Valor por hora vezes as horas escolhidas. O prazo considera até 20 horas de trabalho por semana.'
@@ -158,12 +160,12 @@ window.MUL_ORC = (function () {
     (P.extras || []).forEach(function (x, i) { if (marc[i] && x.dias) { d[0] += x.dias[0]; d[1] += x.dias[1]; } });
     /* mais linguagens tomam mais tempo; urgência encurta */
     var dm = (tecM > 1 ? tecM : 1) * (prazoM > 1 ? 0.7 : 1);
-    return { unico: [redondo(un[0] * m), redondo(un[1] * m)], mensal: [redondo(me[0] * m), redondo(me[1] * m)], dias: [Math.max(1, Math.ceil(d[0] * dm)), Math.max(1, Math.ceil(d[1] * dm))] };
+    return { aberto: !!pl.aPartir, unico: [redondo(un[0] * m), redondo(un[1] * m)], mensal: [redondo(me[0] * m), redondo(me[1] * m)], dias: [Math.max(1, Math.ceil(d[0] * dm)), Math.max(1, Math.ceil(d[1] * dm))] };
   }
   function diasTxt(d) { return d[0] === d[1] ? d[0] + ' dias' : d[0] + ' a ' + d[1] + ' dias'; }
   function valorTxt(v) {
     var partes = [];
-    if (v.unico[1]) partes.push(faixaTxt(v.unico));
+    if (v.unico[1]) partes.push(v.aberto ? 'a partir de ' + reais(v.unico[0]) : faixaTxt(v.unico));
     if (v.mensal[1]) partes.push(faixaTxt(v.mensal) + ' por mês');
     return partes.join(' + ');
   }
@@ -182,11 +184,11 @@ window.MUL_ORC = (function () {
   }
   function totais() {
     return carrinho.reduce(function (s, it) {
-      s.unico[0] += it.valor.unico[0]; s.unico[1] += it.valor.unico[1];
+      s.unico[0] += it.valor.unico[0]; s.unico[1] += it.valor.unico[1]; if (it.valor.aberto) s.aberto = true;
       s.mensal[0] += it.valor.mensal[0]; s.mensal[1] += it.valor.mensal[1];
       s.dias[0] += it.valor.dias[0]; s.dias[1] += it.valor.dias[1];
       return s;
-    }, { unico: [0, 0], mensal: [0, 0], dias: [0, 0] });
+    }, { aberto: false, unico: [0, 0], mensal: [0, 0], dias: [0, 0] });
   }
   function texto() {
     var l = ['Olá! Montei este pedido no site da Mil e Uma Linhas!:', ''];
@@ -210,7 +212,7 @@ window.MUL_ORC = (function () {
       var b = el('button', 'orc-plano'); b.type = 'button'; b.setAttribute('role', 'radio');
       b.setAttribute('aria-checked', i === plano ? 'true' : 'false');
       b.appendChild(el('b', null, pl.nome));
-      b.appendChild(el('span', 'orc-preco', faixaTxt(pl.faixa) + (pl.mensal ? ' por mês' : P.horas ? ' por hora' : '')));
+      b.appendChild(el('span', 'orc-preco', (pl.aPartir ? 'a partir de ' + reais(pl.faixa[0]) : faixaTxt(pl.faixa)) + (pl.mensal ? ' por mês' : P.horas ? ' por hora' : '')));
       b.appendChild(el('span', 'orc-desc', pl.desc));
       b.addEventListener('click', function () { plano = i; renderPlanos(); atualizar(); });
       box.appendChild(b);
