@@ -28,4 +28,7 @@ main{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}
 .v-rodape{padding:1rem clamp(1rem,4vw,3rem)}
 .v-rodape p{margin:0}
 .v-rodape a{color:#14141c;display:inline-block;padding:.3rem 0}
+.cine{background:#061a2c;color:#f7e9c4}
+.cine h2{color:#e8c46a}
+.friagem{background:#0f6283;color:#fff}
 @media (max-width:720px){main{grid-template-columns:minmax(0,1fr)}.v-item{min-height:0}.abrir{padding-top:.6rem}}
