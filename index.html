@@ -20,16 +20,16 @@
 <link rel="canonical" href="https://mileumalinhas.com.br/">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="preload" href="fonts/bricolage.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="css/site.css?v=20261106q">
+<link rel="stylesheet" href="css/site.css?v=20261106r">
 <script src="js/boot.js"></script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"ProfessionalService","name":"Mil e Uma Linhas!","slogan":"Meu código, seu site.","url":"https://mileumalinhas.com.br/","description":"Sites, sistemas, automação de vendas e redes sociais, tráfego pago e programação freelance.","email":"contato@mileumalinhas.com.br","image":"https://mileumalinhas.com.br/og.png","address":{"@type":"PostalAddress","addressLocality":"Cuiabá","addressRegion":"MT","addressCountry":"BR"},"areaServed":"Cuiabá e região","founder":{"@type":"Person","name":"Rodrigo Terroso Junior"},"sameAs":["https://www.instagram.com/mileumalinhas/","https://www.linkedin.com/in/rodrigo-terroso-junior-9b900935b","https://github.com/Toshiro01001"]}</script>
 <script src="js/linguagens.js" defer></script>
 <script src="js/demos.js" defer></script>
-<script src="js/orcamento.js?v=20261106q" defer></script>
-<script src="js/pedido.js?v=20261106q" defer></script>
+<script src="js/orcamento.js?v=20261106r" defer></script>
+<script src="js/pedido.js?v=20261106r" defer></script>
 <script src="js/guia.js" defer></script>
 <script src="js/temas.js" defer></script>
-<script src="js/app.js?v=20261106q" defer></script>
+<script src="js/app.js?v=20261106r" defer></script>
 </head>
 <body>
 <a class="pular" href="#conteudo">Pular para o conteúdo</a>
@@ -697,12 +697,13 @@ histórico
       </div>
     </div>
     <aside class="orc-resumo" aria-label="Resumo do orçamento">
-      <h3 class="h-peq">Esta estimativa</h3>
+      <h3 class="h-peq">O que você está escolhendo agora</h3>
       <p class="orc-valor" id="orc-valor" aria-live="polite"></p>
       <p class="orc-dias" id="orc-dias" aria-live="polite"></p>
       <p class="nota" id="orc-nota"></p>
       <button class="botao cheio" type="button" id="orc-add">Adicionar ao pedido</button>
-      <h3 class="h-peq" id="t-carrinho">Seu pedido <span id="orc-n"></span></h3>
+      <p class="nota orc-aviso-add">Esta escolha só entra no pedido quando você clica em Adicionar. O que já foi adicionado fica na lista abaixo.</p>
+      <h3 class="h-peq orc-sep" id="t-carrinho">Seu pedido <span id="orc-n"></span></h3>
       <ul class="orc-carrinho" id="orc-carrinho" aria-labelledby="t-carrinho"></ul>
       <p class="orc-total" id="orc-total" aria-live="polite"></p>
       <div class="acoes">

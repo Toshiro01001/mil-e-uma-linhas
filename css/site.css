@@ -606,3 +606,6 @@ button.link:disabled { color: var(--cinza); text-decoration: none; cursor: not-a
   .fin-enviar { width: 100%; }
   .fin textarea { min-height: 220px; }
 }
+
+.orc-aviso-add { margin: 10px 0 0; }
+.orc-sep { margin-top: 24px; padding-top: 16px; border-top: 1px solid var(--traco); }
