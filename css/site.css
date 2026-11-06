@@ -374,6 +374,21 @@ textarea { display: block; width: 100%; padding: 8px 10px; background: var(--pai
 .orc-resumo .nota { font-size: 13.5px; line-height: 18px; margin: 10px 0 0; }
 .orc-resumo .acoes { margin: 10px 0 0; }
 
+
+/* ===== guia de linguagens ===== */
+.guia-lista { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-bottom: var(--lin); }
+.lang { background: var(--painel); border: 1px solid var(--traco); border-radius: var(--raio); padding: 16px 18px; display: flex; flex-direction: column; gap: 6px; align-items: flex-start; min-width: 0; }
+.lang h3 { font-size: 22px; line-height: 26px; }
+.lang p { margin: 0; font-size: 16px; line-height: 22px; }
+.lang .lang-q { font-size: 15px; line-height: 21px; color: var(--cinza); }
+.lang .lang-q b { color: var(--papel); }
+.lang-tags { font-family: var(--ui); font-size: 12.5px; line-height: 18px; color: var(--cinza); }
+.lang .botao { margin-top: auto; }
+.lang .botao[aria-pressed="true"] { background: var(--verde); border-color: var(--verde); color: var(--fundo); font-weight: 700; }
+.orc-ling-nota { margin: 0 0 10px; font-size: 14.5px; }
+#orc-ling-caixa[hidden] { display: none; }
+#orc-ling-conta { margin: -10px 0 0; font-size: 14px; line-height: 20px; }
+.abas nav a { flex: none; }
 /* ===== contato ===== */
 .canais { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
 .canal { background: var(--painel); border: 1px solid var(--traco); border-radius: var(--raio); padding: 18px 20px; min-width: 0; }
@@ -431,7 +446,7 @@ textarea { display: block; width: 100%; padding: 8px 10px; background: var(--pai
   .temas-rot { display: none; }
   .temas button { flex: none; }
   .abas nav { justify-content: flex-start; }
-  .vitrine, .canais, .orc-grade { grid-template-columns: minmax(0, 1fr); }
+  .vitrine, .canais, .orc-grade, .guia-lista { grid-template-columns: minmax(0, 1fr); }
   .kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .orc-planos { grid-template-columns: minmax(0, 1fr); }
   .orc-resumo { position: static; }

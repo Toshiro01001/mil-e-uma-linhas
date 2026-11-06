@@ -26,6 +26,7 @@
 <script src="js/linguagens.js" defer></script>
 <script src="js/demos.js" defer></script>
 <script src="js/orcamento.js" defer></script>
+<script src="js/guia.js" defer></script>
 <script src="js/temas.js" defer></script>
 <script src="js/app.js" defer></script>
 </head>
@@ -39,8 +40,9 @@
     <a href="#servicos" data-aba="servicos"><i>2:</i>serviços</a>
     <a href="#projetos" data-aba="projetos"><i>3:</i>projetos</a>
     <a href="#demos" data-aba="demos"><i>4:</i>demos</a>
-    <a href="#orcamento" data-aba="orcamento"><i>5:</i>orçamento</a>
-    <a href="#contato" data-aba="contato"><i>6:</i>contato</a>
+    <a href="#linguagens" data-aba="linguagens"><i>5:</i>linguagens</a>
+    <a href="#orcamento" data-aba="orcamento"><i>6:</i>orçamento</a>
+    <a href="#contato" data-aba="contato"><i>7:</i>contato</a>
   </nav>
   <div class="temas" role="radiogroup" aria-label="Aparência do site">
     <span class="temas-rot" aria-hidden="true">aparência</span>
@@ -506,6 +508,16 @@ histórico
   </div>
 </section>
 
+<!-- ============ linguagens ============ -->
+<section id="linguagens" class="folha" aria-labelledby="t-linguagens">
+  <h2 id="t-linguagens">Qual linguagem combina com o seu projeto?</h2>
+  <p class="intro">Você não precisa entender de programação para decidir. Diga o que quer construir e veja o que cada linguagem faz. Até 2 estão incluídas no orçamento, e cada uma a mais soma 15%.</p>
+  <div class="pilulas" id="gl-areas" role="group" aria-label="Filtrar por tipo de projeto"></div>
+  <p class="totais" id="gl-conta" aria-live="polite"></p>
+  <div class="guia-lista" id="gl-lista"></div>
+  <p><a class="botao cheio" href="#orcamento">Continuar para o orçamento</a> <a class="botao" href="#demos/linguagens">Comparar código em 7 linguagens</a></p>
+</section>
+
 <!-- ============ orçamento ============ -->
 <section id="orcamento" class="folha" aria-labelledby="t-orcamento">
   <h2 id="t-orcamento">Monte seu orçamento</h2>
@@ -518,8 +530,13 @@ histórico
       <div id="orc-horas-caixa" hidden><label>Horas de trabalho <output id="orc-horas-val"></output><input id="orc-horas" type="range" min="5" max="160" step="5" value="20"></label></div>
       <h3 class="h-peq">Adicionais</h3>
       <div class="orc-extras" id="orc-extras"></div>
+      <div id="orc-ling-caixa">
+        <h3 class="h-peq">Linguagens</h3>
+        <p class="nota orc-ling-nota">Não sabe qual escolher? <a href="#linguagens">Veja o que cada uma faz</a> ou deixe a escolha com a gente.</p>
+        <div class="pilulas" id="orc-langs" role="group" aria-label="Linguagens do projeto"></div>
+        <p class="nota" id="orc-ling-conta" aria-live="polite"></p>
+      </div>
       <div class="linha-form orc-opcoes">
-        <label>Linguagem principal <select id="orc-tec"></select></label>
         <label>Prazo <select id="orc-prazo"><option value="1">Normal</option><option value="1.25">Urgente (+25%)</option></select></label>
       </div>
     </div>

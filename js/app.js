@@ -5,8 +5,8 @@
   var $ = function (s, r) { return (r || document).querySelector(s); };
   var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
   var calmo = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var ABAS = ['inicio', 'servicos', 'projetos', 'demos', 'orcamento', 'contato'];
-  var ROTULO = { inicio: '1:início', servicos: '2:serviços', projetos: '3:projetos', demos: '4:demos', orcamento: '5:orçamento', contato: '6:contato' };
+  var ABAS = ['inicio', 'servicos', 'projetos', 'demos', 'linguagens', 'orcamento', 'contato'];
+  var ROTULO = { inicio: '1:início', servicos: '2:serviços', projetos: '3:projetos', demos: '4:demos', linguagens: '5:linguagens', orcamento: '6:orçamento', contato: '7:contato' };
   var main = $('main');
   var calha = $('.calha');
   var abaAtual = null;
@@ -39,6 +39,7 @@
       if (foco) { var t = $('#' + r.aba + ' h1, #' + r.aba + ' h2'); if (t) { t.setAttribute('tabindex', '-1'); t.focus({ preventScroll: true }); } }
     }
     if (window.MUL_ORC && r.aba === 'orcamento') window.MUL_ORC.rota(r.sub);
+    if (window.MUL_GUIA && r.aba === 'linguagens') window.MUL_GUIA.abrir(r.sub);
     if (r.aba === 'inicio' && temaAscii()) campo.mostrar(); else campo.parar();
     if (r.aba === 'contato' && temaAscii()) iniciarObra(); else pararObra();
     numerar();
@@ -442,8 +443,8 @@
     'ls                 o que tem neste site',
     'tema <nome>        ascii, empresa, loja, painel ou agenda',
     'orcamento          abre o montador de orçamento',
-    'linguagens         a mesma regra em 7 linguagens',
-    'cd <aba>           vai para início, serviços, projetos, demos, orçamento ou contato',
+    'linguagens         o que cada linguagem faz',
+    'cd <aba>           vai para início, serviços, projetos, demos, linguagens, orçamento ou contato',
     'servicos           lista o que a gente faz',
     'projetos           lista os projetos',
     'abrir <projeto>    abre os detalhes de um projeto',
@@ -465,7 +466,7 @@
     historico.push(txt); hPos = historico.length;
     var t = semAcento(txt), p = t.split(/\s+/), c = p[0], a = p[1] || '';
     if (c === 'ajuda' || c === 'help' || c === '?') return void linha(AJUDA);
-    if (c === 'ls' || c === 'dir') return void linha('inicio/  servicos/  projetos/  demos/  orcamento/  contato/');
+    if (c === 'ls' || c === 'dir') return void linha('inicio/  servicos/  projetos/  demos/  linguagens/  orcamento/  contato/');
     if (c === 'cd') {
       var alvo = a.replace(/\/$/, '');
       if (alvo === '..' || alvo === '~' || alvo === '') alvo = 'inicio';
@@ -477,7 +478,7 @@
       if (TEMAS[a] && window.MUL_TEMAS) { window.MUL_TEMAS.trocar(a); return void linha('Aparência: ' + a + '.'); }
       return void linha('Aparências: ascii, empresa, loja, painel e agenda.', 'err');
     }
-    if (c === 'linguagens') { ir('#demos/linguagens'); return void linha('SQL  Python  C  C++  Java  JavaScript  PHP'); }
+    if (c === 'linguagens') { ir('#linguagens'); return void linha(window.MUL_ORC.LINGUAGENS.map(function (l) { return l.nome; }).join('  ')); }
     if (c === 'servicos') { ir('#servicos'); return void linha('sites  sistemas  sob-medida  vendas  trafego  freelance'); }
     if (c === 'projetos') {
       ir('#projetos');
@@ -536,7 +537,7 @@
     if ((e.key === '/' || e.key === ':') && temaAscii()) { e.preventDefault(); abrirT(); return; }
     if (e.key === 'Escape' && !term.hidden) { fecharT(); return; }
     var n = parseInt(e.key, 10);
-    if (temaAscii() && n >= 1 && n <= 6) { location.hash = '#' + ABAS[n - 1]; }
+    if (temaAscii() && n >= 1 && n <= 7) { location.hash = '#' + ABAS[n - 1]; }
   });
 
   /* ---------- troca de aparência ---------- */

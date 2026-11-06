@@ -11,7 +11,8 @@ Site estático em HTML, CSS e JavaScript puro, sem dependências, sem cookies e 
 | `js/boot.js` | Prepara as abas e impede que o site seja embutido em outro |
 | `js/app.js` | Abas, logo em ASCII, números de linha e terminal |
 | `js/temas.js` | As 5 aparências e suas capas interativas |
-| `js/orcamento.js` | Montador de orçamento. **Os preços ficam na lista `PEDIDOS`, no início do arquivo** |
+| `js/orcamento.js` | Montador de orçamento. **Os preços ficam na lista `PEDIDOS` e as regras de linguagens em `LINGUAGENS`, no início do arquivo** |
+| `js/guia.js` | Aba que explica o que cada linguagem faz |
 | `js/demos.js` | As demonstrações. Tudo roda no navegador de quem usa |
 | `js/linguagens.js` | A mesma regra em 7 linguagens; cada programa foi executado de verdade |
 | `fonts/` | Bricolage Grotesque e JetBrains Mono, servidas daqui (licença OFL) |

@@ -67,9 +67,61 @@ window.MUL_ORC = (function () {
       ]
     }
   };
-  var TEC = [
-    ['A escolha fica com a gente', 1], ['JavaScript', 1], ['Python', 1], ['PHP', 1], ['SQL (foco em banco de dados)', 1], ['Java', 1.1], ['C', 1.2], ['C++', 1.2]
+  /* Linguagens. fator = quanto a linguagem encarece o trabalho; vale só o maior fator escolhido. */
+  var INCLUSAS = 2, POR_EXTRA = 0.15;
+  var LINGUAGENS = [
+    { id: 'javascript', nome: 'JavaScript', fator: 1, areas: ['site', 'sistema', 'automacao', 'app'],
+      faz: 'É a linguagem dos navegadores: faz botões, formulários e telas reagirem. Com Node.js, também roda no servidor.',
+      quando: 'Quase todo site ou sistema web usa em alguma parte.', exemplo: 'Carrinho de compras e painel que atualiza sem recarregar a página.' },
+    { id: 'typescript', nome: 'TypeScript', fator: 1, areas: ['site', 'sistema', 'app'],
+      faz: 'É JavaScript com tipos: o computador avisa muitos erros antes de o programa chegar ao cliente.',
+      quando: 'Sistemas web que vão crescer e receber manutenção por anos.', exemplo: 'Portal do cliente com várias telas e regras.' },
+    { id: 'python', nome: 'Python', fator: 1, areas: ['sistema', 'automacao', 'dados', 'site'],
+      faz: 'Escrita simples e muitas bibliotecas prontas para dados, automação e inteligência artificial.',
+      quando: 'Automatizar tarefas repetitivas, integrar sistemas e analisar dados.', exemplo: 'Robô que lê planilhas e gera relatórios sozinho.' },
+    { id: 'php', nome: 'PHP', fator: 1, areas: ['site', 'sistema'],
+      faz: 'Roda no servidor e gera páginas. É a base do WordPress e funciona em hospedagens comuns e baratas.',
+      quando: 'Sites e sistemas web em que o custo de hospedagem pesa.', exemplo: 'Site com área administrativa para editar produtos.' },
+    { id: 'sql', nome: 'SQL', fator: 1, areas: ['sistema', 'dados'],
+      faz: 'É a linguagem dos bancos de dados: guarda, busca, cruza e soma informações com segurança.',
+      quando: 'Sempre que o projeto precisa guardar clientes, pedidos ou estoque. Trabalha junto de outra linguagem.', exemplo: 'Relatório de vendas por mês em segundos.' },
+    { id: 'java', nome: 'Java', fator: 1.1, areas: ['sistema', 'app', 'desempenho'],
+      faz: 'Muito usada em empresas grandes e bancos. Estável e feita para sistemas que duram muitos anos.',
+      quando: 'Sistemas corporativos grandes ou uma base que já está em Java.', exemplo: 'Sistema interno com muitos usuários e regras.' },
+    { id: 'csharp', nome: 'C#', fator: 1.1, areas: ['sistema', 'site', 'desempenho'],
+      faz: 'Linguagem da plataforma .NET, da Microsoft. Forte em sistemas empresariais, APIs e programas para Windows.',
+      quando: 'Empresas que já usam produtos Microsoft ou precisam de programa para Windows.', exemplo: 'Sistema de gestão instalado nos computadores da loja.' },
+    { id: 'go', nome: 'Go', fator: 1.1, areas: ['sistema', 'automacao', 'desempenho'],
+      faz: 'Criada para serviços de internet rápidos e simples de manter, que aguentam muitos acessos ao mesmo tempo.',
+      quando: 'APIs e serviços que recebem muito tráfego.', exemplo: 'Serviço que recebe milhares de pedidos por minuto.' },
+    { id: 'ruby', nome: 'Ruby', fator: 1.1, areas: ['site', 'sistema'],
+      faz: 'Com o Ruby on Rails, permite levantar uma plataforma web completa com pouco código.',
+      quando: 'Testar uma ideia de produto rápido ou manter um sistema que já usa Rails.', exemplo: 'Primeira versão de uma plataforma por assinatura.' },
+    { id: 'dart', nome: 'Dart (Flutter)', fator: 1.1, areas: ['app'],
+      faz: 'Com o Flutter, um único código gera aplicativo para Android e iPhone.',
+      quando: 'Aplicativo nas duas lojas gastando menos do que fazer dois separados.', exemplo: 'App de pedidos para clientes de uma rede de lojas.' },
+    { id: 'kotlin', nome: 'Kotlin', fator: 1.1, areas: ['app'],
+      faz: 'Linguagem recomendada pelo Google para aplicativos nativos de Android.',
+      quando: 'App só para Android que precisa aproveitar bem o aparelho.', exemplo: 'App para a equipe de entregas, com câmera e GPS.' },
+    { id: 'swift', nome: 'Swift', fator: 1.1, areas: ['app'],
+      faz: 'Linguagem da Apple para aplicativos nativos de iPhone e iPad.',
+      quando: 'App só para iPhone que precisa aproveitar bem o aparelho.', exemplo: 'App de atendimento para clientes de iPhone.' },
+    { id: 'r', nome: 'R', fator: 1.1, areas: ['dados'],
+      faz: 'Feita para estatística: gera análises e gráficos a partir de muitos dados.',
+      quando: 'Pesquisas, indicadores e estudos estatísticos.', exemplo: 'Painel que compara o desempenho das filiais.' },
+    { id: 'c', nome: 'C', fator: 1.2, areas: ['desempenho'],
+      faz: 'Controle direto da memória e do hardware. Está em equipamentos e sistemas embarcados.',
+      quando: 'Programas para equipamentos ou partes em que cada milissegundo conta.', exemplo: 'Programa de um sensor ligado a uma máquina.' },
+    { id: 'cpp', nome: 'C++', fator: 1.2, areas: ['desempenho', 'sistema'],
+      faz: 'Alto desempenho em programas maiores, como jogos, simulações e processamento pesado.',
+      quando: 'Programas grandes que exigem muito do computador.', exemplo: 'Ferramenta que processa imagens ou cálculos pesados.' },
+    { id: 'rust', nome: 'Rust', fator: 1.2, areas: ['desempenho', 'sistema'],
+      faz: 'Desempenho parecido com o de C++, com verificações que evitam muitos erros de memória.',
+      quando: 'Serviços críticos em que falha e segurança custam caro.', exemplo: 'Serviço que processa pagamentos ou muitos dados.' }
   ];
+  var AREAS = { site: 'Sites', sistema: 'Sistemas', app: 'Aplicativos', automacao: 'Automação', dados: 'Dados e relatórios', desempenho: 'Alto desempenho' };
+  /* Quais áreas cada tipo de pedido oferece. Lista vazia = o pedido não envolve escolher linguagem. */
+  var AREAS_DO_PEDIDO = { site: ['site'], sistema: ['sistema', 'dados', 'app', 'desempenho'], vendas: ['automacao', 'site'], trafego: [], freelance: ['site', 'sistema', 'app', 'automacao', 'dados', 'desempenho'], medida: ['site', 'sistema', 'app', 'automacao', 'dados', 'desempenho'] };
 
   var $ = function (s) { return document.querySelector(s); };
   var el = function (t, c, x) { var e = document.createElement(t); if (c) e.className = c; if (x !== undefined) e.textContent = x; return e; };
@@ -77,7 +129,16 @@ window.MUL_ORC = (function () {
   var faixaTxt = function (f) { return reais(f[0]) + ' a ' + reais(f[1]); };
   var redondo = function (v) { return Math.round(v / 10) * 10; };
 
-  var tipo = 'site', plano = 0, marcados = {}, carrinho = [], pronto = false, ouvintes = [];
+  var tipo = 'site', plano = 0, marcados = {}, carrinho = [], pronto = false, ouvintes = [], escolhidas = [];
+  var ling = function (id) { return LINGUAGENS.filter(function (l) { return l.id === id; })[0]; };
+  function multiplicador(ids) {
+    var maior = ids.reduce(function (m, id) { return Math.max(m, ling(id).fator); }, 1);
+    return maior * (1 + POR_EXTRA * Math.max(0, ids.length - INCLUSAS));
+  }
+  function validasPara(t, ids) {
+    var a = AREAS_DO_PEDIDO[t];
+    return ids.filter(function (id) { return ling(id).areas.some(function (x) { return a.indexOf(x) >= 0; }); });
+  }
 
   function calcular(t, p, marc, horas, tecM, prazoM) {
     var P = PEDIDOS[t], pl = P.planos[p], un = [0, 0], me = [0, 0];
@@ -99,15 +160,15 @@ window.MUL_ORC = (function () {
     return partes.join(' + ');
   }
   function atual() {
-    var horas = +$('#orc-horas').value, tecI = +$('#orc-tec').value, prazo = +$('#orc-prazo').value;
-    return { tipo: tipo, plano: plano, marc: Object.assign({}, marcados), horas: horas, tecI: tecI, prazo: prazo, valor: calcular(tipo, plano, marcados, horas, TEC[tecI][1], prazo) };
+    var horas = +$('#orc-horas').value, prazo = +$('#orc-prazo').value, ids = validasPara(tipo, escolhidas);
+    return { tipo: tipo, plano: plano, marc: Object.assign({}, marcados), horas: horas, ids: ids, prazo: prazo, valor: calcular(tipo, plano, marcados, horas, multiplicador(ids), prazo) };
   }
   function descrever(it) {
     var P = PEDIDOS[it.tipo], d = P.nome + ', plano ' + P.planos[it.plano].nome;
     if (P.horas) d += ', ' + it.horas + ' horas';
     var ex = (P.extras || []).filter(function (x, i) { return it.marc[i]; }).map(function (x) { return x.nome; });
     if (ex.length) d += ', com ' + ex.join(', ').toLowerCase();
-    if (it.tecI) d += ', em ' + TEC[it.tecI][0];
+    if (it.ids.length) d += ', em ' + it.ids.map(function (id) { return ling(id).nome; }).join(', ');
     if (it.prazo > 1) d += ', urgente';
     return d;
   }
@@ -167,8 +228,29 @@ window.MUL_ORC = (function () {
     $('#orc-horas-val').textContent = it.horas + ' horas';
     var n = ['Estimativa. O valor final sai por escrito depois de conversarmos sobre o projeto.'];
     if (P.nota) n.unshift(P.nota);
-    if (TEC[it.tecI][1] > 1) n.unshift('Esta linguagem costuma exigir mais horas de desenvolvimento, por isso a faixa sobe.');
+    var extra = Math.max(0, it.ids.length - INCLUSAS), maior = it.ids.reduce(function (m, id) { return Math.max(m, ling(id).fator); }, 1);
+    if (extra) n.unshift(extra + (extra === 1 ? ' linguagem' : ' linguagens') + ' além das 2 incluídas: +' + Math.round(extra * POR_EXTRA * 100) + '% no valor.');
+    if (maior > 1) n.unshift('A linguagem mais exigente escolhida acrescenta ' + Math.round((maior - 1) * 100) + '%.');
     $('#orc-nota').textContent = n.join(' ');
+  }
+  function renderLinguagens() {
+    var areas = AREAS_DO_PEDIDO[tipo], caixa = $('#orc-ling-caixa'), box = $('#orc-langs');
+    caixa.hidden = !areas.length;
+    box.textContent = '';
+    LINGUAGENS.filter(function (l) { return l.areas.some(function (x) { return areas.indexOf(x) >= 0; }); }).forEach(function (l) {
+      var on = escolhidas.indexOf(l.id) >= 0, b = el('button', 'pilula', l.nome + (l.fator > 1 ? ' +' + Math.round((l.fator - 1) * 100) + '%' : ''));
+      b.type = 'button'; b.setAttribute('aria-pressed', on ? 'true' : 'false');
+      b.addEventListener('click', function () { alternar(l.id); });
+      box.appendChild(b);
+    });
+    var n = validasPara(tipo, escolhidas).length;
+    $('#orc-ling-conta').textContent = !n ? 'Nenhuma marcada: a escolha fica com a gente, sem acréscimo.' : n + (n === 1 ? ' escolhida' : ' escolhidas') + '. Até 2 estão incluídas; cada uma a mais soma ' + Math.round(POR_EXTRA * 100) + '%.';
+  }
+  function alternar(id) {
+    var i = escolhidas.indexOf(id);
+    if (i >= 0) escolhidas.splice(i, 1); else escolhidas.push(id);
+    if (pronto) { renderLinguagens(); atualizar(); }
+    ouvintes.forEach(function (f) { f(); });
   }
   function renderCarrinho() {
     var ul = $('#orc-carrinho'); ul.textContent = '';
@@ -191,14 +273,11 @@ window.MUL_ORC = (function () {
   function escolher(k, p) {
     if (!PEDIDOS[k]) k = 'site';
     tipo = k; plano = p || 0; marcados = {};
-    renderTipos(); renderPlanos(); renderExtras(); atualizar();
+    renderTipos(); renderPlanos(); renderExtras(); renderLinguagens(); atualizar();
   }
   function iniciar() {
     if (pronto) return;
     pronto = true;
-    var sel = $('#orc-tec');
-    TEC.forEach(function (t, i) { var o = el('option', null, t[0]); o.value = i; sel.appendChild(o); });
-    sel.addEventListener('change', atualizar);
     $('#orc-prazo').addEventListener('change', atualizar);
     $('#orc-horas').addEventListener('input', atualizar);
     $('#orc-add').addEventListener('click', function () { carrinho.push(atual()); renderCarrinho(); });
@@ -213,12 +292,13 @@ window.MUL_ORC = (function () {
     renderCarrinho();
   }
   return {
-    PEDIDOS: PEDIDOS, faixaTxt: faixaTxt, reais: reais, EMAIL: EMAIL,
+    PEDIDOS: PEDIDOS, faixaTxt: faixaTxt, reais: reais, EMAIL: EMAIL, LINGUAGENS: LINGUAGENS, AREAS: AREAS, INCLUSAS: INCLUSAS, POR_EXTRA: POR_EXTRA,
+    alternar: alternar, escolhidas: function () { return escolhidas.slice(); },
     rota: function (sub) { iniciar(); if (sub && PEDIDOS[sub] && sub !== tipo) escolher(sub, 0); },
     adicionar: function (k) { // usado pela vitrine da aparência Loja
       iniciar();
       var v = calcular(k, 0, {}, 20, 1, 1);
-      carrinho.push({ tipo: k, plano: 0, marc: {}, horas: 20, tecI: 0, prazo: 1, valor: v });
+      carrinho.push({ tipo: k, plano: 0, marc: {}, horas: 20, ids: [], prazo: 1, valor: v });
       renderCarrinho();
     },
     resumoCarrinho: function () { return { n: carrinho.length, txt: carrinho.length ? valorTxt(totais()) : '' }; },
