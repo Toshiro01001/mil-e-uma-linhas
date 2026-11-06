@@ -19,7 +19,7 @@ Site estático em HTML, CSS e JavaScript puro, sem dependências, sem cookies e 
 | `js/linguagens.js` | A mesma regra em 16 linguagens; cada programa foi compilado ou executado de verdade |
 | `vitrine/` | Sistemas de demonstração, cada um em sua pasta, com aviso e rodapé comuns em `assinatura.css` |
 | `fonts/` | Bricolage Grotesque e JetBrains Mono, servidas daqui (licença OFL) |
-| `pagar/` | Página de pagamento por Pix: lê o valor e a referência do link que envio e gera o QR Code e o código copia e cola no navegador, no padrão BR Code do Banco Central. Em `pagar/gerar/` fica a tela onde monto esse link |
+| `pagar/` | Página de pagamento por Pix: lê o código do link (`?c=`), busca valor, referência e situação no meu servidor de cobranças (Cloudflare Workers e D1, repositório privado) e gera o QR Code e o código copia e cola no navegador, no padrão BR Code do Banco Central |
 
 Para rodar no computador, sirva a pasta com qualquer servidor local, como `python3 -m http.server`.
 
@@ -31,7 +31,7 @@ Desenvolvido por Rodrigo Terroso Junior. O Claude, da Anthropic, foi usado como 
 
 Cada alteração passa por conferência de segredos no código, política de segurança de conteúdo (CSP), tratamento de texto digitado e dependências externas. O GitHub Pages não permite definir cabeçalhos HTTP, então a CSP fica em uma etiqueta meta. As demonstrações rodam só no navegador e não enviam dados.
 
-Na página de pagamento, a chave Pix, o nome e a cidade ficam fixos no código. Do endereço da página só leio o valor e a referência do orçamento, mostrados travados, e a referência passa por um filtro que aceita só letras e números. Um link adulterado pode mudar o valor, mas nunca para quem o dinheiro vai; por isso confiro cada pagamento no extrato contra o orçamento.
+Na página de pagamento, a chave Pix, o nome e a cidade ficam fixos no código. O link leva só um código aleatório de 128 bits; o valor vem do servidor de cobranças, então mexer no link não muda o valor nem o recebedor. A página só conversa com esse servidor (CSP `connect-src`), sem cookies.
 
 ## Projetos com imagens
 

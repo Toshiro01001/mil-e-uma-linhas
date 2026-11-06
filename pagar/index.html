@@ -3,14 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'none'; manifest-src 'none'; media-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'; upgrade-insecure-requests">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src https://cobrancas.contato-aea.workers.dev; manifest-src 'none'; media-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'; upgrade-insecure-requests">
 <meta name="referrer" content="no-referrer">
 <meta name="robots" content="noindex">
 <title>Pagar por Pix | Mil e Uma Linhas!</title>
 <meta name="description" content="Página de pagamento por Pix das etapas de um orçamento aprovado com a Mil e Uma Linhas!">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="preload" href="/fonts/jetbrains-400.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="pagar.css?v=20261106b">
+<link rel="stylesheet" href="pagar.css?v=20261106c">
 </head>
 <body>
 <header class="topo">
@@ -20,19 +20,24 @@
 <main id="conteudo">
   <h1>Pagar uma etapa por Pix</h1>
 
-  <section class="cartao alerta" id="sem-valor" hidden aria-labelledby="t-sem">
-    <h2 id="t-sem">Este endereço não traz o valor da etapa</h2>
-    <p>O valor vem pronto no link que envio depois que você aprova o orçamento. Abra o link que recebeu por e-mail ou mensagem, ou me escreva em <a href="mailto:contato@mileumalinhas.com.br">contato@mileumalinhas.com.br</a> pedindo o link da etapa.</p>
+  <p class="carregando" id="carregando" aria-live="polite">Buscando a cobrança...</p>
+
+  <section class="cartao alerta" id="estado" hidden aria-labelledby="t-estado" aria-live="polite">
+    <h2 id="t-estado"></h2>
+    <p id="p-estado"></p>
+    <p>Meu e-mail: <a href="mailto:contato@mileumalinhas.com.br">contato@mileumalinhas.com.br</a></p>
+    <button type="button" class="botao" id="tentar" hidden>Tentar de novo</button>
   </section>
 
-  <div id="etapa">
-    <p class="intro">O valor abaixo veio do link que enviei para o seu orçamento aprovado. O código é gerado aqui no seu navegador: nada sai desta página.</p>
+  <div id="etapa" hidden>
+    <p class="intro">O valor abaixo vem do meu sistema de cobranças, ligado ao seu orçamento aprovado. O link não carrega o valor, então ninguém consegue mudá-lo. O código Pix é gerado aqui no seu navegador.</p>
     <div class="grade">
       <section class="cartao" aria-labelledby="t-dados">
         <h2 id="t-dados">1. Confira a etapa</h2>
         <dl class="recebedor dados">
           <dt>Valor</dt><dd class="valor" id="mostra-valor"></dd>
           <dt>Referência</dt><dd id="mostra-ref"></dd>
+          <dt>Etapa</dt><dd id="mostra-etapa"></dd>
           <dt>Recebedor</dt><dd>Rodrigo de Sousa Terroso Junior</dd>
           <dt>Chave Pix (e-mail)</dt><dd>contato@mileumalinhas.com.br</dd>
           <dt>Instituição</dt><dd>Mercado Pago</dd>
@@ -66,8 +71,8 @@
 <footer class="rodape">
   <p>Mil e Uma Linhas! · Rodrigo Terroso Junior, Cuiabá, MT · <a href="/">voltar ao site</a></p>
 </footer>
-<script src="qrcode.min.js?v=20261106b"></script>
-<script src="pix-core.js?v=20261106b"></script>
-<script src="pix.js?v=20261106b"></script>
+<script src="qrcode.min.js?v=20261106c"></script>
+<script src="pix-core.js?v=20261106c"></script>
+<script src="pix.js?v=20261106c"></script>
 </body>
 </html>

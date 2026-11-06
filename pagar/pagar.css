@@ -54,3 +54,5 @@ input[aria-invalid="true"] { border-color: var(--coral); }
 a.botao { display: inline-flex; align-items: center; justify-content: center; text-decoration: none; text-align: center; }
 .cartao > .ajuda:last-child { margin-top: 14px; }
 @media (max-width: 420px) { .acoes.duas { grid-template-columns: 1fr; } }
+.carregando { color: var(--cinza); font-family: var(--mono); }
+#estado p { margin: 0 0 12px; }
