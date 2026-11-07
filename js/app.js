@@ -35,7 +35,7 @@
     if (r.aba === 'projetos' && r.sub) abrirProjeto(r.sub);
     if (mudou) {
       main.scrollTop = 0;
-      document.title = (r.aba === 'inicio' ? '' : tituloDa(r.aba) + ' | ') + (r.aba === 'inicio' ? 'Sites e sistemas em Cuiabá | ' : '') + 'Mil e Uma Linhas!';
+      document.title = (r.aba === 'inicio' ? '' : tituloDa(r.aba) + ' | ') + (r.aba === 'inicio' ? 'Sites e sistemas para todo o Brasil | ' : '') + 'Mil e Uma Linhas!';
       if (foco) { var t = Array.prototype.filter.call(document.querySelectorAll('#' + r.aba + ' h2'), function (x) { return x.offsetParent; })[0]; if (t) { t.setAttribute('tabindex', '-1'); t.focus({ preventScroll: true }); } }
     }
     if (window.MUL_ORC && r.aba === 'orcamento') window.MUL_ORC.rota(r.sub);
@@ -501,7 +501,7 @@
     if (c === 'whatsapp' || c === 'zap') return void linha('Work in Progress!!');
     if (c === 'email') return void linha('contato@mileumalinhas.com.br');
     if (c === 'seguranca') return void linha('Sem cookies. Sem rastreadores. Sem scripts de terceiros.\nSem login e sem banco de dados.\nNenhum site é 100% seguro: este foi feito para ter o mínimo possível a ser roubado.');
-    if (c === 'sobre' || c === 'whoami') return void linha('Mil e Uma Linhas!, de Rodrigo Terroso Junior.\nMeu código, seu site. Cuiabá e região.\nO Claude, da Anthropic, foi usado como ferramenta durante o desenvolvimento.');
+    if (c === 'sobre' || c === 'whoami') return void linha('Mil e Uma Linhas!, de Rodrigo Terroso Junior.\nMeu código, seu site. Todo o Brasil, direto de Cuiabá.\nO Claude, da Anthropic, foi usado como ferramenta durante o desenvolvimento.');
     if (c === 'onda') { if (abaAtual !== 'inicio') ir('#inicio'); setTimeout(campo.onda, 120); return void linha('Clique no logo para fazer outra.'); }
     if (c === 'limpar' || c === 'clear' || c === 'cls') { saida.textContent = ''; return; }
     if (c === 'sudo') return void linha('Aqui ninguém precisa de sudo. Mas boa tentativa.');

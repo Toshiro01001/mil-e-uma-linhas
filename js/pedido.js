@@ -4,7 +4,7 @@
 window.MUL_PEDIDO = (function () {
   'use strict';
   var API = 'https://cobrancas.contato-aea.workers.dev';
-  var MIN = 500, MAX = 3000, RASCUNHO = 'mul-pedido-rascunho';
+  var MIN = 1, MAX = 14000, RASCUNHO = 'mul-pedido-rascunho';
   var O = window.MUL_ORC;
   var $ = function (id) { return document.getElementById(id); };
   var el = function (t, c, x) { var e = document.createElement(t); if (c) e.className = c; if (x !== undefined) e.textContent = x; return e; };
@@ -75,8 +75,8 @@ window.MUL_PEDIDO = (function () {
   }
   function contar() {
     var n = tamanho(compor()), p = $('fin-conta');
-    p.classList.toggle('ok', n >= MIN && n <= MAX);
-    p.textContent = n < MIN ? 'Conte um pouco mais. Faltam ' + (MIN - n) + ' caracteres para eu conseguir montar o orçamento.' : n > MAX ? 'Passou ' + (n - MAX) + ' caracteres do limite. Resuma alguma resposta.' : 'Pronto para enviar.';
+    p.classList.toggle('ok', n >= 1 && n <= MAX);
+    p.textContent = n > MAX ? 'Passou ' + (n - MAX) + ' caracteres do limite total. Resuma alguma resposta.' : 'Quanto mais específico você for, melhor para o orçamento.';
   }
 
   function listar(ul, linhas) {
@@ -141,7 +141,7 @@ window.MUL_PEDIDO = (function () {
     erroCampo('fq-negocio', v('fq-negocio').length < 2 ? 'Conte o nome e o ramo do seu negócio.' : '');
     erroCampo('fq-objetivo', v('fq-objetivo').length < 10 ? 'Conte o que você quer que o site ou sistema faça.' : '');
     var n = tamanho(compor()), et = $('fin-texto-erro');
-    et.textContent = n < MIN ? 'Conte um pouco mais nas respostas. Faltam ' + (MIN - n) + ' caracteres.' : n > MAX ? 'Passou ' + (n - MAX) + ' caracteres do limite. Resuma alguma resposta.' : '';
+    et.textContent = n > MAX ? 'Passou ' + (n - MAX) + ' caracteres do limite. Resuma alguma resposta.' : '';
     erroCampo('fin-aceite', $('fin-aceite').checked ? '' : 'Marque que concorda para eu poder responder.');
     ['fin-nome', 'fin-email', 'fin-whats', 'fq-negocio', 'fq-objetivo', 'fin-texto', 'fin-aceite'].some(function (id) {
       if ($(id + '-erro').textContent) { ok = false; if (id === 'fin-texto') $('fq-extra').focus(); else $(id).focus(); return true; }
