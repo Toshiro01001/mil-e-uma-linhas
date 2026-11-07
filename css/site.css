@@ -394,7 +394,36 @@ textarea { display: block; width: 100%; padding: 8px 10px; background: var(--pai
 .orc-preco { font-family: var(--ui); font-size: 13px; line-height: 18px; color: var(--verde); font-weight: 700; }
 .orc-desc { font-size: 14.5px; line-height: 20px; color: var(--cinza); }
 .orc-extras { display: grid; gap: 2px; }
-.orc-extra { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 8px; margin: 0; align-items: center; font-family: var(--texto); font-size: 15.5px; }
+/* adicional: nome com caixa de marcar, botão "i" que explica, preço e prazo logo abaixo */
+.orc-extra { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 0 8px; margin: 0; padding: 6px 0; align-items: center; font-family: var(--texto); font-size: 15.5px; border-bottom: 1px solid var(--traco); }
+.orc-extra-rotulo { margin: 0; font-size: 15.5px; min-height: 32px; }
+.orc-extra-rotulo input { width: 18px; height: 18px; flex: none; }
+.orc-extra .orc-preco { grid-column: 1 / -1; padding-left: 24px; }
+.orc-info { width: 30px; height: 30px; border-radius: 50%; border: 1px solid var(--traco); background: var(--painel); color: var(--verde); font-family: var(--ui); font-weight: 700; font-size: 14px; cursor: pointer; line-height: 1; padding: 0; }
+.orc-info:hover, .orc-info[aria-expanded="true"] { border-color: var(--verde); }
+.orc-ajuda { grid-column: 1 / -1; margin: 4px 0 2px 24px; padding: 8px 10px; background: var(--painel); border-left: 3px solid var(--verde); color: var(--cinza); font-size: 14.5px; line-height: 21px; }
+.orc-itens { margin: 6px 0 0; padding-left: 18px; color: var(--papel); font-size: 14px; line-height: 20px; }
+.orc-dif { margin: 0 0 14px; font-size: 15px; }
+.orc-dif summary { cursor: pointer; color: var(--verde); min-height: 28px; }
+.orc-dif p { margin: 6px 0; color: var(--cinza); line-height: 22px; }
+.orc-dif b { color: var(--papel); }
+.email-menu { margin: 6px 0 10px; padding: 10px 12px; background: var(--painel); border: 1px solid var(--traco); border-radius: var(--raio); }
+.email-menu .nota { margin: 0 0 6px; }
+.email-opcoes { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 6px; }
+.email-opcoes .botao-mini { margin-top: 0; min-height: 36px; display: inline-flex; align-items: center; text-decoration: none; }
+.envio { margin: 6px 0 12px; }
+.envio-input { position: absolute; width: 1px; height: 1px; opacity: 0; overflow: hidden; }
+.envio-area { display: flex; flex-direction: column; align-items: center; gap: 8px; text-align: center; padding: 22px 14px; border: 2px dashed var(--traco); border-radius: var(--raio); cursor: pointer; color: var(--papel); }
+.envio-area:hover, .envio-area.sobre, .envio-input:focus-visible + .envio-area { border-color: var(--verde); background: var(--painel); }
+.envio-titulo { font-weight: 700; }
+.envio-ou { color: var(--cinza); font-size: 14px; }
+.envio-regra { color: var(--cinza); font-size: 13.5px; line-height: 19px; max-width: 46ch; }
+.envio-lista { list-style: none; margin: 8px 0 0; padding: 0; }
+.envio-lista li { display: flex; align-items: center; gap: 10px; padding: 6px 0; border-bottom: 1px solid var(--traco); font-size: 14.5px; }
+.envio-nome { flex: 1 1 auto; min-width: 0; overflow-wrap: anywhere; }
+.envio-tam { color: var(--cinza); font-family: var(--ui); font-size: 13px; flex: none; }
+.envio-lista .botao-mini { margin-top: 0; flex: none; min-height: 32px; }
+.envio-lista .envio-soma { color: var(--cinza); border-bottom: 0; }
 .orc-opcoes { margin-top: 18px; }
 #orc-horas-caixa { margin-top: 14px; }
 #orc-horas-caixa output { float: right; color: var(--papel); }
@@ -489,8 +518,8 @@ textarea { display: block; width: 100%; padding: 8px 10px; background: var(--pai
   .kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .orc-planos { grid-template-columns: minmax(0, 1fr); }
   .orc-resumo { position: static; }
-  .orc-extra { grid-template-columns: auto minmax(0, 1fr); }
-  .orc-extra .orc-preco { grid-column: 2; }
+  .orc-info { width: 34px; height: 34px; }
+  .envio-lista li { flex-wrap: wrap; }
   html.js:not([data-tema="ascii"]) .lista summary { grid-template-columns: minmax(0, 1fr); }
   .guia, .agenda-caixa { padding: 4px 14px 16px; }
   .sacola { position: static; }

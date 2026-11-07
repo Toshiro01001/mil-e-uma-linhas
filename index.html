@@ -20,16 +20,16 @@
 <link rel="canonical" href="https://mileumalinhas.com.br/">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="preload" href="fonts/bricolage.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="css/site.css?v=20261106s">
+<link rel="stylesheet" href="css/site.css?v=20261107a">
 <script src="js/boot.js"></script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"ProfessionalService","name":"Mil e Uma Linhas!","slogan":"Meu código, seu site.","url":"https://mileumalinhas.com.br/","description":"Sites, sistemas, automação de vendas e redes sociais, tráfego pago e programação freelance.","email":"contato@mileumalinhas.com.br","image":"https://mileumalinhas.com.br/og.png","address":{"@type":"PostalAddress","addressLocality":"Cuiabá","addressRegion":"MT","addressCountry":"BR"},"areaServed":{"@type":"Country","name":"Brasil"},"founder":{"@type":"Person","name":"Rodrigo Terroso Junior"},"sameAs":["https://www.instagram.com/mileumalinhas/","https://www.linkedin.com/in/rodrigo-terroso-junior-9b900935b","https://github.com/Toshiro01001"]}</script>
 <script src="js/linguagens.js" defer></script>
 <script src="js/demos.js" defer></script>
-<script src="js/orcamento.js?v=20261106s" defer></script>
-<script src="js/pedido.js?v=20261106s" defer></script>
+<script src="js/orcamento.js?v=20261107a" defer></script>
+<script src="js/pedido.js?v=20261107a" defer></script>
 <script src="js/guia.js" defer></script>
 <script src="js/temas.js" defer></script>
-<script src="js/app.js?v=20261106s" defer></script>
+<script src="js/app.js?v=20261107a" defer></script>
 </head>
 <body>
 <a class="pular" href="#conteudo">Pular para o conteúdo</a>
@@ -681,7 +681,11 @@ histórico
 <section id="orcamento" class="folha" aria-labelledby="t-orcamento">
   <h2 id="t-orcamento">Monte seu orçamento</h2>
   <div id="orc-montar">
-  <p class="intro">Escolha o tipo de pedido e o plano e adicione ao seu pedido. Preço e prazo mudam conforme o que você marca. É uma estimativa: o valor e o prazo finais saem por escrito depois que conversarmos. Tudo que você acrescentar aumenta o preço e também o prazo.</p>
+  <p class="intro">Escolha o tipo de pedido e o plano e adicione ao seu pedido. Preço e prazo mudam conforme o que você marca. É uma estimativa: o valor e o prazo finais saem por escrito depois que conversarmos.</p>
+  <details class="orc-dif"><summary>Qual é a diferença entre um site e um sistema?</summary>
+    <p><b>Site</b> apresenta o seu negócio ao público. A pessoa lê, vê fotos e entra em contato, sem precisar de senha. Exemplos: página da sua loja, portfólio, cardápio.</p>
+    <p><b>Sistema</b> é uma ferramenta de trabalho. Tem login, guarda informações (clientes, pedidos, estoque) e gera relatórios para a sua equipe usar no dia a dia. Exemplos: controle de pedidos, cadastro de clientes, agenda interna.</p>
+  </details>
   <div class="orc-tipos" id="orc-tipos" role="tablist" aria-label="Tipo de pedido"></div>
   <div class="orc-grade">
     <div class="orc-monta">
@@ -714,13 +718,14 @@ histórico
         <a class="botao cheio" id="orc-finalizar" href="#orcamento/finalizar">Continuar e enviar o pedido</a>
       </div>
       <p class="nota">Na próxima tela você confere tudo, responde algumas perguntas simples e envia. Você recebe um número de protocolo. Nada é cobrado agora.</p>
-      <p class="nota orc-outros"><a id="orc-email" href="#orcamento">Prefiro enviar por e-mail</a> · <button class="link" type="button" id="orc-copiar">Copiar resumo</button> · <button class="link" type="button" id="orc-esvaziar">Esvaziar</button></p>
+      <p class="nota orc-outros"><button class="link" type="button" id="orc-email" aria-expanded="false" aria-controls="orc-email-menu">Prefiro enviar por e-mail</button> · <button class="link" type="button" id="orc-copiar">Copiar resumo</button> · <button class="link" type="button" id="orc-esvaziar">Esvaziar</button></p>
+      <div class="email-menu" id="orc-email-menu" hidden></div>
       <h3 class="h-peq">Como funciona depois do pedido</h3>
       <ol class="fin-passos">
         <li>Você envia o pedido e recebe um <b>protocolo</b>. Nada é cobrado.</li>
         <li>Eu entro em contato para conversar e mando o <b>orçamento final por escrito</b>.</li>
-        <li>Você aprova e paga <b>50% de entrada</b>. Só então eu começo.</li>
-        <li>Quando o trabalho fica pronto, você confere e paga os <b>50% restantes</b>. Aí eu publico e entrego os acessos.</li>
+        <li>Você aprova o orçamento e o projeto começa com uma <b>entrada de 50%</b>.</li>
+        <li>Os <b>50% restantes</b> são pagos na entrega. O site ou sistema fica disponível depois do pagamento final.</li>
       </ol>
       <p class="nota">Leia os <a href="termos.html">Termos de Serviço</a> e a <a href="privacidade.html">Política de Privacidade</a>.</p>
     </aside>
@@ -739,16 +744,16 @@ histórico
         </section>
         <div id="fin-campos">
         <section aria-labelledby="t-fin-dados" class="fin-bloco">
-          <h3 class="sub" id="t-fin-dados">2. Seus dados para eu responder</h3>
+          <h3 class="sub" id="t-fin-dados">2. Dados de contato</h3>
           <label for="fin-nome">Nome</label>
           <input id="fin-nome" type="text" autocomplete="name" maxlength="80" required aria-describedby="fin-nome-erro">
           <p class="erro" id="fin-nome-erro"></p>
           <label for="fin-email">E-mail</label>
           <input id="fin-email" type="email" autocomplete="email" inputmode="email" maxlength="120" spellcheck="false" required aria-describedby="fin-email-erro">
           <p class="erro" id="fin-email-erro"></p>
-          <p class="nota">Vou enviar para este e-mail uma confirmação com o protocolo. Se não aparecer na caixa de entrada, olhe o spam e marque como "não é spam".</p>
-          <label for="fin-whats">WhatsApp com DDD</label>
-          <input id="fin-whats" type="tel" autocomplete="tel-national" inputmode="tel" maxlength="20" placeholder="(65) 99999-9999" required aria-describedby="fin-whats-erro">
+          <p class="nota">Uma confirmação com o protocolo será enviada para este e-mail. Se não aparecer na caixa de entrada, confira o spam e marque como "não é spam".</p>
+          <label for="fin-whats">WhatsApp (com DDD)</label>
+          <input id="fin-whats" type="tel" autocomplete="tel-national" inputmode="tel" maxlength="20" placeholder="(11) 99999-9999" required aria-describedby="fin-whats-erro">
           <p class="erro" id="fin-whats-erro"></p>
           <div class="armadilha" aria-hidden="true"><label for="fin-site">Não preencha</label><input id="fin-site" type="text" tabindex="-1" autocomplete="off"></div>
         </section>
@@ -765,11 +770,8 @@ histórico
           <textarea id="fq-publico" placeholder="Ex.: Clientes da minha cidade, quase todos pelo celular. Minha equipe de 3 pessoas vai atender os pedidos pelo computador." rows="2" maxlength="1500"></textarea>
           <label for="fq-passos">Como isso funciona hoje, passo a passo? (Se for um sistema, conte o caminho do começo ao fim.)</label>
           <textarea id="fq-passos" placeholder="Ex.: 1) O cliente escolhe os produtos. 2) Informa o endereço e o horário. 3) Eu recebo o aviso e confirmo. 4) O cliente paga na entrega." rows="3" maxlength="1500"></textarea>
-          <label for="fq-concorr">Quais empresas parecidas com a sua você conhece? (até 3)</label>
-          <textarea id="fq-concorr" placeholder="Ex.: Padaria Estrela, Pão Dourado e a Casa do Trigo. Gosto do jeito que a Estrela mostra os preços." rows="2" maxlength="1500"></textarea>
-          <label for="fq-extra">Tem mais alguma coisa que eu precise saber?</label>
+          <label for="fq-extra">Alguma observação adicional?</label>
           <textarea id="fq-extra" placeholder="Ex.: Quero lançar no começo do mês que vem. Tenho uma promoção fixa de segunda a quarta. Preciso emitir pedidos em PDF." rows="3" maxlength="1500"></textarea>
-          <p class="nota">O prazo do seu pedido já vem definido no orçamento (até 14 dias no site Essencial). Por isso não pergunto data limite. Se algo mudar o prazo, aviso você antes.</p>
         </section>
         <section aria-labelledby="t-fin-material" class="fin-bloco">
           <h3 class="sub" id="t-fin-material">4. O que você já tem pronto</h3>
@@ -784,9 +786,21 @@ histórico
             <label for="fa-dominio">Endereço na internet (domínio)</label>
             <select id="fa-dominio"><option value="">Escolha</option><option>Já tenho</option><option>Não tenho</option><option>Quero ajuda para registrar</option></select>
           </div>
-          <label for="fq-links">Links dos seus arquivos (Google Drive, Dropbox, OneDrive...)</label>
+          <p class="nota"><b>Anexe aqui o logotipo, as fotos e outros arquivos do projeto.</b> Quanto melhor a qualidade das imagens, melhor o resultado final.</p>
+          <div class="envio" id="envio">
+            <input class="envio-input" id="fa-arquivos" type="file" multiple accept=".png,.jpg,.jpeg,.webp,.gif,.svg,.pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.txt,.csv,.zip,.rar,.7z,.ai,.psd" aria-describedby="fa-regra fa-erro">
+            <label class="envio-area" for="fa-arquivos" id="fa-drop">
+              <span class="envio-titulo">Arraste os arquivos até aqui</span>
+              <span class="envio-ou">ou</span>
+              <span class="botao botao-mini">Escolher arquivos</span>
+              <span class="envio-regra" id="fa-regra">Imagens, PDF, documentos ou arquivos compactados. De 1 a 20 arquivos, até 25 MB cada e 50 MB no total.</span>
+            </label>
+            <ul class="envio-lista" id="fa-lista" aria-label="Arquivos escolhidos"></ul>
+            <p class="erro" id="fa-erro" role="alert"></p>
+          </div>
+          <label for="fq-links">Ou cole o link dos arquivos (Google Drive, Dropbox, OneDrive...)</label>
           <input id="fq-links" type="text" maxlength="300" inputmode="url" autocomplete="off" placeholder="Link da pasta com seus arquivos">
-          <p class="nota">Depois de enviar, você recebe o protocolo e me manda os arquivos por e-mail ou pelo link acima. Não anexe documentos pessoais, como RG e CPF.</p>
+          <p class="nota">Os arquivos são enviados junto com o pedido e só eu os vejo. Não anexe documentos pessoais, como RG e CPF.</p>
         </section>
         <section aria-labelledby="t-fin-cores" class="fin-bloco">
           <h3 class="sub" id="t-fin-cores">5. Cores</h3>
@@ -804,11 +818,11 @@ histórico
           <p class="nota">Eu cuido dos tons de erro, sucesso, aviso e das cores de botão ao passar o mouse, sempre com contraste fácil de ler.</p>
         </section>
         <section aria-labelledby="t-fin-ref" class="fin-bloco">
-          <h3 class="sub" id="t-fin-ref">6. Sites que você gosta</h3>
-          <p class="nota">Cole o endereço de até 3 sites que você acha bonitos ou parecidos com o que você quer, e diga o que gostou.</p>
-          <label for="fr-1">Site 1</label><input id="fr-1" type="text" maxlength="200" inputmode="url" autocomplete="off" placeholder="https://">
-          <label for="fr-2">Site 2</label><input id="fr-2" type="text" maxlength="200" inputmode="url" autocomplete="off" placeholder="https://">
-          <label for="fr-3">Site 3</label><input id="fr-3" type="text" maxlength="200" inputmode="url" autocomplete="off" placeholder="https://">
+          <h3 class="sub" id="t-fin-ref">6. Quais sites ou sistemas você teria de inspiração para o seu projeto?</h3>
+          <p class="nota">Cole o endereço de até 3 sites ou sistemas que você acha bonitos ou parecidos com o que você quer, e conte o que gostou.</p>
+          <label for="fr-1">Endereço 1</label><input id="fr-1" type="text" maxlength="200" inputmode="url" autocomplete="off" placeholder="https://">
+          <label for="fr-2">Endereço 2</label><input id="fr-2" type="text" maxlength="200" inputmode="url" autocomplete="off" placeholder="https://">
+          <label for="fr-3">Endereço 3</label><input id="fr-3" type="text" maxlength="200" inputmode="url" autocomplete="off" placeholder="https://">
           <label for="fr-gostei">O que você gostou neles?</label>
           <textarea id="fr-gostei" placeholder="Ex.: Gostei das fotos grandes, do menu simples e do botão de WhatsApp sempre visível." rows="2" maxlength="1500"></textarea>
         </section>
@@ -821,7 +835,7 @@ histórico
           <div class="fin-robo" id="fin-robo"></div>
           <button class="botao cheio fin-enviar" type="button" id="fin-enviar">Enviar pedido</button>
           <p class="fin-estado" id="fin-estado" role="status" aria-live="polite"></p>
-          <p class="nota" id="fin-alternativa" hidden><a class="botao" id="fin-email" href="#orcamento/finalizar">Enviar por e-mail</a></p>
+          <div class="nota" id="fin-alternativa" hidden><button class="botao" type="button" id="fin-email-abrir" aria-expanded="false" aria-controls="fin-email-menu">Enviar por e-mail</button><div class="email-menu" id="fin-email-menu" hidden></div></div>
         </section>
         </div>
       </div>
@@ -832,7 +846,8 @@ histórico
       <ul class="orc-carrinho" id="fin-ok-itens"></ul>
       <p class="orc-total" id="fin-ok-total"></p>
       <p class="nota" id="fin-ok-aviso" hidden></p>
-      <p>Guarde o protocolo. Vou ler o seu pedido e responder pelo e-mail ou WhatsApp que você informou. Para corrigir alguma coisa, escreva para <a href="mailto:contato@mileumalinhas.com.br">contato@mileumalinhas.com.br</a> citando o protocolo.</p>
+      <p class="nota" id="fin-ok-arquivos" hidden aria-live="polite"></p>
+      <p>Guarde o protocolo. Nossa equipe entrará em contato nas próximas horas, pelo WhatsApp e pelo e-mail informados. Para corrigir alguma coisa, escreva para <a href="mailto:contato@mileumalinhas.com.br">contato@mileumalinhas.com.br</a> citando o protocolo.</p>
       <p><a class="botao" href="#orcamento">Montar outro pedido</a></p>
     </section>
   </div>

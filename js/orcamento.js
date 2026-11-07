@@ -1,6 +1,6 @@
 /* Montador de orçamento e carrinho. Para mudar preços ou prazos, edite só a lista PEDIDOS abaixo e depois gere o
    catálogo do servidor (tests/gerar-catalogo.cjs no sistema de cobranças): o servidor refaz a conta com a mesma tabela.
-   faixa = [mínimo, máximo] em reais. dias = [mínimo, máximo] em dias corridos.
+   faixa = [mínimo, máximo] em reais. dias = [mínimo, máximo] em dias úteis (segunda a sexta).
    O carrinho fica só neste aparelho (localStorage) até o cliente enviar o pedido em js/pedido.js. */
 window.MUL_ORC = (function () {
   'use strict';
@@ -8,46 +8,46 @@ window.MUL_ORC = (function () {
   var PEDIDOS = {
     site: {
       nome: 'Site', planos: [
-        { nome: 'Essencial', desc: 'Uma página com seus serviços e botão de contato. Pronta em até 14 dias depois de receber textos e fotos.', dias: [7, 14], faixa: [600, 1200] },
-        { nome: 'Profissional', desc: 'Até 5 páginas, formulário e aparência própria da sua marca.', dias: [21, 30], faixa: [1500, 3000] },
-        { nome: 'Completo', desc: 'Loja virtual ou área do cliente simples.', dias: [45, 75], faixa: [5000, 12000] }
+        { nome: 'Essencial', desc: 'Uma página com seus serviços e botão de contato. Pronta em até 10 dias úteis depois de receber textos e fotos.', dias: [5, 10], faixa: [600, 1200] },
+        { nome: 'Profissional', desc: 'Até 5 páginas, formulário e aparência própria da sua marca.', dias: [15, 21], faixa: [1500, 3000] },
+        { nome: 'Completo', desc: 'Loja virtual ou área do cliente simples.', dias: [32, 54], faixa: [5000, 12000] }
       ],
       extras: [
-        { nome: 'Página a mais', dias: [1, 2], faixa: [150, 300] }, { nome: 'Agendamento online', dias: [3, 5], faixa: [400, 900] },
-        { nome: 'Escrita dos textos', dias: [2, 4], faixa: [200, 500] }, { nome: 'Otimização para o Google', dias: [1, 2], faixa: [150, 400] },
+        { nome: 'Página a mais', dias: [1, 1], faixa: [150, 300] }, { nome: 'Agendamento online', dias: [2, 4], faixa: [400, 900] },
+        { nome: 'Escrita dos textos', dias: [1, 3], faixa: [200, 500] }, { nome: 'Otimização para o Google', dias: [1, 1], faixa: [150, 400] },
         { nome: 'Manutenção e segurança', dias: [0, 0], faixa: [150, 400], mensal: true }
       ]
     },
     sistema: {
       nome: 'Sistema', planos: [
-        { nome: 'Pequeno', desc: 'Um cadastro principal, como pedidos ou clientes, com busca e relatório simples.', dias: [30, 45], faixa: [2500, 5000] },
-        { nome: 'Médio', desc: 'Vários cadastros, login e permissões por usuário, relatórios.', dias: [60, 90], faixa: [6000, 15000] },
-        { nome: 'Grande', desc: 'Regras complexas, integrações e muitos perfis de acesso. Começa pelo Diagnóstico pago, que define o valor final.', dias: [120, 180], faixa: [18000, 40000], aPartir: true }
+        { nome: 'Pequeno', desc: 'Para quem precisa organizar um assunto só, como clientes ou pedidos.', itens: ['Acesso: até 3 pessoas', 'Guarda: 1 cadastro principal, até 5.000 registros', 'Relatórios: 1 relatório simples, com filtro por período', 'Busca e filtros no cadastro'], dias: [21, 32], faixa: [2500, 5000] },
+        { nome: 'Médio', desc: 'Para uma equipe que trabalha junta, com cada pessoa vendo só o que pode.', itens: ['Acesso: de 4 a 15 pessoas, com login e permissões por usuário', 'Guarda: até 5 cadastros ligados entre si, até 50.000 registros', 'Relatórios: até 5 relatórios, com filtros e totais', 'Histórico de quem alterou cada informação'], dias: [43, 64], faixa: [6000, 15000] },
+        { nome: 'Grande', desc: 'Para operações maiores, com regras próprias do seu negócio.', itens: ['Acesso: mais de 15 pessoas, com vários perfis de acesso', 'Guarda: mais de 5 cadastros e regras complexas', 'Relatórios: sob medida, com integrações combinadas', 'Começa pelo Diagnóstico pago, que define o valor final'], dias: [86, 129], faixa: [18000, 40000], aPartir: true }
       ],
       extras: [
-        { nome: 'Integração com outro sistema', dias: [7, 14], faixa: [1000, 4000] }, { nome: 'Importar planilhas ou banco antigo', dias: [3, 7], faixa: [500, 2000] },
-        { nome: 'Relatórios em PDF ou Excel', dias: [2, 5], faixa: [400, 1500] }, { nome: 'Versão instalável no celular', dias: [14, 30], faixa: [1500, 5000] },
+        { nome: 'Integração com outro sistema', dias: [5, 10], faixa: [1000, 4000] }, { nome: 'Importar planilhas ou banco antigo', dias: [2, 5], faixa: [500, 2000] },
+        { nome: 'Relatórios em PDF ou Excel', dias: [1, 4], faixa: [400, 1500] }, { nome: 'Versão instalável no celular', dias: [10, 21], faixa: [1500, 5000] },
         { nome: 'Manutenção e segurança', dias: [0, 0], faixa: [150, 400], mensal: true }
       ]
     },
     vendas: {
       nome: 'Vendas automatizadas', planos: [
-        { nome: 'Básico', desc: 'Respostas automáticas e coleta de dados do interessado.', dias: [7, 14], faixa: [500, 1200] },
-        { nome: 'Funil', desc: 'Página, perguntas de qualificação e aviso para quem vende.', dias: [14, 30], faixa: [1500, 3500] },
-        { nome: 'Integrado', desc: 'Liga o funil ao seu cadastro de clientes ou ao pagamento.', dias: [30, 60], faixa: [4000, 9000] }
+        { nome: 'Básico', desc: 'Respostas automáticas e coleta de dados do interessado.', dias: [5, 10], faixa: [500, 1200] },
+        { nome: 'Funil', desc: 'Página, perguntas de qualificação e aviso para quem vende.', dias: [10, 21], faixa: [1500, 3500] },
+        { nome: 'Integrado', desc: 'Liga o funil ao seu cadastro de clientes ou ao pagamento.', dias: [21, 43], faixa: [4000, 9000] }
       ],
       extras: [
-        { nome: 'Acompanhamento mensal', dias: [0, 0], faixa: [200, 500], mensal: true }, { nome: 'Página de vendas', dias: [3, 7], faixa: [600, 1500] }
+        { nome: 'Acompanhamento mensal', dias: [0, 0], faixa: [200, 500], mensal: true }, { nome: 'Página de vendas', dias: [2, 5], faixa: [600, 1500] }
       ]
     },
     trafego: {
       nome: 'Tráfego pago', planos: [
-        { nome: 'Início', desc: 'Uma plataforma e verba de anúncios de até R$ 3.000 por mês.', dias: [7, 14], faixa: [500, 1200], mensal: true },
-        { nome: 'Crescimento', desc: 'Até duas plataformas e verba de até R$ 10.000 por mês.', dias: [14, 21], faixa: [1200, 2000], mensal: true },
-        { nome: 'Completo', desc: 'Várias campanhas, testes contínuos e relatório semanal.', dias: [21, 30], faixa: [2000, 3500], mensal: true }
+        { nome: 'Início', desc: 'Uma plataforma e verba de anúncios de até R$ 3.000 por mês.', dias: [5, 10], faixa: [500, 1200], mensal: true },
+        { nome: 'Crescimento', desc: 'Até duas plataformas e verba de até R$ 10.000 por mês.', dias: [10, 15], faixa: [1200, 2000], mensal: true },
+        { nome: 'Completo', desc: 'Várias campanhas, testes contínuos e relatório semanal.', dias: [15, 21], faixa: [2000, 3500], mensal: true }
       ],
       extras: [
-        { nome: 'Configuração inicial das contas', dias: [2, 3], faixa: [500, 1000] }, { nome: 'Página de destino', dias: [3, 7], faixa: [600, 1500] }
+        { nome: 'Configuração inicial das contas', dias: [1, 2], faixa: [500, 1000] }, { nome: 'Página de destino', dias: [2, 5], faixa: [600, 1500] }
       ],
       nota: 'A verba de anúncios é paga direto na plataforma e não entra nesta conta. Resultados não são garantidos.'
     },
@@ -58,18 +58,38 @@ window.MUL_ORC = (function () {
         { nome: 'Especializado', desc: 'Banco de dados, integrações, C ou C++.', faixa: [80, 120] }
       ],
       extras: [],
-      nota: 'Valor por hora vezes as horas escolhidas. O prazo considera até 20 horas de trabalho por semana.'
+      nota: 'Valor por hora vezes as horas escolhidas. O prazo considera até 20 horas de trabalho por semana, em dias úteis.'
     },
     medida: {
       nome: 'Projeto sob medida', planos: [
-        { nome: 'Diagnóstico', desc: 'Conversa e documento com escopo, prazo e custo do projeto.', dias: [3, 7], faixa: [300, 800] },
-        { nome: 'Protótipo', desc: 'Uma primeira versão que funciona, para testar a ideia.', dias: [14, 30], faixa: [2000, 6000] },
-        { nome: 'Projeto completo', desc: 'Da ideia à entrega, em etapas combinadas.', dias: [60, 120], faixa: [8000, 30000] }
+        { nome: 'Diagnóstico', desc: 'Conversa e documento com escopo, prazo e custo do projeto.', dias: [2, 5], faixa: [300, 800] },
+        { nome: 'Protótipo', desc: 'Uma primeira versão que funciona, para testar a ideia.', dias: [10, 21], faixa: [2000, 6000] },
+        { nome: 'Projeto completo', desc: 'Da ideia à entrega, em etapas combinadas.', dias: [43, 86], faixa: [8000, 30000] }
       ],
       extras: [
-        { nome: 'Banco de dados', dias: [5, 10], faixa: [500, 2000] }, { nome: 'Versão para celular', dias: [14, 30], faixa: [1500, 5000] }, { nome: 'Treinamento da equipe', dias: [1, 3], faixa: [300, 800] }
+        { nome: 'Banco de dados', dias: [4, 7], faixa: [500, 2000] }, { nome: 'Versão para celular', dias: [10, 21], faixa: [1500, 5000] }, { nome: 'Treinamento da equipe', dias: [1, 2], faixa: [300, 800] }
       ]
     }
+  };
+  /* Explicação curta de cada adicional (botão "i"). Chave: tipo | nome do adicional. */
+  var AJUDA = {
+    'site|Página a mais': 'Uma página extra além das que o plano já inclui, como Sobre, Galeria ou Contato separado.',
+    'site|Agendamento online': 'Seus clientes escolhem dia e horário direto no site, e você recebe o aviso de cada agendamento.',
+    'site|Escrita dos textos': 'Eu escrevo os textos das páginas a partir do que você contar, em vez de você enviar tudo pronto.',
+    'site|Otimização para o Google': 'Ajustes para o site aparecer melhor nas buscas: títulos, descrições, velocidade e cadastro no Google.',
+    'site|Manutenção e segurança': 'Atualizações, cópias de segurança e correção de problemas todo mês. É cobrada por mês e não aumenta o prazo de entrega.',
+    'sistema|Integração com outro sistema': 'Liga o seu sistema a outro programa, como emissor de nota, pagamento ou planilha online, para os dados passarem sozinhos.',
+    'sistema|Importar planilhas ou banco antigo': 'Leva para o sistema novo as informações que você já tem em planilhas ou em um sistema antigo.',
+    'sistema|Relatórios em PDF ou Excel': 'Botão para baixar os relatórios do sistema em PDF ou em planilha do Excel.',
+    'sistema|Versão instalável no celular': 'O sistema pode ser instalado na tela do celular como um aplicativo, sem passar pela loja de aplicativos.',
+    'sistema|Manutenção e segurança': 'Atualizações, cópias de segurança e correção de problemas todo mês. É cobrada por mês e não aumenta o prazo de entrega.',
+    'vendas|Acompanhamento mensal': 'Acompanho os resultados todo mês e ajusto as mensagens e as perguntas. É cobrado por mês e não aumenta o prazo.',
+    'vendas|Página de vendas': 'Uma página feita para convencer e levar a pessoa a comprar ou pedir contato.',
+    'trafego|Configuração inicial das contas': 'Crio e configuro as contas de anúncios, a forma de pagamento e a medição dos resultados.',
+    'trafego|Página de destino': 'A página para onde os anúncios levam, pensada para transformar visitas em contatos.',
+    'medida|Banco de dados': 'A estrutura que guarda e consulta as informações do projeto com segurança.',
+    'medida|Versão para celular': 'O projeto adaptado para funcionar bem no celular, como aplicativo ou versão própria.',
+    'medida|Treinamento da equipe': 'Eu explico à sua equipe como usar o que foi entregue.'
   };
   /* Linguagens. fator = quanto a linguagem encarece o trabalho; vale só o maior fator escolhido.
      consulta: true = aparece na aba de linguagens, mas não entra no orçamento automático. */
@@ -158,14 +178,14 @@ window.MUL_ORC = (function () {
     });
     var m = tecM * prazoM;
     var d = [0, 0];
-    if (P.horas) { var sem = Math.ceil(q / 20) * 7; d = [sem, sem + 7]; }
+    if (P.horas) { var sem = Math.ceil(q / 20) * 5; d = [sem, sem + 5]; }
     else { d = pl.dias.slice(); }
     (P.extras || []).forEach(function (x, i) { if (marc[i] && x.dias) { d[0] += x.dias[0]; d[1] += x.dias[1]; } });
     /* mais linguagens tomam mais tempo; urgência encurta */
     var dm = (tecM > 1 ? tecM : 1) * (prazoM > 1 ? 0.7 : 1);
     return { aberto: !!pl.aPartir, unico: [redondo(un[0] * m), redondo(un[1] * m)], mensal: [redondo(me[0] * m), redondo(me[1] * m)], dias: [Math.max(1, Math.ceil(d[0] * dm)), Math.max(1, Math.ceil(d[1] * dm))] };
   }
-  function diasTxt(d) { return d[0] === d[1] ? d[0] + ' dias' : d[0] + ' a ' + d[1] + ' dias'; }
+  function diasTxt(d) { return d[0] === d[1] ? d[0] + (d[0] === 1 ? ' dia útil' : ' dias úteis') : d[0] + ' a ' + d[1] + ' dias úteis'; }
   function valorTxt(v) {
     var partes = [];
     if (v.unico[1]) partes.push(v.aberto ? 'a partir de ' + reais(v.unico[0]) : faixaTxt(v.unico));
@@ -177,13 +197,13 @@ window.MUL_ORC = (function () {
     return { tipo: tipo, plano: plano, marc: Object.assign({}, marcados), horas: horas, ids: ids, prazo: prazo, valor: calcular(tipo, plano, marcados, horas, multiplicador(ids), prazo) };
   }
   function descrever(it) {
-    var P = PEDIDOS[it.tipo], d = P.nome + ', plano ' + P.planos[it.plano].nome;
-    if (P.horas) d += ', ' + it.horas + ' horas';
+    var P = PEDIDOS[it.tipo], d = [P.nome, 'Plano ' + P.planos[it.plano].nome];
+    if (P.horas) d.push(it.horas + ' horas');
     var ex = (P.extras || []).filter(function (x, i) { return it.marc[i]; }).map(function (x) { return x.nome; });
-    if (ex.length) d += ', com ' + ex.join(', ').toLowerCase();
-    if (it.ids.length) d += ', em ' + it.ids.map(function (id) { return ling(id).nome; }).join(', ');
-    if (it.prazo > 1) d += ', urgente';
-    return d;
+    if (ex.length) d.push('Adicionais: ' + ex.join(', '));
+    if (it.ids.length) d.push('Linguagens: ' + it.ids.map(function (id) { return ling(id).nome; }).join(', '));
+    if (it.prazo > 1) d.push('Urgente');
+    return d.join(', ');
   }
   function totais() {
     return carrinho.reduce(function (s, it) {
@@ -217,6 +237,7 @@ window.MUL_ORC = (function () {
       b.appendChild(el('b', null, pl.nome));
       b.appendChild(el('span', 'orc-preco', (pl.aPartir ? 'a partir de ' + reais(pl.faixa[0]) : faixaTxt(pl.faixa)) + (pl.mensal ? ' por mês' : P.horas ? ' por hora' : '')));
       b.appendChild(el('span', 'orc-desc', pl.desc));
+      if (pl.itens) { var ul = el('ul', 'orc-itens'); pl.itens.forEach(function (t) { ul.appendChild(el('li', null, t)); }); b.appendChild(ul); }
       b.addEventListener('click', function () { plano = i; renderPlanos(); atualizar(); });
       box.appendChild(b);
     });
@@ -226,13 +247,25 @@ window.MUL_ORC = (function () {
     var tit = box.previousElementSibling;
     if (tit) tit.hidden = !(P.extras && P.extras.length);
     (P.extras || []).forEach(function (x, i) {
-      var l = el('label', 'radio orc-extra'), c = document.createElement('input');
+      var linha = el('div', 'orc-extra'), l = el('label', 'radio orc-extra-rotulo'), c = document.createElement('input');
       c.type = 'checkbox'; c.checked = !!marcados[i];
       c.addEventListener('change', function () { marcados[i] = c.checked; atualizar(); });
       l.appendChild(c);
       l.appendChild(el('span', null, x.nome));
-      l.appendChild(el('span', 'orc-preco', '+ ' + faixaTxt(x.faixa) + (x.mensal ? ' por mês' : '')));
-      box.appendChild(l);
+      linha.appendChild(l);
+      var ajuda = AJUDA[tipo + '|' + x.nome], idp = 'ajuda-' + tipo + '-' + i;
+      if (ajuda) {
+        var bi = el('button', 'orc-info', 'i'); bi.type = 'button';
+        bi.setAttribute('aria-label', 'O que é: ' + x.nome); bi.setAttribute('aria-expanded', 'false'); bi.setAttribute('aria-controls', idp);
+        linha.appendChild(bi);
+        var tx = el('p', 'orc-ajuda', ajuda); tx.id = idp; tx.hidden = true;
+        bi.addEventListener('click', function () { var abre = tx.hidden; tx.hidden = !abre; bi.setAttribute('aria-expanded', abre ? 'true' : 'false'); });
+        linha.appendChild(el('span', 'orc-preco', '+ ' + faixaTxt(x.faixa) + (x.mensal ? ' por mês' : '') + ' · ' + (x.mensal || !x.dias || !x.dias[1] ? 'sem prazo extra' : '+ ' + diasTxt(x.dias))));
+        linha.appendChild(tx);
+      } else {
+        linha.appendChild(el('span', 'orc-preco', '+ ' + faixaTxt(x.faixa) + (x.mensal ? ' por mês' : '') + ' · ' + (x.mensal || !x.dias || !x.dias[1] ? 'sem prazo extra' : '+ ' + diasTxt(x.dias))));
+      }
+      box.appendChild(linha);
     });
     $('#orc-horas-caixa').hidden = !P.horas;
   }
@@ -241,7 +274,7 @@ window.MUL_ORC = (function () {
     $('#orc-valor').textContent = valorTxt(it.valor);
     $('#orc-dias').textContent = 'Prazo estimado: ' + diasTxt(it.valor.dias);
     $('#orc-horas-val').textContent = it.horas + ' horas';
-    var n = ['Estimativa. Valor e prazo finais saem por escrito depois de conversarmos sobre o projeto. O prazo conta em dias corridos e só começa depois da entrada de 50%, da aprovação do escopo e do recebimento de todo o material. Cada adicional aumenta o preço e também o prazo.'];
+    var n = ['Estimativa. Valor e prazo finais saem por escrito depois de conversarmos sobre o projeto. O prazo conta em dias úteis (segunda a sexta) e só começa depois da entrada de 50%, da aprovação do escopo e do recebimento de todo o material.'];
     if (tipo === 'trafego') n.unshift('O prazo é até a primeira campanha no ar.');
     if (+$('#orc-prazo').value > 1) n.unshift('Urgente: prazo cerca de 30% menor, quando a agenda permitir.');
     if (P.nota) n.unshift(P.nota);
@@ -321,13 +354,51 @@ window.MUL_ORC = (function () {
     $('#orc-n').textContent = carrinho.length ? '(' + carrinho.length + (carrinho.length === 1 ? ' item)' : ' itens)') : '';
     // Com um item só, o total repetiria a linha do item: mostro o total a partir de dois itens.
     $('#orc-total').textContent = carrinho.length > 1 ? 'Total estimado: ' + valorTxt(T) + '. Um depois do outro: ' + diasTxt(T.dias) + '.' : '';
-    var a = $('#orc-email'), copia = $('#orc-copiar'), fin = $('#orc-finalizar');
-    a.href = 'mailto:' + EMAIL + '?subject=' + encodeURIComponent('Pedido de orçamento') + '&body=' + encodeURIComponent(carrinho.length ? texto() : 'Olá! Quero um orçamento para o meu projeto:\n\n');
+    var copia = $('#orc-copiar'), fin = $('#orc-finalizar');
     copia.disabled = !carrinho.length; $('#orc-esvaziar').disabled = !carrinho.length;
     fin.classList.toggle('desligado', !carrinho.length);
     if (carrinho.length) { fin.removeAttribute('aria-disabled'); fin.href = '#orcamento/finalizar'; } else { fin.setAttribute('aria-disabled', 'true'); fin.removeAttribute('href'); }
     $('#orc-add').disabled = carrinho.length >= MAX_ITENS;
     mudou();
+  }
+  /* Menu "enviar por e-mail": o cliente escolhe onde abrir (Gmail, Outlook, Yahoo, app do aparelho) ou copia o texto.
+     O link mailto: sozinho só funciona se o aparelho tiver um programa de e-mail configurado; por isso há as outras opções. */
+  function menuEmail(botao, caixa, montar) {
+    var MAX_URL = 7000;
+    function link(rotulo, href, novaAba) {
+      var a = el('a', 'botao botao-mini', rotulo); a.href = href;
+      if (novaAba) { a.target = '_blank'; a.rel = 'noopener noreferrer'; }
+      return a;
+    }
+    function preencher() {
+      var m = montar(), corpo = m.corpo, ass = m.assunto, para = EMAIL;
+      var cortar = function (extraLen) { var max = Math.max(500, MAX_URL - extraLen); var c = corpo; while (encodeURIComponent(c).length > max && c.length > 200) c = c.slice(0, Math.floor(c.length * 0.9)); return c === corpo ? c : c + '\n\n(Texto cortado. Use "Copiar texto" para enviar o pedido completo.)'; };
+      var web = function (base, _x, pk, sk, bk) {
+        var extra = base.length + encodeURIComponent(para).length + encodeURIComponent(ass).length + 40, c = cortar(extra);
+        return base + pk + '=' + encodeURIComponent(para) + '&' + sk + '=' + encodeURIComponent(ass) + '&' + bk + '=' + encodeURIComponent(c);
+      };
+      caixa.textContent = '';
+      caixa.appendChild(el('p', 'nota', 'Escolha onde abrir o e-mail. O texto do pedido já vai junto.'));
+      var l = el('div', 'email-opcoes');
+      l.appendChild(link('Gmail', web('https://mail.google.com/mail/?view=cm&fs=1&', 0, 'to', 'su', 'body'), true));
+      l.appendChild(link('Outlook', web('https://outlook.live.com/mail/0/deeplink/compose?', 0, 'to', 'subject', 'body'), true));
+      l.appendChild(link('Yahoo', web('https://compose.mail.yahoo.com/?', 0, 'to', 'subject', 'body'), true));
+      l.appendChild(link('App de e-mail do aparelho', 'mailto:' + para + '?subject=' + encodeURIComponent(ass) + '&body=' + encodeURIComponent(corpo), false));
+      var cp = el('button', 'botao botao-mini', 'Copiar texto'); cp.type = 'button';
+      cp.addEventListener('click', function () {
+        var t = 'Para: ' + para + '\nAssunto: ' + ass + '\n\n' + corpo;
+        if (!navigator.clipboard) { cp.textContent = 'Copie pelo botão do navegador'; return; }
+        navigator.clipboard.writeText(t).then(function () { cp.textContent = 'Texto copiado'; setTimeout(function () { cp.textContent = 'Copiar texto'; }, 1800); }).catch(function () { cp.textContent = 'O navegador não deixou copiar'; });
+      });
+      l.appendChild(cp);
+      caixa.appendChild(l);
+      caixa.appendChild(el('p', 'nota', 'Para: ' + para));
+    }
+    botao.addEventListener('click', function () {
+      var abre = caixa.hidden;
+      if (abre) preencher();
+      caixa.hidden = !abre; botao.setAttribute('aria-expanded', abre ? 'true' : 'false');
+    });
   }
   function mostrarFinalizar(sim) {
     $('#orc-montar').hidden = sim; $('#fin').hidden = !sim;
@@ -363,13 +434,16 @@ window.MUL_ORC = (function () {
         b.textContent = 'Resumo copiado'; setTimeout(function () { b.textContent = 'Copiar resumo'; }, 1500);
       }).catch(function () { b.textContent = 'O navegador não deixou copiar'; });
     });
+    menuEmail($('#orc-email'), $('#orc-email-menu'), function () {
+      return { assunto: 'Pedido de orçamento', corpo: carrinho.length ? texto() : 'Olá! Quero um orçamento para o meu projeto:\n\n' };
+    });
     escolher(tipo, 0);
     renderCarrinho();
   }
   recuperar();
   contador();
   return {
-    PEDIDOS: PEDIDOS, AREAS_DO_PEDIDO: AREAS_DO_PEDIDO, diasTxt: diasTxt, faixaTxt: faixaTxt, reais: reais, EMAIL: EMAIL, LINGUAGENS: LINGUAGENS, AREAS: AREAS, INCLUSAS: INCLUSAS, POR_EXTRA: POR_EXTRA,
+    menuEmail: menuEmail, PEDIDOS: PEDIDOS, AREAS_DO_PEDIDO: AREAS_DO_PEDIDO, diasTxt: diasTxt, faixaTxt: faixaTxt, reais: reais, EMAIL: EMAIL, LINGUAGENS: LINGUAGENS, AREAS: AREAS, INCLUSAS: INCLUSAS, POR_EXTRA: POR_EXTRA,
     alternar: alternar, escolhidas: function () { return escolhidas.slice(); },
     rota: function (sub) {
       iniciar();

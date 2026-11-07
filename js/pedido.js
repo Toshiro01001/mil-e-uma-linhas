@@ -28,7 +28,7 @@ window.MUL_PEDIDO = (function () {
   }
 
   /* rascunho: só nesta aba do navegador (sessionStorage), para não perder o texto ao voltar e mudar o pedido */
-  var CAMPOS = ['fin-nome', 'fin-email', 'fin-whats', 'fq-negocio', 'fq-objetivo', 'fq-publico', 'fq-passos', 'fq-concorr', 'fq-extra', 'fq-links', 'fa-logo', 'fa-textos', 'fa-fotos', 'fa-dominio', 'fc-livre', 'fr-1', 'fr-2', 'fr-3', 'fr-gostei', 'fc-primaria', 'fc-secundaria', 'fc-destaque', 'fc-fundo', 'fc-texto'];
+  var CAMPOS = ['fin-nome', 'fin-email', 'fin-whats', 'fq-negocio', 'fq-objetivo', 'fq-publico', 'fq-passos', 'fq-extra', 'fq-links', 'fa-logo', 'fa-textos', 'fa-fotos', 'fa-dominio', 'fc-livre', 'fr-1', 'fr-2', 'fr-3', 'fr-gostei', 'fc-primaria', 'fc-secundaria', 'fc-destaque', 'fc-fundo', 'fc-texto'];
   function salvarRascunho() {
     var r = { eu: $('fc-eu').checked };
     CAMPOS.forEach(function (id) { r[id] = $(id).value; });
@@ -63,14 +63,14 @@ window.MUL_PEDIDO = (function () {
   function compor() {
     var l = [], add = function (t, x) { if (x) l.push(t + ': ' + x); };
     add('Negócio', v('fq-negocio')); add('O que quer', v('fq-objetivo')); add('Quem vai usar', v('fq-publico'));
-    add('Como funciona hoje', v('fq-passos')); add('Empresas parecidas', v('fq-concorr')); add('Mais informações', v('fq-extra'));
+    add('Como funciona hoje', v('fq-passos')); add('Observação adicional', v('fq-extra'));
     add('Logotipo', v('fa-logo')); add('Textos', v('fa-textos')); add('Fotos', v('fa-fotos')); add('Domínio', v('fa-dominio')); add('Links dos arquivos', v('fq-links'));
     if ($('fc-eu').checked) l.push('Cores: escolher por mim.');
     else l.push('Cores: ' + COR_ROTULOS.map(function (c) { return c[1] + ' ' + $(c[0]).value.toUpperCase(); }).join('; ') + '.');
     add('Cores da marca', v('fc-livre'));
     var refs = ['fr-1', 'fr-2', 'fr-3'].map(v).filter(Boolean);
-    if (refs.length) add('Sites de referência', refs.join(' | '));
-    add('O que gostou nos sites', v('fr-gostei'));
+    if (refs.length) add('Sites ou sistemas de inspiração', refs.join(' | '));
+    add('O que gostou neles', v('fr-gostei'));
     return l.join('\n');
   }
   function contar() {
@@ -88,15 +88,77 @@ window.MUL_PEDIDO = (function () {
       ul.appendChild(li);
     });
   }
-  function emailAlternativo() {
+  function textoEmailAlternativo() {
     var T = O.total(), l = ['Olá! Montei este pedido no site da Mil e Uma Linhas!:', ''];
     O.linhas().forEach(function (x) { l.push('- ' + x.descricao + ': ' + x.valor + '. Prazo: ' + x.prazo); });
     l.push('', 'Estimativa total: ' + T.valor + '. Prazo somado: ' + T.prazo, '', 'Nome: ' + $('fin-nome').value.trim(), 'WhatsApp: ' + $('fin-whats').value.trim(), '', 'O que eu quero:', compor());
-    return 'mailto:' + O.EMAIL + '?subject=' + encodeURIComponent('Pedido de orçamento') + '&body=' + encodeURIComponent(l.join('\n'));
+    return l.join('\n');
   }
   function mostrarAlternativa(sim) {
     $('fin-alternativa').hidden = !sim;
-    if (sim) $('fin-email').href = emailAlternativo();
+    if (!sim) { $('fin-email-menu').hidden = true; $('fin-email-abrir').setAttribute('aria-expanded', 'false'); }
+  }
+
+  /* arquivos do projeto: escolhidos aqui e enviados logo depois que o pedido é registrado */
+  var ARQ_MAX = 20, ARQ_LIM = 25 * 1024 * 1024, ARQ_TOTAL = 50 * 1024 * 1024;
+  var ARQ_EXT = ['png', 'jpg', 'jpeg', 'webp', 'gif', 'svg', 'pdf', 'doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx', 'txt', 'csv', 'zip', 'rar', '7z', 'ai', 'psd'];
+  var arquivos = [];
+  function extensao(n) { var i = String(n).lastIndexOf('.'); return i < 0 ? '' : String(n).slice(i + 1).toLowerCase(); }
+  function tamTxt(b) { return b >= 1048576 ? (b / 1048576).toFixed(1).replace('.', ',') + ' MB' : Math.max(1, Math.round(b / 1024)) + ' KB'; }
+  function somaArquivos() { return arquivos.reduce(function (t, f) { return t + f.size; }, 0); }
+  function renderArquivos() {
+    var ul = $('fa-lista'); ul.textContent = '';
+    arquivos.forEach(function (f, i) {
+      var li = el('li'); li.appendChild(el('span', 'envio-nome', f.name)); li.appendChild(el('span', 'envio-tam', tamTxt(f.size)));
+      var x = el('button', 'botao botao-mini', 'Remover'); x.type = 'button'; x.setAttribute('aria-label', 'Remover o arquivo ' + f.name);
+      x.addEventListener('click', function () { arquivos.splice(i, 1); renderArquivos(); $('fa-erro').textContent = ''; });
+      li.appendChild(x); ul.appendChild(li);
+    });
+    if (arquivos.length) { var t = el('li', 'envio-soma', arquivos.length + (arquivos.length === 1 ? ' arquivo' : ' arquivos') + ', ' + tamTxt(somaArquivos()) + ' no total.'); ul.appendChild(t); }
+  }
+  function adicionarArquivos(lista) {
+    var erros = [];
+    Array.prototype.forEach.call(lista, function (f) {
+      if (arquivos.some(function (a) { return a.name === f.name && a.size === f.size; })) return;
+      if (ARQ_EXT.indexOf(extensao(f.name)) < 0) { erros.push(f.name + ': tipo de arquivo não aceito.'); return; }
+      if (!f.size) { erros.push(f.name + ': o arquivo está vazio.'); return; }
+      if (f.size > ARQ_LIM) { erros.push(f.name + ': passa de 25 MB. Cole o link dele no campo abaixo.'); return; }
+      if (arquivos.length >= ARQ_MAX) { erros.push('O limite é de ' + ARQ_MAX + ' arquivos. ' + f.name + ' ficou de fora.'); return; }
+      if (somaArquivos() + f.size > ARQ_TOTAL) { erros.push(f.name + ': passaria do total de 50 MB.'); return; }
+      arquivos.push(f);
+    });
+    $('fa-erro').textContent = erros.join(' ');
+    renderArquivos();
+  }
+  function enviarUmArquivo(protocolo, token, f, aoProgresso) {
+    return new Promise(function (resolve) {
+      var x = new XMLHttpRequest();
+      x.open('POST', API + '/api/pedidos/' + encodeURIComponent(protocolo) + '/arquivos');
+      x.setRequestHeader('X-Envio-Token', token); x.setRequestHeader('X-Nome-Arquivo', encodeURIComponent(f.name));
+      x.setRequestHeader('Content-Type', f.type || 'application/octet-stream');
+      x.upload.onprogress = function (e) { if (e.lengthComputable) aoProgresso(Math.round(e.loaded * 100 / e.total)); };
+      x.onload = function () {
+        var j = {}; try { j = JSON.parse(x.responseText); } catch (e) { j = {}; }
+        resolve(x.status === 201 ? { ok: true } : { ok: false, motivo: j.erro || 'o servidor recusou o arquivo.' });
+      };
+      x.onerror = function () { resolve({ ok: false, motivo: 'falha de conexão.' }); };
+      x.ontimeout = function () { resolve({ ok: false, motivo: 'a conexão demorou demais.' }); };
+      x.timeout = 10 * 60 * 1000;
+      x.send(f);
+    });
+  }
+  async function enviarArquivos(protocolo, token) {
+    var av = $('fin-ok-arquivos'), lista = arquivos.slice(), falhas = [];
+    av.hidden = false;
+    if (!token) { av.textContent = 'Os arquivos não puderam ser enviados agora. Envie por e-mail para ' + O.EMAIL + ' citando o protocolo ' + protocolo + '.'; return; }
+    for (var i = 0; i < lista.length; i++) {
+      var f = lista[i], pref = 'Enviando arquivo ' + (i + 1) + ' de ' + lista.length + ' (' + f.name + '). Não feche esta página. ';
+      av.textContent = pref + '0%';
+      var r = await enviarUmArquivo(protocolo, token, f, function (pc) { av.textContent = pref + pc + '%'; });
+      if (!r.ok) falhas.push(f.name + ' (' + r.motivo + ')');
+    }
+    if (!falhas.length) av.textContent = lista.length === 1 ? 'Arquivo enviado com sucesso.' : 'Os ' + lista.length + ' arquivos foram enviados com sucesso.';
+    else av.textContent = 'Não consegui enviar: ' + falhas.join('; ') + ' Envie esses arquivos por e-mail para ' + O.EMAIL + ' citando o protocolo ' + protocolo + '.';
   }
 
   /* Turnstile */
@@ -137,7 +199,7 @@ window.MUL_PEDIDO = (function () {
     var ok = true, nome = $('fin-nome').value.replace(/\s+/g, ' ').trim();
     erroCampo('fin-nome', nome.length < 2 ? 'Informe seu nome.' : /[<>]/.test(nome) ? 'O nome não pode ter os sinais < e >.' : '');
     erroCampo('fin-email', emailValido($('fin-email').value) ? '' : 'Informe um e-mail válido, como nome@empresa.com.br.');
-    erroCampo('fin-whats', zapValido($('fin-whats').value) ? '' : 'Informe o WhatsApp com DDD, como (65) 99999-9999.');
+    erroCampo('fin-whats', zapValido($('fin-whats').value) ? '' : 'Informe o WhatsApp com DDD, como (11) 99999-9999.');
     erroCampo('fq-negocio', v('fq-negocio').length < 2 ? 'Conte o nome e o ramo do seu negócio.' : '');
     erroCampo('fq-objetivo', v('fq-objetivo').length < 10 ? 'Conte o que você quer que o site ou sistema faça.' : '');
     var n = tamanho(compor()), et = $('fin-texto-erro');
@@ -192,10 +254,13 @@ window.MUL_PEDIDO = (function () {
     av.textContent = j.divergente ? 'A tabela de preços mudou enquanto o pedido estava aberto. Os valores acima são os da tabela atual.' : '';
     O.esvaziar(); apagarRascunho();
     CAMPOS.forEach(function (id) { if ($(id).type !== 'color') $(id).value = ''; }); $('fc-eu').checked = true; aplicarCores();
+    var enviar_arq = arquivos.slice(); arquivos = []; renderArquivos();
+    $('fin-ok-arquivos').hidden = true;
     $('fin-aceite').checked = false; refazerRobo(); estado('');
     document.querySelector('#fin .fin-grade').hidden = true;
     document.querySelector('#fin > .intro').hidden = true;
     $('fin-ok').hidden = false; $('fin-ok').focus();
+    if (enviar_arq.length) { arquivos = enviar_arq; enviarArquivos(j.protocolo, j.envio_token).then(function () { arquivos = []; }); }
   }
 
   function ligar() {
@@ -207,7 +272,12 @@ window.MUL_PEDIDO = (function () {
     $('fin-whats').addEventListener('blur', function () { if (zapValido(this.value)) { this.value = zapFormatado(this.value); salvarRascunho(); } });
     $('fin-aceite').addEventListener('change', function () { if (this.checked) erroCampo('fin-aceite', ''); });
     $('fin-enviar').addEventListener('click', enviar);
-    $('fin-email').addEventListener('click', function () { this.href = emailAlternativo(); });
+    O.menuEmail($('fin-email-abrir'), $('fin-email-menu'), function () { return { assunto: 'Pedido de orçamento', corpo: textoEmailAlternativo() }; });
+    var drop = $('fa-drop');
+    $('fa-arquivos').addEventListener('change', function () { adicionarArquivos(this.files); this.value = ''; });
+    ['dragenter', 'dragover'].forEach(function (ev) { drop.addEventListener(ev, function (e) { e.preventDefault(); drop.classList.add('sobre'); }); });
+    ['dragleave', 'drop'].forEach(function (ev) { drop.addEventListener(ev, function (e) { e.preventDefault(); drop.classList.remove('sobre'); }); });
+    drop.addEventListener('drop', function (e) { if (e.dataTransfer && e.dataTransfer.files) adicionarArquivos(e.dataTransfer.files); });
     $('fin-copiar-prot').addEventListener('click', function () {
       var t = $('fin-protocolo').textContent, b = this;
       if (navigator.clipboard) navigator.clipboard.writeText(t).then(function () { b.textContent = 'Copiado'; setTimeout(function () { b.textContent = 'Copiar'; }, 1500); }, function () {});
