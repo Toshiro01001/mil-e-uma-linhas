@@ -586,6 +586,13 @@ button.link:disabled { color: var(--cinza); text-decoration: none; cursor: not-a
 .botao.desligado[aria-disabled="true"] { pointer-events: none; }
 .fin-grade { max-width: 760px; }
 .fin-bloco { margin-bottom: 28px; }
+.fin select { width: 100%; min-height: 44px; margin: 4px 0 6px; padding: 8px 10px; background: var(--painel); border: 1px solid var(--traco); border-radius: var(--raio); font-family: var(--ui); font-size: 16px; color: var(--papel); }
+.fin input[type="color"] { width: 64px; height: 44px; padding: 2px; margin: 4px 0 6px; background: var(--painel); border: 1px solid var(--traco); border-radius: var(--raio); }
+.fin input:disabled { opacity: .45; }
+.fin-passos { color: var(--cinza); font-size: 15px; line-height: 23px; padding-left: 20px; margin: 4px 0 10px; }
+.fin-passos b { color: var(--papel); }
+.st-leis { display: flex; gap: 12px; white-space: nowrap; font-size: 12.5px; }
+.st-leis a { color: var(--cinza); }
 .fin input[type="text"], .fin input[type="email"], .fin input[type="tel"] {
   display: block; width: 100%; margin-top: 4px; padding: 8px 10px; background: var(--painel);
   border: 1px solid var(--traco); border-radius: var(--raio); font-family: var(--ui); font-size: 16px; line-height: 22px; color: var(--papel);
@@ -594,7 +601,7 @@ button.link:disabled { color: var(--cinza); text-decoration: none; cursor: not-a
 .fin [aria-invalid="true"] { border-color: var(--coral); }
 .fin .erro { margin: 4px 0 0; min-height: 0; }
 .fin .erro:empty { display: none; }
-.fin textarea { min-height: 260px; margin: 4px 0 6px; }
+.fin textarea { min-height: 84px; margin: 4px 0 6px; }
 .fin-guia { margin: 0 0 8px; padding-left: 20px; color: var(--cinza); font-size: 14.5px; line-height: 22px; }
 .fin-conta { font-family: var(--ui); font-size: 13.5px; color: var(--coral); margin: 0; }
 .fin-conta.ok { color: var(--verde); }
@@ -610,7 +617,7 @@ button.link:disabled { color: var(--cinza); text-decoration: none; cursor: not-a
 .armadilha { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
 @media (max-width: 900px) {
   .fin-enviar { width: 100%; }
-  .fin textarea { min-height: 220px; }
+  .fin textarea { min-height: 96px; }
 }
 
 .orc-aviso-add { margin: 10px 0 0; }

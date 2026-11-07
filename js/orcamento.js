@@ -241,13 +241,13 @@ window.MUL_ORC = (function () {
     $('#orc-valor').textContent = valorTxt(it.valor);
     $('#orc-dias').textContent = 'Prazo estimado: ' + diasTxt(it.valor.dias);
     $('#orc-horas-val').textContent = it.horas + ' horas';
-    var n = ['Estimativa. Valor e prazo finais saem por escrito depois de conversarmos sobre o projeto. O prazo conta em dias corridos, depois de recebermos o material e a aprovação do escopo.'];
+    var n = ['Estimativa. Valor e prazo finais saem por escrito depois de conversarmos sobre o projeto. O prazo conta em dias corridos e só começa depois da entrada de 50%, da aprovação do escopo e do recebimento de todo o material. Cada adicional aumenta o preço e também o prazo.'];
     if (tipo === 'trafego') n.unshift('O prazo é até a primeira campanha no ar.');
     if (+$('#orc-prazo').value > 1) n.unshift('Urgente: prazo cerca de 30% menor, quando a agenda permitir.');
     if (P.nota) n.unshift(P.nota);
     var extra = Math.max(0, it.ids.length - INCLUSAS), maior = it.ids.reduce(function (m, id) { return Math.max(m, ling(id).fator); }, 1);
-    if (extra) n.unshift(extra + (extra === 1 ? ' linguagem' : ' linguagens') + ' além das 2 incluídas: +' + Math.round(extra * POR_EXTRA * 100) + '% no valor.');
-    if (maior > 1) n.unshift('A linguagem mais exigente escolhida acrescenta ' + Math.round((maior - 1) * 100) + '%.');
+    if (extra) n.unshift(extra + (extra === 1 ? ' linguagem' : ' linguagens') + ' além das 2 incluídas: +' + Math.round(extra * POR_EXTRA * 100) + '% no preço e no prazo.');
+    if (maior > 1) n.unshift('Java, C# e outras mais exigentes levam mais tempo de teste e correção: a mais exigente que você marcou soma ' + Math.round((maior - 1) * 100) + '% (uma vez só).');
     $('#orc-nota').textContent = n.join(' ');
   }
   function renderLinguagens() {
@@ -261,7 +261,7 @@ window.MUL_ORC = (function () {
       box.appendChild(b);
     });
     var n = validasPara(tipo, escolhidas).length;
-    $('#orc-ling-conta').textContent = !n ? 'Nenhuma marcada: a escolha fica comigo, sem acréscimo.' : n + (n === 1 ? ' escolhida' : ' escolhidas') + '. Até 2 estão incluídas; cada uma a mais soma ' + Math.round(POR_EXTRA * 100) + '%.';
+    $('#orc-ling-conta').textContent = !n ? 'Nenhuma marcada: decidimos juntos na conversa, sem acréscimo.' : n + (n === 1 ? ' linguagem marcada' : ' linguagens marcadas') + '. Duas estão incluídas. Cada uma a partir da terceira soma ' + Math.round(POR_EXTRA * 100) + '% no preço e no prazo. A escolha final é combinada na conversa.';
   }
   function alternar(id) {
     var i = escolhidas.indexOf(id);

@@ -681,7 +681,7 @@ histórico
 <section id="orcamento" class="folha" aria-labelledby="t-orcamento">
   <h2 id="t-orcamento">Monte seu orçamento</h2>
   <div id="orc-montar">
-  <p class="intro">Escolha o tipo de pedido e o plano e adicione ao seu pedido. Preço e prazo mudam conforme o que você marca. É uma estimativa: os valores finais saem por escrito depois de conversarmos sobre o projeto.</p>
+  <p class="intro">Escolha o tipo de pedido e o plano e adicione ao seu pedido. Preço e prazo mudam conforme o que você marca. É uma estimativa: o valor e o prazo finais saem por escrito depois que conversarmos. Tudo que você acrescentar aumenta o preço e também o prazo.</p>
   <div class="orc-tipos" id="orc-tipos" role="tablist" aria-label="Tipo de pedido"></div>
   <div class="orc-grade">
     <div class="orc-monta">
@@ -691,8 +691,8 @@ histórico
       <h3 class="h-peq">Adicionais</h3>
       <div class="orc-extras" id="orc-extras"></div>
       <div id="orc-ling-caixa">
-        <h3 class="h-peq">Linguagens</h3>
-        <p class="nota orc-ling-nota">Não sabe qual escolher? <a href="#linguagens">Veja o que cada uma faz</a> ou deixe a escolha comigo.</p>
+        <h3 class="h-peq">Linguagens de programação (opcional)</h3>
+        <p class="nota orc-ling-nota"><b>Duas linguagens já estão incluídas no preço.</b> A partir da terceira, cada uma soma 15% no preço e no prazo. Não sabe qual escolher? Não marque nada: nós decidimos juntos na conversa, antes do orçamento final. <a href="#linguagens">Veja o que cada uma faz</a>.</p>
         <div class="pilulas" id="orc-langs" role="group" aria-label="Linguagens do projeto"></div>
         <p class="nota" id="orc-ling-conta" aria-live="polite"></p>
       </div>
@@ -711,12 +711,18 @@ histórico
       <ul class="orc-carrinho" id="orc-carrinho" aria-labelledby="t-carrinho"></ul>
       <p class="orc-total" id="orc-total" aria-live="polite"></p>
       <div class="acoes">
-        <a class="botao cheio" id="orc-finalizar" href="#orcamento/finalizar">Finalizar pedido</a>
+        <a class="botao cheio" id="orc-finalizar" href="#orcamento/finalizar">Continuar e enviar o pedido</a>
       </div>
-      <p class="nota">Na finalização você confere tudo, conta em detalhes o que quer e envia. O pedido fica salvo neste aparelho até você enviar.</p>
+      <p class="nota">Na próxima tela você confere tudo, responde algumas perguntas simples e envia. Você recebe um número de protocolo. Nada é cobrado agora.</p>
       <p class="nota orc-outros"><a id="orc-email" href="#orcamento">Prefiro enviar por e-mail</a> · <button class="link" type="button" id="orc-copiar">Copiar resumo</button> · <button class="link" type="button" id="orc-esvaziar">Esvaziar</button></p>
-      <h3 class="h-peq">Como você paga</h3>
-      <p class="nota">Enviar o pedido não cobra nada. Depois que você aprova o orçamento por escrito, envio para cada etapa (entrada, versão de teste e entrega) um link da minha página de pagamento. O valor fica guardado no meu sistema de cobranças, não no link, e você paga por Pix, com QR Code ou código copia e cola, sem digitar nada. Se preferir cartão, mando um link de pagamento do Mercado Pago. Nos planos mensais, envio um link por mês.</p>
+      <h3 class="h-peq">Como funciona depois do pedido</h3>
+      <ol class="fin-passos">
+        <li>Você envia o pedido e recebe um <b>protocolo</b>. Nada é cobrado.</li>
+        <li>Eu entro em contato para conversar e mando o <b>orçamento final por escrito</b>.</li>
+        <li>Você aprova e paga <b>50% de entrada</b>. Só então eu começo.</li>
+        <li>Quando o trabalho fica pronto, você confere e paga os <b>50% restantes</b>. Aí eu publico e entrego os acessos.</li>
+      </ol>
+      <p class="nota">Leia os <a href="termos.html">Termos de Serviço</a> e a <a href="privacidade.html">Política de Privacidade</a>.</p>
     </aside>
   </div>
   </div>
@@ -746,24 +752,70 @@ histórico
           <div class="armadilha" aria-hidden="true"><label for="fin-site">Não preencha</label><input id="fin-site" type="text" tabindex="-1" autocomplete="off"></div>
         </section>
         <section aria-labelledby="t-fin-texto" class="fin-bloco">
-          <h3 class="sub" id="t-fin-texto">3. Conte exatamente o que você quer</h3>
-          <p class="nota">De 500 a 3.000 caracteres. Quanto mais detalhe, mais certo fica o orçamento. Algumas perguntas para guiar:</p>
-          <ul class="fin-guia">
-            <li>O que a sua empresa faz e para quem?</li>
-            <li>O que o site ou sistema precisa fazer, passo a passo?</li>
-            <li>Quem vai usar, e mais no celular ou no computador?</li>
-            <li>Já tem logotipo, textos, fotos e domínio?</li>
-            <li>Tem algum site que você gosta como exemplo?</li>
-            <li>Tem data limite? Por quê?</li>
-          </ul>
-          <label for="fin-texto">Descrição do pedido</label>
-          <textarea id="fin-texto" rows="12" maxlength="3000" required aria-describedby="fin-conta fin-texto-erro"></textarea>
-          <p class="fin-conta" id="fin-conta" aria-live="polite"></p>
-          <p class="erro" id="fin-texto-erro"></p>
+          <h3 class="sub" id="t-fin-texto">3. Conte o que você quer</h3>
+          <p class="nota">Responda do seu jeito, com palavras simples. Não existe resposta errada. Quanto mais você contar, mais certo fica o orçamento. Só as duas primeiras são obrigatórias.</p>
+          <label for="fq-negocio">Qual é o nome e o ramo do seu negócio? (obrigatório)</label>
+          <input id="fq-negocio" type="text" maxlength="160" autocomplete="organization" required aria-describedby="fq-negocio-erro">
+          <p class="erro" id="fq-negocio-erro"></p>
+          <label for="fq-objetivo">O que você quer que o site ou sistema faça pelo seu negócio? (obrigatório)</label>
+          <textarea id="fq-objetivo" rows="4" maxlength="500" required aria-describedby="fq-objetivo-erro"></textarea>
+          <p class="erro" id="fq-objetivo-erro"></p>
+          <label for="fq-publico">Quem vai usar? Seus clientes, sua equipe? Mais pelo celular ou pelo computador?</label>
+          <textarea id="fq-publico" rows="2" maxlength="300"></textarea>
+          <label for="fq-passos">Como isso funciona hoje, passo a passo? (Se for um sistema, conte o caminho do começo ao fim.)</label>
+          <textarea id="fq-passos" rows="3" maxlength="500"></textarea>
+          <label for="fq-concorr">Quais empresas parecidas com a sua você conhece? (até 3)</label>
+          <textarea id="fq-concorr" rows="2" maxlength="300"></textarea>
+          <label for="fq-extra">Tem mais alguma coisa que eu precise saber?</label>
+          <textarea id="fq-extra" rows="3" maxlength="500"></textarea>
+          <p class="nota">O prazo do seu pedido já vem definido no orçamento (até 14 dias no site Essencial). Por isso não pergunto data limite. Se algo mudar o prazo, aviso você antes.</p>
         </section>
+        <section aria-labelledby="t-fin-material" class="fin-bloco">
+          <h3 class="sub" id="t-fin-material">4. O que você já tem pronto</h3>
+          <p class="nota">O prazo só começa a contar depois que eu receber todo o material. Marque o que você já tem.</p>
+          <div class="fin-mat">
+            <label for="fa-logo">Logotipo</label>
+            <select id="fa-logo"><option value="">Escolha</option><option>Já tenho</option><option>Não tenho</option><option>Quero ajuda para fazer</option></select>
+            <label for="fa-textos">Textos do site</label>
+            <select id="fa-textos"><option value="">Escolha</option><option>Já tenho</option><option>Não tenho</option><option>Quero ajuda para escrever</option></select>
+            <label for="fa-fotos">Fotos e imagens</label>
+            <select id="fa-fotos"><option value="">Escolha</option><option>Já tenho</option><option>Não tenho</option><option>Quero ajuda para conseguir</option></select>
+            <label for="fa-dominio">Endereço na internet (domínio)</label>
+            <select id="fa-dominio"><option value="">Escolha</option><option>Já tenho</option><option>Não tenho</option><option>Quero ajuda para registrar</option></select>
+          </div>
+          <label for="fq-links">Links dos seus arquivos (Google Drive, Dropbox, OneDrive...)</label>
+          <input id="fq-links" type="text" maxlength="300" inputmode="url" autocomplete="off" placeholder="Link da pasta com seus arquivos">
+          <p class="nota">Depois de enviar, você recebe o protocolo e me manda os arquivos por e-mail ou pelo link acima. Não anexe documentos pessoais, como RG e CPF.</p>
+        </section>
+        <section aria-labelledby="t-fin-cores" class="fin-bloco">
+          <h3 class="sub" id="t-fin-cores">5. Cores</h3>
+          <label class="radio fin-aceite"><input type="checkbox" id="fc-eu" checked> <span>Escolham as cores por mim</span></label>
+          <div class="fin-cores" id="fc-lista">
+            <label for="fc-primaria">Cor principal (botões e destaques da marca)</label><input id="fc-primaria" type="color" value="#1f4fd8" disabled>
+            <label for="fc-secundaria">Cor de apoio (detalhes, botões secundários)</label><input id="fc-secundaria" type="color" value="#6b7280" disabled>
+            <label for="fc-destaque">Cor de destaque (avisos, números, ícones)</label><input id="fc-destaque" type="color" value="#f59e0b" disabled>
+            <label for="fc-fundo">Cor do fundo das páginas</label><input id="fc-fundo" type="color" value="#ffffff" disabled>
+            <label for="fc-texto">Cor dos textos</label><input id="fc-texto" type="color" value="#111827" disabled>
+          </div>
+          <p class="nota" id="fc-aviso" aria-live="polite"></p>
+          <label for="fc-livre">Cores da sua marca que já existem (código, nome ou descrição)</label>
+          <input id="fc-livre" type="text" maxlength="160" placeholder="Ex.: azul do logotipo, #1F4FD8">
+          <p class="nota">Eu cuido dos tons de erro, sucesso, aviso e das cores de botão ao passar o mouse, sempre com contraste fácil de ler.</p>
+        </section>
+        <section aria-labelledby="t-fin-ref" class="fin-bloco">
+          <h3 class="sub" id="t-fin-ref">6. Sites que você gosta</h3>
+          <p class="nota">Cole o endereço de até 3 sites que você acha bonitos ou parecidos com o que você quer, e diga o que gostou.</p>
+          <label for="fr-1">Site 1</label><input id="fr-1" type="text" maxlength="200" inputmode="url" autocomplete="off" placeholder="https://">
+          <label for="fr-2">Site 2</label><input id="fr-2" type="text" maxlength="200" inputmode="url" autocomplete="off" placeholder="https://">
+          <label for="fr-3">Site 3</label><input id="fr-3" type="text" maxlength="200" inputmode="url" autocomplete="off" placeholder="https://">
+          <label for="fr-gostei">O que você gostou neles?</label>
+          <textarea id="fr-gostei" rows="2" maxlength="300"></textarea>
+        </section>
+        <p class="fin-conta" id="fin-conta" aria-live="polite"></p>
+        <p class="erro" id="fin-texto-erro"></p>
         <section aria-labelledby="t-fin-envio" class="fin-bloco">
-          <h3 class="sub" id="t-fin-envio">4. Enviar</h3>
-          <label class="radio fin-aceite"><input type="checkbox" id="fin-aceite" aria-describedby="fin-aceite-erro"> <span>Concordo que a Mil e Uma Linhas! use meu nome, e-mail, WhatsApp e esta descrição só para responder este pedido, como explico em <a href="#contato/dados">Como cuido dos seus dados</a>.</span></label>
+          <h3 class="sub" id="t-fin-envio">7. Enviar</h3>
+          <label class="radio fin-aceite"><input type="checkbox" id="fin-aceite" aria-describedby="fin-aceite-erro"> <span>Concordo que a Mil e Uma Linhas! use meu nome, e-mail, WhatsApp e esta descrição só para responder este pedido, como explico na <a href="privacidade.html">Política de Privacidade</a>, e li os <a href="termos.html">Termos de Serviço</a>.</span></label>
           <p class="erro" id="fin-aceite-erro"></p>
           <div class="fin-robo" id="fin-robo"></div>
           <button class="botao cheio fin-enviar" type="button" id="fin-enviar">Enviar pedido</button>
@@ -788,7 +840,7 @@ histórico
 <!-- ============ contato ============ -->
 <section id="contato" class="folha" aria-labelledby="t-contato">
   <h2 id="t-contato">Fale comigo</h2>
-  <p class="intro">Conte o que você vende, o que precisa resolver e se tem data para ficar pronto. Se quiser, <a href="#orcamento">monte um orçamento</a> antes e envie o resumo.</p>
+  <p class="intro">Conte o que você vende e o que precisa resolver. Se quiser, <a href="#orcamento">monte um orçamento</a> antes e envie o resumo.</p>
   <div class="canais">
     <div class="canal canal-principal">
       <h3>E-mail</h3>
@@ -839,6 +891,7 @@ histórico
 <footer class="status">
   <button type="button" id="term-botao" aria-expanded="false" aria-controls="terminal">&gt;_ terminal</button>
   <span class="st-aba" id="st-aba">1:início</span>
+  <span class="st-leis"><a href="termos.html">Termos</a> <a href="privacidade.html">Privacidade</a></span>
   <span class="st-dir"><span id="st-linha">linha 1 de 1001</span><span class="st-ok">200 OK</span></span>
 </footer>
 </body>

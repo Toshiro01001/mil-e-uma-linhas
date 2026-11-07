@@ -1,5 +1,5 @@
-/* Finalização do pedido: confere o carrinho, pede nome, e-mail, WhatsApp e a descrição (500 a 3.000 caracteres)
-   e envia para o meu sistema de pedidos. O preço não vai pronto: o servidor refaz a conta com a mesma tabela.
+/* Finalização do pedido: confere o carrinho, pede nome, e-mail, WhatsApp e um questionário (uma pergunta por campo, cores,
+   material pronto e sites de referência). As respostas viram um texto organizado (500 a 3.000 caracteres) e para o meu sistema de pedidos. O preço não vai pronto: o servidor refaz a conta com a mesma tabela.
    A verificação contra robôs (Cloudflare Turnstile) só é carregada nesta tela. */
 window.MUL_PEDIDO = (function () {
   'use strict';
@@ -28,21 +28,55 @@ window.MUL_PEDIDO = (function () {
   }
 
   /* rascunho: só nesta aba do navegador (sessionStorage), para não perder o texto ao voltar e mudar o pedido */
+  var CAMPOS = ['fin-nome', 'fin-email', 'fin-whats', 'fq-negocio', 'fq-objetivo', 'fq-publico', 'fq-passos', 'fq-concorr', 'fq-extra', 'fq-links', 'fa-logo', 'fa-textos', 'fa-fotos', 'fa-dominio', 'fc-livre', 'fr-1', 'fr-2', 'fr-3', 'fr-gostei', 'fc-primaria', 'fc-secundaria', 'fc-destaque', 'fc-fundo', 'fc-texto'];
   function salvarRascunho() {
-    try { sessionStorage.setItem(RASCUNHO, JSON.stringify({ nome: $('fin-nome').value, email: $('fin-email').value, whats: $('fin-whats').value, texto: $('fin-texto').value })); } catch (e) { /* sem armazenamento */ }
+    var r = { eu: $('fc-eu').checked };
+    CAMPOS.forEach(function (id) { r[id] = $(id).value; });
+    try { sessionStorage.setItem(RASCUNHO, JSON.stringify(r)); } catch (e) { /* sem armazenamento */ }
   }
   function lerRascunho() {
     try {
       var r = JSON.parse(sessionStorage.getItem(RASCUNHO) || 'null');
-      if (r) { $('fin-nome').value = r.nome || ''; $('fin-email').value = r.email || ''; $('fin-whats').value = r.whats || ''; $('fin-texto').value = (r.texto || '').slice(0, MAX); }
+      if (!r) return;
+      CAMPOS.forEach(function (id) { if (typeof r[id] === 'string') { try { $(id).value = r[id]; } catch (e) { /* valor inválido */ } } });
+      if (typeof r.eu === 'boolean') $('fc-eu').checked = r.eu;
+      aplicarCores();
     } catch (e) { /* sem rascunho */ }
   }
   function apagarRascunho() { try { sessionStorage.removeItem(RASCUNHO); } catch (e) { /* nada */ } }
 
+  /* cores: sem escolha própria, o campo fica desligado e eu escolho */
+  var COR_ROTULOS = [['fc-primaria', 'Cor principal'], ['fc-secundaria', 'Cor de apoio'], ['fc-destaque', 'Cor de destaque'], ['fc-fundo', 'Fundo'], ['fc-texto', 'Texto']];
+  function luz(hex) {
+    var c = [1, 3, 5].map(function (i) { var v = parseInt(hex.slice(i, i + 2), 16) / 255; return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4); });
+    return 0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2];
+  }
+  function contraste(a, b) { var x = luz(a), y = luz(b); return (Math.max(x, y) + 0.05) / (Math.min(x, y) + 0.05); }
+  function aplicarCores() {
+    var eu = $('fc-eu').checked, av = $('fc-aviso');
+    COR_ROTULOS.forEach(function (c) { $(c[0]).disabled = eu; });
+    if (eu) { av.textContent = ''; return; }
+    var r = contraste($('fc-texto').value, $('fc-fundo').value);
+    av.textContent = 'Contraste entre texto e fundo: ' + r.toFixed(1).replace('.', ',') + ' para 1. ' + (r >= 4.5 ? 'Bom para ler (mínimo recomendado: 4,5).' : 'Baixo: o texto pode ficar difícil de ler. Eu aviso e sugiro um ajuste.');
+  }
+  function v(id) { return $(id).value.replace(/\s+/g, ' ').trim(); }
+  function compor() {
+    var l = [], add = function (t, x) { if (x) l.push(t + ': ' + x); };
+    add('Negócio', v('fq-negocio')); add('O que quer', v('fq-objetivo')); add('Quem vai usar', v('fq-publico'));
+    add('Como funciona hoje', v('fq-passos')); add('Empresas parecidas', v('fq-concorr')); add('Mais informações', v('fq-extra'));
+    add('Logotipo', v('fa-logo')); add('Textos', v('fa-textos')); add('Fotos', v('fa-fotos')); add('Domínio', v('fa-dominio')); add('Links dos arquivos', v('fq-links'));
+    if ($('fc-eu').checked) l.push('Cores: escolher por mim.');
+    else l.push('Cores: ' + COR_ROTULOS.map(function (c) { return c[1] + ' ' + $(c[0]).value.toUpperCase(); }).join('; ') + '.');
+    add('Cores da marca', v('fc-livre'));
+    var refs = ['fr-1', 'fr-2', 'fr-3'].map(v).filter(Boolean);
+    if (refs.length) add('Sites de referência', refs.join(' | '));
+    add('O que gostou nos sites', v('fr-gostei'));
+    return l.join('\n');
+  }
   function contar() {
-    var n = tamanho($('fin-texto').value), p = $('fin-conta');
-    p.classList.toggle('ok', n >= MIN);
-    p.textContent = n < MIN ? n + ' de ' + MIN + ' caracteres no mínimo. Faltam ' + (MIN - n) + '.' : n + ' de ' + MAX + ' caracteres. Pronto para enviar.';
+    var n = tamanho(compor()), p = $('fin-conta');
+    p.classList.toggle('ok', n >= MIN && n <= MAX);
+    p.textContent = n < MIN ? 'Conte um pouco mais. Faltam ' + (MIN - n) + ' caracteres para eu conseguir montar o orçamento.' : n > MAX ? 'Passou ' + (n - MAX) + ' caracteres do limite. Resuma alguma resposta.' : 'Pronto para enviar.';
   }
 
   function listar(ul, linhas) {
@@ -57,7 +91,7 @@ window.MUL_PEDIDO = (function () {
   function emailAlternativo() {
     var T = O.total(), l = ['Olá! Montei este pedido no site da Mil e Uma Linhas!:', ''];
     O.linhas().forEach(function (x) { l.push('- ' + x.descricao + ': ' + x.valor + '. Prazo: ' + x.prazo); });
-    l.push('', 'Estimativa total: ' + T.valor + '. Prazo somado: ' + T.prazo, '', 'Nome: ' + $('fin-nome').value.trim(), 'WhatsApp: ' + $('fin-whats').value.trim(), '', 'O que eu quero:', $('fin-texto').value.trim());
+    l.push('', 'Estimativa total: ' + T.valor + '. Prazo somado: ' + T.prazo, '', 'Nome: ' + $('fin-nome').value.trim(), 'WhatsApp: ' + $('fin-whats').value.trim(), '', 'O que eu quero:', compor());
     return 'mailto:' + O.EMAIL + '?subject=' + encodeURIComponent('Pedido de orçamento') + '&body=' + encodeURIComponent(l.join('\n'));
   }
   function mostrarAlternativa(sim) {
@@ -104,11 +138,13 @@ window.MUL_PEDIDO = (function () {
     erroCampo('fin-nome', nome.length < 2 ? 'Informe seu nome.' : /[<>]/.test(nome) ? 'O nome não pode ter os sinais < e >.' : '');
     erroCampo('fin-email', emailValido($('fin-email').value) ? '' : 'Informe um e-mail válido, como nome@empresa.com.br.');
     erroCampo('fin-whats', zapValido($('fin-whats').value) ? '' : 'Informe o WhatsApp com DDD, como (65) 99999-9999.');
-    var n = tamanho($('fin-texto').value);
-    erroCampo('fin-texto', n < MIN ? 'Faltam ' + (MIN - n) + ' caracteres para o mínimo de ' + MIN + '.' : n > MAX ? 'Passou ' + (n - MAX) + ' caracteres do limite.' : '');
+    erroCampo('fq-negocio', v('fq-negocio').length < 2 ? 'Conte o nome e o ramo do seu negócio.' : '');
+    erroCampo('fq-objetivo', v('fq-objetivo').length < 10 ? 'Conte o que você quer que o site ou sistema faça.' : '');
+    var n = tamanho(compor()), et = $('fin-texto-erro');
+    et.textContent = n < MIN ? 'Conte um pouco mais nas respostas. Faltam ' + (MIN - n) + ' caracteres.' : n > MAX ? 'Passou ' + (n - MAX) + ' caracteres do limite. Resuma alguma resposta.' : '';
     erroCampo('fin-aceite', $('fin-aceite').checked ? '' : 'Marque que concorda para eu poder responder.');
-    ['fin-nome', 'fin-email', 'fin-whats', 'fin-texto', 'fin-aceite'].some(function (id) {
-      if ($(id + '-erro').textContent) { ok = false; $(id).focus(); return true; }
+    ['fin-nome', 'fin-email', 'fin-whats', 'fq-negocio', 'fq-objetivo', 'fin-texto', 'fin-aceite'].some(function (id) {
+      if ($(id + '-erro').textContent) { ok = false; if (id === 'fin-texto') $('fq-extra').focus(); else $(id).focus(); return true; }
       return false;
     });
     return ok;
@@ -124,7 +160,7 @@ window.MUL_PEDIDO = (function () {
     enviando = true;
     var b = $('fin-enviar'); b.disabled = true; b.setAttribute('aria-busy', 'true'); estado('Enviando...');
     var corpo = {
-      nome: $('fin-nome').value, email: $('fin-email').value, whatsapp: $('fin-whats').value, texto: $('fin-texto').value,
+      nome: $('fin-nome').value, email: $('fin-email').value, whatsapp: $('fin-whats').value, texto: compor(),
       consentimento: $('fin-aceite').checked, site_web: $('fin-site').value,
       itens: O.paraEnvio(), total_visto: O.total().valor, turnstile: ficha
     };
@@ -141,7 +177,7 @@ window.MUL_PEDIDO = (function () {
     if (j.codigo === 'nome') erroCampo('fin-nome', msg);
     if (j.codigo === 'email') erroCampo('fin-email', msg);
     if (j.codigo === 'whatsapp') erroCampo('fin-whats', msg);
-    if (j.codigo === 'texto') erroCampo('fin-texto', msg);
+    if (j.codigo === 'texto') $('fin-texto-erro').textContent = msg;
     if (j.codigo === 'consentimento') erroCampo('fin-aceite', msg);
     estado(msg, true);
     if (r.status >= 500 || r.status === 429) mostrarAlternativa(true);
@@ -155,7 +191,7 @@ window.MUL_PEDIDO = (function () {
     av.hidden = !j.divergente;
     av.textContent = j.divergente ? 'A tabela de preços mudou enquanto o pedido estava aberto. Os valores acima são os da tabela atual.' : '';
     O.esvaziar(); apagarRascunho();
-    ['fin-nome', 'fin-email', 'fin-whats', 'fin-texto'].forEach(function (id) { $(id).value = ''; });
+    CAMPOS.forEach(function (id) { if ($(id).type !== 'color') $(id).value = ''; }); $('fc-eu').checked = true; aplicarCores();
     $('fin-aceite').checked = false; refazerRobo(); estado('');
     document.querySelector('#fin .fin-grade').hidden = true;
     document.querySelector('#fin > .intro').hidden = true;
@@ -166,8 +202,8 @@ window.MUL_PEDIDO = (function () {
     if (ligado) return;
     ligado = true;
     lerRascunho(); contar();
-    $('fin-texto').addEventListener('input', function () { contar(); salvarRascunho(); if ($('fin-texto-erro').textContent && tamanho(this.value) >= MIN) erroCampo('fin-texto', ''); });
-    ['fin-nome', 'fin-email', 'fin-whats'].forEach(function (id) { $(id).addEventListener('input', salvarRascunho); });
+    CAMPOS.forEach(function (id) { $(id).addEventListener('input', function () { contar(); salvarRascunho(); if (id === 'fc-texto' || id === 'fc-fundo') aplicarCores(); if (this.getAttribute('aria-invalid') === 'true') erroCampo(id, ''); $('fin-texto-erro').textContent = ''; }); $(id).addEventListener('change', function () { contar(); salvarRascunho(); }); });
+    $('fc-eu').addEventListener('change', function () { aplicarCores(); contar(); salvarRascunho(); });
     $('fin-whats').addEventListener('blur', function () { if (zapValido(this.value)) { this.value = zapFormatado(this.value); salvarRascunho(); } });
     $('fin-aceite').addEventListener('change', function () { if (this.checked) erroCampo('fin-aceite', ''); });
     $('fin-enviar').addEventListener('click', enviar);

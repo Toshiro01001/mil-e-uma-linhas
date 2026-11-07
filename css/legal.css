@@ -1,0 +1,25 @@
+/* Páginas de Termos e Privacidade: texto longo, leitura simples, sem script. */
+:root { --fundo:#101418; --painel:#1B2229; --papel:#F4F1E8; --verde:#B8F34A; --cinza:#AEB7C0; --traco:#38424C; }
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--fundo); color: var(--papel); font: 18px/1.65 system-ui, -apple-system, "Segoe UI", Arial, sans-serif; }
+.pular { position: absolute; left: -999px; } .pular:focus { left: 8px; top: 8px; background: var(--verde); color: #101418; padding: 8px 12px; z-index: 5; }
+.topo { display: flex; justify-content: space-between; gap: 12px; padding: 14px 20px; border-bottom: 1px solid var(--traco); }
+.topo a { color: var(--verde); } .topo span { color: var(--cinza); }
+main { max-width: 760px; margin: 0 auto; padding: 24px 20px 48px; }
+h1 { font-size: 32px; line-height: 1.2; margin: 8px 0 4px; }
+h2 { font-size: 23px; margin: 36px 0 8px; padding-bottom: 6px; border-bottom: 2px solid var(--verde); }
+h3 { font-size: 19px; margin: 24px 0 4px; }
+.sub { color: var(--cinza); margin-top: 0; }
+a { color: var(--verde); text-underline-offset: 3px; }
+a:focus-visible { outline: 3px solid var(--verde); outline-offset: 3px; }
+ol.cl { padding-left: 0; list-style: none; counter-reset: c; }
+ol.cl > li { counter-increment: c; position: relative; padding-left: 40px; margin: 14px 0; }
+ol.cl > li::before { content: counter(c) "."; position: absolute; left: 0; color: var(--verde); font-weight: 700; }
+ul { padding-left: 22px; } li { margin: 4px 0; }
+table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 16px; display: block; overflow-x: auto; }
+th, td { border: 1px solid var(--traco); padding: 8px 10px; text-align: left; vertical-align: top; }
+th { background: var(--painel); }
+.rodape { display: flex; flex-wrap: wrap; gap: 8px 18px; justify-content: center; padding: 20px; border-top: 1px solid var(--traco); }
+.rodape a { color: var(--cinza); }
+@media (max-width: 600px) { body { font-size: 17px; } h1 { font-size: 27px; } main { padding: 18px 16px 40px; } ol.cl > li { padding-left: 32px; } }
