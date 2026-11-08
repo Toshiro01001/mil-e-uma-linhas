@@ -41,10 +41,10 @@ window.MUL_TEMAS = (function () {
     var G = [
       ['Escritório', 'Site Profissional', 'Até 5 páginas com áreas de atuação, equipe e formulário. Passa confiança para quem pesquisa antes de ligar.', 'site'],
       ['Clínica', 'Site Essencial com agendamento', 'Uma página clara e horários online, para reduzir ligações e mensagens repetidas.', 'site'],
-      ['Comércio', 'Site Completo ou loja virtual', 'Catálogo e pedidos no próprio site, sem depender só das redes sociais.', 'site'],
+      ['Comércio', 'E-commerce', 'Catálogo, carrinho e pagamento no próprio site, sem depender só de marketplace e das redes sociais.', 'ecommerce'],
       ['Restaurante', 'Site Essencial e atendimento automático', 'Cardápio sempre atualizado e pedidos organizados antes de chegar à cozinha.', 'vendas'],
       ['Indústria ou serviços', 'Sistema Pequeno', 'Tire o controle de pedidos, estoque ou ordens de serviço das planilhas soltas.', 'sistema'],
-      ['Outro', 'Diagnóstico', 'Uma conversa e um documento com escopo, prazo e custo antes de qualquer gasto maior.', 'medida']
+      ['Outro', 'uma conversa', 'Conte o que você vende e o que precisa resolver. Eu indico o caminho e o preço antes de qualquer gasto.', '#contato']
     ];
     var box = $('#em-negocios'), saida = $('#em-saida');
     function abrir(i) {
@@ -52,7 +52,7 @@ window.MUL_TEMAS = (function () {
       saida.textContent = '';
       saida.appendChild(el('h3', null, 'Comece por: ' + G[i][1]));
       saida.appendChild(el('p', null, G[i][2]));
-      var a = el('a', 'botao cheio', 'Ver preços deste caminho'); a.href = '#orcamento/' + G[i][3];
+      var ext = G[i][3].charAt(0) === '#'; var a = el('a', 'botao cheio', ext ? 'Falar comigo' : 'Ver preços deste caminho'); a.href = ext ? G[i][3] : '#orcamento/' + G[i][3];
       saida.appendChild(a);
     }
     G.forEach(function (g, i) {

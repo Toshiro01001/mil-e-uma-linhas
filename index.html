@@ -234,7 +234,7 @@
       <button role="tab" data-svc="escolher" id="s-escolher" aria-controls="p-escolher"><span class="so-ascii">qual-escolher.md</span><span class="sem-ascii">Qual escolher?</span></button>
       <button role="tab" data-svc="sites" id="s-sites" aria-controls="p-sites"><span class="so-ascii">sites.html</span><span class="sem-ascii">Sites</span></button>
       <button role="tab" data-svc="sistemas" id="s-sistemas" aria-controls="p-sistemas"><span class="so-ascii">sistemas.sql</span><span class="sem-ascii">Sistemas</span></button>
-      <button role="tab" data-svc="sob-medida" id="s-sob-medida" aria-controls="p-sob-medida"><span class="so-ascii">sob-medida.md</span><span class="sem-ascii">Projetos sob medida</span></button>
+      <button role="tab" data-svc="ecommerce" id="s-ecommerce" aria-controls="p-ecommerce"><span class="so-ascii">loja.php</span><span class="sem-ascii">E-commerce</span></button>
       <button role="tab" data-svc="vendas" id="s-vendas" aria-controls="p-vendas"><span class="so-ascii">vendas.bot</span><span class="sem-ascii">Vendas automatizadas</span></button>
       <button role="tab" data-svc="trafego" id="s-trafego" aria-controls="p-trafego"><span class="so-ascii">trafego.ads</span><span class="sem-ascii">Tráfego pago</span></button>
     </div>
@@ -251,8 +251,8 @@
           <dd><b>Vendas automatizadas.</b> Respostas e perguntas automáticas que organizam o interessado e avisam quem vai fechar a venda.</dd>
           <dt>Quero que mais gente chegue até mim</dt>
           <dd><b>Tráfego pago.</b> Anúncios pagos, como no Instagram ou no Google, levando as pessoas até o seu site ou WhatsApp. A verba vai direto para a plataforma, e ninguém pode prometer venda.</dd>
-          <dt>Tenho uma ideia que não existe pronta</dt>
-          <dd><b>Projeto sob medida.</b> Começa com uma conversa (Diagnóstico), depois uma primeira versão (Protótipo) ou o projeto completo.</dd>
+          <dt>Quero vender pela internet, com carrinho e pagamento</dt>
+          <dd><b>E-commerce.</b> Uma loja no seu próprio endereço, com catálogo, carrinho, Pix e cartão, frete e um painel para acompanhar os pedidos. Começa pequena e cresce.</dd>
         </dl>
         <p><b>Site ou sistema?</b> No site, qualquer pessoa entra e olha. No sistema, só entra quem tem login, e o que está lá dentro é trabalho da sua empresa.</p>
         <details class="orc-dif"><summary>Quero os detalhes técnicos</summary>
@@ -300,16 +300,23 @@
         </ul>
         <a class="botao" href="#demos/pedidos">Testar um sistema de pedidos</a> <a class="botao" href="#demos/banco">Testar um banco de dados</a>
       </div>
-      <div class="painel" id="p-sob-medida" role="tabpanel" aria-labelledby="s-sob-medida" data-svc="sob-medida">
-        <h3>Projetos sob medida</h3>
-        <pre class="arte" aria-hidden="true">ideia &gt; escopo &gt; código &gt; entrega
-  |       |        |        |
-  |       |        |        +-- no ar e explicado
-  |       |        +----------- testado a cada etapa
-  |       +-------------------- prazo por escrito
-  +---------------------------- sua conversa</pre>
-        <p>Tem uma ideia que nenhum produto pronto resolve? Mapa em 3D, plataforma de estudos, ferramenta interna: os projetos da aba ao lado nasceram assim.</p>
-        <a class="botao" href="#projetos">Ver projetos prontos</a>
+      <div class="painel" id="p-ecommerce" role="tabpanel" aria-labelledby="s-ecommerce" data-svc="ecommerce">
+        <h3>E-commerce</h3>
+        <pre class="arte" aria-hidden="true">+------------------------------------+
+| sualoja.com.br          [sacola 2] |
++------------------------------------+
+|  [foto]  Produto A   R$ 89,90  [+] |
+|  [foto]  Produto B   R$ 49,90  [+] |
++------------------------------------+
+|  Pix ou cartão  |  frete: R$ 18,00 |
++------------------------------------+</pre>
+        <p>Uma loja no seu próprio endereço, sem depender só de marketplace ou de rede social: catálogo, carrinho, pagamento por Pix e cartão e frete calculado. Você acompanha os pedidos em um painel simples e marca o envio.</p>
+        <ul class="check">
+          <li>Funciona bem no celular, onde a maioria compra</li>
+          <li>Pagamento por um intermediador, como o Mercado Pago, que cobra a taxa por venda</li>
+          <li>Começa pequeno, com pedido pelo WhatsApp, e cresce para pagamento online e estoque</li>
+        </ul>
+        <a class="botao cheio" href="#orcamento/ecommerce">Ver preços da loja</a> <a class="botao" href="https://toshiro01001.github.io/tenis-primeiro/" rel="noopener noreferrer" target="_blank">Abrir uma loja de demonstração</a>
       </div>
       <div class="painel" id="p-vendas" role="tabpanel" aria-labelledby="s-vendas" data-svc="vendas">
         <h3>Vendas automatizadas</h3>
@@ -1104,13 +1111,13 @@ histórico
       <a class="botao" href="#demos">Testar uma demonstração</a>
     </div>
   </div>
-  <details class="orc-dif"><summary>Qual é a diferença entre site, sistema, vendas automatizadas, tráfego pago e projeto sob medida?</summary>
+  <details class="orc-dif"><summary>Qual é a diferença entre site, e-commerce, sistema, vendas automatizadas e tráfego pago?</summary>
     <p><b>Site</b> apresenta o seu negócio ao público. A pessoa lê, vê fotos e entra em contato, sem precisar de senha. Exemplos: página da sua loja, portfólio, cardápio. Pagamento único, com manutenção mensal opcional.</p>
+    <p><b>E-commerce</b> é a loja no seu próprio endereço: catálogo, carrinho, pagamento por Pix e cartão, frete calculado e um painel para acompanhar os pedidos. Diferente do site, que apresenta, a loja vende sozinha, a qualquer hora. A taxa por venda é do intermediador de pagamento, como o Mercado Pago.</p>
     <p><b>Sistema</b> é uma ferramenta de trabalho. Tem login, guarda informações (clientes, pedidos, estoque) e gera relatórios para a sua equipe usar no dia a dia. Ocupa o lugar da planilha. Exemplos: controle de pedidos, cadastro de clientes, agenda interna. Pequeno, médio ou grande, conforme o número de pessoas e de informações.</p>
     <p><b>Vendas automatizadas</b> cuidam do atendimento: respostas e perguntas automáticas que organizam o interessado, guardam nome e contato de quem deu permissão e avisam quem vai fechar a venda. Podem ligar o interessado ao seu cadastro ou ao pagamento. O custo da conta e das mensagens da plataforma (WhatsApp, e-mail) é seu.</p>
     <p><b>Tráfego pago</b> traz mais gente até você: anúncios no Instagram, no Google ou em outra plataforma, levando as pessoas ao seu site ou WhatsApp. É um serviço mensal. A verba dos anúncios vai direto para a plataforma, vídeos e artes são à parte, e ninguém pode prometer venda.</p>
-    <p><b>Projeto sob medida</b> é para a ideia que não existe pronta. Começa com uma conversa e um documento com escopo, prazo e custo (Diagnóstico), que é seu; depois vem uma primeira versão para testar (Protótipo) ou o projeto completo, entregue em etapas aprovadas por você.</p>
-    <p><b>Em resumo:</b> o site mostra, o sistema organiza, as vendas automatizadas atendem, o tráfego pago traz gente e o projeto sob medida faz o que ainda não existe. Eles se combinam: um site pode receber quem chega pelo anúncio, e o funil de vendas pode alimentar o sistema. Na dúvida, veja a aba <a href="#servicos">Qual escolher</a> ou <a href="#contato">fale comigo</a>.</p>
+    <p><b>Em resumo:</b> o site mostra, o e-commerce vende, o sistema organiza, as vendas automatizadas atendem e o tráfego pago traz gente. Eles se combinam: a loja pode receber quem chega pelo anúncio, e o funil de vendas pode alimentar o sistema. Uma ideia que não se encaixa em nenhum deles também é bem-vinda: é só me chamar. Na dúvida, veja a aba <a href="#servicos">Qual escolher</a> ou <a href="#contato">fale comigo</a>.</p>
   </details>
   <div class="orc-tipos" id="orc-tipos" role="tablist" aria-label="Tipo de pedido"></div>
   <div class="orc-grade">

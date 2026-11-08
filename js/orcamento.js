@@ -10,7 +10,7 @@ window.MUL_ORC = (function () {
       nome: 'Site', planos: [
         { nome: 'Essencial', desc: 'Uma página com seus serviços e botão de contato. Pronta em até 10 dias úteis depois de receber textos e fotos.', itens: ['Funciona no celular e no computador', 'Estrutura pronta para o Google: títulos, descrição e imagens leves', 'Conexão segura (https) e botão de contato', 'Você testa uma versão antes de ir ao ar e pede ajustes (até 2 rodadas)'], dias: [5, 10], faixa: [600, 1200] },
         { nome: 'Profissional', desc: 'Até 5 páginas, formulário e aparência própria da sua marca.', itens: ['Inclui tudo do plano Essencial', 'Páginas como Início, Serviços, Sobre, Galeria e Contato', 'Formulário: o cliente preenche e a mensagem chega para você', 'Desenho próprio, aprovado por você antes da programação'], dias: [15, 21], faixa: [1500, 3000] },
-        { nome: 'Completo', desc: 'Loja virtual ou área do cliente simples.', itens: ['Inclui tudo do plano Profissional', 'Loja: vitrine de produtos, carrinho e pedido que chega para você', 'Área do cliente: login simples para ver pedidos ou documentos', 'Quantidade de produtos e forma de pagamento combinadas por escrito'], dias: [32, 54], faixa: [5000, 12000] }
+        { nome: 'Completo', desc: 'Até 10 páginas, galeria e área do cliente simples.', itens: ['Inclui tudo do plano Profissional', 'Até 10 páginas, galeria de fotos e espaço de notícias ou blog', 'Área do cliente: login simples para ver pedidos ou documentos', 'Para vender com carrinho e pagamento, veja o pedido E-commerce'], dias: [21, 32], faixa: [3000, 6000] }
       ],
       extras: [
         { nome: 'Página a mais', dias: [1, 1], faixa: [150, 300] }, { nome: 'Agendamento online', dias: [2, 4], faixa: [400, 900] },
@@ -18,11 +18,22 @@ window.MUL_ORC = (function () {
         { nome: 'Manutenção e segurança', dias: [0, 0], faixa: [150, 400], mensal: true }
       ]
     },
+    ecommerce: {
+      nome: 'E-commerce', planos: [
+        { nome: 'Loja Inicial', desc: 'Catálogo com carrinho e pedido que chega para você, sem pagamento online.', itens: ['Até 30 produtos, cadastrados por você em uma tela simples', 'Carrinho e pedido enviado por WhatsApp ou e-mail, para você combinar o pagamento', 'Funciona no celular e no computador, com conexão segura (https)', 'Você testa uma versão antes de ir ao ar e pede ajustes (até 2 rodadas)'], dias: [15, 25], faixa: [2500, 5000] },
+        { nome: 'Loja com Pagamento', desc: 'Pix e cartão no próprio site, frete calculado e painel de pedidos.', itens: ['Inclui tudo da Loja Inicial, com até 200 produtos', 'Pagamento online (Pix e cartão) por um intermediador, como o Mercado Pago; a taxa por venda é cobrada por ele', 'Cálculo de frete pelos Correios ou por tabela própria', 'Painel para acompanhar os pedidos e marcar o envio'], dias: [25, 43], faixa: [5000, 10000] },
+        { nome: 'Loja Completa', desc: 'Estoque, cupons, relatórios e integração com nota fiscal ou sistema de gestão.', itens: ['Inclui tudo da Loja com Pagamento, sem limite de produtos', 'Controle de estoque, cupons de desconto e relatórios de vendas', 'Integração combinada com emissor de nota fiscal ou sistema de gestão', 'Começa por um escopo escrito aprovado por você, que define o valor final'], dias: [43, 64], faixa: [10000, 20000], aPartir: true }
+      ],
+      extras: [
+        { nome: 'Cadastro dos produtos', dias: [2, 5], faixa: [300, 800] }, { nome: 'Cupons e promoções', dias: [2, 4], faixa: [300, 800] },
+        { nome: 'Integração com marketplace', dias: [5, 10], faixa: [1000, 3000] }, { nome: 'Manutenção e segurança', dias: [0, 0], faixa: [150, 400], mensal: true }
+      ]
+    },
     sistema: {
       nome: 'Sistema', planos: [
         { nome: 'Pequeno', desc: 'Para quem precisa organizar um assunto só, como clientes ou pedidos.', itens: ['Acesso: até 3 pessoas', 'Guarda: 1 cadastro principal, até 5.000 registros', 'Relatórios: 1 relatório simples, com filtro por período', 'Busca e filtros no cadastro'], dias: [21, 32], faixa: [2500, 5000] },
         { nome: 'Médio', desc: 'Para uma equipe que trabalha junta, com cada pessoa vendo só o que pode.', itens: ['Acesso: de 4 a 15 pessoas, com login e permissões por usuário', 'Guarda: até 5 cadastros ligados entre si, até 50.000 registros', 'Relatórios: até 5 relatórios, com filtros e totais', 'Histórico de quem alterou cada informação'], dias: [43, 64], faixa: [6000, 15000] },
-        { nome: 'Grande', desc: 'Para operações maiores, com regras próprias do seu negócio.', itens: ['Acesso: mais de 15 pessoas, com vários perfis de acesso', 'Guarda: mais de 5 cadastros e regras complexas', 'Relatórios: sob medida, com integrações combinadas', 'Começa pelo Diagnóstico pago, que define o valor final'], dias: [86, 129], faixa: [18000, 40000], aPartir: true }
+        { nome: 'Grande', desc: 'Para operações maiores, com regras próprias do seu negócio.', itens: ['Acesso: mais de 15 pessoas, com vários perfis de acesso', 'Guarda: mais de 5 cadastros e regras complexas', 'Relatórios: sob medida, com integrações combinadas', 'Começa por um escopo escrito aprovado por você, que define o valor final'], dias: [86, 129], faixa: [18000, 40000], aPartir: true }
       ],
       extras: [
         { nome: 'Integração com outro sistema', dias: [5, 10], faixa: [1000, 4000] }, { nome: 'Importar planilhas ou banco antigo', dias: [2, 5], faixa: [500, 2000] },
@@ -51,16 +62,6 @@ window.MUL_ORC = (function () {
       ],
       nota: 'A verba de anúncios é paga direto na plataforma e não entra nesta conta. Resultados não são garantidos.'
     },
-    medida: {
-      nome: 'Projeto sob medida', planos: [
-        { nome: 'Diagnóstico', desc: 'Conversa e documento com escopo, prazo e custo do projeto.', itens: ['Você recebe um documento escrito, que é seu', 'Pode levar esse documento para outra empresa fazer o projeto', 'Sistema grande e projeto completo começam por aqui'], dias: [2, 5], faixa: [300, 800] },
-        { nome: 'Protótipo', desc: 'Uma primeira versão que funciona, para testar a ideia.', itens: ['Só as telas e funções principais, sem acabamento final', 'Você testa de verdade e aponta o que mudar antes de investir mais', 'Entrega, aprovação e pagamento próprios: 50% antes, 50% na entrega'], dias: [10, 21], faixa: [2000, 6000] },
-        { nome: 'Projeto completo', desc: 'Da ideia à entrega, em etapas combinadas.', itens: ['Cada etapa é entregue, testada e aprovada por você antes da próxima', 'Cada etapa tem pagamento próprio: 50% antes, 50% na entrega', 'Mudança no que foi combinado é orçada à parte, por escrito'], dias: [43, 86], faixa: [8000, 30000] }
-      ],
-      extras: [
-        { nome: 'Banco de dados', dias: [4, 7], faixa: [500, 2000] }, { nome: 'Versão para celular', dias: [10, 21], faixa: [1500, 5000] }
-      ]
-    }
   };
   /* Explicação curta de cada adicional (botão "i"). Chave: tipo | nome do adicional. */
   var AJUDA = {
@@ -78,8 +79,10 @@ window.MUL_ORC = (function () {
     'vendas|Página de vendas': 'Uma página feita para convencer e levar a pessoa a comprar ou pedir contato.',
     'trafego|Configuração inicial das contas': 'Crio e configuro as contas de anúncios, a forma de pagamento e a medição dos resultados.',
     'trafego|Página de destino': 'A página para onde os anúncios levam, pensada para transformar visitas em contatos.',
-    'medida|Banco de dados': 'A estrutura que guarda e consulta as informações do projeto com segurança.',
-    'medida|Versão para celular': 'O projeto adaptado para funcionar bem no celular, como aplicativo ou versão própria.'
+    'ecommerce|Cadastro dos produtos': 'Eu cadastro os produtos na loja a partir da sua lista com nomes, preços e fotos, em vez de você cadastrar um por um.',
+    'ecommerce|Cupons e promoções': 'Cupons de desconto com validade e regras, como frete grátis acima de um valor ou desconto na primeira compra.',
+    'ecommerce|Integração com marketplace': 'Liga a loja a um marketplace, como Mercado Livre ou Shopee, para o estoque e os pedidos andarem juntos.',
+    'ecommerce|Manutenção e segurança': 'Atualizações, cópias de segurança e correção de problemas todo mês. É cobrada por mês e não aumenta o prazo de entrega.'
   };
   /* Linguagens. fator = quanto a linguagem encarece o trabalho; vale só o maior fator escolhido.
      consulta: true = aparece na aba de linguagens, mas não entra no orçamento automático. */
@@ -136,7 +139,7 @@ window.MUL_ORC = (function () {
   ];
   var AREAS = { site: 'Sites', sistema: 'Sistemas', app: 'Aplicativos', automacao: 'Automação', dados: 'Dados e relatórios', desempenho: 'Alto desempenho' };
   /* Quais áreas cada tipo de pedido oferece. Lista vazia = o pedido não envolve escolher linguagem. */
-  var AREAS_DO_PEDIDO = { site: ['site'], sistema: ['sistema', 'dados', 'app', 'desempenho'], vendas: ['automacao', 'site'], trafego: [], medida: ['site', 'sistema', 'app', 'automacao', 'dados', 'desempenho'] };
+  var AREAS_DO_PEDIDO = { site: ['site'], sistema: ['sistema', 'dados', 'app', 'desempenho'], vendas: ['automacao', 'site'], trafego: [], ecommerce: ['site', 'sistema', 'automacao'] };
 
   var $ = function (s) { return document.querySelector(s); };
   var el = function (t, c, x) { var e = document.createElement(t); if (c) e.className = c; if (x !== undefined) e.textContent = x; return e; };
