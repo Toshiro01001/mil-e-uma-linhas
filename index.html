@@ -70,15 +70,22 @@
   <div class="hero">
     <canvas id="campo" aria-hidden="true"></canvas>
     <div class="hero-texto">
-      <h2 class="slogan">Meu código, seu site.</h2>
-      <p>Sites, sistemas e projetos sob medida para empresas de todo o Brasil. Também vendas automatizadas e tráfego pago.</p>
-      <div class="acoes">
-        <a class="botao cheio" href="#demos">Testar uma demonstração</a>
-        <a class="botao" href="#projetos">Ver projetos prontos</a>
+      <h2 class="slogan"><span>Meu código,</span> <span class="fino">seu site.</span></h2>
+      <div class="hero-linha">
+        <p>Sites, sistemas e projetos sob medida para empresas de todo o Brasil. Preço e prazo na tela, antes de você falar comigo.</p>
+        <div class="acoes">
+          <a class="botao cheio" href="#orcamento">Montar meu orçamento</a>
+          <a class="botao" href="#demos">Testar uma demonstração</a>
+        </div>
       </div>
       <p class="dica"><span class="so-mouse">O logo reage ao mouse e ao clique. Aperte <kbd>/</kbd> para abrir o terminal.</span><span class="so-toque">Toque no logo. O terminal fica no botão lá embaixo.</span></p>
     </div>
-  </div>
+  
+    <div class="hero-palco" aria-hidden="true">
+      <div class="monitor"><div class="barra"><i></i><i></i><i></i></div><img src="img/projetos/friagem.webp" width="800" height="500" alt="" decoding="async"></div>
+      <div class="fone"><img src="img/projetos/cinelumen.webp" width="800" height="500" alt="" decoding="async"></div>
+    </div>
+</div>
 
   <div class="capa" data-capa="empresa">
     <div class="capa-texto">
@@ -149,7 +156,7 @@
     </section>
 
     <div class="ap-duas">
-      <section class="ap-bloco" aria-labelledby="t-processo">
+      <section class="ap-bloco ap-processo" aria-labelledby="t-processo">
         <h3 id="t-processo">Como eu trabalho</h3>
         <ol class="ap-passos">
           <li><b>Conversa sobre o negócio</b><span>Você me conta o que vende, para quem e o que precisa resolver.</span></li>
@@ -298,12 +305,16 @@ vendas     ###</pre>
 <!-- ============ projetos ============ -->
 <section id="projetos" class="folha" aria-labelledby="t-projetos">
   <h2 id="t-projetos">Projetos prontos</h2>
-  <p class="intro">Sites e sistemas publicados para você abrir e testar agora. As empresas e os dados das demonstrações são fictícios, e nada do que você digitar é vendido de verdade. <a href="vitrine/">Ver a vitrine</a>.</p>
+  <p class="intro">Tudo aqui está publicado para você abrir e testar agora. As empresas e os dados são fictícios, e nada do que você digitar é vendido de verdade. <a href="vitrine/">Ver a vitrine</a>.</p>
 
-  <nav class="pilulas proj-atalhos" aria-label="Grupos de projetos"><a class="pilula" href="#projetos/lojas">Lojas e vendas</a><a class="pilula" href="#projetos/atendimento">Atendimento e agendamento</a><a class="pilula" href="#projetos/trafego">Tráfego e automação</a><a class="pilula" href="#projetos/seguranca">Segurança e criptografia</a><a class="pilula" href="#projetos/dados">Dados e ferramentas</a></nav>
-
-  <h3 class="sub" data-grupo="lojas">Lojas e vendas</h3>
-  <p class="intro">Da vitrine ao pedido, com carrinho, cálculo e área de gestão.</p>
+  <div class="vit-abas pilulas" role="tablist" aria-label="Tipo de projeto">
+    <button class="pilula" role="tab" id="vt-sites" aria-selected="true" aria-controls="vit-sites" data-vit="sites">Sites</button>
+    <button class="pilula" role="tab" id="vt-sistemas" aria-selected="false" aria-controls="vit-sistemas" data-vit="sistemas" tabindex="-1">Sistemas</button>
+    <button class="pilula" role="tab" id="vt-vendas" aria-selected="false" aria-controls="vit-vendas" data-vit="vendas" tabindex="-1">Vendas automatizadas</button>
+    <button class="pilula" role="tab" id="vt-trafego" aria-selected="false" aria-controls="vit-trafego" data-vit="trafego" tabindex="-1">Tráfego pago</button>
+  </div>
+  <div class="vit-painel" id="vit-sites" role="tabpanel" aria-labelledby="vt-sites" data-vit="sites">
+  <p class="aba-desc">Cada site tem identidade própria: cores, tipografia e layout pensados para aquele negócio, como se fosse um cliente de verdade. Abra, mexa, teste no celular.</p>
   <ul class="projs">
     <li class="proj">
       <a class="proj-img" rel="noopener noreferrer" target="_blank" href="https://toshiro01001.github.io/tenis-primeiro/" aria-label="Abrir Pinhoso&#x27;s Kicks"><img src="img/projetos/pinhosos.webp" width="800" height="500" loading="lazy" decoding="async" alt="Página inicial da loja de tênis Pinhoso&#x27;s Kicks, em preto, dourado e vermelho"></a>
@@ -320,30 +331,11 @@ vendas     ###</pre>
       <p class="links"><a class="botao cheio" rel="noopener noreferrer" target="_blank" href="https://toshiro01001.github.io/ar-condicionado/">Abrir</a> <a class="botao" rel="noopener noreferrer" target="_blank" href="https://github.com/Toshiro01001/ar-condicionado">Ver o código</a></p>
     </li>
     <li class="proj">
-      <a class="proj-img" rel="noopener noreferrer" target="_blank" href="https://toshiro01001.github.io/Atacado_Digital_Brasileiro/" aria-label="Abrir Atacado Digital"><img src="img/projetos/atacado.webp" width="800" height="500" loading="lazy" decoding="async" alt="Catálogo do Atacado Digital com preços por faixa de quantidade e pedido atual"></a>
-      <h4>Atacado Digital</h4>
-      <p>Sistema de atacado com banco SQLite de verdade no navegador, preço por quantidade, pedidos e painel do gestor. Também tem API em PHP.</p>
-      <p class="pilha">SQL, PHP, JavaScript, WebAssembly</p>
-      <p class="links"><a class="botao cheio" rel="noopener noreferrer" target="_blank" href="https://toshiro01001.github.io/Atacado_Digital_Brasileiro/">Abrir</a> <a class="botao" rel="noopener noreferrer" target="_blank" href="https://github.com/Toshiro01001/Atacado_Digital_Brasileiro">Ver o código</a></p>
-    </li>
-    <li class="proj">
       <a class="proj-img" rel="noopener noreferrer" target="_blank" href="https://toshiro01001.github.io/cinelumen/" aria-label="Abrir CineLumen"><img src="img/projetos/cinelumen.webp" width="800" height="500" loading="lazy" decoding="async" alt="Página inicial do CineLumen, com letreiro de cinema e a escolha da capital"></a>
       <h4>CineLumen</h4>
       <p>Cinema fictício nas 27 capitais, com programação no fuso de cada estado, mapa de assentos, bomboniere, ingresso e painel do gerente.</p>
       <p class="pilha">HTML, CSS, JavaScript</p>
       <p class="links"><a class="botao cheio" rel="noopener noreferrer" target="_blank" href="https://toshiro01001.github.io/cinelumen/">Abrir</a> <a class="botao" rel="noopener noreferrer" target="_blank" href="https://github.com/Toshiro01001/cinelumen">Ver o código</a></p>
-    </li>
-  </ul>
-
-  <h3 class="sub" data-grupo="atendimento">Atendimento e agendamento</h3>
-  <p class="intro">Sistemas para o cliente resolver sozinho e a equipe acompanhar tudo em um lugar só.</p>
-  <ul class="projs">
-    <li class="proj">
-      <a class="proj-img" rel="noopener noreferrer" target="_blank" href="vitrine/agenda/" aria-label="Abrir Clínica Ipê de Agosto"><img src="img/projetos/clinica.webp" width="800" height="500" loading="lazy" decoding="async" alt="Página da clínica Ipê de Agosto com o início do agendamento de consulta"></a>
-      <h4>Clínica Ipê de Agosto</h4>
-      <p>Agendamento por especialidade, profissional, dia e horário, sem marcar duas pessoas na mesma vaga, com tela da recepção.</p>
-      <p class="pilha">HTML, CSS, JavaScript</p>
-      <p class="links"><a class="botao cheio" rel="noopener noreferrer" target="_blank" href="vitrine/agenda/">Abrir</a> <a class="botao" rel="noopener noreferrer" target="_blank" href="https://github.com/Toshiro01001/mil-e-uma-linhas/tree/main/vitrine/agenda">Ver o código</a></p>
     </li>
     <li class="proj">
       <a class="proj-img" rel="noopener noreferrer" target="_blank" href="vitrine/cardapio/" aria-label="Abrir Pacu Gordo"><img src="img/projetos/pacu.webp" width="800" height="500" loading="lazy" decoding="async" alt="Cardápio digital do restaurante Pacu Gordo com petiscos e a coluna do pedido"></a>
@@ -351,77 +343,6 @@ vendas     ###</pre>
       <p>Cardápio digital com adicionais, observações e carrinho. O pedido aparece na tela da cozinha, em outra aba, na hora.</p>
       <p class="pilha">HTML, CSS, JavaScript</p>
       <p class="links"><a class="botao cheio" rel="noopener noreferrer" target="_blank" href="vitrine/cardapio/">Abrir</a> <a class="botao" rel="noopener noreferrer" target="_blank" href="https://github.com/Toshiro01001/mil-e-uma-linhas/tree/main/vitrine/cardapio">Ver o código</a></p>
-    </li>
-    <li class="proj">
-      <a class="proj-img" rel="noopener noreferrer" target="_blank" href="vitrine/funil/" aria-label="Abrir Sol a Pino"><img src="img/projetos/solapino.webp" width="800" height="500" loading="lazy" decoding="async" alt="Página da Sol a Pino com o atendimento automático em andamento"></a>
-      <h4>Sol a Pino</h4>
-      <p>Atendimento automático por regras, sem IA, que qualifica o interessado e coloca o contato em um quadro de vendas arrastável.</p>
-      <p class="pilha">HTML, CSS, JavaScript</p>
-      <p class="links"><a class="botao cheio" rel="noopener noreferrer" target="_blank" href="vitrine/funil/">Abrir</a> <a class="botao" rel="noopener noreferrer" target="_blank" href="https://github.com/Toshiro01001/mil-e-uma-linhas/tree/main/vitrine/funil">Ver o código</a></p>
-    </li>
-  </ul>
-
-  <h3 class="sub" data-grupo="trafego">Tráfego e automação</h3>
-  <p class="intro">O que faço para atrair clientes e não deixar nenhum para trás. Empresas e números são simulados.</p>
-  <ul class="projs">
-    <li class="proj">
-      <a class="proj-img" rel="noopener noreferrer" target="_blank" href="vitrine/trafego/" aria-label="Abrir Móveis Cerrado Alto"><img src="img/projetos/moveis.webp" width="800" height="500" loading="lazy" decoding="async" alt="Painel de anúncios da Móveis Cerrado Alto com números simulados e gráfico de gasto por dia"></a>
-      <h4>Móveis Cerrado Alto</h4>
-      <p>Painel de anúncios com gasto, cliques, CPC, CPA e ROAS por campanha, gráficos e calculadora de verba.</p>
-      <p class="pilha">HTML, CSS, JavaScript, SVG</p>
-      <p class="links"><a class="botao cheio" rel="noopener noreferrer" target="_blank" href="vitrine/trafego/">Abrir</a> <a class="botao" rel="noopener noreferrer" target="_blank" href="https://github.com/Toshiro01001/mil-e-uma-linhas/tree/main/vitrine/trafego">Ver o código</a></p>
-    </li>
-    <li class="proj">
-      <a class="proj-img" rel="noopener noreferrer" target="_blank" href="vitrine/relogios/" aria-label="Abrir Ponteiro Alto"><img src="img/projetos/relogios.webp" width="800" height="500" loading="lazy" decoding="async" alt="Mostrador de relógio com o ciclo de automação ao lado da conversa com a cliente fictícia"></a>
-      <h4>Ponteiro Alto</h4>
-      <p>Automação de vendas para relojoaria: atendimento que recomenda o modelo e mensagens do anúncio à troca da bateria, com autorização do cliente.</p>
-      <p class="pilha">HTML, CSS, JavaScript, SVG</p>
-      <p class="links"><a class="botao cheio" rel="noopener noreferrer" target="_blank" href="vitrine/relogios/">Abrir</a> <a class="botao" rel="noopener noreferrer" target="_blank" href="https://github.com/Toshiro01001/mil-e-uma-linhas/tree/main/vitrine/relogios">Ver o código</a></p>
-    </li>
-    <li class="proj">
-      <a class="proj-img" rel="noopener noreferrer" target="_blank" href="vitrine/redes/" aria-label="Abrir Ateliê Seriema"><img src="img/projetos/redes.webp" width="800" height="500" loading="lazy" decoding="async" alt="Calendário semanal de posts do Ateliê Seriema, com posts aprovados e aguardando aprovação"></a>
-      <h4>Ateliê Seriema</h4>
-      <p>Automação de redes sociais: calendário com aprovação, publicação agendada e respostas automáticas que passam para a equipe o que não souberem resolver.</p>
-      <p class="pilha">HTML, CSS, JavaScript</p>
-      <p class="links"><a class="botao cheio" rel="noopener noreferrer" target="_blank" href="vitrine/redes/">Abrir</a> <a class="botao" rel="noopener noreferrer" target="_blank" href="https://github.com/Toshiro01001/mil-e-uma-linhas/tree/main/vitrine/redes">Ver o código</a></p>
-    </li>
-    <li class="proj">
-      <a class="proj-img" rel="noopener noreferrer" target="_blank" href="vitrine/anuncios/" aria-label="Abrir Prancheta de Tráfego"><img src="img/projetos/anuncios.webp" width="800" height="500" loading="lazy" decoding="async" alt="Simulador de tráfego pago com o caminho da verba até a receita, em barras sobre fundo azul quadriculado"></a>
-      <h4>Prancheta de Tráfego</h4>
-      <p>Simulador de anúncios com funil, custo máximo por venda, gerador de links rastreados e teste A/B com estatística.</p>
-      <p class="pilha">HTML, CSS, JavaScript</p>
-      <p class="links"><a class="botao cheio" rel="noopener noreferrer" target="_blank" href="vitrine/anuncios/">Abrir</a> <a class="botao" rel="noopener noreferrer" target="_blank" href="https://github.com/Toshiro01001/mil-e-uma-linhas/tree/main/vitrine/anuncios">Ver o código</a></p>
-    </li>
-  </ul>
-
-  <h3 class="sub" data-grupo="seguranca">Segurança e criptografia</h3>
-  <p class="intro">Toda entrega passa por uma vistoria de segurança. Aqui você testa a criptografia com as próprias mãos.</p>
-  <ul class="projs">
-    <li class="proj">
-      <a class="proj-img" rel="noopener noreferrer" target="_blank" href="vitrine/cofre/" aria-label="Abrir Cofre de Dados"><img src="img/projetos/cofre.webp" width="800" height="500" loading="lazy" decoding="async" alt="Tela do Cofre de Dados, com a ficha aberta à esquerda e o texto cifrado à direita"></a>
-      <h4>Cofre de Dados</h4>
-      <p>Cifre uma ficha fictícia com AES-256-GCM, tente abrir com a senha errada e altere um byte para ver o sistema recusar. Lista também o que confiro em cada sistema.</p>
-      <p class="pilha">JavaScript, Web Crypto</p>
-      <p class="links"><a class="botao cheio" rel="noopener noreferrer" target="_blank" href="vitrine/cofre/">Abrir</a> <a class="botao" rel="noopener noreferrer" target="_blank" href="https://github.com/Toshiro01001/mil-e-uma-linhas/tree/main/vitrine/cofre">Ver o código</a></p>
-    </li>
-  </ul>
-
-  <h3 class="sub" data-grupo="dados">Dados e ferramentas</h3>
-  <p class="intro">Programas em que o que importa é a lógica por baixo.</p>
-  <ul class="projs">
-    <li class="proj">
-      <a class="proj-img" rel="noopener noreferrer" target="_blank" href="https://toshiro01001.github.io/teste-teste/" aria-label="Abrir Fichário"><img src="img/projetos/fichario.webp" width="800" height="500" loading="lazy" decoding="async" alt="Tela de consulta do Fichário com filtros e a lista de registros fictícios"></a>
-      <h4>Fichário</h4>
-      <p>Consulta e cadastro de registros com filtros, paginação, exportação em CSV e API em Java. Todas as pessoas são fictícias.</p>
-      <p class="pilha">Java, HTML, CSS, JavaScript</p>
-      <p class="links"><a class="botao cheio" rel="noopener noreferrer" target="_blank" href="https://toshiro01001.github.io/teste-teste/">Abrir</a> <a class="botao" rel="noopener noreferrer" target="_blank" href="https://github.com/Toshiro01001/teste-teste">Ver o código</a></p>
-    </li>
-    <li class="proj">
-      <a class="proj-img" rel="noopener noreferrer" target="_blank" href="https://toshiro01001.github.io/Compilador-Python_-Calculadora/" aria-label="Abrir Mini Compilador"><img src="img/projetos/compilador.webp" width="800" height="500" loading="lazy" decoding="async" alt="Mini Compilador com editor de código e os tokens da linguagem própria"></a>
-      <h4>Mini Compilador</h4>
-      <p>Linguagem própria em Python e C que roda no navegador com WebAssembly, mostrando cada etapa da tradução.</p>
-      <p class="pilha">C, Python, WebAssembly</p>
-      <p class="links"><a class="botao cheio" rel="noopener noreferrer" target="_blank" href="https://toshiro01001.github.io/Compilador-Python_-Calculadora/">Abrir</a> <a class="botao" rel="noopener noreferrer" target="_blank" href="https://github.com/Toshiro01001/Compilador-Python_-Calculadora">Ver o código</a></p>
     </li>
     <li class="proj">
       <a class="proj-img" rel="noopener noreferrer" target="_blank" href="https://toshiro01001.github.io/Horoscopo-fasipe/" aria-label="Abrir Céu de Bolso"><img src="img/projetos/ceu.webp" width="800" height="500" loading="lazy" decoding="async" alt="Página inicial do Céu de Bolso, com a roda dos signos em amarelo e azul"></a>
@@ -437,7 +358,292 @@ vendas     ###</pre>
       <p class="pilha">HTML, CSS, JavaScript</p>
       <p class="links"><a class="botao cheio" rel="noopener noreferrer" target="_blank" href="https://toshiro01001.github.io/Cartao-Resposta/">Abrir</a> <a class="botao" rel="noopener noreferrer" target="_blank" href="https://github.com/Toshiro01001/Cartao-Resposta">Ver o código</a></p>
     </li>
+    <li class="proj">
+      <a class="proj-img" rel="noopener noreferrer" target="_blank" href="https://toshiro01001.github.io/Compilador-Python_-Calculadora/" aria-label="Abrir Mini Compilador"><img src="img/projetos/compilador.webp" width="800" height="500" loading="lazy" decoding="async" alt="Mini Compilador com editor de código e os tokens da linguagem própria"></a>
+      <h4>Mini Compilador</h4>
+      <p>Linguagem própria em Python e C que roda no navegador com WebAssembly, mostrando cada etapa da tradução.</p>
+      <p class="pilha">C, Python, WebAssembly</p>
+      <p class="links"><a class="botao cheio" rel="noopener noreferrer" target="_blank" href="https://toshiro01001.github.io/Compilador-Python_-Calculadora/">Abrir</a> <a class="botao" rel="noopener noreferrer" target="_blank" href="https://github.com/Toshiro01001/Compilador-Python_-Calculadora">Ver o código</a></p>
+    </li>
   </ul>
+  <p class="vit-breve-tit">Em construção, um por profissão:</p>
+  <p class="pilulas vit-breve"><span class="pilula">Dentista</span><span class="pilula">Advogado</span><span class="pilula">Contabilidade</span><span class="pilula">Clínica médica</span><span class="pilula">Psicologia</span><span class="pilula">Personal trainer</span><span class="pilula">Nutrição</span><span class="pilula">Estética e beleza</span><span class="pilula">Engenharia</span><span class="pilula">Arquitetura</span><span class="pilula">Imóveis</span><span class="pilula">Escritório de advocacia</span><span class="pilula">Assistência técnica</span><span class="pilula">Serviços automotivos</span><span class="pilula">Pet shop e veterinária</span><span class="pilula">Fotografia</span><span class="pilula">Consultoria de negócios</span><span class="pilula">Palestrante e videomaker</span><span class="pilula">Academia</span><span class="pilula">Economista</span></p>
+  </div>
+  <div class="vit-painel" id="vit-sistemas" role="tabpanel" aria-labelledby="vt-sistemas" data-vit="sistemas" hidden>
+  <p class="aba-desc">Um sistema é difícil de "ver". Por isso cada um está descrito pelo problema que resolve, pela solução e pelo que ele faz. Os que já têm demonstração abrem no botão.</p>
+  <div class="vit-grade">
+    <article class="vit-card">
+      <a class="vit-img" href="vitrine/agenda/"><img src="img/projetos/clinica.webp" width="800" height="500" loading="lazy" decoding="async" alt="Página da clínica Ipê de Agosto com o início do agendamento de consulta"></a>
+      <div class="vit-corpo">
+        <h4>Sua recepção perde tempo marcando consulta pelo WhatsApp?</h4>
+        <dl class="vit-linhas">
+          <dt>Problema</dt><dd>Agenda em caderno ou em mensagens soltas, duas pessoas na mesma vaga, paciente que esquece.</dd>
+          <dt>Solução</dt><dd>Sistema para clínicas e consultórios: agenda por profissional, prontuário simples, controle de procedimentos.</dd>
+          <dt>Faz</dt><dd>Login por função, bloqueio de horário ocupado, relatório em PDF, lembrete por WhatsApp (API oficial, custo da plataforma à parte).</dd>
+        </dl>
+      </div>
+      <p class="vit-pe"><a class="botao cheio" href="vitrine/agenda/">Testar a agenda da Clínica Ipê</a> <a class="botao" href="#orcamento">Pedir orçamento</a></p>
+    </article>
+    <article class="vit-card breve">
+      <div class="vit-sem" aria-hidden="true">demonstração em construção<br>previsão: novembro</div>
+      <div class="vit-corpo">
+        <h4>Ordem de serviço no papel e cliente ligando para saber se ficou pronto?</h4>
+        <dl class="vit-linhas">
+          <dt>Problema</dt><dd>Assistência técnica e oficina sem controle de peças, status do conserto e prazo.</dd>
+          <dt>Solução</dt><dd>Painel de ordens de serviço: abertura da OS, peças em estoque, etapas do conserto, aviso ao cliente quando fica pronto.</dd>
+          <dt>Faz</dt><dd>Login de funcionários, histórico por cliente, baixa de peça, relatório financeiro em PDF e Excel.</dd>
+        </dl>
+      </div>
+      <p class="vit-pe"><span class="vit-tag">em construção</span> <a class="botao" href="#orcamento">Pedir orçamento</a></p>
+    </article>
+    <article class="vit-card">
+      <a class="vit-img" href="https://toshiro01001.github.io/Atacado_Digital_Brasileiro/" rel="noopener noreferrer" target="_blank"><img src="img/projetos/atacado.webp" width="800" height="500" loading="lazy" decoding="async" alt="Catálogo do Atacado Digital com preços por faixa de quantidade e pedido atual"></a>
+      <div class="vit-corpo">
+        <h4>Estoque em planilha que ninguém atualiza?</h4>
+        <dl class="vit-linhas">
+          <dt>Problema</dt><dd>Distribuidora ou comércio sem saber o que tem, o que falta e o que saiu hoje.</dd>
+          <dt>Solução</dt><dd>Gestão de inventário e pedidos: cadastro de produtos, entrada e saída, alerta de estoque baixo.</dd>
+          <dt>Faz</dt><dd>Permissões por usuário, importação da planilha antiga, exportação em Excel, histórico de quem alterou.</dd>
+        </dl>
+      </div>
+      <p class="vit-pe"><a class="botao cheio" href="https://toshiro01001.github.io/Atacado_Digital_Brasileiro/" rel="noopener noreferrer" target="_blank">Testar o Atacado Digital</a> <a class="botao" href="#orcamento">Pedir orçamento</a></p>
+    </article>
+    <article class="vit-card breve">
+      <div class="vit-sem" aria-hidden="true">demonstração em construção<br>previsão: novembro</div>
+      <div class="vit-corpo">
+        <h4>Cliente marca horário e não aparece?</h4>
+        <dl class="vit-linhas">
+          <dt>Problema</dt><dd>Barbearia ou salão com agenda cheia de furos e profissional parado.</dd>
+          <dt>Solução</dt><dd>Agendamento com escolha de profissional, horário livre em tempo real, sinal por Pix e lembrete.</dd>
+          <dt>Faz</dt><dd>Agenda por profissional, sinal por Pix (chave ou automático), lembrete por WhatsApp via API oficial, painel do dono.</dd>
+        </dl>
+      </div>
+      <p class="vit-pe"><span class="vit-tag">em construção</span> <a class="botao" href="#orcamento">Pedir orçamento</a></p>
+    </article>
+    <article class="vit-card breve">
+      <div class="vit-sem" aria-hidden="true">demonstração em construção<br>previsão: dezembro</div>
+      <div class="vit-corpo">
+        <h4>Espaço, quadra ou equipamento reservado duas vezes no mesmo dia?</h4>
+        <dl class="vit-linhas">
+          <dt>Problema</dt><dd>Reservas por telefone e caderno, sem saber o que está livre.</dd>
+          <dt>Solução</dt><dd>Plataforma de reservas: calendário de disponibilidade, bloqueio de datas, pagamento por etapa.</dd>
+          <dt>Faz</dt><dd>Calendário em tempo real, regras por item, comprovante, painel de ocupação.</dd>
+        </dl>
+      </div>
+      <p class="vit-pe"><span class="vit-tag">em construção</span> <a class="botao" href="#orcamento">Pedir orçamento</a></p>
+    </article>
+    <article class="vit-card breve">
+      <div class="vit-sem" aria-hidden="true">demonstração em construção<br>previsão: dezembro</div>
+      <div class="vit-corpo">
+        <h4>Seus leads ficam perdidos no WhatsApp de cada vendedor?</h4>
+        <dl class="vit-linhas">
+          <dt>Problema</dt><dd>Ninguém sabe em que fase cada negociação está nem quem ficou com qual cliente.</dd>
+          <dt>Solução</dt><dd>CRM de vendas em Kanban: Novo contato, Em conversa, Proposta enviada, Fechado, com histórico e distribuição automática.</dd>
+          <dt>Faz</dt><dd>Arrastar e soltar, histórico por lead, metas por vendedor, exportação, login por função.</dd>
+        </dl>
+      </div>
+      <p class="vit-pe"><span class="vit-tag">em construção</span> <a class="botao" href="#orcamento">Pedir orçamento</a></p>
+    </article>
+    <article class="vit-card">
+      <a class="vit-img" href="vitrine/cofre/"><img src="img/projetos/cofre.webp" width="800" height="500" loading="lazy" decoding="async" alt="Tela do Cofre de Dados, com a ficha aberta à esquerda e o texto cifrado à direita"></a>
+      <div class="vit-corpo">
+        <h4>Seu cliente precisa de documentos e andamento sem ligar para o escritório?</h4>
+        <dl class="vit-linhas">
+          <dt>Problema</dt><dd>Escritório de advocacia ou contabilidade mandando guia e andamento um a um por e-mail.</dd>
+          <dt>Solução</dt><dd>Portal do cliente com login: baixa guias, acompanha processos, envia documentos com segurança.</dd>
+          <dt>Faz</dt><dd>Perfis de acesso, dados cifrados, registro de quem acessou o quê, envio de arquivos com limite e validação.</dd>
+        </dl>
+      </div>
+      <p class="vit-pe"><a class="botao cheio" href="vitrine/cofre/">Testar a criptografia no Cofre de Dados</a> <a class="botao" href="#orcamento">Pedir orçamento</a></p>
+    </article>
+    <article class="vit-card breve">
+      <div class="vit-sem" aria-hidden="true">demonstração em construção<br>previsão: dezembro</div>
+      <div class="vit-corpo">
+        <h4>Vende curso e controla aluno por planilha e link solto?</h4>
+        <dl class="vit-linhas">
+          <dt>Problema</dt><dd>Conteúdo em vídeo espalhado, sem controle de quem pagou e de quem assistiu.</dd>
+          <dt>Solução</dt><dd>Área de membros própria: gestão de alunos, acesso por turma, certificado, progresso.</dd>
+          <dt>Faz</dt><dd>Login de aluno, liberação por módulo, certificado em PDF, relatório de progresso.</dd>
+        </dl>
+      </div>
+      <p class="vit-pe"><span class="vit-tag">em construção</span> <a class="botao" href="#orcamento">Pedir orçamento</a></p>
+    </article>
+    <article class="vit-card">
+      <a class="vit-img" href="https://toshiro01001.github.io/teste-teste/" rel="noopener noreferrer" target="_blank"><img src="img/projetos/fichario.webp" width="800" height="500" loading="lazy" decoding="async" alt="Tela de consulta do Fichário com filtros e a lista de registros fictícios"></a>
+      <div class="vit-corpo">
+        <h4>Precisa consultar e cadastrar registros com rapidez e sem bagunça?</h4>
+        <dl class="vit-linhas">
+          <dt>Problema</dt><dd>Cadastro em várias planilhas, sem filtro, sem histórico e sem exportação.</dd>
+          <dt>Solução</dt><dd>Fichário: consulta com filtros, paginação, cadastro validado e exportação.</dd>
+          <dt>Faz</dt><dd>Busca por vários campos, exportação em planilha, API em Java, validação dupla.</dd>
+        </dl>
+      </div>
+      <p class="vit-pe"><a class="botao cheio" href="https://toshiro01001.github.io/teste-teste/" rel="noopener noreferrer" target="_blank">Testar o Fichário</a> <a class="botao" href="#orcamento">Pedir orçamento</a></p>
+    </article>
+  </div>
+  <p class="nota vit-nota">Aviso por WhatsApp e lembrete automático dependem da API oficial do WhatsApp Business, contratada pelo cliente; eu faço a integração. Sinal por Pix funciona por chave desde já e por Pix automático quando a conta do Mercado Pago liberar.</p>
+  </div>
+  <div class="vit-painel" id="vit-vendas" role="tabpanel" aria-labelledby="vt-vendas" data-vit="vendas" hidden>
+  <p class="aba-desc">Aqui o que importa é velocidade de atendimento e menos trabalho manual para quem vende. Cada item mostra a dor, a automação e o que você recebe.</p>
+  <div class="vit-grade">
+    <article class="vit-card">
+      <a class="vit-img" href="vitrine/funil/"><img src="img/projetos/solapino.webp" width="800" height="500" loading="lazy" decoding="async" alt="Página da Sol a Pino com o atendimento automático em andamento"></a>
+      <div class="vit-corpo">
+        <h4>Chega de responder curiosos manualmente</h4>
+        <dl class="vit-linhas">
+          <dt>Problema</dt><dd>O lead chega do Instagram ou do site e fica esperando, ou toma o tempo do vendedor com perguntas básicas.</dd>
+          <dt>Solução</dt><dd>Funil de triagem: perguntas iniciais (orçamento, região, necessidade) e o lead chega pronto para o atendente humano.</dd>
+          <dt>Você recebe</dt><dd>Resumo de cada interessado, filtro de quem está pronto para comprar, aviso para quem vende.</dd>
+        </dl>
+      </div>
+      <p class="vit-pe"><a class="botao cheio" href="vitrine/funil/">Conversar com o Sol a Pino</a> <a class="botao" href="#orcamento">Pedir orçamento</a></p>
+    </article>
+    <article class="vit-card">
+      <a class="vit-img" href="vitrine/relogios/"><img src="img/projetos/relogios.webp" width="800" height="500" loading="lazy" decoding="async" alt="Mostrador de relógio com o ciclo de automação ao lado da conversa com a cliente fictícia"></a>
+      <div class="vit-corpo">
+        <h4>Do anúncio à troca da bateria, sem digitar nada duas vezes</h4>
+        <dl class="vit-linhas">
+          <dt>Problema</dt><dd>Cliente pergunta no anúncio, ninguém sabe o que ele quer, e a venda esfria.</dd>
+          <dt>Solução</dt><dd>Automação de vendas por nicho: atendimento que recomenda o produto e mensagens ligadas ao anúncio.</dd>
+          <dt>Você recebe</dt><dd>Recomendação automática, histórico do cliente, mensagem de pós-venda com autorização.</dd>
+        </dl>
+      </div>
+      <p class="vit-pe"><a class="botao cheio" href="vitrine/relogios/">Ver o Ponteiro Alto</a> <a class="botao" href="#orcamento">Pedir orçamento</a></p>
+    </article>
+    <article class="vit-card">
+      <a class="vit-img" href="vitrine/redes/"><img src="img/projetos/redes.webp" width="800" height="500" loading="lazy" decoding="async" alt="Calendário semanal de posts do Ateliê Seriema, com posts aprovados e aguardando aprovação"></a>
+      <div class="vit-corpo">
+        <h4>Redes sociais sem alguém dedicado o dia inteiro</h4>
+        <dl class="vit-linhas">
+          <dt>Problema</dt><dd>Post esquecido, comentário sem resposta, nenhuma rotina.</dd>
+          <dt>Solução</dt><dd>Automação de redes: calendário com aprovação, publicação agendada e respostas automáticas às perguntas de sempre.</dd>
+          <dt>Você recebe</dt><dd>Calendário aprovado por você, respostas padrão revisadas, relatório do que saiu.</dd>
+        </dl>
+      </div>
+      <p class="vit-pe"><a class="botao cheio" href="vitrine/redes/">Ver o Ateliê Seriema</a> <a class="botao" href="#orcamento">Pedir orçamento</a></p>
+    </article>
+    <article class="vit-card breve">
+      <div class="vit-sem" aria-hidden="true">demonstração em construção<br>previsão: dezembro</div>
+      <div class="vit-corpo">
+        <h4>Carrinho abandonado e boleto vencido virando venda perdida</h4>
+        <dl class="vit-linhas">
+          <dt>Problema</dt><dd>Cliente gera o boleto ou enche o carrinho e some.</dd>
+          <dt>Solução</dt><dd>Recuperação automática: lembrete por WhatsApp ou e-mail para quem não concluiu, com link de volta.</dd>
+          <dt>Você recebe</dt><dd>Lista de recuperados, texto revisado por você, respeito ao opt-in.</dd>
+        </dl>
+      </div>
+      <p class="vit-pe"><span class="vit-tag">em construção</span> <a class="botao" href="#orcamento">Pedir orçamento</a></p>
+    </article>
+    <article class="vit-card breve">
+      <div class="vit-sem" aria-hidden="true">demonstração em construção<br>previsão: dezembro</div>
+      <div class="vit-corpo">
+        <h4>Aula ao vivo ou lançamento sem equipe de produção</h4>
+        <dl class="vit-linhas">
+          <dt>Problema</dt><dd>Página, lembrete, grupo e transmissão feitos na mão, a cada evento.</dd>
+          <dt>Solução</dt><dd>Funil de captura: página de inscrição, e-mails de lembrete, grupo de aviso e abertura de vendas em fases.</dd>
+          <dt>Você recebe</dt><dd>Inscritos organizados, lembretes no horário, página de vendas no dia certo.</dd>
+        </dl>
+      </div>
+      <p class="vit-pe"><span class="vit-tag">em construção</span> <a class="botao" href="#orcamento">Pedir orçamento</a></p>
+    </article>
+    <article class="vit-card breve">
+      <div class="vit-sem" aria-hidden="true">demonstração em construção<br>previsão: dezembro</div>
+      <div class="vit-corpo">
+        <h4>Um produto, uma página, um checkout</h4>
+        <dl class="vit-linhas">
+          <dt>Problema</dt><dd>Site institucional não vende um produto específico.</dd>
+          <dt>Solução</dt><dd>Página de alta conversão para um produto ou serviço, ligada ao pagamento por Pix ou cartão.</dd>
+          <dt>Você recebe</dt><dd>Página rápida, pagamento integrado, rastreamento para anúncios.</dd>
+        </dl>
+      </div>
+      <p class="vit-pe"><span class="vit-tag">em construção</span> <a class="botao" href="#orcamento">Pedir orçamento</a></p>
+    </article>
+    <article class="vit-card breve">
+      <div class="vit-sem" aria-hidden="true">demonstração em construção<br>previsão: dezembro</div>
+      <div class="vit-corpo">
+        <h4>Anúncio que vira lead dentro do seu painel</h4>
+        <dl class="vit-linhas">
+          <dt>Problema</dt><dd>Lead do Meta ou do Google chega por e-mail e se perde.</dd>
+          <dt>Solução</dt><dd>Integração anúncio para CRM: o lead cai no Kanban e recebe mensagem de boas-vindas na hora.</dd>
+          <dt>Você recebe</dt><dd>Kanban Novo lead, Em contato, Proposta, Fechado; boas-vindas via API oficial do WhatsApp.</dd>
+        </dl>
+      </div>
+      <p class="vit-pe"><span class="vit-tag">em construção</span> <a class="botao" href="#orcamento">Pedir orçamento</a></p>
+    </article>
+    <article class="vit-card breve">
+      <div class="vit-sem" aria-hidden="true">demonstração em construção<br>previsão: dezembro</div>
+      <div class="vit-corpo">
+        <h4>Pós-venda e avaliação no Google sem lembrar de pedir</h4>
+        <dl class="vit-linhas">
+          <dt>Problema</dt><dd>Serviço entregue e nenhuma avaliação, nenhum retorno.</dd>
+          <dt>Solução</dt><dd>Automação de pós-venda: mensagem de agradecimento, pesquisa de satisfação e convite para avaliar no Google.</dd>
+          <dt>Você recebe</dt><dd>Avaliações, notas de satisfação, alerta de cliente insatisfeito.</dd>
+        </dl>
+      </div>
+      <p class="vit-pe"><span class="vit-tag">em construção</span> <a class="botao" href="#orcamento">Pedir orçamento</a></p>
+    </article>
+  </div>
+  <p class="nota vit-nota">Mensagens automáticas só para quem deu permissão, com jeito simples de sair. Envio por WhatsApp usa a API oficial do WhatsApp Business, contratada pelo cliente.</p>
+  </div>
+  <div class="vit-painel" id="vit-trafego" role="tabpanel" aria-labelledby="vt-trafego" data-vit="trafego" hidden>
+  <p class="aba-desc">Anúncio bom é o que vira contato e venda. A verba vai direto para a plataforma; o meu trabalho é a estrutura, a campanha e os números na sua mão.</p>
+  <div class="vit-planos">
+    <div class="vit-plano"><b>Início</b><span class="vit-preco">R$ 500 a R$ 1.200 por mês</span><p>Anúncios no Meta ou no Google para gerar contatos diários no WhatsApp. Uma plataforma, verba de até R$ 3.000 por mês.</p></div>
+    <div class="vit-plano"><b>Crescimento</b><span class="vit-preco">R$ 1.200 a R$ 2.000 por mês</span><p>Estrutura de vendas para loja virtual, com remarketing e catálogo. Até duas plataformas, verba de até R$ 10.000 por mês.</p></div>
+    <div class="vit-plano"><b>Completo</b><span class="vit-preco">R$ 2.000 a R$ 3.500 por mês</span><p>Várias campanhas em mais de uma plataforma, testes lado a lado toda semana e relatório semanal.</p></div>
+  </div>
+  <div class="vit-grade">
+    <article class="vit-card">
+      <a class="vit-img" href="vitrine/anuncios/"><img src="img/projetos/anuncios.webp" width="800" height="500" loading="lazy" decoding="async" alt="Simulador de tráfego pago com o caminho da verba até a receita, em barras sobre fundo azul quadriculado"></a>
+      <div class="vit-corpo">
+        <h4>Quer que quem procura "perto de mim" encontre você primeiro?</h4>
+        <dl class="vit-linhas">
+          <dt>Para quem</dt><dd>Clínicas, escritórios e prestadores de serviço que dependem de atendimento diário.</dd>
+          <dt>Campanhas</dt><dd>Geração de cadastros, anúncio para mensagem direta no WhatsApp e no Direct, Google Pesquisa e Maps.</dd>
+          <dt>Você recebe</dt><dd>Contatos no WhatsApp, custo por contato, relatório mensal.</dd>
+        </dl>
+      </div>
+      <p class="vit-pe"><a class="botao cheio" href="vitrine/anuncios/">Simular um funil de anúncios</a> <a class="botao" href="#orcamento">Pedir orçamento</a></p>
+    </article>
+    <article class="vit-card">
+      <a class="vit-img" href="vitrine/trafego/"><img src="img/projetos/moveis.webp" width="800" height="500" loading="lazy" decoding="async" alt="Painel de anúncios da Móveis Cerrado Alto com números simulados e gráfico de gasto por dia"></a>
+      <div class="vit-corpo">
+        <h4>Gente que coloca no carrinho e some?</h4>
+        <dl class="vit-linhas">
+          <dt>Para quem</dt><dd>Lojas virtuais com produto físico.</dd>
+          <dt>Campanhas</dt><dd>Remarketing para quem visitou e não comprou, Google Shopping e Performance Max, catálogo dinâmico no Meta.</dd>
+          <dt>Você recebe</dt><dd>Vendas rastreadas, retorno sobre o investimento por campanha, relatório mensal.</dd>
+        </dl>
+      </div>
+      <p class="vit-pe"><a class="botao cheio" href="vitrine/trafego/">Ver o painel Móveis Cerrado Alto</a> <a class="botao" href="#orcamento">Pedir orçamento</a></p>
+    </article>
+    <article class="vit-card breve">
+      <div class="vit-sem" aria-hidden="true">demonstração em construção<br>previsão: sob orçamento</div>
+      <div class="vit-corpo">
+        <h4>Autoridade, curso ou evento para lançar</h4>
+        <dl class="vit-linhas">
+          <dt>Para quem</dt><dd>Consultores, mentores, palestrantes, cursos e eventos.</dd>
+          <dt>Campanhas</dt><dd>Distribuição de vídeo para crescer audiência, lançamento em fases (captação, lembrete, abertura de vendas), captação B2B no LinkedIn por cargo e setor.</dd>
+          <dt>Você recebe</dt><dd>Audiência qualificada, inscritos por fase, custo por inscrito.</dd>
+        </dl>
+      </div>
+      <p class="vit-pe"><span class="vit-tag">em construção</span> <a class="botao" href="#orcamento">Pedir orçamento</a></p>
+    </article>
+    <article class="vit-card breve">
+      <div class="vit-sem" aria-hidden="true">demonstração em construção<br>previsão: sob orçamento</div>
+      <div class="vit-corpo">
+        <h4>Rastreamento certo antes de gastar um real</h4>
+        <dl class="vit-linhas">
+          <dt>Para quem</dt><dd>Qualquer site ou página que vai receber anúncios.</dd>
+          <dt>Adicionais</dt><dd>Configuração inicial de contas, Pixel do Meta, Google Tag Manager, GA4 e API de conversões; página de destino; relatório semanal ou mensal.</dd>
+          <dt>Você recebe</dt><dd>Conversões medidas de verdade, custo por clique e por contato comparáveis entre campanhas.</dd>
+        </dl>
+      </div>
+      <p class="vit-pe"><span class="vit-tag">em construção</span> <a class="botao" href="#orcamento">Pedir orçamento</a></p>
+    </article>
+  </div>
+  <p class="nota vit-nota">A verba de anúncios é paga por você direto na plataforma e não entra no meu preço. Resultados não são garantidos; o que eu garanto é mostrar os números.</p>
+  </div>
 
   <h3 class="sub">Feitos para mesas de RPG</h3>
   <p class="intro">Projetos em uso nas minhas campanhas, que cobram tempo real, permissões e desempenho de verdade. Ficam só descritos aqui, sem link, porque guardam material de jogo.</p>

@@ -104,20 +104,34 @@ p { margin: 0 0 var(--lin); max-width: 62ch; text-wrap: pretty; }
 .arte { font-size: 13px; line-height: 17px; color: var(--verde); overflow-x: auto; white-space: pre; }
 
 /* início */
-.hero { position: relative; height: calc(100dvh - 148px); min-height: 520px; display: flex; align-items: center; overflow: hidden; touch-action: pan-y; }
-#campo { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
-.hero-texto {
-  position: relative; max-width: 560px; margin-left: clamp(16px, 4vw, 48px);
-  padding: 24px 28px 20px 0; pointer-events: none;
-  background: linear-gradient(90deg, var(--fundo) 88%, rgba(16,20,24,0));
-}
+.hero { position: relative; display: block; padding: clamp(40px, 7vh, 84px) clamp(16px, 4vw, 48px) 0; overflow: hidden; touch-action: pan-y; }
+#campo { position: absolute; inset: 0; width: 100%; height: 100%; display: block; opacity: .16; -webkit-mask-image: linear-gradient(180deg, #000 0%, #000 45%, transparent 95%); mask-image: linear-gradient(180deg, #000 0%, #000 45%, transparent 95%); }
+.hero-texto { position: relative; max-width: 1120px; margin: 0 auto; pointer-events: none; }
 .hero-texto a { pointer-events: auto; }
-.slogan { font-size: clamp(52px, 7.6vw, 104px); line-height: .96; letter-spacing: -.025em; margin-bottom: var(--lin); }
+.slogan { font-size: clamp(56px, 11vw, 168px); line-height: .88; letter-spacing: -.045em; margin-bottom: 36px; font-variation-settings: "opsz" 96; }
+.slogan span { display: block; }
+.slogan .fino { font-weight: 300; letter-spacing: -.03em; color: var(--cinza); }
+.hero-linha { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 24px 48px; align-items: start; }
+.hero-linha p { font-size: 19px; line-height: 1.45; max-width: 42ch; color: var(--cinza); margin: 0; }
 .acoes { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: var(--lin); }
-.dica { font-family: var(--ui); font-size: 12.5px; line-height: 18px; color: var(--cinza); margin: 0; }
+.hero-linha .acoes { margin: 0; justify-content: flex-end; }
+.dica { font-family: var(--ui); font-size: 12.5px; line-height: 18px; color: var(--cinza); margin: 18px 0 0; }
 kbd { font-family: var(--ui); border: 1px solid var(--traco); padding: 0 5px; border-radius: var(--raio); color: var(--papel); }
 .so-toque { display: none; }
 @media (hover: none) { .so-mouse { display: none; } .so-toque { display: inline; } }
+.hero-palco { position: relative; max-width: 1120px; margin: 48px auto 0; height: clamp(220px, 34vw, 420px); }
+.hero-palco .monitor { position: absolute; left: 0; right: 0; bottom: -2px; height: 100%; background: var(--painel); border: 1px solid var(--traco); border-bottom: 0; border-radius: 14px 14px 0 0; padding: 12px 12px 0; box-shadow: 0 -30px 120px -40px rgba(184,243,74,.22); overflow: hidden; }
+.hero-palco .barra { display: flex; gap: 6px; margin-bottom: 10px; }
+.hero-palco .barra i { width: 9px; height: 9px; border-radius: 50%; background: var(--traco); display: block; }
+.hero-palco .monitor img { width: 100%; height: 100%; object-fit: cover; object-position: top; border-radius: 6px 6px 0 0; display: block; }
+.hero-palco .fone { position: absolute; right: 6%; bottom: -2px; width: clamp(140px, 16vw, 220px); height: 118%; background: var(--fundo); border: 1px solid var(--traco); border-bottom: 0; border-radius: 30px 30px 0 0; padding: 10px 10px 0; box-shadow: 0 40px 80px -20px rgba(0,0,0,.7); overflow: hidden; }
+.hero-palco .fone img { width: 100%; height: 100%; object-fit: cover; object-position: top; border-radius: 22px 22px 0 0; display: block; }
+@media (prefers-reduced-motion: no-preference) {
+  .slogan span { animation: subir .7s cubic-bezier(.2,.7,.2,1) both; }
+  .slogan .fino { animation-delay: .08s; }
+  .hero-linha, .hero-palco { animation: subir .8s .18s cubic-bezier(.2,.7,.2,1) both; }
+  @keyframes subir { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
+}
 
 /* serviços */
 .arvore-grade { display: grid; grid-template-columns: 200px minmax(0, 1fr); gap: 32px; }
@@ -287,6 +301,11 @@ html.js:not([data-tema="ascii"]) .apres { padding-top: 0; }
 .ap-mostra span { font-size: 15px; line-height: 22px; color: var(--cinza); padding: 0 14px 14px; }
 .ap-mais { display: flex; flex-wrap: wrap; gap: 10px; margin: 0; max-width: none; }
 .ap-duas { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: clamp(24px, 5vw, 56px); }
+.ap-processo { background: var(--verde); color: var(--fundo); padding: clamp(22px, 3vw, 36px); border-radius: var(--raio); }
+.ap-processo h3 { color: var(--fundo); }
+.ap-processo .ap-passos li::before { background: var(--fundo); color: var(--verde); }
+.ap-processo .ap-passos li:not(:last-child)::after { background: rgba(16,20,24,.22); }
+.ap-processo .ap-passos span { color: rgba(16,20,24,.78); }
 .ap-passos { list-style: none; counter-reset: passo; margin: 0; padding: 0; }
 .ap-passos li { counter-increment: passo; position: relative; padding: 0 0 18px 44px; display: flex; flex-direction: column; }
 .ap-passos li::before { content: counter(passo); position: absolute; left: 0; top: 0; width: 28px; height: 28px; display: grid; place-items: center; font-family: var(--ui); font-size: 14px; font-weight: 700; line-height: 1; color: var(--fundo); background: var(--verde); border-radius: var(--raio); }
@@ -312,7 +331,7 @@ html.js:not([data-tema="ascii"]) .apres { padding-top: 0; }
 
 /* ===== capas das aparências ===== */
 .capa { display: none; padding: calc(var(--lin) * 1.5) clamp(16px, 4vw, 48px) calc(var(--lin) * 3); max-width: 1120px; margin-left: auto; margin-right: auto; }
-[data-tema="ascii"] .hero { display: flex; }
+[data-tema="ascii"] .hero { display: block; }
 html.js:not([data-tema="ascii"]) .hero { display: none; }
 [data-tema="empresa"] .capa[data-capa="empresa"], [data-tema="loja"] .capa[data-capa="loja"], [data-tema="painel"] .capa[data-capa="painel"], [data-tema="agenda"] .capa[data-capa="agenda"] { display: block; }
 .amostra { font-family: var(--ui); font-size: 13.5px; line-height: 20px; color: var(--cinza); margin-bottom: 14px; max-width: none; }
@@ -542,10 +561,15 @@ textarea { display: block; width: 100%; padding: 8px 10px; background: var(--pai
   .abas nav a i { display: none; }
   .buffer { grid-template-columns: minmax(0, 1fr); }
   .calha { display: none; }
-  [data-tema="ascii"] .hero { display: block; height: auto; min-height: 0; }
-  #campo { position: relative; height: 24vh; min-height: 150px; }
-  .hero-texto { margin: 0; padding: 12px 16px 28px; background: none; max-width: none; }
-  .slogan { font-size: clamp(50px, 14.5vw, 84px); }
+  .hero { padding-top: 36px; }
+  .hero-texto { margin: 0; padding: 0; max-width: none; }
+  .slogan { font-size: clamp(54px, 16vw, 84px); margin-bottom: 22px; }
+  .hero-linha { grid-template-columns: minmax(0, 1fr); gap: 18px; }
+  .hero-linha p { font-size: 17px; }
+  .hero-linha .acoes { justify-content: flex-start; }
+  .hero-linha .acoes .botao { flex: 1 1 100%; text-align: center; }
+  .hero-palco { margin-top: 28px; height: 46vw; min-height: 180px; }
+  .hero-palco .fone { display: none; }
   .arvore-grade { grid-template-columns: minmax(0, 1fr); gap: 20px; }
   .arvore { flex-direction: row; flex-wrap: wrap; gap: 4px; }
   .arvore .raiz { display: none; }
@@ -654,3 +678,39 @@ button.link:disabled { color: var(--cinza); text-decoration: none; cursor: not-a
 .escolha { margin: 0 0 var(--lin); }
 .escolha dt { margin-top: 14px; font-weight: 700; color: var(--verde); }
 .escolha dd { margin: 4px 0 0; color: var(--papel); }
+
+/* ===== projetos em quatro vitrines ===== */
+.vit-abas { margin: 8px 0 6px; }
+.vit-abas .pilula { cursor: pointer; }
+.aba-desc { color: var(--cinza); font-size: 16px; line-height: 1.45; max-width: 70ch; margin: 10px 0 26px; }
+.vit-grade { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+.vit-card { background: var(--painel); border: 1px solid var(--traco); border-radius: var(--raio); display: grid; grid-template-rows: auto 1fr auto; min-width: 0; }
+.vit-card.breve { opacity: .82; }
+.vit-img { display: block; border-bottom: 1px solid var(--traco); overflow: hidden; }
+.vit-img img { display: block; width: 100%; height: auto; aspect-ratio: 16 / 8; object-fit: cover; object-position: top; }
+.vit-sem { aspect-ratio: 16 / 8; display: grid; place-items: center; text-align: center; padding: 20px; border-bottom: 1px solid var(--traco); color: var(--cinza); font-family: var(--ui); font-size: 13px; line-height: 1.5; background: repeating-linear-gradient(135deg, transparent 0 14px, rgba(255,255,255,.035) 14px 15px); }
+.vit-corpo { padding: 20px 22px 6px; }
+.vit-card h4 { margin: 0 0 14px; font-family: var(--titulo); font-size: 23px; line-height: 1.12; letter-spacing: -.01em; font-weight: 760; text-wrap: balance; }
+.vit-linhas { display: grid; grid-template-columns: 110px minmax(0, 1fr); gap: 8px 14px; margin: 0; font-size: 15.5px; line-height: 1.4; }
+.vit-linhas dt { font-family: var(--ui); font-size: 12.5px; color: var(--verde); padding-top: 3px; }
+.vit-linhas dd { margin: 0; color: #D9D6CC; }
+.vit-linhas dd:last-of-type { color: var(--cinza); }
+.vit-pe { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; padding: 14px 22px 22px; margin: 0; }
+.vit-tag { font-family: var(--ui); font-size: 12px; color: var(--cinza); border: 1px dashed var(--traco); padding: 5px 9px; border-radius: var(--raio); }
+.vit-nota { margin-top: 22px; max-width: 80ch; }
+.vit-breve-tit { margin: 26px 0 8px; color: var(--cinza); }
+.vit-breve .pilula { cursor: default; opacity: .8; }
+.vit-planos { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; margin-bottom: 24px; }
+.vit-plano { border: 1px solid var(--traco); border-radius: var(--raio); padding: 18px 18px 16px; }
+.vit-plano b { display: block; font-family: var(--titulo); font-size: 21px; margin-bottom: 4px; }
+.vit-preco { display: block; font-family: var(--ui); font-size: 14px; color: var(--verde); margin-bottom: 10px; }
+.vit-plano p { color: var(--cinza); font-size: 15px; line-height: 1.4; margin: 0; }
+@media (max-width: 900px) {
+  .vit-grade, .vit-planos { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 560px) {
+  .vit-linhas { grid-template-columns: minmax(0, 1fr); gap: 2px 0; }
+  .vit-linhas dt { padding-top: 10px; }
+  .vit-corpo, .vit-pe { padding-left: 16px; padding-right: 16px; }
+  .vit-pe .botao { flex: 1 1 100%; text-align: center; }
+}

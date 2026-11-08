@@ -67,7 +67,28 @@
   setasEmTabs($('.arvore'), 'button');
 
   /* ---------- projetos ---------- */
+  var VIT_ANTIGOS = { lojas: 'sites', atendimento: 'sistemas', trafego: 'trafego', seguranca: 'sistemas', dados: 'sistemas' };
+  function abrirVitrine(id, rolar) {
+    if (!$('.vit-painel[data-vit="' + id + '"]')) return false;
+    $$('.vit-abas [role="tab"]').forEach(function (b) {
+      var on = b.dataset.vit === id;
+      b.setAttribute('aria-selected', on ? 'true' : 'false'); b.tabIndex = on ? 0 : -1;
+    });
+    $$('.vit-painel').forEach(function (p) { p.hidden = p.dataset.vit !== id; });
+    numerar();
+    if (rolar) setTimeout(function () { $('.vit-abas').scrollIntoView({ block: 'start' }); }, 30);
+    return true;
+  }
+  $$('.vit-abas [role="tab"]').forEach(function (b) {
+    b.addEventListener('click', function () { abrirVitrine(b.dataset.vit, false); history.replaceState(null, '', '#projetos/' + b.dataset.vit); });
+    b.addEventListener('keydown', function (e) {
+      var abas = $$('.vit-abas [role="tab"]'), i = abas.indexOf(b);
+      if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') { e.preventDefault(); var n = abas[(i + (e.key === 'ArrowRight' ? 1 : abas.length - 1)) % abas.length]; n.focus(); n.click(); }
+    });
+  });
   function abrirProjeto(id) {
+    if (VIT_ANTIGOS[id]) id = VIT_ANTIGOS[id];
+    if (abrirVitrine(id, true)) return true;
     var g = $('#projetos [data-grupo="' + id + '"]');
     if (g) { setTimeout(function () { g.scrollIntoView({ block: 'start' }); }, 30); return true; }
     var d = $('details[data-proj="' + id + '"]');
