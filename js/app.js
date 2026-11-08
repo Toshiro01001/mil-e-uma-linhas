@@ -12,6 +12,8 @@
   var abaAtual = null;
 
   function temaAscii() { return document.documentElement.getAttribute('data-tema') === 'ascii'; }
+  /* a revelação ao rolar existe no ASCII, na Loja e na Agenda; Empresa e Painel ficam parados, como manda cada referência */
+  function temaRevela() { var t = document.documentElement.getAttribute('data-tema'); return t === 'ascii' || t === 'loja' || t === 'agenda'; }
 
   /* ---------- abas e endereço ---------- */
   function rota() {
@@ -573,13 +575,13 @@
     aplicarRota(false);
   });
 
-  /* ---------- revelação ao rolar (só no tema ASCII) ----------
+  /* ---------- revelação ao rolar (temas ASCII, Loja e Agenda) ----------
      Cada cartão entra uma vez, quando aparece na tela. Sem IntersectionObserver ou com movimento reduzido,
      nada é escondido: a classe .revela só é colocada quando dá para revelar de verdade. */
   var CARTOES = '.ap-mostra li, .vit-grade .vit-card, .projs .proj, .guia-lista .lang, .canais .canal, .vit-planos .vit-plano, .ap-passos li, .ap-seg .check li';
   var olho = null;
   function revelar() {
-    if (calmo || !('IntersectionObserver' in window) || !temaAscii()) return;
+    if (calmo || !('IntersectionObserver' in window) || !temaRevela()) return;
     if (!olho) {
       olho = new IntersectionObserver(function (ents) {
         ents.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('visto'); olho.unobserve(e.target); } });

@@ -92,6 +92,16 @@ window.MUL_TEMAS = (function () {
       sac.appendChild(el('span', null, r.n + (r.n === 1 ? ' item' : ' itens') + ': ' + r.txt));
       var a = el('a', 'botao cheio', 'Revisar e enviar'); a.href = '#orcamento/finalizar'; sac.appendChild(a);
     }
+    /* faixa de anúncios: os serviços e os preços de partida, repetidos duas vezes para a rolagem contínua não ter emenda */
+    var faixa = $('#lj-faixa');
+    if (faixa) {
+      var itens = chaves.map(function (k) { var pl = P[k].planos[0], cl = classe(k); return P[k].nome + ' a partir de ' + O.reais(pl.faixa[0]) + (cl === 'mensal' ? ' por mês' : cl === 'hora' ? ' por hora' : ''); });
+      [0, 1].forEach(function () {
+        var t = el('span', 'lj-faixa-trilha');
+        itens.forEach(function (x) { t.appendChild(el('b', null, x)); t.appendChild(el('i', null, '\u25CF')); });
+        faixa.appendChild(t);
+      });
+    }
     F.forEach(function (f) {
       var b = el('button', 'pilula', f[1]); b.type = 'button';
       b.addEventListener('click', function () { filtro = f[0]; render(); });
@@ -124,7 +134,10 @@ window.MUL_TEMAS = (function () {
       if (!f.length) { var v = el('tr'), td = el('td', 'vazio', 'Nenhum pedido com esse filtro. Limpe a busca para ver todos.'); td.colSpan = 6; v.appendChild(td); tb.appendChild(v); }
       f.forEach(function (l) {
         var r = el('tr');
-        l.forEach(function (x, i) { r.appendChild(el('td', i === 3 || i === 4 || i === 0 ? 'num' : i === 5 ? 'st st-' + sa(x).replace(/\s/g, '-') : null, i === 4 ? 'R$ ' + x : x)); });
+        l.forEach(function (x, i) {
+          if (i === 5) { var td = el('td', 'st st-' + sa(x).replace(/\s/g, '-')); td.appendChild(el('span', 'sit', x)); r.appendChild(td); return; }
+          r.appendChild(el('td', i === 3 || i === 4 || i === 0 ? 'num' : null, i === 4 ? 'R$ ' + x : x));
+        });
         tb.appendChild(r);
       });
       tab.appendChild(tb);
@@ -162,6 +175,21 @@ window.MUL_TEMAS = (function () {
     HORAS.forEach(function (h, i) { var b = el('button', 'pilula', h); b.type = 'button'; b.addEventListener('click', function () { sel.h = i; atualizar(); }); horasBox.appendChild(b); });
     $('#ag-nome').addEventListener('input', atualizar);
     atualizar();
+  }
+
+  /* trilho de rolagem (tema Loja): uma linha fina sob o cabeçalho cresce conforme a leitura avança */
+  var trilho = $('#trilho'), principal = $('main');
+  if (trilho && principal) {
+    var pedido = false;
+    function medir() {
+      pedido = false;
+      var max = principal.scrollHeight - principal.clientHeight;
+      trilho.style.transform = 'scaleX(' + (max > 0 ? Math.min(1, principal.scrollTop / max) : 0) + ')';
+    }
+    principal.addEventListener('scroll', function () { if (!pedido) { pedido = true; requestAnimationFrame(medir); } }, { passive: true });
+    window.addEventListener('hashchange', function () { setTimeout(medir, 80); });
+    window.addEventListener('mul:tema', function () { setTimeout(medir, 80); });
+    medir();
   }
 
   var CAPAS = { empresa: empresa, loja: loja, painel: painel, agenda: agenda };
