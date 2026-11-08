@@ -431,7 +431,9 @@ textarea { display: block; width: 100%; padding: 8px 10px; background: var(--pai
 .orc-itens { margin: 6px 0 0; padding-left: 18px; color: var(--papel); font-size: 14px; line-height: 20px; }
 .orc-dif { margin: 0 0 14px; font-size: 15px; }
 .orc-dif summary { cursor: pointer; color: var(--verde); min-height: 28px; }
-.orc-dif p { margin: 6px 0; color: var(--cinza); line-height: 22px; }
+.orc-dif p { margin: 6px 0; color: var(--cinza); line-height: 22px; max-width: 70ch; }
+.orc-dif[open] { padding-bottom: 6px; border-bottom: 1px solid var(--traco); }
+.orc-dif a { color: var(--verde); }
 .orc-dif b { color: var(--papel); }
 .email-menu { margin: 6px 0 10px; padding: 10px 12px; background: var(--painel); border: 1px solid var(--traco); border-radius: var(--raio); }
 .email-menu .nota { margin: 0 0 6px; }
