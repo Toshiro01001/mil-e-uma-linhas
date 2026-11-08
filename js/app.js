@@ -482,7 +482,7 @@
       return void linha('Aparências: ascii, empresa, loja, painel e agenda.', 'err');
     }
     if (c === 'linguagens') { ir('#linguagens'); return void linha(window.MUL_ORC.LINGUAGENS.map(function (l) { return l.nome; }).join('  ')); }
-    if (c === 'servicos') { ir('#servicos'); return void linha('sites  sistemas  sob-medida  vendas  trafego  freelance'); }
+    if (c === 'servicos') { ir('#servicos'); return void linha('escolher  sites  sistemas  sob-medida  vendas  trafego'); }
     if (c === 'projetos') {
       ir('#projetos');
       Object.keys(PROJETOS).forEach(function (k) { linha(k + ': ' + PROJETOS[k].split(': ')[1]); });

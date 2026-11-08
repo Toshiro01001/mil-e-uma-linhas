@@ -8,9 +8,9 @@ window.MUL_ORC = (function () {
   var PEDIDOS = {
     site: {
       nome: 'Site', planos: [
-        { nome: 'Essencial', desc: 'Uma página com seus serviços e botão de contato. Pronta em até 10 dias úteis depois de receber textos e fotos.', dias: [5, 10], faixa: [600, 1200] },
-        { nome: 'Profissional', desc: 'Até 5 páginas, formulário e aparência própria da sua marca.', dias: [15, 21], faixa: [1500, 3000] },
-        { nome: 'Completo', desc: 'Loja virtual ou área do cliente simples.', dias: [32, 54], faixa: [5000, 12000] }
+        { nome: 'Essencial', desc: 'Uma página com seus serviços e botão de contato. Pronta em até 10 dias úteis depois de receber textos e fotos.', itens: ['Páginas: 1, com o que você faz e um botão para chamar no WhatsApp', 'Aparece direito no celular e no computador', 'Conexão segura (https)', 'Você envia textos e fotos; eu monto a página'], dias: [5, 10], faixa: [600, 1200] },
+        { nome: 'Profissional', desc: 'Até 5 páginas, formulário e aparência própria da sua marca.', itens: ['Páginas: até 5, como Início, Serviços, Sobre, Galeria e Contato', 'Formulário: o cliente preenche e o pedido chega para você', 'Aparência da sua marca: cores, letras e logotipo', 'Aparece direito no celular e no computador'], dias: [15, 21], faixa: [1500, 3000] },
+        { nome: 'Completo', desc: 'Loja virtual ou área do cliente simples.', itens: ['Loja virtual: vitrine de produtos, carrinho e pedido, ou área do cliente com login simples', 'Tudo do plano Profissional', 'O que entra e o prazo ficam combinados por escrito antes de começar'], dias: [32, 54], faixa: [5000, 12000] }
       ],
       extras: [
         { nome: 'Página a mais', dias: [1, 1], faixa: [150, 300] }, { nome: 'Agendamento online', dias: [2, 4], faixa: [400, 900] },
@@ -32,9 +32,9 @@ window.MUL_ORC = (function () {
     },
     vendas: {
       nome: 'Vendas automatizadas', planos: [
-        { nome: 'Básico', desc: 'Respostas automáticas e coleta de dados do interessado.', dias: [5, 10], faixa: [500, 1200] },
-        { nome: 'Funil', desc: 'Página, perguntas de qualificação e aviso para quem vende.', dias: [10, 21], faixa: [1500, 3500] },
-        { nome: 'Integrado', desc: 'Liga o funil ao seu cadastro de clientes ou ao pagamento.', dias: [21, 43], faixa: [4000, 9000] }
+        { nome: 'Básico', desc: 'Respostas automáticas e coleta de dados do interessado.', itens: ['Responde sozinho as perguntas de sempre', 'Pergunta nome, contato e o que a pessoa procura', 'Você recebe o resumo de cada interessado'], dias: [5, 10], faixa: [500, 1200] },
+        { nome: 'Funil', desc: 'Página, perguntas de qualificação e aviso para quem vende.', itens: ['Página própria para receber o interessado', 'Perguntas que mostram quem está pronto para comprar', 'Aviso para quem vende quando chega um interessado'], dias: [10, 21], faixa: [1500, 3500] },
+        { nome: 'Integrado', desc: 'Liga o funil ao seu cadastro de clientes ou ao pagamento.', itens: ['Tudo do plano Funil', 'Os dados do interessado vão sozinhos para o seu cadastro de clientes ou para o pagamento', 'Ninguém precisa digitar a mesma informação duas vezes'], dias: [21, 43], faixa: [4000, 9000] }
       ],
       extras: [
         { nome: 'Acompanhamento mensal', dias: [0, 0], faixa: [200, 500], mensal: true }, { nome: 'Página de vendas', dias: [2, 5], faixa: [600, 1500] }
@@ -42,32 +42,23 @@ window.MUL_ORC = (function () {
     },
     trafego: {
       nome: 'Tráfego pago', planos: [
-        { nome: 'Início', desc: 'Uma plataforma e verba de anúncios de até R$ 3.000 por mês.', dias: [5, 10], faixa: [500, 1200], mensal: true },
-        { nome: 'Crescimento', desc: 'Até duas plataformas e verba de até R$ 10.000 por mês.', dias: [10, 15], faixa: [1200, 2000], mensal: true },
-        { nome: 'Completo', desc: 'Várias campanhas, testes contínuos e relatório semanal.', dias: [15, 21], faixa: [2000, 3500], mensal: true }
+        { nome: 'Início', desc: 'Uma plataforma e verba de anúncios de até R$ 3.000 por mês.', itens: ['Anúncios: 1 plataforma, como Instagram ou Google', 'Verba de anúncios: até R$ 3.000 por mês, paga por você direto na plataforma', 'Eu mostro os números dos anúncios para você'], dias: [5, 10], faixa: [500, 1200], mensal: true },
+        { nome: 'Crescimento', desc: 'Até duas plataformas e verba de até R$ 10.000 por mês.', itens: ['Anúncios: até 2 plataformas', 'Verba de anúncios: até R$ 10.000 por mês, paga por você direto na plataforma', 'Eu mostro os números dos anúncios para você'], dias: [10, 15], faixa: [1200, 2000], mensal: true },
+        { nome: 'Completo', desc: 'Várias campanhas, testes contínuos e relatório semanal.', itens: ['Anúncios: várias campanhas ao mesmo tempo', 'Testes contínuos para descobrir qual anúncio funciona melhor', 'Relatório toda semana com os números'], dias: [15, 21], faixa: [2000, 3500], mensal: true }
       ],
       extras: [
         { nome: 'Configuração inicial das contas', dias: [1, 2], faixa: [500, 1000] }, { nome: 'Página de destino', dias: [2, 5], faixa: [600, 1500] }
       ],
       nota: 'A verba de anúncios é paga direto na plataforma e não entra nesta conta. Resultados não são garantidos.'
     },
-    freelance: {
-      nome: 'Programação freelance', horas: true, planos: [
-        { nome: 'Ajustes', desc: 'Correções e manutenção em um código que já existe.', faixa: [50, 70] },
-        { nome: 'Novas funções', desc: 'Partes novas em um projeto da sua equipe.', faixa: [60, 90] },
-        { nome: 'Especializado', desc: 'Banco de dados, integrações, C ou C++.', faixa: [80, 120] }
-      ],
-      extras: [],
-      nota: 'Valor por hora vezes as horas escolhidas. O prazo considera até 20 horas de trabalho por semana, em dias úteis.'
-    },
     medida: {
       nome: 'Projeto sob medida', planos: [
-        { nome: 'Diagnóstico', desc: 'Conversa e documento com escopo, prazo e custo do projeto.', dias: [2, 5], faixa: [300, 800] },
-        { nome: 'Protótipo', desc: 'Uma primeira versão que funciona, para testar a ideia.', dias: [10, 21], faixa: [2000, 6000] },
-        { nome: 'Projeto completo', desc: 'Da ideia à entrega, em etapas combinadas.', dias: [43, 86], faixa: [8000, 30000] }
+        { nome: 'Diagnóstico', desc: 'Conversa e documento com escopo, prazo e custo do projeto.', itens: ['Conversa para entender a sua ideia', 'Documento com o que será feito, o prazo e o custo', 'É um serviço pago, e vem antes de qualquer projeto maior'], dias: [2, 5], faixa: [300, 800] },
+        { nome: 'Protótipo', desc: 'Uma primeira versão que funciona, para testar a ideia.', itens: ['Uma primeira versão que funciona, só com o essencial', 'Serve para testar a ideia antes de investir mais', 'Não é o produto final'], dias: [10, 21], faixa: [2000, 6000] },
+        { nome: 'Projeto completo', desc: 'Da ideia à entrega, em etapas combinadas.', itens: ['Da ideia até o projeto no ar, em etapas combinadas', 'Prazo e custo por escrito antes de começar', 'Testado a cada etapa'], dias: [43, 86], faixa: [8000, 30000] }
       ],
       extras: [
-        { nome: 'Banco de dados', dias: [4, 7], faixa: [500, 2000] }, { nome: 'Versão para celular', dias: [10, 21], faixa: [1500, 5000] }, { nome: 'Treinamento da equipe', dias: [1, 2], faixa: [300, 800] }
+        { nome: 'Banco de dados', dias: [4, 7], faixa: [500, 2000] }, { nome: 'Versão para celular', dias: [10, 21], faixa: [1500, 5000] }
       ]
     }
   };
@@ -88,8 +79,7 @@ window.MUL_ORC = (function () {
     'trafego|Configuração inicial das contas': 'Crio e configuro as contas de anúncios, a forma de pagamento e a medição dos resultados.',
     'trafego|Página de destino': 'A página para onde os anúncios levam, pensada para transformar visitas em contatos.',
     'medida|Banco de dados': 'A estrutura que guarda e consulta as informações do projeto com segurança.',
-    'medida|Versão para celular': 'O projeto adaptado para funcionar bem no celular, como aplicativo ou versão própria.',
-    'medida|Treinamento da equipe': 'Eu explico à sua equipe como usar o que foi entregue.'
+    'medida|Versão para celular': 'O projeto adaptado para funcionar bem no celular, como aplicativo ou versão própria.'
   };
   /* Linguagens. fator = quanto a linguagem encarece o trabalho; vale só o maior fator escolhido.
      consulta: true = aparece na aba de linguagens, mas não entra no orçamento automático. */
@@ -146,7 +136,7 @@ window.MUL_ORC = (function () {
   ];
   var AREAS = { site: 'Sites', sistema: 'Sistemas', app: 'Aplicativos', automacao: 'Automação', dados: 'Dados e relatórios', desempenho: 'Alto desempenho' };
   /* Quais áreas cada tipo de pedido oferece. Lista vazia = o pedido não envolve escolher linguagem. */
-  var AREAS_DO_PEDIDO = { site: ['site'], sistema: ['sistema', 'dados', 'app', 'desempenho'], vendas: ['automacao', 'site'], trafego: [], freelance: ['site', 'sistema', 'app', 'automacao', 'dados', 'desempenho'], medida: ['site', 'sistema', 'app', 'automacao', 'dados', 'desempenho'] };
+  var AREAS_DO_PEDIDO = { site: ['site'], sistema: ['sistema', 'dados', 'app', 'desempenho'], vendas: ['automacao', 'site'], trafego: [], medida: ['site', 'sistema', 'app', 'automacao', 'dados', 'desempenho'] };
 
   var $ = function (s) { return document.querySelector(s); };
   var el = function (t, c, x) { var e = document.createElement(t); if (c) e.className = c; if (x !== undefined) e.textContent = x; return e; };
@@ -278,6 +268,7 @@ window.MUL_ORC = (function () {
     if (tipo === 'trafego') n.unshift('O prazo é até a primeira campanha no ar.');
     if (+$('#orc-prazo').value > 1) n.unshift('Urgente: prazo cerca de 30% menor, quando a agenda permitir.');
     if (P.nota) n.unshift(P.nota);
+    n.push('Depois da entrega eu explico por cima como usar e deixo meu contato (e-mail e WhatsApp) para qualquer dúvida.');
     var extra = Math.max(0, it.ids.length - INCLUSAS), maior = it.ids.reduce(function (m, id) { return Math.max(m, ling(id).fator); }, 1);
     if (extra) n.unshift(extra + (extra === 1 ? ' linguagem' : ' linguagens') + ' além das 2 incluídas: +' + Math.round(extra * POR_EXTRA * 100) + '% no preço e no prazo.');
     if (maior > 1) n.unshift('Java, C# e outras mais exigentes levam mais tempo de teste e correção: a mais exigente que você marcou soma ' + Math.round((maior - 1) * 100) + '% (uma vez só).');

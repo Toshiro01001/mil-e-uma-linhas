@@ -651,3 +651,6 @@ button.link:disabled { color: var(--cinza); text-decoration: none; cursor: not-a
 
 .orc-aviso-add { margin: 10px 0 0; }
 .orc-sep { margin-top: 24px; padding-top: 16px; border-top: 1px solid var(--traco); }
+.escolha { margin: 0 0 var(--lin); }
+.escolha dt { margin-top: 14px; font-weight: 700; color: var(--verde); }
+.escolha dd { margin: 4px 0 0; color: var(--papel); }
