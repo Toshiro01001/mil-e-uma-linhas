@@ -30,6 +30,8 @@ Desenvolvido por Rodrigo Terroso Junior. O Claude, da Anthropic, foi usado como 
 
 ## Como o cliente faz um pedido
 
+![Montador de orçamento no computador](img/orcamento-desktop.webp)
+
 ![Carrinho do orçamento](img/pedido-carrinho.webp)
 
 1. Na aba orçamento, o cliente escolhe o tipo, o plano e os adicionais e clica em **Adicionar ao pedido**. Cada item mostra valor e prazo; o total aparece na hora. Cabem até 10 itens e o carrinho fica salvo no aparelho (`localStorage`, só as escolhas, nunca dados pessoais).
@@ -38,6 +40,14 @@ Desenvolvido por Rodrigo Terroso Junior. O Claude, da Anthropic, foi usado como 
 4. O cliente recebe um protocolo (`PED2611...`) para citar na conversa. O pedido aparece no meu painel de cobranças com os itens e o texto exatamente como foram enviados.
 
 <img src="img/pedido-texto-celular.webp" alt="Etapa de descrição do pedido no celular" width="300">
+
+### Adicionais, e-mail e arquivos
+
+Todos os prazos do site são em **dias úteis** (segunda a sexta). Cada adicional mostra o valor e o prazo que ele soma, e o botão "i" explica em uma frase o que ele faz. Quem prefere mandar o pedido por e-mail escolhe onde abrir: Gmail, Outlook, Yahoo, o aplicativo do aparelho ou só copiar o texto.
+
+<img src="img/orcamento-adicionais-celular.webp" alt="Adicionais com valor, prazo e botão de explicação, no celular" width="260"> <img src="img/pedido-email-celular.webp" alt="Menu para escolher onde abrir o e-mail, no celular" width="260"> <img src="img/pedido-anexos-celular.webp" alt="Área para anexar logotipos e arquivos, no celular" width="260">
+
+O cliente pode anexar de 1 a 20 arquivos (logotipos, fotos, documentos), com até 25 MB cada e 50 MB no total, arrastando ou escolhendo no aparelho. Os arquivos sobem depois que o pedido é enviado e ficam em armazenamento privado, ligados ao protocolo. Se o envio falhar, o site orienta mandar por e-mail citando o protocolo.
 
 A verificação contra robôs (Turnstile) só é carregada na tela de finalização.
 
@@ -48,6 +58,8 @@ Cada alteração passa por conferência de segredos no código, política de seg
 Na página de pagamento, a chave Pix, o nome e a cidade ficam fixos no código. O link leva só um código aleatório de 128 bits; o valor vem do servidor de cobranças, então mexer no link não muda o valor nem o recebedor. A página só conversa com esse servidor (CSP `connect-src`), sem cookies.
 
 No pedido, nome, e-mail, WhatsApp e texto do cliente vão por HTTPS direto ao meu servidor, que os cifra (AES-256-GCM) antes de gravar. A CSP agora permite só o script do Turnstile (`challenges.cloudflare.com`) além do próprio site.
+
+Os arquivos anexados vão em um envio por arquivo, com um token de envio que vale 24 horas e só serve para aquele pedido. O servidor recusa executáveis e scripts, confere tamanho e quantidade, e guarda tudo em um bucket privado (Cloudflare R2), sem endereço público. Só eu, logado no painel, consigo baixar.
 
 ## Projetos com imagens
 
