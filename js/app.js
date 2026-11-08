@@ -573,7 +573,7 @@
   /* ---------- revelação ao rolar (só no tema ASCII) ----------
      Cada cartão entra uma vez, quando aparece na tela. Sem IntersectionObserver ou com movimento reduzido,
      nada é escondido: a classe .revela só é colocada quando dá para revelar de verdade. */
-  var CARTOES = '.ap-mostra li, .vit-grade .vit-card, .projs .proj, .guia-lista .lang, .canais .canal, .vit-planos .vit-plano';
+  var CARTOES = '.ap-mostra li, .vit-grade .vit-card, .projs .proj, .guia-lista .lang, .canais .canal, .vit-planos .vit-plano, .ap-passos li, .ap-seg .check li';
   var olho = null;
   function revelar() {
     if (calmo || !('IntersectionObserver' in window) || !temaAscii()) return;
