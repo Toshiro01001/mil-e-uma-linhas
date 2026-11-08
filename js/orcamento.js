@@ -8,9 +8,9 @@ window.MUL_ORC = (function () {
   var PEDIDOS = {
     site: {
       nome: 'Site', planos: [
-        { nome: 'Essencial', desc: 'Uma página com seus serviços e botão de contato. Pronta em até 10 dias úteis depois de receber textos e fotos.', itens: ['Páginas: 1, com o que você faz e um botão para chamar no WhatsApp', 'Aparece direito no celular e no computador', 'Conexão segura (https)', 'Você envia textos e fotos; eu monto a página'], dias: [5, 10], faixa: [600, 1200] },
-        { nome: 'Profissional', desc: 'Até 5 páginas, formulário e aparência própria da sua marca.', itens: ['Páginas: até 5, como Início, Serviços, Sobre, Galeria e Contato', 'Formulário: o cliente preenche e o pedido chega para você', 'Aparência da sua marca: cores, letras e logotipo', 'Aparece direito no celular e no computador'], dias: [15, 21], faixa: [1500, 3000] },
-        { nome: 'Completo', desc: 'Loja virtual ou área do cliente simples.', itens: ['Loja virtual: vitrine de produtos, carrinho e pedido, ou área do cliente com login simples', 'Tudo do plano Profissional', 'O que entra e o prazo ficam combinados por escrito antes de começar'], dias: [32, 54], faixa: [5000, 12000] }
+        { nome: 'Essencial', desc: 'Uma página com seus serviços e botão de contato. Pronta em até 10 dias úteis depois de receber textos e fotos.', itens: ['Funciona no celular e no computador', 'Estrutura pronta para o Google: títulos, descrição e imagens leves', 'Conexão segura (https) e botão de contato', 'Você testa uma versão antes de ir ao ar e pede ajustes (até 2 rodadas)'], dias: [5, 10], faixa: [600, 1200] },
+        { nome: 'Profissional', desc: 'Até 5 páginas, formulário e aparência própria da sua marca.', itens: ['Inclui tudo do plano Essencial', 'Páginas como Início, Serviços, Sobre, Galeria e Contato', 'Formulário: o cliente preenche e a mensagem chega para você', 'Desenho próprio, aprovado por você antes da programação'], dias: [15, 21], faixa: [1500, 3000] },
+        { nome: 'Completo', desc: 'Loja virtual ou área do cliente simples.', itens: ['Inclui tudo do plano Profissional', 'Loja: vitrine de produtos, carrinho e pedido que chega para você', 'Área do cliente: login simples para ver pedidos ou documentos', 'Quantidade de produtos e forma de pagamento combinadas por escrito'], dias: [32, 54], faixa: [5000, 12000] }
       ],
       extras: [
         { nome: 'Página a mais', dias: [1, 1], faixa: [150, 300] }, { nome: 'Agendamento online', dias: [2, 4], faixa: [400, 900] },
@@ -32,9 +32,9 @@ window.MUL_ORC = (function () {
     },
     vendas: {
       nome: 'Vendas automatizadas', planos: [
-        { nome: 'Básico', desc: 'Respostas automáticas e coleta de dados do interessado.', itens: ['Responde sozinho as perguntas de sempre', 'Pergunta nome, contato e o que a pessoa procura', 'Você recebe o resumo de cada interessado'], dias: [5, 10], faixa: [500, 1200] },
-        { nome: 'Funil', desc: 'Página, perguntas de qualificação e aviso para quem vende.', itens: ['Página própria para receber o interessado', 'Perguntas que mostram quem está pronto para comprar', 'Aviso para quem vende quando chega um interessado'], dias: [10, 21], faixa: [1500, 3500] },
-        { nome: 'Integrado', desc: 'Liga o funil ao seu cadastro de clientes ou ao pagamento.', itens: ['Tudo do plano Funil', 'Os dados do interessado vão sozinhos para o seu cadastro de clientes ou para o pagamento', 'Ninguém precisa digitar a mesma informação duas vezes'], dias: [21, 43], faixa: [4000, 9000] }
+        { nome: 'Básico', desc: 'Respostas automáticas e coleta de dados do interessado.', itens: ['Textos das respostas revisados por você antes de entrar no ar', 'Guarda nome, contato e o que a pessoa procura', 'Só fala com quem deu permissão (opt-in), com jeito simples de sair'], dias: [5, 10], faixa: [500, 1200] },
+        { nome: 'Funil', desc: 'Página, perguntas de qualificação e aviso para quem vende.', itens: ['Inclui tudo do plano Básico', 'Página própria para receber quem chega pelo anúncio ou pelo link', 'Perguntas que separam quem só está olhando de quem quer comprar', 'Quem vende recebe o aviso com as respostas da pessoa'], dias: [10, 21], faixa: [1500, 3500] },
+        { nome: 'Integrado', desc: 'Liga o funil ao seu cadastro de clientes ou ao pagamento.', itens: ['Inclui tudo do plano Funil', 'Os dados do interessado entram sozinhos no seu cadastro ou no pagamento', 'Ninguém digita a mesma informação duas vezes', 'Custo da conta e das mensagens da plataforma (WhatsApp, e-mail) é seu'], dias: [21, 43], faixa: [4000, 9000] }
       ],
       extras: [
         { nome: 'Acompanhamento mensal', dias: [0, 0], faixa: [200, 500], mensal: true }, { nome: 'Página de vendas', dias: [2, 5], faixa: [600, 1500] }
@@ -42,9 +42,9 @@ window.MUL_ORC = (function () {
     },
     trafego: {
       nome: 'Tráfego pago', planos: [
-        { nome: 'Início', desc: 'Uma plataforma e verba de anúncios de até R$ 3.000 por mês.', itens: ['Anúncios: 1 plataforma, como Instagram ou Google', 'Verba de anúncios: até R$ 3.000 por mês, paga por você direto na plataforma', 'Eu mostro os números dos anúncios para você'], dias: [5, 10], faixa: [500, 1200], mensal: true },
-        { nome: 'Crescimento', desc: 'Até duas plataformas e verba de até R$ 10.000 por mês.', itens: ['Anúncios: até 2 plataformas', 'Verba de anúncios: até R$ 10.000 por mês, paga por você direto na plataforma', 'Eu mostro os números dos anúncios para você'], dias: [10, 15], faixa: [1200, 2000], mensal: true },
-        { nome: 'Completo', desc: 'Várias campanhas, testes contínuos e relatório semanal.', itens: ['Anúncios: várias campanhas ao mesmo tempo', 'Testes contínuos para descobrir qual anúncio funciona melhor', 'Relatório toda semana com os números'], dias: [15, 21], faixa: [2000, 3500], mensal: true }
+        { nome: 'Início', desc: 'Uma plataforma e verba de anúncios de até R$ 3.000 por mês.', itens: ['Plataformas: 1, como Instagram ou Google', 'Criação e ajuste das campanhas; vídeos e artes são à parte', 'Relatório mensal com os números, sem promessa de venda'], dias: [5, 10], faixa: [500, 1200], mensal: true },
+        { nome: 'Crescimento', desc: 'Até duas plataformas e verba de até R$ 10.000 por mês.', itens: ['Plataformas: até 2 ao mesmo tempo', 'Criação e ajuste das campanhas; vídeos e artes são à parte', 'Relatório mensal com os números, sem promessa de venda'], dias: [10, 15], faixa: [1200, 2000], mensal: true },
+        { nome: 'Completo', desc: 'Várias campanhas, testes contínuos e relatório semanal.', itens: ['Várias campanhas ao mesmo tempo, em mais de uma plataforma', 'Anúncios testados lado a lado, mantendo o que rende mais', 'Relatório semanal com os números, sem promessa de venda'], dias: [15, 21], faixa: [2000, 3500], mensal: true }
       ],
       extras: [
         { nome: 'Configuração inicial das contas', dias: [1, 2], faixa: [500, 1000] }, { nome: 'Página de destino', dias: [2, 5], faixa: [600, 1500] }
@@ -53,9 +53,9 @@ window.MUL_ORC = (function () {
     },
     medida: {
       nome: 'Projeto sob medida', planos: [
-        { nome: 'Diagnóstico', desc: 'Conversa e documento com escopo, prazo e custo do projeto.', itens: ['Conversa para entender a sua ideia', 'Documento com o que será feito, o prazo e o custo', 'É um serviço pago, e vem antes de qualquer projeto maior'], dias: [2, 5], faixa: [300, 800] },
-        { nome: 'Protótipo', desc: 'Uma primeira versão que funciona, para testar a ideia.', itens: ['Uma primeira versão que funciona, só com o essencial', 'Serve para testar a ideia antes de investir mais', 'Não é o produto final'], dias: [10, 21], faixa: [2000, 6000] },
-        { nome: 'Projeto completo', desc: 'Da ideia à entrega, em etapas combinadas.', itens: ['Da ideia até o projeto no ar, em etapas combinadas', 'Prazo e custo por escrito antes de começar', 'Testado a cada etapa'], dias: [43, 86], faixa: [8000, 30000] }
+        { nome: 'Diagnóstico', desc: 'Conversa e documento com escopo, prazo e custo do projeto.', itens: ['Você recebe um documento escrito, que é seu', 'Pode levar esse documento para outra empresa fazer o projeto', 'Sistema grande e projeto completo começam por aqui'], dias: [2, 5], faixa: [300, 800] },
+        { nome: 'Protótipo', desc: 'Uma primeira versão que funciona, para testar a ideia.', itens: ['Só as telas e funções principais, sem acabamento final', 'Você testa de verdade e aponta o que mudar antes de investir mais', 'Entrega, aprovação e pagamento próprios: 50% antes, 50% na entrega'], dias: [10, 21], faixa: [2000, 6000] },
+        { nome: 'Projeto completo', desc: 'Da ideia à entrega, em etapas combinadas.', itens: ['Cada etapa é entregue, testada e aprovada por você antes da próxima', 'Cada etapa tem pagamento próprio: 50% antes, 50% na entrega', 'Mudança no que foi combinado é orçada à parte, por escrito'], dias: [43, 86], faixa: [8000, 30000] }
       ],
       extras: [
         { nome: 'Banco de dados', dias: [4, 7], faixa: [500, 2000] }, { nome: 'Versão para celular', dias: [10, 21], faixa: [1500, 5000] }
