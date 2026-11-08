@@ -570,7 +570,31 @@
     aplicarRota(false);
   });
 
+  /* ---------- revelação ao rolar (só no tema ASCII) ----------
+     Cada cartão entra uma vez, quando aparece na tela. Sem IntersectionObserver ou com movimento reduzido,
+     nada é escondido: a classe .revela só é colocada quando dá para revelar de verdade. */
+  var CARTOES = '.ap-mostra li, .vit-grade .vit-card, .projs .proj, .guia-lista .lang, .canais .canal, .vit-planos .vit-plano';
+  var olho = null;
+  function revelar() {
+    if (calmo || !('IntersectionObserver' in window) || !temaAscii()) return;
+    if (!olho) {
+      olho = new IntersectionObserver(function (ents) {
+        ents.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('visto'); olho.unobserve(e.target); } });
+      }, { root: main, rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
+    }
+    var folha = $('.folha.ativa') || main;
+    $$(CARTOES, folha).forEach(function (el) {
+      if (el.classList.contains('revela')) return;
+      el.classList.add('revela'); olho.observe(el);
+      /* garantia: se por algum motivo o observador não disparar, o cartão aparece sozinho */
+      setTimeout(function () { el.classList.add('visto'); }, 2500);
+    });
+  }
+  window.addEventListener('hashchange', function () { setTimeout(revelar, 60); });
+  window.addEventListener('mul:tema', function () { setTimeout(revelar, 60); });
+
   /* ---------- partida ---------- */
   window.addEventListener('hashchange', function () { aplicarRota(true); });
   aplicarRota(false);
+  setTimeout(revelar, 80);
 })();
