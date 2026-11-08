@@ -20,7 +20,7 @@
 <link rel="canonical" href="https://mileumalinhas.com.br/">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="preload" href="fonts/bricolage.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="css/site.css?v=20261108c">
+<link rel="stylesheet" href="css/site.css?v=20261108d">
 <script src="js/boot.js"></script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"ProfessionalService","name":"Mil e Uma Linhas!","slogan":"Meu código, seu site.","url":"https://mileumalinhas.com.br/","description":"Sites, sistemas, automação de vendas e redes sociais e tráfego pago.","email":"contato@mileumalinhas.com.br","image":"https://mileumalinhas.com.br/og.png","address":{"@type":"PostalAddress","addressLocality":"Cuiabá","addressRegion":"MT","addressCountry":"BR"},"areaServed":{"@type":"Country","name":"Brasil"},"founder":{"@type":"Person","name":"Rodrigo Terroso Junior"},"sameAs":["https://www.instagram.com/mileumalinhas/","https://www.linkedin.com/in/rodrigo-terroso-junior-9b900935b","https://github.com/Toshiro01001"]}</script>
 <script src="js/linguagens.js" defer></script>
@@ -29,7 +29,8 @@
 <script src="js/pedido.js?v=20261107a" defer></script>
 <script src="js/guia.js" defer></script>
 <script src="js/temas.js" defer></script>
-<script src="js/app.js?v=20261107a" defer></script>
+<script src="js/fundo.js" defer></script>
+<script src="js/app.js?v=20261108c" defer></script>
 </head>
 <body>
 <a class="pular" href="#conteudo">Pular para o conteúdo</a>
@@ -37,6 +38,7 @@
 <header class="abas">
   <h1 class="marca-h"><a class="marca" href="#inicio" aria-label="Mil e Uma Linhas!, início">mil e uma linhas<b>!</b></a></h1>
   <button type="button" class="temas-abrir" id="temas-abrir" aria-expanded="false" aria-controls="temas">aparência</button>
+  <button type="button" class="gaveta-abrir" id="gaveta-abrir" aria-expanded="false" aria-controls="gaveta"><i aria-hidden="true"></i>menu</button>
   <nav aria-label="Abas do site">
     <a href="#inicio" data-aba="inicio"><i>1:</i>início</a>
     <a href="#servicos" data-aba="servicos"><i>2:</i>serviços</a>
@@ -59,6 +61,48 @@
     <span class="carrinho-rot">Meu pedido</span><span class="orc-conta" id="orc-conta"></span>
   </a>
 </header>
+
+<div class="gaveta" id="gaveta" inert>
+  <button type="button" class="gaveta-fechar" id="gaveta-fechar">fechar</button>
+  <nav aria-label="Abas do site (menu)">
+    <a href="#inicio" data-aba="inicio"><i>1:</i>início</a>
+    <a href="#servicos" data-aba="servicos"><i>2:</i>serviços</a>
+    <a href="#projetos" data-aba="projetos"><i>3:</i>projetos</a>
+    <a href="#demos" data-aba="demos"><i>4:</i>demos</a>
+    <a href="#linguagens" data-aba="linguagens"><i>5:</i>linguagens</a>
+    <a href="#orcamento" data-aba="orcamento"><i>6:</i>orçamento</a>
+    <a href="#contato" data-aba="contato"><i>7:</i>contato</a>
+  </nav>
+  <p class="gaveta-tit">aparência</p>
+  <div class="temas" role="radiogroup" aria-label="Aparência do site (menu)">
+    <button type="button" role="radio" data-t="ascii">ASCII</button>
+    <button type="button" role="radio" data-t="empresa">Empresa</button>
+    <button type="button" role="radio" data-t="loja">Loja</button>
+    <button type="button" role="radio" data-t="painel">Painel</button>
+    <button type="button" role="radio" data-t="agenda">Agenda</button>
+  </div>
+  <p class="gaveta-tit">cor de destaque</p>
+  <div class="acentos" role="radiogroup" aria-label="Cor de destaque (menu)">
+    <span class="rot" aria-hidden="true">cor</span>
+    <button type="button" role="radio" data-acento="verde" aria-label="Verde" aria-checked="true"></button>
+    <button type="button" role="radio" data-acento="ciano" aria-label="Ciano" aria-checked="false"></button>
+    <button type="button" role="radio" data-acento="ambar" aria-label="Âmbar" aria-checked="false"></button>
+    <button type="button" role="radio" data-acento="laranja" aria-label="Laranja" aria-checked="false"></button>
+    <button type="button" role="radio" data-acento="rosa" aria-label="Rosa" aria-checked="false"></button>
+    <button type="button" role="radio" data-acento="lilas" aria-label="Lilás" aria-checked="false"></button>
+    <button type="button" role="radio" data-acento="menta" aria-label="Menta" aria-checked="false"></button>
+    <button type="button" role="radio" data-acento="gelo" aria-label="Gelo" aria-checked="false"></button>
+  </div>
+  <p class="gaveta-tit">fundo</p>
+  <div class="fundos" role="radiogroup" aria-label="Fundo animado (menu)">
+    <span class="rot" aria-hidden="true">fundo</span>
+    <button type="button" role="radio" data-fundo="aurora" aria-checked="true">aurora</button>
+    <button type="button" role="radio" data-fundo="chuva" aria-checked="false">chuva</button>
+    <button type="button" role="radio" data-fundo="nenhum" aria-checked="false">nenhum</button>
+  </div>
+</div>
+
+<div class="fundo-vivo" id="fundo-vivo" data-fundo="aurora" aria-hidden="true"><canvas id="fundo-canvas"></canvas></div>
 
 <main id="conteudo" tabindex="-1">
   <div class="buffer">
@@ -1347,6 +1391,23 @@ histórico
   <button type="button" id="term-botao" aria-expanded="false" aria-controls="terminal">&gt;_ terminal</button>
   <span class="st-aba" id="st-aba">1:início</span>
   <span class="st-leis"><a href="termos.html">Termos</a> <a href="privacidade.html">Privacidade</a></span>
+<div class="acentos" role="radiogroup" aria-label="Cor de destaque">
+    <span class="rot" aria-hidden="true">cor</span>
+    <button type="button" role="radio" data-acento="verde" aria-label="Verde" aria-checked="true"></button>
+    <button type="button" role="radio" data-acento="ciano" aria-label="Ciano" aria-checked="false"></button>
+    <button type="button" role="radio" data-acento="ambar" aria-label="Âmbar" aria-checked="false"></button>
+    <button type="button" role="radio" data-acento="laranja" aria-label="Laranja" aria-checked="false"></button>
+    <button type="button" role="radio" data-acento="rosa" aria-label="Rosa" aria-checked="false"></button>
+    <button type="button" role="radio" data-acento="lilas" aria-label="Lilás" aria-checked="false"></button>
+    <button type="button" role="radio" data-acento="menta" aria-label="Menta" aria-checked="false"></button>
+    <button type="button" role="radio" data-acento="gelo" aria-label="Gelo" aria-checked="false"></button>
+  </div>
+  <div class="fundos" role="radiogroup" aria-label="Fundo animado">
+    <span class="rot" aria-hidden="true">fundo</span>
+    <button type="button" role="radio" data-fundo="aurora" aria-checked="true">aurora</button>
+    <button type="button" role="radio" data-fundo="chuva" aria-checked="false">chuva</button>
+    <button type="button" role="radio" data-fundo="nenhum" aria-checked="false">nenhum</button>
+  </div>
   <span class="st-dir"><span id="st-linha">linha 1 de 1001</span><span class="st-ok">200 OK</span></span>
 </footer>
 </body>

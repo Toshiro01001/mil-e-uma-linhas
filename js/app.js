@@ -26,7 +26,7 @@
     var mudou = r.aba !== abaAtual;
     abaAtual = r.aba;
     $$('.folha').forEach(function (f) { f.classList.toggle('ativa', f.id === r.aba); });
-    $$('.abas nav a').forEach(function (a) {
+    $$('.abas nav a, .gaveta nav a').forEach(function (a) {
       if (a.dataset.aba === r.aba) { a.setAttribute('aria-current', 'page'); if (a.scrollIntoView && a.parentNode.scrollWidth > a.parentNode.clientWidth) a.parentNode.scrollLeft = a.offsetLeft - 40; } else a.removeAttribute('aria-current');
     });
     $('#st-aba').textContent = ROTULO[r.aba];
@@ -164,6 +164,7 @@
     var cv = $('#campo'), ctx = cv.getContext('2d', { alpha: false });
     var base = document.createElement('canvas'), bctx = base.getContext('2d', { alpha: false });
     var FUNDO = '#101418', DIM = '#28313a', PAPEL = '#F4F1E8', VERDE = '#B8F34A';
+    function lerVerde() { var v = getComputedStyle(document.documentElement).getPropertyValue('--verde').trim(); if (/^#[0-9a-f]{6}$/i.test(v)) VERDE = v; }
     var FONTE = 'JetBrains Mono';
     var CODIGO = [
       'const site = novo("sua empresa");', 'site.celular = true;', 'if (cliente.chegou) responda();',
@@ -367,6 +368,7 @@
       var r = cv.getBoundingClientRect(), t = Math.round(r.width) + 'x' + Math.round(r.height);
       if (t === tamanho && pronto) { blit(); return; }
       tamanho = t;
+      lerVerde();
       if (!montar()) return;
       calcularExcl();
       montar();
@@ -381,6 +383,7 @@
     }
     var rz = 0;
     window.addEventListener('resize', function () { clearTimeout(rz); rz = setTimeout(function () { if (visivel) preparar(); }, 160); });
+    window.addEventListener('mul:acento', function () { tamanho = ''; if (visivel) preparar(); });
     return {
       mostrar: mostrar,
       parar: function () { visivel = false; if (raf) cancelAnimationFrame(raf); raf = 0; animando = false; ondas = []; ponteiro.f = 0; sujo = null; },
@@ -592,6 +595,24 @@
   }
   window.addEventListener('hashchange', function () { setTimeout(revelar, 60); });
   window.addEventListener('mul:tema', function () { setTimeout(revelar, 60); });
+
+  /* ---------- gaveta de celular (tema ASCII) ---------- */
+  var gaveta = $('#gaveta'), gavetaAbrir = $('#gaveta-abrir'), gavetaFechar = $('#gaveta-fechar');
+  function abrirGaveta(on) {
+    if (!gaveta) return;
+    gaveta.classList.toggle('aberta', on);
+    if (on) gaveta.removeAttribute('inert'); else gaveta.setAttribute('inert', '');
+    document.body.classList.toggle('gaveta-aberta', on);
+    gavetaAbrir.setAttribute('aria-expanded', on ? 'true' : 'false');
+    if (on) gavetaFechar.focus(); else if (document.activeElement && gaveta.contains(document.activeElement)) gavetaAbrir.focus();
+  }
+  if (gaveta) {
+    gavetaAbrir.addEventListener('click', function () { abrirGaveta(!gaveta.classList.contains('aberta')); });
+    gavetaFechar.addEventListener('click', function () { abrirGaveta(false); });
+    gaveta.addEventListener('click', function (e) { if (e.target.closest('nav a') || e.target.closest('.temas button')) abrirGaveta(false); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && gaveta.classList.contains('aberta')) abrirGaveta(false); });
+    window.addEventListener('mul:tema', function () { if (!temaAscii()) abrirGaveta(false); });
+  }
 
   /* ---------- partida ---------- */
   window.addEventListener('hashchange', function () { aplicarRota(true); });
