@@ -21,7 +21,8 @@ button{cursor:pointer}
 .placa h1{font-size:clamp(3rem,13vw,8.4rem);letter-spacing:-.01em;line-height:.95}
 .placa p{font-size:1.2rem;max-width:44ch;margin:.7rem 0 .5rem}
 .ir-cozinha{display:inline-block;color:var(--tinta);font-weight:700;padding:.5rem 0}
-.peixe{width:clamp(120px,26vw,330px);height:auto}
+.foto-placa{margin:0;width:clamp(220px,34vw,460px);aspect-ratio:3/2;border-radius:18px;overflow:hidden;border:6px solid var(--tinta,#24140a);box-shadow:0 18px 40px -22px rgba(36,20,10,.7);transform:rotate(-2deg)}
+.foto-placa img{display:block;width:100%;height:100%;object-fit:cover}
 .categorias{position:sticky;top:0;z-index:5;display:flex;flex-wrap:wrap;gap:.2rem .3rem;background:var(--tinta);padding:.3rem clamp(1rem,4vw,3rem)}
 .categorias a{color:#fff6dc;font-weight:700;text-decoration:none;padding:.4rem .7rem;border-radius:4px;min-height:40px;display:flex;align-items:center}
 .categorias a:hover{background:var(--tomate)}
@@ -119,7 +120,7 @@ body.cozinha{background:#20302f;color:#fff}
 }
 @media (max-width:560px){
   .placa{grid-template-columns:minmax(0,1fr)}
-  .peixe{position:absolute;right:.6rem;width:92px;opacity:1;margin-top:-.2rem;display:none}
+  .foto-placa{width:100%;max-width:520px;transform:none;border-width:4px;margin-top:.4rem}
   .trilhos{grid-template-columns:minmax(0,1fr)}
   .categorias a{padding:.35rem .5rem}
   .coz-topo a{margin-left:0}
