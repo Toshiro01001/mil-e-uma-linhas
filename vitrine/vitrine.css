@@ -45,6 +45,7 @@ h1,h2,h3{margin:0;line-height:1.05;text-wrap:balance}
 .redes{background:#ffd23f;color:#3a1248}
 .anuncios{background:#0d4a91;color:#fff}
 .cofre{background:#121a24;color:#7ef0c8;border:1px solid var(--traco)}
+.vendas{background:#F2B705;color:#141712}
 .v-fim{margin:clamp(2.2rem,5vw,4rem) var(--gutter) clamp(2rem,5vw,4rem);padding:clamp(1.4rem,3vw,2.4rem);background:var(--painel);border:1px solid var(--traco);border-radius:6px}
 .v-fim h2{font-size:clamp(1.8rem,4vw,3rem);font-weight:800;letter-spacing:-.02em}
 .v-fim p{margin:.8rem 0 0;max-width:58ch;color:#CDD3DA}

@@ -1,0 +1,107 @@
+/* Empório Chapada: painel de vendas de demonstração. Cores do cerrado: pequi, buriti, urucum e o azul da Chapada. */
+@font-face{font-family:"Onest";src:url(fontes/onest-latin-wght-normal.woff2) format("woff2");font-weight:100 900;font-display:swap}
+@font-face{font-family:"Geist Mono";src:url(fontes/geist-mono-latin-wght-normal.woff2) format("woff2");font-weight:100 900;font-display:swap}
+:root{--noite:#0D100E;--placa:#181C19;--placa2:#222823;--traco:#2F3631;--creme:#F3EFE6;--cinza:#A9B1AB;--pequi:#F2B705;--buriti:#2E7D4F;--urucum:#D9472F;--chapada:#2F6FDB;--tinta:#141712}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--noite);color:var(--creme);font:400 16px/1.45 Onest,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+h1,h2,p,ul,ol{margin:0}
+button{font:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--pequi);outline-offset:2px}
+.so-leitor{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.num{font-variant-numeric:tabular-nums;letter-spacing:-.025em}
+.cinza{color:var(--cinza)}
+
+.faixa{display:flex;flex-wrap:wrap;gap:.3rem 1rem;align-items:center;justify-content:space-between;background:#000;color:var(--cinza);padding:.45rem clamp(1rem,4vw,2rem);font-size:.9rem}
+.faixa p{margin:0}
+.faixa button{background:transparent;color:var(--creme);border:1px solid var(--cinza);border-radius:999px;padding:.3rem .9rem;min-height:40px}
+
+.topo{display:flex;align-items:center;gap:1rem;padding:1.4rem 2rem .4rem;flex-wrap:wrap}
+.marca{display:flex;align-items:center;gap:.75rem}
+.selo{width:42px;height:42px;border-radius:12px;background:var(--pequi);display:grid;place-items:center;color:var(--tinta);font-weight:800;font-size:1.05rem}
+.marca h1{font-size:1.1rem;font-weight:700}
+.marca p{font-size:.85rem;color:var(--cinza)}
+.periodo{margin-left:auto;display:flex;background:var(--placa);border:1px solid var(--traco);border-radius:999px;padding:4px}
+.periodo button{border:0;background:none;color:var(--cinza);font-weight:600;font-size:.85rem;padding:.5rem .9rem;border-radius:999px;min-height:40px}
+.periodo button[aria-pressed=true]{background:var(--creme);color:var(--tinta)}
+
+.grade{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;padding:1.1rem 2rem 2rem}
+.t{border-radius:24px;padding:22px;background:var(--placa);position:relative;overflow:hidden;min-height:200px;display:flex;flex-direction:column;min-width:0}
+.l2{grid-column:span 2}
+.rot{font:500 .75rem "Geist Mono",ui-monospace,monospace;opacity:.8;margin-bottom:.35rem}
+.t:has(> .chip) .rot{padding-right:10rem}
+.tit{font-size:1.2rem;font-weight:650;letter-spacing:-.01em}
+.chip{position:absolute;top:18px;right:18px;font-weight:600;font-size:.75rem;padding:.35rem .65rem;border-radius:999px;background:rgba(255,255,255,.14);max-width:60%;text-align:right}
+.pequi{background:var(--pequi);color:var(--tinta)} .pequi .chip{background:rgba(0,0,0,.1)}
+.buriti{background:var(--buriti)} .urucum{background:var(--urucum);color:#fff} .chapada{background:var(--chapada);color:#fff}
+.grande{font-size:4rem;font-weight:700;margin:.8rem 0 .35rem;line-height:1}
+.medio{font-size:2.9rem;font-weight:700;margin:1rem 0 .25rem;line-height:1}
+.sub{font-size:.9rem;opacity:.85}
+.meta{margin-top:auto;padding-top:1rem}
+.trilho{height:14px;border-radius:999px;background:rgba(0,0,0,.14);overflow:hidden;margin:0 0 .5rem}
+.trilho i{display:block;height:100%;width:0;background:var(--tinta);border-radius:999px;transition:width .6s cubic-bezier(.2,.8,.2,1)}
+.linha{display:flex;justify-content:space-between;gap:1rem;font-size:.85rem}
+
+.dois{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:auto;padding-top:1rem}
+.dois div{background:var(--placa2);border-radius:16px;padding:12px;min-width:0}
+.dois b{font-size:1.4rem;display:block;white-space:nowrap}
+.dois small{font-size:.75rem;color:var(--cinza)}
+
+.barras{display:flex;align-items:flex-end;gap:6px;height:160px;margin-top:auto;padding-top:1rem}
+.barras button{flex:1;min-width:0;height:100%;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:6px;background:none;border:0;color:inherit;padding:0}
+.barras span{display:block;width:100%;border-radius:999px;background:rgba(255,255,255,.3);transition:height .5s cubic-bezier(.2,.8,.2,1)}
+.barras button[aria-pressed=true] span{background:var(--creme)}
+.barras small{font-size:.7rem;opacity:.8}
+.detalhe{margin-top:.6rem;min-height:1.3em}
+
+.top{list-style:none;padding:0;margin-top:1rem;display:grid;gap:12px}
+.top li{display:grid;grid-template-columns:1fr auto;gap:4px 12px;font-size:.9rem}
+.top .b{grid-column:1/-1;height:8px;border-radius:999px;background:var(--placa2);overflow:hidden}
+.top .b i{display:block;height:100%;background:var(--pequi);border-radius:999px;transition:width .5s cubic-bezier(.2,.8,.2,1)}
+
+.cal{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:6px;margin-top:1rem}
+.cal b{font-size:.68rem;color:var(--cinza);text-align:center;font-weight:500}
+.cal button,.cal i{aspect-ratio:1;border-radius:50%;border:0;padding:0;background:var(--placa2);min-width:0}
+.cal i{visibility:hidden}
+.cal button.v1{background:rgba(242,183,5,.32)} .cal button.v2{background:rgba(242,183,5,.62)} .cal button.v3{background:var(--pequi)}
+.cal button.hoje{outline:2px solid var(--creme);outline-offset:2px}
+.cal button:disabled{cursor:default;opacity:.45}
+
+.canais{display:grid;gap:10px;margin-top:1rem}
+.canais div{display:grid;grid-template-columns:5.6rem 1fr 2.8rem;align-items:center;gap:8px;font-size:.85rem}
+.canais .barra{height:10px;border-radius:999px;background:rgba(255,255,255,.25);overflow:hidden}
+.canais .barra i{display:block;height:100%;background:#fff;border-radius:999px;transition:width .5s cubic-bezier(.2,.8,.2,1)}
+.canais b{text-align:right}
+
+.lista{list-style:none;padding:0;margin-top:.75rem;display:grid;gap:.5rem;font-size:.88rem}
+.lista li{display:flex;justify-content:space-between;align-items:center;gap:.6rem;border-bottom:1px solid var(--traco);padding-bottom:.5rem}
+.urucum .lista li{border-color:rgba(255,255,255,.28)}
+.lista li > span{min-width:0}
+.lista small{display:block;opacity:.75;font-size:.75rem}
+.pill{font-weight:600;font-size:.72rem;padding:.25rem .55rem;border-radius:999px;background:rgba(255,255,255,.18);white-space:nowrap}
+.mini{flex-shrink:0;border:1px solid currentColor;background:transparent;color:inherit;border-radius:999px;font-weight:600;font-size:.78rem;padding:.3rem .75rem;min-height:40px}
+.botao{margin-top:auto;align-self:flex-start;border:0;border-radius:999px;padding:.7rem 1.1rem;background:#fff;color:var(--urucum);font-weight:650;font-size:.9rem;min-height:44px}
+.botao:disabled{opacity:.6;cursor:default}
+.vazio{margin-top:1rem;font-size:.9rem;opacity:.85}
+.nota-clara{font-size:.78rem;margin-top:.5rem;opacity:.9}
+.urucum.ok{background:var(--buriti)}
+
+.explica{max-width:60rem;margin:0 auto;padding:1rem 2rem 3rem;color:var(--cinza);font-size:.95rem}
+.explica h2{color:var(--creme);font-size:1.15rem;margin-bottom:.75rem}
+.explica ul{padding-left:1.1rem;display:grid;gap:.45rem;margin-bottom:.75rem}
+.explica b{color:var(--creme)}
+
+@media (max-width:1080px){.grade{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:960px){.grade{padding:.9rem 1rem 1.5rem}.topo{padding:1.1rem 1rem .3rem}.explica{padding:1rem 1rem 2.5rem}}
+@media (max-width:640px){
+  .grade{grid-template-columns:minmax(0,1fr)}
+  .l2{grid-column:auto}
+  .grande{font-size:3rem}
+  .periodo{margin-left:0;width:100%}
+  .periodo button{flex:1;padding:.5rem .3rem}
+  .rot,.t:has(> .chip) .rot{padding-right:0}
+  .chip{position:static;align-self:flex-start;max-width:none;text-align:left;margin:.15rem 0 .35rem}
+  .t{min-height:0}
+}
+@media (pointer:coarse){.cal button{min-height:36px}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
