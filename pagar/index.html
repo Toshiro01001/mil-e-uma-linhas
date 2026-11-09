@@ -6,19 +6,19 @@
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src https://cobrancas.contato-aea.workers.dev; manifest-src 'none'; media-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'; upgrade-insecure-requests">
 <meta name="referrer" content="no-referrer">
 <meta name="robots" content="noindex">
-<title>Pagar por Pix | Mil e Uma Linhas!</title>
-<meta name="description" content="Página de pagamento por Pix das etapas de um orçamento aprovado com a Mil e Uma Linhas!">
+<title>Pagar uma etapa | Mil e Uma Linhas!</title>
+<meta name="description" content="Página de pagamento das etapas de um orçamento aprovado com a Mil e Uma Linhas!: Pix, cartão de crédito à vista ou parcelado, débito ou boleto.">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="preload" href="/fonts/jetbrains-400.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="pagar.css?v=20261106d">
+<link rel="stylesheet" href="pagar.css?v=20261109b">
 </head>
 <body>
 <header class="topo">
   <a class="marca" href="/">mil e uma linhas<b>!</b></a>
-  <span class="topo-nota">pagamento por Pix</span>
+  <span class="topo-nota">pagamento</span>
 </header>
 <main id="conteudo">
-  <h1>Pagar uma etapa por Pix</h1>
+  <h1>Pagar uma etapa</h1>
 
   <p class="carregando" id="carregando" aria-live="polite">Buscando a cobrança...</p>
 
@@ -29,8 +29,13 @@
     <button type="button" class="botao" id="tentar" hidden>Tentar de novo</button>
   </section>
 
+  <section class="cartao volta" id="volta" hidden aria-live="polite" aria-labelledby="t-volta">
+    <h2 id="t-volta"></h2>
+    <p id="p-volta"></p>
+  </section>
+
   <div id="etapa" hidden>
-    <p class="intro">O valor abaixo vem do meu sistema de cobranças, ligado ao seu orçamento aprovado. O link não carrega o valor, então ninguém consegue mudá-lo. <span id="intro-manual">O código Pix é gerado aqui no seu navegador.</span><span id="intro-auto" hidden>O código Pix é gerado pelo Mercado Pago para esta cobrança, e esta página avisa quando o pagamento chegar.</span></p>
+    <p class="intro">O valor abaixo vem do meu sistema de cobranças, ligado ao seu orçamento aprovado. O link não carrega o valor, então ninguém consegue mudá-lo. <span id="intro-manual">O código Pix é gerado aqui no seu navegador.</span><span id="intro-auto" hidden>Todas as formas de pagamento caem na mesma conta do Mercado Pago, e esta página avisa quando o pagamento chegar.</span></p>
     <div class="grade">
       <section class="cartao" aria-labelledby="t-dados">
         <h2 id="t-dados">1. Confira a etapa</h2>
@@ -46,20 +51,44 @@
       </section>
 
       <section class="cartao" aria-labelledby="t-pagar">
-        <h2 id="t-pagar">2. Pague pelo app do seu banco</h2>
-        <div class="qr" id="qr"></div>
-        <label for="codigo">Pix copia e cola</label>
-        <textarea id="codigo" readonly rows="5" spellcheck="false"></textarea>
-        <div class="acoes">
-          <button type="button" id="copiar" class="botao cheio">Copiar código Pix</button>
+        <h2 id="t-pagar">2. Escolha como pagar</h2>
+        <fieldset class="formas" id="formas" hidden>
+          <legend class="sr">Forma de pagamento</legend>
+          <label class="forma"><input type="radio" name="forma" value="pix" checked><span><b>Pix</b><small>Na hora, sem taxa</small></span></label>
+          <label class="forma"><input type="radio" name="forma" value="credito"><span><b>Crédito à vista</b><small>Uma parcela, sem juros</small></span></label>
+          <label class="forma"><input type="radio" name="forma" value="parcelado"><span><b>Crédito parcelado</b><small>Até 12x, com os juros do Mercado Pago</small></span></label>
+          <label class="forma"><input type="radio" name="forma" value="debito"><span><b>Débito</b><small>Cartão aceito para débito online</small></span></label>
+          <label class="forma"><input type="radio" name="forma" value="boleto"><span><b>Boleto</b><small>Compensa em até 3 dias úteis</small></span></label>
+        </fieldset>
+
+        <div id="painel-pix">
+          <div class="qr" id="qr"></div>
+          <label for="codigo">Pix copia e cola</label>
+          <textarea id="codigo" readonly rows="5" spellcheck="false"></textarea>
+          <div class="acoes">
+            <button type="button" id="copiar" class="botao cheio">Copiar código Pix</button>
+          </div>
+          <p class="aviso-copia" id="aviso-copia" aria-live="polite"></p>
         </div>
-        <p class="aviso-copia" id="aviso-copia" aria-live="polite"></p>
+
+        <div id="painel-checkout" hidden>
+          <p class="forma-texto" id="texto-forma"></p>
+          <div class="acoes">
+            <button type="button" id="ir-mp" class="botao cheio">Continuar no Mercado Pago</button>
+          </div>
+          <p class="ajuda" id="aviso-mp" aria-live="polite"></p>
+        </div>
       </section>
     </div>
 
     <section class="cartao passos" aria-labelledby="t-passos">
       <h2 id="t-passos">Como pagar</h2>
-      <ol>
+      <ol class="so-checkout" hidden>
+        <li><b>Continue no Mercado Pago:</b> o botão abre a página de pagamento do próprio Mercado Pago, já com o valor desta etapa. Os dados do seu cartão ficam só lá.</li>
+        <li><b>Antes de confirmar:</b> confira se o valor é o desta página. No parcelado, o Mercado Pago mostra o valor de cada parcela e o total com juros antes de você confirmar.</li>
+        <li><b>Depois de pagar:</b> você volta para esta página e ela mostra a confirmação. No boleto, pague até o vencimento impresso nele; a confirmação chega quando o banco compensar.</li>
+      </ol>
+      <ol class="so-pix">
         <li><b>No celular:</b> toque em Copiar código Pix, abra o app do seu banco, entre em Pix e escolha Pix copia e cola.</li>
         <li><b>No computador:</b> abra o app do banco no celular, entre em Pix, escolha Ler QR Code e aponte para a imagem.</li>
         <li><b>Antes de confirmar:</b> confira se o recebedor é Rodrigo de Sousa Terroso Junior, no Mercado Pago, e se o valor é o mesmo desta página. Se algo for diferente, não confirme e me escreva.</li>
@@ -74,6 +103,6 @@
 </footer>
 <script src="qrcode.min.js?v=20261106d"></script>
 <script src="pix-core.js?v=20261106d"></script>
-<script src="pix.js?v=20261106d"></script>
+<script src="pix.js?v=20261109b"></script>
 </body>
 </html>
