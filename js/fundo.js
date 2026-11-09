@@ -12,10 +12,10 @@ window.MUL_FUNDO = (function () {
   var ctx = cv.getContext('2d', { alpha: true });
   var ACENTOS = ['verde', 'ciano', 'ambar', 'laranja', 'rosa', 'lilas', 'menta', 'gelo'];
   var FUNDOS = ['aurora', 'chuva', 'nenhum'];
-  var acento = 'verde', fundo = 'aurora';
+  var acento = 'verde', fundo = 'nenhum'; /* padrão: sem fundo animado; aurora e chuva são escolha de quem visita */
   try { acento = localStorage.getItem('mul-acento') || acento; fundo = localStorage.getItem('mul-fundo') || fundo; } catch (e) {}
   if (ACENTOS.indexOf(acento) < 0) acento = 'verde';
-  if (FUNDOS.indexOf(fundo) < 0) fundo = 'aurora';
+  if (FUNDOS.indexOf(fundo) < 0) fundo = 'nenhum';
 
   function rgb() {
     var v = getComputedStyle(raiz).getPropertyValue('--verde-rgb').trim().split(',').map(function (x) { return +x; });
