@@ -1,5 +1,5 @@
 /* Finalização do pedido: confere o carrinho, pede nome, e-mail, WhatsApp e um questionário (uma pergunta por campo, cores,
-   material pronto e sites de referência). As respostas viram um texto organizado (500 a 3.000 caracteres) e para o meu sistema de pedidos. O preço não vai pronto: o servidor refaz a conta com a mesma tabela.
+   material pronto e sites de referência). As respostas viram um texto organizado (500 a 3.000 caracteres) e para o meu sistema de pedidos. O pedido não leva preço: o preço sai depois, no orçamento por escrito.
    A verificação contra robôs (Cloudflare Turnstile) só é carregada nesta tela. */
 window.MUL_PEDIDO = (function () {
   'use strict';
@@ -84,14 +84,14 @@ window.MUL_PEDIDO = (function () {
     linhas.forEach(function (x) {
       var li = el('li');
       li.appendChild(el('span', null, x.descricao));
-      li.appendChild(el('b', null, (x.valor || x.valor_txt) + '. Prazo: ' + (x.prazo || x.prazo_txt)));
+      li.appendChild(el('b', null, 'Prazo estimado: ' + (x.prazo || x.prazo_txt)));
       ul.appendChild(li);
     });
   }
   function textoEmailAlternativo() {
     var T = O.total(), l = ['Olá! Montei este pedido no site da Mil e Uma Linhas!:', ''];
-    O.linhas().forEach(function (x) { l.push('- ' + x.descricao + ': ' + x.valor + '. Prazo: ' + x.prazo); });
-    l.push('', 'Estimativa total: ' + T.valor + '. Prazo somado: ' + T.prazo, '', 'Nome: ' + $('fin-nome').value.trim(), 'WhatsApp: ' + $('fin-whats').value.trim(), '', 'O que eu quero:', compor());
+    O.linhas().forEach(function (x) { l.push('- ' + x.descricao + '. Prazo estimado: ' + x.prazo); });
+    l.push('', 'Prazo somado: ' + T.prazo + '. Quero receber o orçamento por escrito.', '', 'Nome: ' + $('fin-nome').value.trim(), 'WhatsApp: ' + $('fin-whats').value.trim(), '', 'O que eu quero:', compor());
     return l.join('\n');
   }
   function mostrarAlternativa(sim) {
@@ -224,7 +224,7 @@ window.MUL_PEDIDO = (function () {
     var corpo = {
       nome: $('fin-nome').value, email: $('fin-email').value, whatsapp: $('fin-whats').value, texto: compor(),
       consentimento: $('fin-aceite').checked, site_web: $('fin-site').value,
-      itens: O.paraEnvio(), total_visto: O.total().valor, turnstile: ficha
+      itens: O.paraEnvio(), turnstile: ficha
     };
     var r, j = {};
     try {
@@ -248,10 +248,9 @@ window.MUL_PEDIDO = (function () {
   function concluir(j) {
     $('fin-protocolo').textContent = j.protocolo;
     listar($('fin-ok-itens'), j.itens);
-    $('fin-ok-total').textContent = 'Total estimado: ' + j.total_txt + '. Prazo somado: ' + j.prazo_txt + '.';
+    $('fin-ok-total').textContent = j.prazo_txt ? 'Prazo somado: ' + j.prazo_txt + '. O orçamento com o preço chega por escrito depois da nossa conversa.' : '';
     var av = $('fin-ok-aviso');
-    av.hidden = !j.divergente;
-    av.textContent = j.divergente ? 'A tabela de preços mudou enquanto o pedido estava aberto. Os valores acima são os da tabela atual.' : '';
+    av.hidden = true; av.textContent = '';
     O.esvaziar(); apagarRascunho();
     CAMPOS.forEach(function (id) { if ($(id).type !== 'color') $(id).value = ''; }); $('fc-eu').checked = true; aplicarCores();
     var enviar_arq = arquivos.slice(); arquivos = []; renderArquivos();
@@ -293,7 +292,7 @@ window.MUL_PEDIDO = (function () {
     document.querySelector('#fin > .intro').hidden = false;
     listar($('fin-itens'), O.linhas());
     var T = O.total();
-    $('fin-total').textContent = vazio ? '' : 'Total estimado: ' + T.valor + '. Prazo somado: ' + T.prazo + '.';
+    $('fin-total').textContent = vazio ? '' : 'Prazo somado: ' + T.prazo + '.';
     $('fin-campos').hidden = vazio;
     if (vazio) { $('fin-itens').appendChild(el('li', 'vazio', 'O pedido está vazio. Volte, monte um item e clique em Adicionar ao pedido.')); }
     var h = $('t-orcamento'); if (h && h.scrollIntoView) h.scrollIntoView({ block: 'start' });

@@ -13,9 +13,9 @@ Site estático em HTML, CSS e JavaScript puro, sem dependências, sem cookies e 
 | `js/boot.js` | Prepara as abas e impede que o site seja embutido em outro |
 | `js/app.js` | Abas, logo em ASCII, números de linha e terminal |
 | `js/temas.js` | As 5 aparências e suas capas interativas |
-| `js/orcamento.js` | Montador de orçamento e carrinho (fica salvo no aparelho do cliente). **Os preços ficam na lista `PEDIDOS` e as regras de linguagens em `LINGUAGENS`, no início do arquivo. Mudou preço aqui? Gere de novo o catálogo do servidor de cobranças (veja o README dele)** |
+| `js/orcamento.js` | Montador do pedido e carrinho (fica salvo no aparelho do cliente). **O site não mostra preços:** a lista `PEDIDOS` tem os serviços, planos, adicionais e prazos, e `LINGUAGENS` alimenta a aba que explica cada linguagem. A tabela de preços fica só no servidor de cobranças, que é privado. Mudou a lista `PEDIDOS`? Gere de novo o catálogo do servidor (veja o README dele) |
 | `js/pedido.js` | Tela de finalização: confere o carrinho, pede nome, e-mail e WhatsApp, e uma descrição de 500 a 3.000 caracteres do que o cliente quer. Envia ao meu servidor; se ele estiver fora, oferece o e-mail com tudo escrito |
-| `js/guia.js` | Aba que explica o que cada linguagem faz |
+| `js/guia.js` | Aba que explica o que cada linguagem faz. É só informação: quem escolhe a linguagem de cada projeto sou eu |
 | `js/demos.js` | As demonstrações. Tudo roda no navegador de quem usa |
 | `js/linguagens.js` | A mesma regra em 16 linguagens; cada programa foi compilado ou executado de verdade |
 | `vitrine/` | Sistemas de demonstração, cada um em sua pasta, com aviso e rodapé comuns em `assinatura.css` |
@@ -34,18 +34,18 @@ Desenvolvido por Rodrigo Terroso Junior. O Claude, da Anthropic, foi usado como 
 
 ![Carrinho do orçamento](img/pedido-carrinho.webp)
 
-1. Na aba orçamento, o cliente escolhe o tipo, o plano e os adicionais e clica em **Adicionar ao pedido**. Cada item mostra valor e prazo; o total aparece na hora. Cabem até 10 itens e o carrinho fica salvo no aparelho (`localStorage`, só as escolhas, nunca dados pessoais).
+1. Na aba orçamento, o cliente escolhe o tipo, o plano e os adicionais e clica em **Adicionar ao pedido**. Cada item mostra o prazo estimado; o preço não aparece no site e sai depois, no orçamento por escrito. Cabem até 10 itens e o carrinho fica salvo no aparelho (`localStorage`, só as escolhas, nunca dados pessoais).
 2. Em **Finalizar pedido** ele confere os itens, informa nome, e-mail e WhatsApp (todos obrigatórios) e escreve, com no mínimo 500 e no máximo 3.000 caracteres, exatamente o que quer. A tela traz perguntas para guiar o texto, e o rascunho fica só na aba aberta.
-3. Ao enviar, o navegador manda ao meu servidor apenas as **escolhas**, não os preços. O servidor refaz a conta com o mesmo catálogo, então mexer no navegador não muda o valor. Se o valor que o cliente viu for diferente do calculado, o pedido chega marcado.
+3. Ao enviar, o navegador manda ao meu servidor apenas as **escolhas**. O servidor confere cada escolha com o catálogo e calcula o preço de tabela, que aparece só no meu painel, para eu montar o orçamento. O e-mail de confirmação do cliente leva os itens e o prazo, sem preço.
 4. O cliente recebe um protocolo (`PED2611...`) para citar na conversa. O pedido aparece no meu painel de cobranças com os itens e o texto exatamente como foram enviados.
 
 <img src="img/pedido-texto-celular.webp" alt="Etapa de descrição do pedido no celular" width="300">
 
 ### Adicionais, e-mail e arquivos
 
-Todos os prazos do site são em **dias úteis** (segunda a sexta). Cada adicional mostra o valor e o prazo que ele soma, e o botão "i" explica em uma frase o que ele faz. Quem prefere mandar o pedido por e-mail escolhe onde abrir: Gmail, Outlook, Yahoo, o aplicativo do aparelho ou só copiar o texto.
+Todos os prazos do site são em **dias úteis** (segunda a sexta). Cada adicional mostra o prazo que ele soma, e o botão "i" explica em uma frase o que ele faz. Quem prefere mandar o pedido por e-mail escolhe onde abrir: Gmail, Outlook, Yahoo, o aplicativo do aparelho ou só copiar o texto.
 
-<img src="img/orcamento-adicionais-celular.webp" alt="Adicionais com valor, prazo e botão de explicação, no celular" width="260"> <img src="img/pedido-email-celular.webp" alt="Menu para escolher onde abrir o e-mail, no celular" width="260"> <img src="img/pedido-anexos-celular.webp" alt="Área para anexar logotipos e arquivos, no celular" width="260">
+<img src="img/orcamento-adicionais-celular.webp" alt="Adicionais com prazo e botão de explicação, no celular" width="260"> <img src="img/pedido-email-celular.webp" alt="Menu para escolher onde abrir o e-mail, no celular" width="260"> <img src="img/pedido-anexos-celular.webp" alt="Área para anexar logotipos e arquivos, no celular" width="260">
 
 O cliente pode anexar de 1 a 20 arquivos (logotipos, fotos, documentos), com até 25 MB cada e 50 MB no total, arrastando ou escolhendo no aparelho. Os arquivos sobem depois que o pedido é enviado e ficam em armazenamento privado, ligados ao protocolo. Se o envio falhar, o site orienta mandar por e-mail citando o protocolo.
 

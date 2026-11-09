@@ -52,7 +52,7 @@ window.MUL_TEMAS = (function () {
       saida.textContent = '';
       saida.appendChild(el('h3', null, 'Comece por: ' + G[i][1]));
       saida.appendChild(el('p', null, G[i][2]));
-      var ext = G[i][3].charAt(0) === '#'; var a = el('a', 'botao cheio', ext ? 'Falar comigo' : 'Ver preços deste caminho'); a.href = ext ? G[i][3] : '#orcamento/' + G[i][3];
+      var ext = G[i][3].charAt(0) === '#'; var a = el('a', 'botao cheio', ext ? 'Falar comigo' : 'Ver os planos deste caminho'); a.href = ext ? G[i][3] : '#orcamento/' + G[i][3];
       saida.appendChild(a);
     }
     G.forEach(function (g, i) {
@@ -76,7 +76,7 @@ window.MUL_TEMAS = (function () {
         var c = el('article', 'produto'), pl = P[k].planos[0], cl = classe(k);
         c.appendChild(el('h3', null, P[k].nome));
         c.appendChild(el('p', null, pl.desc));
-        c.appendChild(el('p', 'produto-preco', 'A partir de ' + O.reais(pl.faixa[0]) + (cl === 'mensal' ? ' por mês' : cl === 'hora' ? ' por hora' : '')));
+        c.appendChild(el('p', 'produto-preco', cl === 'mensal' ? 'Serviço mensal, orçamento sem compromisso' : 'Orçamento sem compromisso'));
         if (pl.dias) c.appendChild(el('p', 'produto-prazo', 'Prazo: ' + O.diasTxt(pl.dias)));
         var b = el('button', 'botao cheio', 'Adicionar ao pedido'); b.type = 'button';
         b.addEventListener('click', function () { O.adicionar(k); });
@@ -89,13 +89,14 @@ window.MUL_TEMAS = (function () {
     function sacola() {
       var r = O.resumoCarrinho(); sac.textContent = '';
       if (!r.n) { sac.appendChild(el('span', null, 'Seu pedido está vazio.')); return; }
-      sac.appendChild(el('span', null, r.n + (r.n === 1 ? ' item' : ' itens') + ': ' + r.txt));
+      sac.appendChild(el('span', null, r.n + (r.n === 1 ? ' item' : ' itens') + ': ' + r.txt + '.'));
       var a = el('a', 'botao cheio', 'Revisar e enviar'); a.href = '#orcamento/finalizar'; sac.appendChild(a);
     }
-    /* faixa de anúncios: os serviços e os preços de partida, repetidos duas vezes para a rolagem contínua não ter emenda */
+    /* faixa de anúncios: os serviços e o que cada um faz, repetidos duas vezes para a rolagem contínua não ter emenda */
     var faixa = $('#lj-faixa');
     if (faixa) {
-      var itens = chaves.map(function (k) { var pl = P[k].planos[0], cl = classe(k); return P[k].nome + ' a partir de ' + O.reais(pl.faixa[0]) + (cl === 'mensal' ? ' por mês' : cl === 'hora' ? ' por hora' : ''); });
+      var FAZ = { site: 'mostra o seu negócio', ecommerce: 'vende a qualquer hora', sistema: 'organiza a equipe', vendas: 'atende sozinho', trafego: 'traz mais gente' };
+      var itens = chaves.map(function (k) { return P[k].nome + ': ' + (FAZ[k] || 'sob medida'); });
       [0, 1].forEach(function () {
         var t = el('span', 'lj-faixa-trilha');
         itens.forEach(function (x) { t.appendChild(el('b', null, x)); t.appendChild(el('i', null, '\u25CF')); });
