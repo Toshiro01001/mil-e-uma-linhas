@@ -21,7 +21,7 @@
   var TEXTO_FORMA = {
     credito: 'Pague com cartão de crédito em uma parcela, sem juros, na página do Mercado Pago.',
     parcelado: 'Pague em até 12x no cartão de crédito. Os juros do parcelamento são cobrados pelo Mercado Pago e aparecem antes de você confirmar.',
-    debito: 'Pague com cartão de débito na página do Mercado Pago. Nem todo cartão aceita débito online; se o seu não aparecer, use crédito à vista ou Pix.',
+    debito: 'Pague com cartão de débito Visa ou Mastercard na página do Mercado Pago, à vista, sem juros.',
     boleto: 'Gere o boleto na página do Mercado Pago e pague no app do banco ou numa lotérica. A confirmação chega quando o banco compensar, em até 3 dias úteis.'
   };
 
