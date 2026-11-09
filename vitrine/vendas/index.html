@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'none'; base-uri 'none'; form-action 'none'">
+<meta name="referrer" content="no-referrer">
+<title>Painel de vendas para loja, demonstração | Mil e Uma Linhas!</title>
+<meta name="description" content="Demonstração de painel de vendas: faturamento e meta do mês, pedidos de hoje, estoque baixo, mais vendidos, canais de venda e pedidos para despachar. Empresa e dados fictícios.">
+<link rel="canonical" href="https://mileumalinhas.com.br/vitrine/vendas/">
+<meta name="theme-color" content="#0D100E">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:site_name" content="Mil e Uma Linhas!">
+<meta property="og:title" content="Painel de vendas para loja, demonstração | Mil e Uma Linhas!">
+<meta property="og:description" content="Demonstração de painel de vendas: faturamento e meta do mês, pedidos de hoje, estoque baixo, mais vendidos, canais de venda e pedidos para despachar. Empresa e dados fictícios.">
+<meta property="og:url" content="https://mileumalinhas.com.br/vitrine/vendas/">
+<meta property="og:image" content="https://mileumalinhas.com.br/og.png?v=20261109">
+<meta property="og:image:secure_url" content="https://mileumalinhas.com.br/og.png?v=20261109">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Mil e Uma Linhas!: meu código, seu site.">
+<meta name="twitter:image" content="https://mileumalinhas.com.br/og.png?v=20261109">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<link rel="preload" href="fontes/onest-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="estilo.css">
+<link rel="stylesheet" href="../assinatura.css">
+<script src="app.js" defer></script>
+</head>
+<body>
+<aside class="faixa" aria-label="Aviso de demonstração">
+  <p>Sistema de demonstração. Empresa e dados fictícios. <a href="../index.html">Ver outros sistemas</a></p>
+  <button type="button" id="restaurar">Restaurar dados de exemplo</button>
+</aside>
+<header class="topo">
+  <div class="marca">
+    <span class="selo" aria-hidden="true">EC</span>
+    <div><h1>Empório Chapada</h1><p>Painel de vendas · loja e site</p></div>
+  </div>
+  <div class="periodo" role="group" aria-label="Período mostrado no painel">
+    <button type="button" data-periodo="hoje" aria-pressed="false">Hoje</button>
+    <button type="button" data-periodo="7d" aria-pressed="false">7 dias</button>
+    <button type="button" data-periodo="mes" aria-pressed="true">Este mês</button>
+    <button type="button" data-periodo="12m" aria-pressed="false">12 meses</button>
+  </div>
+</header>
+
+<main class="grade" id="inicio">
+  <section class="t pequi l2" aria-labelledby="fat-rot">
+    <p class="rot" id="fat-rot">Faturamento do mês</p>
+    <span class="chip" id="fat-comp"></span>
+    <p class="grande num" id="fat-valor" aria-live="polite"></p>
+    <p class="sub" id="fat-sub"></p>
+    <div class="meta" id="meta">
+      <div class="trilho" role="progressbar" aria-label="Meta do mês" aria-valuemin="0" aria-valuemax="100" id="meta-barra"><i id="meta-i"></i></div>
+      <div class="linha"><span id="meta-txt"></span><b class="num" id="meta-pct"></b></div>
+    </div>
+  </section>
+
+  <section class="t" aria-labelledby="hoje-rot">
+    <p class="rot" id="hoje-rot">Pedidos hoje</p><span class="chip">ao vivo</span>
+    <p class="medio num" id="hoje-qtd"></p>
+    <p class="sub cinza" id="hoje-sub"></p>
+    <div class="dois"><div><b class="num" id="hoje-valor"></b><small>vendido hoje</small></div><div><b class="num" id="hoje-ticket"></b><small>ticket médio</small></div></div>
+  </section>
+
+  <section class="t urucum" aria-labelledby="est-tit">
+    <p class="rot">Estoque baixo</p><h2 class="tit" id="est-tit"></h2>
+    <ul class="lista" id="est-lista"></ul>
+    <p class="vazio" id="est-vazio" hidden>Nenhum produto abaixo do mínimo.</p>
+    <button type="button" class="botao" id="est-pedir">Fazer pedido ao fornecedor</button>
+    <p class="nota-clara" id="est-nota" hidden></p>
+  </section>
+
+  <section class="t buriti l2" aria-labelledby="ano-tit">
+    <p class="rot">Últimos 12 meses</p><h2 class="tit" id="ano-tit">Faturamento por mês</h2>
+    <span class="chip" id="ano-chip"></span>
+    <div class="barras" id="barras" role="list"></div>
+    <p class="sub detalhe" id="ano-detalhe" aria-live="polite"></p>
+  </section>
+
+  <section class="t l2" aria-labelledby="top-tit">
+    <p class="rot" id="top-rot">Mais vendidos</p><h2 class="tit" id="top-tit">Top 5 produtos</h2><span class="chip">por faturamento</span>
+    <ol class="top" id="top"></ol>
+  </section>
+
+  <section class="t" aria-labelledby="cal-tit">
+    <p class="rot">Vendas por dia</p><h2 class="tit" id="cal-tit"></h2>
+    <div class="cal" id="cal"></div>
+    <p class="sub detalhe" id="cal-detalhe" aria-live="polite">Toque num dia para ver o total.</p>
+  </section>
+
+  <section class="t chapada" aria-labelledby="can-tit">
+    <p class="rot" id="can-rot">De onde vêm os pedidos</p><h2 class="tit" id="can-tit">Canais de venda</h2>
+    <div class="canais" id="canais"></div>
+  </section>
+
+  <section class="t" aria-labelledby="cli-tit">
+    <p class="rot" id="cli-rot">Clientes</p><h2 class="tit" id="cli-tit">Quem comprou</h2>
+    <div class="dois"><div><b class="num" id="cli-volta"></b><small>voltaram a comprar</small></div><div><b class="num" id="cli-novos"></b><small>compraram pela 1ª vez</small></div></div>
+  </section>
+
+  <section class="t" aria-labelledby="desp-tit">
+    <p class="rot">Para despachar</p><h2 class="tit" id="desp-tit">Pedidos do site</h2>
+    <ul class="lista" id="desp-lista"></ul>
+    <p class="vazio" id="desp-vazio" hidden>Tudo despachado. Nenhum pedido esperando.</p>
+  </section>
+</main>
+
+<section class="explica" aria-labelledby="exp-tit">
+  <h2 id="exp-tit">Como este painel funciona</h2>
+  <ul>
+    <li><b>Os botões de período</b> trocam o faturamento, os mais vendidos, os canais e os clientes para hoje, 7 dias, este mês ou 12 meses, sempre comparando com o período anterior do mesmo tamanho.</li>
+    <li><b>O estoque baixo</b> mostra o que está abaixo do mínimo. O pedido ao fornecedor fica registrado, e ao marcar "Chegou" o estoque volta ao normal.</li>
+    <li><b>Os pedidos do site</b> saem da lista quando você marca "Despachado".</li>
+    <li><b>Os números são fictícios</b> e gerados no seu navegador. O que você marca fica só neste aparelho; "Restaurar dados de exemplo" volta ao começo.</li>
+  </ul>
+  <p>Num sistema de verdade, o painel lê as vendas da loja, do site e do WhatsApp num só lugar, com login e acesso só para quem a empresa autorizar.</p>
+</section>
+
+<footer class="rodape-mil">
+  <div>
+    <p class="rm-marca"><a href="../../">mil e uma linhas<b>!</b></a></p>
+    <p class="rm-texto">Fiz esta demonstração para mostrar como o sistema funciona. Posso adaptar a ideia ao seu negócio.</p>
+  </div>
+  <nav class="rm-links" aria-label="Próximos passos"><a class="cheio" href="../../#orcamento/sistema">Montar um orçamento</a><a href="../index.html">Ver outros sistemas</a><a href="mailto:contato@mileumalinhas.com.br?subject=Quero%20um%20painel%20de%20vendas">Escrever um e-mail</a></nav>
+</footer>
+<p id="aviso" class="so-leitor" aria-live="polite"></p>
+</body>
+</html>
