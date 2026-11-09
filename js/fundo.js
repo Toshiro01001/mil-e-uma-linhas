@@ -2,7 +2,8 @@
    Aurora: manchas de luz grandes e lentas, na cor de destaque, misturadas com "screen".
    Chuva de luz: a mesma aurora mais fraca, com riscos de luz que caem na diagonal e alguns orbes.
    Tudo em canvas 2D próprio, sem biblioteca. Para quem pede menos movimento, um quadro parado.
-   A escolha fica neste aparelho (localStorage: mul-acento e mul-fundo). */
+   A cor fica guardada neste aparelho (localStorage: mul-acento). O fundo sempre começa em "nenhum" a cada visita:
+   aurora e chuva são só opções estéticas da visita e não ficam guardadas. */
 window.MUL_FUNDO = (function () {
   'use strict';
   var raiz = document.documentElement;
@@ -13,7 +14,7 @@ window.MUL_FUNDO = (function () {
   var ACENTOS = ['verde', 'ciano', 'ambar', 'laranja', 'rosa', 'lilas', 'menta', 'gelo'];
   var FUNDOS = ['aurora', 'chuva', 'nenhum'];
   var acento = 'verde', fundo = 'nenhum'; /* padrão: sem fundo animado; aurora e chuva são escolha de quem visita */
-  try { acento = localStorage.getItem('mul-acento') || acento; fundo = localStorage.getItem('mul-fundo') || fundo; } catch (e) {}
+  try { acento = localStorage.getItem('mul-acento') || acento; localStorage.removeItem('mul-fundo'); } catch (e) {} /* apaga a escolha antiga de fundo guardada por versões anteriores */
   if (ACENTOS.indexOf(acento) < 0) acento = 'verde';
   if (FUNDOS.indexOf(fundo) < 0) fundo = 'nenhum';
 
@@ -35,7 +36,6 @@ window.MUL_FUNDO = (function () {
   function aplicarFundo(f, inicial) {
     fundo = f; caixa.setAttribute('data-fundo', f);
     marcar('.fundos button', 'fundo', f);
-    if (!inicial) { try { localStorage.setItem('mul-fundo', f); } catch (e) {} }
     ligar();
   }
   document.addEventListener('click', function (ev) {
