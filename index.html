@@ -35,7 +35,7 @@
 <script src="js/pedido.js?v=20261109a" defer></script>
 <script src="js/guia.js?v=20261109a" defer></script>
 <script src="js/temas.js?v=20261109a" defer></script>
-<script src="js/fundo.js" defer></script>
+<script src="js/fundo.js?v=20261109" defer></script>
 <script src="js/app.js?v=20261108d" defer></script>
 </head>
 <body>
@@ -103,13 +103,13 @@
   <p class="gaveta-tit">fundo</p>
   <div class="fundos" role="radiogroup" aria-label="Fundo animado (menu)">
     <span class="rot" aria-hidden="true">fundo</span>
-    <button type="button" role="radio" data-fundo="aurora" aria-checked="true">aurora</button>
+    <button type="button" role="radio" data-fundo="aurora" aria-checked="false">aurora</button>
     <button type="button" role="radio" data-fundo="chuva" aria-checked="false">chuva</button>
-    <button type="button" role="radio" data-fundo="nenhum" aria-checked="false">nenhum</button>
+    <button type="button" role="radio" data-fundo="nenhum" aria-checked="true">nenhum</button>
   </div>
 </div>
 
-<div class="fundo-vivo" id="fundo-vivo" data-fundo="aurora" aria-hidden="true"><canvas id="fundo-canvas"></canvas></div>
+<div class="fundo-vivo" id="fundo-vivo" data-fundo="nenhum" aria-hidden="true"><canvas id="fundo-canvas"></canvas></div>
 
 <main id="conteudo" tabindex="-1">
   <div class="buffer">
@@ -1420,9 +1420,9 @@ histórico
   </div>
   <div class="fundos" role="radiogroup" aria-label="Fundo animado">
     <span class="rot" aria-hidden="true">fundo</span>
-    <button type="button" role="radio" data-fundo="aurora" aria-checked="true">aurora</button>
+    <button type="button" role="radio" data-fundo="aurora" aria-checked="false">aurora</button>
     <button type="button" role="radio" data-fundo="chuva" aria-checked="false">chuva</button>
-    <button type="button" role="radio" data-fundo="nenhum" aria-checked="false">nenhum</button>
+    <button type="button" role="radio" data-fundo="nenhum" aria-checked="true">nenhum</button>
   </div>
   <span class="st-dir"><span id="st-linha">linha 1 de 1001</span><span class="st-ok">200 OK</span></span>
 </footer>
