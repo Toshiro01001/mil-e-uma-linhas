@@ -27,7 +27,9 @@ window.MUL_ORC = (function () {
       ],
       extras: [
         { nome: 'Cadastro dos produtos', dias: [2, 5] }, { nome: 'Cupons e promoções', dias: [2, 4] },
-        { nome: 'Integração com marketplace', dias: [5, 10] }, { nome: 'Manutenção e segurança', dias: [0, 0], mensal: true }
+        { nome: 'Integração com marketplace', dias: [5, 10] }, { nome: 'Manutenção e segurança', dias: [0, 0], mensal: true },
+        // adicionado em 10/11/2026 no fim da lista, para não mudar a posição dos adicionais de carrinhos já salvos
+        { nome: 'Automatização de redes sociais', dias: [3, 7] }
       ]
     },
     sistema: {
@@ -83,7 +85,8 @@ window.MUL_ORC = (function () {
     'ecommerce|Cadastro dos produtos': 'Eu cadastro os produtos na loja a partir da sua lista com nomes, preços e fotos, em vez de você cadastrar um por um.',
     'ecommerce|Cupons e promoções': 'Cupons de desconto com validade e regras, como frete grátis acima de um valor ou desconto na primeira compra.',
     'ecommerce|Integração com marketplace': 'Liga a loja a um marketplace, como Mercado Livre ou Shopee, para o estoque e os pedidos andarem juntos.',
-    'ecommerce|Manutenção e segurança': 'Atualizações, cópias de segurança e correção de problemas todo mês. É cobrada por mês e não aumenta o prazo de entrega.'
+    'ecommerce|Manutenção e segurança': 'Atualizações, cópias de segurança e correção de problemas todo mês. É cobrada por mês e não aumenta o prazo de entrega.',
+    'ecommerce|Automatização de redes sociais': 'Liga a loja ao Instagram e ao Facebook: seus produtos aparecem no catálogo das redes, os produtos novos e as promoções são postados sozinhos, e as perguntas mais comuns no Direct recebem resposta automática. As contas e os anúncios são seus.'
   };
   /* Linguagens que uso, explicadas na aba Linguagens. O cliente não escolhe: a Mil e Uma Linhas! decide a ferramenta
      certa para cada projeto. consulta: true = usada só quando o projeto pede, depois de conversar. */
