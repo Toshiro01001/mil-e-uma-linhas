@@ -2,7 +2,7 @@
    O valor, a referência e a situação vêm do meu servidor de cobranças; nada disso pode ser mudado pelo link.
    Com a resposta, gero aqui no navegador o QR Code e o Pix copia e cola.
    Com o Pix automático ligado, o código vem do Mercado Pago e a página confere sozinha quando o pagamento chega.
-   Com o Mercado Pago ligado, o cliente também pode escolher crédito à vista, crédito parcelado (até 12x), débito ou boleto:
+   Com o Mercado Pago ligado, o cliente também pode escolher crédito à vista, crédito parcelado (até 6x sem juros e até 12x com juros), débito ou boleto:
    a página pede ao meu servidor um link do Checkout do Mercado Pago para esta cobrança e manda o cliente para lá.
    Na volta, o endereço traz o número do pagamento; o servidor confere esse número com o Mercado Pago antes de aceitar. */
 (function () {
@@ -20,7 +20,7 @@
   if (volta && history.replaceState) history.replaceState(null, '', location.pathname + '?c=' + encodeURIComponent(codigoUrl));
   var TEXTO_FORMA = {
     credito: 'Pague com cartão de crédito em uma parcela, sem juros, na página do Mercado Pago.',
-    parcelado: 'Pague em até 12x no cartão de crédito. Os juros do parcelamento são cobrados pelo Mercado Pago e aparecem antes de você confirmar.',
+    parcelado: 'Pague em até 6x sem juros no cartão de crédito. De 7x a 12x, os juros do parcelamento são cobrados pelo Mercado Pago e aparecem antes de você confirmar.',
     debito: 'Pague com cartão de débito Visa ou Mastercard na página do Mercado Pago, à vista, sem juros.',
     boleto: 'Gere o boleto na página do Mercado Pago e pague no app do banco ou numa lotérica. A confirmação chega quando o banco compensar, em até 3 dias úteis.'
   };

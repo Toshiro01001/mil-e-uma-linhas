@@ -56,7 +56,7 @@
           <legend class="sr">Forma de pagamento</legend>
           <label class="forma"><input type="radio" name="forma" value="pix" checked><span><b>Pix</b><small>Na hora, sem taxa</small></span></label>
           <label class="forma"><input type="radio" name="forma" value="credito"><span><b>Crédito à vista</b><small>Uma parcela, sem juros</small></span></label>
-          <label class="forma"><input type="radio" name="forma" value="parcelado"><span><b>Crédito parcelado</b><small>Até 12x, com os juros do Mercado Pago</small></span></label>
+          <label class="forma"><input type="radio" name="forma" value="parcelado"><span><b>Crédito parcelado</b><small>Até 6x sem juros, ou de 7x a 12x com juros</small></span></label>
           <label class="forma"><input type="radio" name="forma" value="debito"><span><b>Débito</b><small>Visa ou Mastercard</small></span></label>
           <label class="forma"><input type="radio" name="forma" value="boleto"><span><b>Boleto</b><small>Compensa em até 3 dias úteis</small></span></label>
         </fieldset>
@@ -85,7 +85,7 @@
       <h2 id="t-passos">Como pagar</h2>
       <ol class="so-checkout" hidden>
         <li><b>Continue no Mercado Pago:</b> o botão abre a página de pagamento do próprio Mercado Pago, já com o valor desta etapa. Os dados do seu cartão ficam só lá.</li>
-        <li><b>Antes de confirmar:</b> confira se o valor é o desta página. No parcelado, o Mercado Pago mostra o valor de cada parcela e o total com juros antes de você confirmar.</li>
+        <li><b>Antes de confirmar:</b> confira se o valor é o desta página. No parcelado, até 6x não tem juros; de 7x a 12x, o Mercado Pago mostra o valor de cada parcela e o total com juros antes de você confirmar.</li>
         <li><b>Depois de pagar:</b> você volta para esta página e ela mostra a confirmação. No boleto, pague até o vencimento impresso nele; a confirmação chega quando o banco compensar.</li>
       </ol>
       <ol class="so-pix">
@@ -103,6 +103,6 @@
 </footer>
 <script src="qrcode.min.js?v=20261106d"></script>
 <script src="pix-core.js?v=20261106d"></script>
-<script src="pix.js?v=20261109c"></script>
+<script src="pix.js?v=20261109d"></script>
 </body>
 </html>
