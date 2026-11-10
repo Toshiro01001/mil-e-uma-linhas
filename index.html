@@ -26,13 +26,13 @@
 <link rel="canonical" href="https://mileumalinhas.com.br/">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="preload" href="fonts/bricolage.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="css/site.css?v=20261108e">
+<link rel="stylesheet" href="css/site.css?v=20261110a">
 <script src="js/boot.js"></script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"ProfessionalService","name":"Mil e Uma Linhas!","slogan":"Meu código, seu site.","url":"https://mileumalinhas.com.br/","description":"Sites, sistemas, automação de vendas e redes sociais e tráfego pago.","email":"contato@mileumalinhas.com.br","image":"https://mileumalinhas.com.br/og.png","address":{"@type":"PostalAddress","addressLocality":"Cuiabá","addressRegion":"MT","addressCountry":"BR"},"areaServed":{"@type":"Country","name":"Brasil"},"founder":{"@type":"Person","name":"Rodrigo Terroso Junior"},"sameAs":["https://www.instagram.com/mileumalinhas/","https://www.linkedin.com/in/rodrigo-terroso-junior-9b900935b","https://github.com/Toshiro01001"]}</script>
 <script src="js/linguagens.js" defer></script>
 <script src="js/demos.js" defer></script>
 <script src="js/orcamento.js?v=20261109a" defer></script>
-<script src="js/pedido.js?v=20261109a" defer></script>
+<script src="js/pedido.js?v=20261110a" defer></script>
 <script src="js/guia.js?v=20261109a" defer></script>
 <script src="js/temas.js?v=20261109a" defer></script>
 <script src="js/fundo.js?v=20261109b" defer></script>
@@ -1323,7 +1323,25 @@ histórico
         <p class="erro" id="fin-texto-erro"></p>
         <section aria-labelledby="t-fin-envio" class="fin-bloco">
           <h3 class="sub" id="t-fin-envio">7. Enviar</h3>
-          <label class="radio fin-aceite"><input type="checkbox" id="fin-aceite" aria-describedby="fin-aceite-erro"> <span>Concordo que a Mil e Uma Linhas! use meu nome, e-mail, WhatsApp e esta descrição só para responder este pedido, como explico na <a href="privacidade.html">Política de Privacidade</a>, e li os <a href="termos.html">Termos de Serviço</a>.</span></label>
+          <label class="radio fin-aceite"><input type="checkbox" id="fin-nota" aria-controls="fin-nota-campos" aria-expanded="false"> <span>Quero nota fiscal deste serviço (opcional)</span></label>
+          <div class="fin-nota" id="fin-nota-campos" hidden>
+            <fieldset class="fin-nota-tipo">
+              <legend>A nota sai no</legend>
+              <label class="radio"><input type="radio" name="fin-nota-tipo" id="fin-nota-cpf" value="cpf" checked> <span>CPF (pessoa)</span></label>
+              <label class="radio"><input type="radio" name="fin-nota-tipo" id="fin-nota-cnpj" value="cnpj"> <span>CNPJ (empresa)</span></label>
+            </fieldset>
+            <label for="fin-nota-doc" id="fin-nota-doc-rot">CPF</label>
+            <input id="fin-nota-doc" type="text" inputmode="numeric" maxlength="18" autocomplete="off" spellcheck="false" placeholder="000.000.000-00" aria-describedby="fin-nota-doc-erro">
+            <p class="erro" id="fin-nota-doc-erro"></p>
+            <label for="fin-nota-nome" id="fin-nota-nome-rot">Nome completo</label>
+            <input id="fin-nota-nome" type="text" maxlength="150" autocomplete="name" aria-describedby="fin-nota-nome-erro">
+            <p class="erro" id="fin-nota-nome-erro"></p>
+            <label for="fin-nota-email">E-mail para receber a nota (só se for outro)</label>
+            <input id="fin-nota-email" type="email" inputmode="email" maxlength="120" autocomplete="email" spellcheck="false" placeholder="Opcional" aria-describedby="fin-nota-email-erro">
+            <p class="erro" id="fin-nota-email-erro"></p>
+            <p class="nota">Os dados da nota ficam guardados com criptografia e servem só para emitir a nota fiscal. Na nossa conversa eu confirmo os dados e como a nota será emitida.</p>
+          </div>
+          <label class="radio fin-aceite"><input type="checkbox" id="fin-aceite" aria-describedby="fin-aceite-erro"> <span>Concordo que a Mil e Uma Linhas! use meu nome, e-mail, WhatsApp e esta descrição só para responder este pedido (e, se eu pedir nota fiscal, os dados da nota só para emiti-la), como explico na <a href="privacidade.html">Política de Privacidade</a>, e li os <a href="termos.html">Termos de Serviço</a>.</span></label>
           <p class="erro" id="fin-aceite-erro"></p>
           <div class="fin-robo" id="fin-robo"></div>
           <button class="botao cheio fin-enviar" type="button" id="fin-enviar">Enviar pedido</button>

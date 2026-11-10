@@ -23,23 +23,27 @@ window.MUL_PEDIDO = (function () {
   function estado(t, erro) { var p = $('fin-estado'); p.textContent = t; p.classList.toggle('erro', !!erro); }
   function erroCampo(id, t) {
     $(id + '-erro').textContent = t || '';
-    var c = $(id === 'fin-aceite' ? 'fin-aceite' : id);
+    var c = $(id);
     if (t) c.setAttribute('aria-invalid', 'true'); else c.removeAttribute('aria-invalid');
   }
 
   /* rascunho: só nesta aba do navegador (sessionStorage), para não perder o texto ao voltar e mudar o pedido */
+  var CAMPOS_NOTA = ['fin-nota-nome', 'fin-nota-email'];
   var CAMPOS = ['fin-nome', 'fin-email', 'fin-whats', 'fq-negocio', 'fq-objetivo', 'fq-publico', 'fq-passos', 'fq-extra', 'fq-links', 'fa-logo', 'fa-textos', 'fa-fotos', 'fa-dominio', 'fc-livre', 'fr-1', 'fr-2', 'fr-3', 'fr-gostei', 'fc-primaria', 'fc-secundaria', 'fc-destaque', 'fc-fundo', 'fc-texto'];
   function salvarRascunho() {
-    var r = { eu: $('fc-eu').checked };
-    CAMPOS.forEach(function (id) { r[id] = $(id).value; });
+    var r = { eu: $('fc-eu').checked, nota: $('fin-nota').checked, nota_tipo: tipoNota() };
+    CAMPOS.concat(CAMPOS_NOTA).forEach(function (id) { r[id] = $(id).value; });
     try { sessionStorage.setItem(RASCUNHO, JSON.stringify(r)); } catch (e) { /* sem armazenamento */ }
   }
   function lerRascunho() {
     try {
       var r = JSON.parse(sessionStorage.getItem(RASCUNHO) || 'null');
       if (!r) return;
-      CAMPOS.forEach(function (id) { if (typeof r[id] === 'string') { try { $(id).value = r[id]; } catch (e) { /* valor inválido */ } } });
+      CAMPOS.concat(CAMPOS_NOTA).forEach(function (id) { if (typeof r[id] === 'string') { try { $(id).value = r[id]; } catch (e) { /* valor inválido */ } } });
       if (typeof r.eu === 'boolean') $('fc-eu').checked = r.eu;
+      if (r.nota_tipo === 'cnpj') $('fin-nota-cnpj').checked = true;
+      if (r.nota === true) $('fin-nota').checked = true;
+      mostrarNota(false);
       aplicarCores();
     } catch (e) { /* sem rascunho */ }
   }
@@ -58,6 +62,53 @@ window.MUL_PEDIDO = (function () {
     if (eu) { av.textContent = ''; return; }
     var r = contraste($('fc-texto').value, $('fc-fundo').value);
     av.textContent = 'Contraste entre texto e fundo: ' + r.toFixed(1).replace('.', ',') + ' para 1. ' + (r >= 4.5 ? 'Bom para ler (mínimo recomendado: 4,5).' : 'Baixo: o texto pode ficar difícil de ler. Eu aviso e sugiro um ajuste.');
+  }
+  /* nota fiscal opcional: CPF ou CNPJ conferidos aqui e de novo no servidor (o CNPJ aceita o formato com letras da Receita) */
+  function tipoNota() { return $('fin-nota-cnpj').checked ? 'cnpj' : 'cpf'; }
+  function docLimpo(t) { return String(t || '').toUpperCase().replace(/[\s.\/-]/g, ''); }
+  function dv11(vals, pesos) { var r = vals.reduce(function (t, x, i) { return t + x * pesos[i]; }, 0) % 11; return r < 2 ? 0 : 11 - r; }
+  function cpfOk(d) {
+    if (!/^\d{11}$/.test(d) || /^(\d)\1{10}$/.test(d)) return false;
+    var n = d.split('').map(Number);
+    return dv11(n.slice(0, 9), [10, 9, 8, 7, 6, 5, 4, 3, 2]) === n[9] && dv11(n.slice(0, 10), [11, 10, 9, 8, 7, 6, 5, 4, 3, 2]) === n[10];
+  }
+  function cnpjOk(d) {
+    if (!/^[0-9A-Z]{12}\d{2}$/.test(d) || /^(.)\1{13}$/.test(d)) return false;
+    var n = d.split('').map(function (ch) { return ch.charCodeAt(0) - 48; });
+    return dv11(n.slice(0, 12), [5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2]) === n[12] && dv11(n.slice(0, 13), [6, 5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2]) === n[13];
+  }
+  function docFormatado(d, tipo) {
+    if (tipo === 'cpf' && d.length === 11) return d.slice(0, 3) + '.' + d.slice(3, 6) + '.' + d.slice(6, 9) + '-' + d.slice(9);
+    if (tipo === 'cnpj' && d.length === 14) return d.slice(0, 2) + '.' + d.slice(2, 5) + '.' + d.slice(5, 8) + '/' + d.slice(8, 12) + '-' + d.slice(12);
+    return d;
+  }
+  function mostrarNota(foco) {
+    var sim = $('fin-nota').checked, cnpj = tipoNota() === 'cnpj';
+    $('fin-nota-campos').hidden = !sim;
+    $('fin-nota').setAttribute('aria-expanded', sim ? 'true' : 'false');
+    $('fin-nota-doc-rot').textContent = cnpj ? 'CNPJ' : 'CPF';
+    $('fin-nota-doc').placeholder = cnpj ? '00.000.000/0000-00' : '000.000.000-00';
+    // CNPJ novo pode ter letras: no celular, o teclado de texto aparece só para CNPJ
+    $('fin-nota-doc').inputMode = cnpj ? 'text' : 'numeric';
+    $('fin-nota-doc').setAttribute('autocapitalize', cnpj ? 'characters' : 'off');
+    $('fin-nota-nome-rot').textContent = cnpj ? 'Razão social' : 'Nome completo';
+    $('fin-nota-nome').autocomplete = cnpj ? 'organization' : 'name';
+    if (!sim) ['fin-nota-doc', 'fin-nota-nome', 'fin-nota-email'].forEach(function (id) { erroCampo(id, ''); });
+    if (sim && foco) {
+      if (!cnpj && !$('fin-nota-nome').value.trim() && $('fin-nome').value.trim()) $('fin-nota-nome').value = $('fin-nome').value.replace(/\s+/g, ' ').trim();
+      $('fin-nota-doc').focus();
+    }
+  }
+  function conferirNota() {
+    if (!$('fin-nota').checked) return;
+    var tipo = tipoNota(), d = docLimpo($('fin-nota-doc').value), nm = $('fin-nota-nome').value.replace(/\s+/g, ' ').trim(), em = $('fin-nota-email').value.trim();
+    erroCampo('fin-nota-doc', !d ? 'Informe o ' + tipo.toUpperCase() + ' para a nota.' : (tipo === 'cpf' ? cpfOk(d) : cnpjOk(d)) ? '' : 'Confira o ' + tipo.toUpperCase() + ': os números não conferem.');
+    erroCampo('fin-nota-nome', nm.length < 2 ? (tipo === 'cpf' ? 'Informe o nome completo para a nota.' : 'Informe a razão social para a nota.') : /[<>]/.test(nm) ? 'O nome não pode ter os sinais < e >.' : '');
+    erroCampo('fin-nota-email', em && !emailValido(em) ? 'Confira o e-mail da nota, ou deixe em branco para usar o de contato.' : '');
+  }
+  function dadosNota() {
+    if (!$('fin-nota').checked) return null;
+    return { tipo: tipoNota(), documento: docLimpo($('fin-nota-doc').value), nome: $('fin-nota-nome').value, email: $('fin-nota-email').value.trim() };
   }
   function v(id) { return $(id).value.replace(/\s+/g, ' ').trim(); }
   function compor() {
@@ -91,7 +142,7 @@ window.MUL_PEDIDO = (function () {
   function textoEmailAlternativo() {
     var T = O.total(), l = ['Olá! Montei este pedido no site da Mil e Uma Linhas!:', ''];
     O.linhas().forEach(function (x) { l.push('- ' + x.descricao + '. Prazo estimado: ' + x.prazo); });
-    l.push('', 'Prazo somado: ' + T.prazo + '. Quero receber o orçamento por escrito.', '', 'Nome: ' + $('fin-nome').value.trim(), 'WhatsApp: ' + $('fin-whats').value.trim(), '', 'O que eu quero:', compor());
+    l.push('', 'Prazo somado: ' + T.prazo + '. Quero receber o orçamento por escrito.' + ($('fin-nota').checked ? ' Quero nota fiscal (passo os dados na conversa).' : ''), '', 'Nome: ' + $('fin-nome').value.trim(), 'WhatsApp: ' + $('fin-whats').value.trim(), '', 'O que eu quero:', compor());
     return l.join('\n');
   }
   function mostrarAlternativa(sim) {
@@ -204,8 +255,9 @@ window.MUL_PEDIDO = (function () {
     erroCampo('fq-objetivo', v('fq-objetivo').length < 10 ? 'Conte o que você quer que o site ou sistema faça.' : '');
     var n = tamanho(compor()), et = $('fin-texto-erro');
     et.textContent = n > MAX ? 'Passou ' + (n - MAX) + ' caracteres do limite. Resuma alguma resposta.' : '';
+    conferirNota();
     erroCampo('fin-aceite', $('fin-aceite').checked ? '' : 'Marque que concorda para eu poder responder.');
-    ['fin-nome', 'fin-email', 'fin-whats', 'fq-negocio', 'fq-objetivo', 'fin-texto', 'fin-aceite'].some(function (id) {
+    ['fin-nome', 'fin-email', 'fin-whats', 'fq-negocio', 'fq-objetivo', 'fin-texto', 'fin-nota-doc', 'fin-nota-nome', 'fin-nota-email', 'fin-aceite'].some(function (id) {
       if ($(id + '-erro').textContent) { ok = false; if (id === 'fin-texto') $('fq-extra').focus(); else $(id).focus(); return true; }
       return false;
     });
@@ -224,7 +276,7 @@ window.MUL_PEDIDO = (function () {
     var corpo = {
       nome: $('fin-nome').value, email: $('fin-email').value, whatsapp: $('fin-whats').value, texto: compor(),
       consentimento: $('fin-aceite').checked, site_web: $('fin-site').value,
-      itens: O.paraEnvio(), turnstile: ficha
+      itens: O.paraEnvio(), turnstile: ficha, nota: dadosNota()
     };
     var r, j = {};
     try {
@@ -241,6 +293,9 @@ window.MUL_PEDIDO = (function () {
     if (j.codigo === 'whatsapp') erroCampo('fin-whats', msg);
     if (j.codigo === 'texto') $('fin-texto-erro').textContent = msg;
     if (j.codigo === 'consentimento') erroCampo('fin-aceite', msg);
+    if (j.codigo === 'nota_documento' || j.codigo === 'nota_tipo' || j.codigo === 'nota') { erroCampo('fin-nota-doc', msg); $('fin-nota-doc').focus(); }
+    if (j.codigo === 'nota_nome') { erroCampo('fin-nota-nome', msg); $('fin-nota-nome').focus(); }
+    if (j.codigo === 'nota_email') { erroCampo('fin-nota-email', msg); $('fin-nota-email').focus(); }
     estado(msg, true);
     if (r.status >= 500 || r.status === 429) mostrarAlternativa(true);
   }
@@ -248,11 +303,12 @@ window.MUL_PEDIDO = (function () {
   function concluir(j) {
     $('fin-protocolo').textContent = j.protocolo;
     listar($('fin-ok-itens'), j.itens);
-    $('fin-ok-total').textContent = j.prazo_txt ? 'Prazo somado: ' + j.prazo_txt + '. O orçamento com o preço chega por escrito depois da nossa conversa.' : '';
+    $('fin-ok-total').textContent = j.prazo_txt ? 'Prazo somado: ' + j.prazo_txt + '. O orçamento com o preço chega por escrito depois da nossa conversa.' + (j.nota ? ' Você pediu nota fiscal: eu confirmo os dados na conversa.' : '') : '';
     var av = $('fin-ok-aviso');
     av.hidden = true; av.textContent = '';
     O.esvaziar(); apagarRascunho();
-    CAMPOS.forEach(function (id) { if ($(id).type !== 'color') $(id).value = ''; }); $('fc-eu').checked = true; aplicarCores();
+    CAMPOS.concat(CAMPOS_NOTA, ['fin-nota-doc']).forEach(function (id) { if ($(id).type !== 'color') $(id).value = ''; }); $('fc-eu').checked = true; aplicarCores();
+    $('fin-nota').checked = false; $('fin-nota-cpf').checked = true; mostrarNota(false);
     var enviar_arq = arquivos.slice(); arquivos = []; renderArquivos();
     $('fin-ok-arquivos').hidden = true;
     $('fin-aceite').checked = false; refazerRobo(); estado('');
@@ -270,6 +326,10 @@ window.MUL_PEDIDO = (function () {
     $('fc-eu').addEventListener('change', function () { aplicarCores(); contar(); salvarRascunho(); });
     $('fin-whats').addEventListener('blur', function () { if (zapValido(this.value)) { this.value = zapFormatado(this.value); salvarRascunho(); } });
     $('fin-aceite').addEventListener('change', function () { if (this.checked) erroCampo('fin-aceite', ''); });
+    $('fin-nota').addEventListener('change', function () { mostrarNota(true); salvarRascunho(); });
+    ['fin-nota-cpf', 'fin-nota-cnpj'].forEach(function (id) { $(id).addEventListener('change', function () { erroCampo('fin-nota-doc', ''); var d = docLimpo($('fin-nota-doc').value); $('fin-nota-doc').value = d; mostrarNota(false); salvarRascunho(); }); });
+    $('fin-nota-doc').addEventListener('blur', function () { var d = docLimpo(this.value); if ((tipoNota() === 'cpf' ? cpfOk(d) : cnpjOk(d))) this.value = docFormatado(d, tipoNota()); });
+    ['fin-nota-doc'].concat(CAMPOS_NOTA).forEach(function (id) { $(id).addEventListener('input', function () { if (this.getAttribute('aria-invalid') === 'true') erroCampo(id, ''); if (id !== 'fin-nota-doc') salvarRascunho(); }); });
     $('fin-enviar').addEventListener('click', enviar);
     O.menuEmail($('fin-email-abrir'), $('fin-email-menu'), function () { return { assunto: 'Pedido de orçamento', corpo: textoEmailAlternativo() }; });
     var drop = $('fa-drop');
