@@ -676,6 +676,14 @@ button.link:disabled { color: var(--cinza); text-decoration: none; cursor: not-a
 .fin-aceite { display: flex; align-items: flex-start; gap: 10px; margin: 0; font-family: var(--texto); font-size: 15px; line-height: 22px; }
 .fin-aceite input { margin-top: 4px; width: 18px; height: 18px; flex: none; }
 .fin-robo { min-height: 70px; margin: 14px 0 6px; }
+/* nota fiscal opcional, empilhada com o aceite */
+.fin-nota { margin: 8px 0 14px 28px; padding: 4px 16px 12px; border-left: 2px solid var(--traco); }
+.fin-nota-tipo { border: 0; margin: 8px 0 0; padding: 0; min-width: 0; }
+.fin-nota-tipo legend { padding: 0; font-family: var(--ui); font-size: 14px; color: var(--cinza); }
+.fin-nota-tipo .radio { min-height: 44px; font-size: 15px; }
+.fin-nota-tipo .radio input { width: 18px; height: 18px; }
+#fin-nota-campos + .fin-aceite, .fin-aceite + .fin-aceite { margin-top: 12px; }
+@media (max-width: 600px) { .fin-nota { margin-left: 4px; padding: 2px 0 10px 12px; } .fin-nota-tipo .radio { display: flex; margin-right: 0; } }
 .fin-enviar { min-width: 220px; min-height: 44px; }
 .fin-estado { font-family: var(--ui); font-size: 14px; margin: 10px 0 0; }
 .fin-estado.erro { color: var(--coral); }
