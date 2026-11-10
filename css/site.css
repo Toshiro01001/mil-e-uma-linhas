@@ -701,6 +701,7 @@ button.link:disabled { color: var(--cinza); text-decoration: none; cursor: not-a
 .escolha { margin: 0 0 var(--lin); }
 .escolha dt { margin-top: 14px; font-weight: 700; color: var(--verde); }
 .escolha dd { margin: 4px 0 0; color: var(--papel); }
+.escolha .auto-onde { display: block; margin-top: 2px; font-size: .85em; opacity: .75; }
 
 /* ===== projetos em quatro vitrines ===== */
 .vit-abas { margin: 8px 0 6px; }

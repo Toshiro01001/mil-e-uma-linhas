@@ -26,7 +26,7 @@
 <link rel="canonical" href="https://mileumalinhas.com.br/">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="preload" href="fonts/bricolage.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="css/site.css?v=20261110a">
+<link rel="stylesheet" href="css/site.css?v=20261110b">
 <script src="js/boot.js"></script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"ProfessionalService","name":"Mil e Uma Linhas!","slogan":"Meu código, seu site.","url":"https://mileumalinhas.com.br/","description":"Sites, sistemas, automação de vendas e redes sociais e tráfego pago.","email":"contato@mileumalinhas.com.br","image":"https://mileumalinhas.com.br/og.png","address":{"@type":"PostalAddress","addressLocality":"Cuiabá","addressRegion":"MT","addressCountry":"BR"},"areaServed":{"@type":"Country","name":"Brasil"},"founder":{"@type":"Person","name":"Rodrigo Terroso Junior"},"sameAs":["https://www.instagram.com/mileumalinhas/","https://www.linkedin.com/in/rodrigo-terroso-junior-9b900935b","https://github.com/Toshiro01001"]}</script>
 <script src="js/linguagens.js" defer></script>
@@ -275,7 +275,7 @@
   <div class="aba-cab">
     <h2 id="t-servicos"><span>O que eu faço,</span> <span class="fino">e como funciona.</span></h2>
     <div class="hero-linha aba-linha">
-      <p class="intro"><span class="so-ascii">Seis arquivos abertos neste projeto. Escolha um para ler.</span><span class="sem-ascii">Escolha um serviço para ver como funciona.</span></p>
+      <p class="intro"><span class="so-ascii">Sete arquivos abertos neste projeto. Escolha um para ler.</span><span class="sem-ascii">Escolha um serviço para ver como funciona.</span></p>
       <div class="acoes">
         <a class="botao cheio" href="#orcamento">Montar meu orçamento</a>
         <a class="botao" href="#projetos">Ver projetos prontos</a>
@@ -291,6 +291,7 @@
       <button role="tab" data-svc="ecommerce" id="s-ecommerce" aria-controls="p-ecommerce"><span class="so-ascii">loja.php</span><span class="sem-ascii">E-commerce</span></button>
       <button role="tab" data-svc="vendas" id="s-vendas" aria-controls="p-vendas"><span class="so-ascii">vendas.bot</span><span class="sem-ascii">Vendas automatizadas</span></button>
       <button role="tab" data-svc="trafego" id="s-trafego" aria-controls="p-trafego"><span class="so-ascii">trafego.ads</span><span class="sem-ascii">Tráfego pago</span></button>
+      <button role="tab" data-svc="automacoes" id="s-automacoes" aria-controls="p-automacoes"><span class="so-ascii">automacoes.md</span><span class="sem-ascii">O que dá para automatizar</span></button>
     </div>
     <div class="paineis">
       <div class="painel" id="p-escolher" role="tabpanel" aria-labelledby="s-escolher" data-svc="escolher">
@@ -308,6 +309,7 @@
           <dt>Quero vender pela internet, com carrinho e pagamento</dt>
           <dd><b>E-commerce.</b> Uma loja no seu próprio endereço, com catálogo, carrinho, Pix e cartão, frete e um painel para acompanhar os pedidos. Começa pequena e cresce.</dd>
         </dl>
+        <p><b>Tem uma tarefa repetida que cansa?</b> Veja <a href="#servicos/automacoes">o que dá para automatizar</a>: doze exemplos, do atendimento à cobrança.</p>
         <p><b>Site ou sistema?</b> No site, qualquer pessoa entra e olha. No sistema, só entra quem tem login, e o que está lá dentro é trabalho da sua empresa.</p>
         <details class="orc-dif"><summary>Quero os detalhes técnicos</summary>
           <p>Sites são páginas em HTML, CSS e JavaScript, com servidor só quando o projeto pede. Sistemas usam banco de dados SQL e back-end em PHP, Python, Java ou JavaScript, e C ou C++ quando o desempenho importa. A aba Linguagens explica cada uma.</p>
@@ -393,6 +395,42 @@ contatos   ########
 vendas     ###</pre>
         <p>Configuração e acompanhamento de anúncios que levam para a página certa. A verba é paga direto na plataforma. Ninguém pode prometer venda: o que eu prometo é mostrar os números.</p>
         <a class="botao" href="#demos/funil">Simular um funil</a>
+      </div>
+      <div class="painel" id="p-automacoes" role="tabpanel" aria-labelledby="s-automacoes" data-svc="automacoes">
+        <h3>O que dá para automatizar</h3>
+        <p>Doze tarefas repetidas que eu tiro das suas mãos. Procure a frase que parece com o seu dia e veja o que eu construo para resolver.</p>
+        <dl class="escolha">
+          <dt>O cliente pergunta preço e horário fora do expediente e fica sem resposta</dt>
+          <dd><b>Atendimento no WhatsApp.</b> Respostas prontas para as perguntas de sempre, com o seu jeito de falar. O que foge do combinado vai para uma pessoa da sua equipe. <span class="auto-onde">Entra em: Vendas automatizadas.</span></dd>
+          <dt>A agenda vive com faltas e horários vazios</dt>
+          <dd><b>Agendamento com lembrete.</b> O cliente marca sozinho, recebe um lembrete e você vê tudo numa agenda só. Se alguém desmarca, a vaga aparece para quem estava esperando. <span class="auto-onde">Entra em: Site, com o adicional Agendamento online.</span></dd>
+          <dt>Preciso avisar o cliente do pedido, do horário ou da cobrança, um por um</dt>
+          <dd><b>Avisos ao cliente.</b> A mensagem fica pronta na hora certa, com o nome e os dados de cada um. Você confere e envia. <span class="auto-onde">Entra em: Sistema ou E-commerce.</span></dd>
+          <dt>Mando o orçamento e depois esqueço de voltar a falar</dt>
+          <dd><b>Acompanhamento de orçamentos.</b> Cada contato ganha uma próxima data. Todo dia você vê quem precisa de retorno hoje e quem está atrasado. <span class="auto-onde">Entra em: Vendas automatizadas.</span></dd>
+          <dt>Perco tempo com quem não vai comprar</dt>
+          <dd><b>Triagem dos interessados.</b> Três ou quatro perguntas separam quem está pronto de quem só está olhando. Você vê o motivo de cada nota e pode discordar dela. <span class="auto-onde">Entra em: Vendas automatizadas.</span></dd>
+          <dt>O cliente começou a compra ou pediu orçamento e sumiu</dt>
+          <dd><b>Recuperação de venda parada.</b> Uma fila com quem parou no meio, o valor, a validade e o motivo da dúvida, para você retomar a conversa. <span class="auto-onde">Entra em: Vendas automatizadas ou E-commerce.</span></dd>
+          <dt>Não sei por onde começar a procurar clientes</dt>
+          <dd><b>Lista de empresas para abordar.</b> Uma lista organizada por cidade e ramo, sem repetidos, com uma primeira mensagem para você revisar. Nada é enviado sem você, e toda mensagem leva a opção de não receber mais. <span class="auto-onde">Entra em: Vendas automatizadas.</span></dd>
+          <dt>Faço cada proposta do zero e demoro</dt>
+          <dd><b>Propostas com a sua marca.</b> Você escolhe os itens, o total é calculado e a proposta sai em PDF. Depois dá para acompanhar qual foi aceita. <span class="auto-onde">Entra em: Sistema.</span></dd>
+          <dt>Meus produtos estão espalhados em fotos e conversas</dt>
+          <dd><b>Catálogo de produtos.</b> Cada produto com foto, variação, preço e estoque, numa vitrine em que o cliente encontra o que procura. <span class="auto-onde">Entra em: E-commerce.</span></dd>
+          <dt>Não tenho tempo de postar nas redes</dt>
+          <dd><b>Conteúdo para redes sociais.</b> Um calendário com pauta, rascunho e aprovação. Nenhum post sai sem você aprovar. <span class="auto-onde">Entra em: E-commerce, com o adicional Automatização de redes sociais.</span></dd>
+          <dt>Tenho poucas avaliações no Google</dt>
+          <dd><b>Pedido de avaliação.</b> Depois de cada atendimento, o convite para avaliar fica pronto. Vai para todos os clientes, e não só para os satisfeitos. <span class="auto-onde">Entra em: Site, com o adicional Otimização para o Google.</span></dd>
+          <dt>Cobrar quem está devendo é constrangedor e toma tempo</dt>
+          <dd><b>Controle de cobranças.</b> Uma lista de quem deve, quanto e desde quando, com acordos e lembretes educados. A baixa só acontece com o pagamento confirmado. <span class="auto-onde">Entra em: Sistema.</span></dd>
+        </dl>
+        <p><b>O que é automático de verdade?</b> O trabalho repetido: organizar, lembrar, calcular e deixar a mensagem pronta. A decisão continua com você. Nenhuma mensagem sai para quem não pediu, e todo envio pode ser conferido antes.</p>
+        <details class="orc-dif"><summary>Quero os detalhes técnicos</summary>
+          <p>Cada automação é feita sob medida, com servidor próprio, acesso por login e dados protegidos por criptografia. Integrações como WhatsApp, Google Agenda ou meio de pagamento usam os canais oficiais de cada serviço; o custo dessas contas é seu, pago direto a quem fornece. O tratamento dos dados dos seus clientes segue a LGPD: consentimento registrado, opção de sair e prazo de guarda.</p>
+        </details>
+        <p>Não achou a sua tarefa? Me conte como ela funciona hoje. A conversa é gratuita.</p>
+        <a class="botao cheio" href="#orcamento">Montar meu orçamento</a> <a class="botao" href="#contato">Falar comigo</a>
       </div>
     </div>
   </div>
