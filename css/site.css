@@ -1485,3 +1485,22 @@ html.js[data-tema="loja"] .ap-seg .check li::before { content: "\2713"; left: 13
 @media (prefers-reduced-motion: reduce) {
   [data-tema="agenda"] .botao:hover, [data-tema="agenda"] .ap-mostra a:hover, [data-tema="agenda"] .vit-card:hover, [data-tema="agenda"] .lang:hover, [data-tema="agenda"] .canal:hover, [data-tema="agenda"] .proj-img:hover { transform: none; }
 }
+
+/* ---------- movimento: luz do início, mural de projetos e entrada dos títulos (js/vivo.js) ---------- */
+.hero .luz { position: absolute; inset: 0; width: 100%; height: 100%; display: block; pointer-events: none; -webkit-mask-image: linear-gradient(180deg, #000 0%, #000 55%, transparent 100%); mask-image: linear-gradient(180deg, #000 0%, #000 55%, transparent 100%); }
+.hero.luz-fixa::before { content: ""; position: absolute; inset: 0; pointer-events: none; background: radial-gradient(60% 70% at 68% 40%, rgba(var(--verde-rgb), .2), transparent 70%); }
+html.js:not([data-tema="ascii"]) .hero .luz { display: none; }
+
+.mural-proj { position: relative; height: clamp(170px, 24vw, 300px); margin: 4px calc(clamp(16px, 4vw, 48px) * -1) 30px; overflow: hidden; pointer-events: none; -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 12%, #000 88%, transparent 100%); mask-image: linear-gradient(90deg, transparent 0, #000 12%, #000 88%, transparent 100%); }
+.mural-proj canvas { display: block; width: 100%; height: 100%; }
+@media (max-width: 640px) { .mural-proj { height: 190px; margin-bottom: 22px; } }
+
+h2.pv-on > span { animation: none !important; }
+h2.pv-on .pv { display: inline-block !important; overflow: hidden; vertical-align: top; animation: none !important; padding: .14em .06em .2em; margin: -.14em -.06em -.2em; }
+h2.pv-on .pv-i { display: inline-block !important; animation: none !important; will-change: transform; }
+h2.pv-on:not(.pv-ok) .pv-i { transform: translateY(110%); }
+/* tema Empresa: o degradê do texto passa da linha para cada palavra, senão a máscara apaga a linha */
+[data-tema="empresa"] h2.pv-on .fino { background: none; }
+[data-tema="empresa"] h2.pv-on .fino .pv-i { color: transparent; background: linear-gradient(180deg, #4D6463, #93A7A5); -webkit-background-clip: text; background-clip: text; }
+
+@media print { .hero .luz, .mural-proj { display: none; } }
