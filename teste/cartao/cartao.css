@@ -607,3 +607,14 @@ body.com-folha { overscroll-behavior-y: none; }
 /* vitrine: cada peça abre no catálogo, então o cursor avisa que dá para clicar */
 .fila .foto { cursor: pointer; }
 .fila.passando:active .foto { cursor: grabbing; }
+
+/* vitrine em arco: sobra um respiro em cima e embaixo para as fotos das pontas poderem girar sem cortar (o giro vem do cartao.js) */
+.fila.passando { padding-top: 18px; padding-bottom: 18px; margin-top: -14px; margin-bottom: -14px; }
+.fila.passando .foto { will-change: transform; backface-visibility: hidden; }
+
+/* luz viva nos painéis escuros: o brilho verde se desloca devagar em vez de ficar parado */
+.sobre-painel::before { animation: luz-painel 16s ease-in-out infinite alternate; will-change: transform; }
+.indicar { position: relative; overflow: hidden; isolation: isolate; }
+.indicar::before { content: ''; position: absolute; z-index: -1; right: -18%; top: -160%; width: 70%; aspect-ratio: 1; border-radius: 50%; background: radial-gradient(closest-side, rgba(164, 207, 69, .34), transparent); pointer-events: none; animation: luz-painel 13s ease-in-out infinite alternate-reverse; will-change: transform; }
+@keyframes luz-painel { from { transform: translate3d(0, 0, 0) scale(1); } to { transform: translate3d(-38%, 26%, 0) scale(1.25); } }
+@media (prefers-reduced-motion: reduce) { .sobre-painel::before, .indicar::before { animation: none; } }
