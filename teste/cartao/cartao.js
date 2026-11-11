@@ -406,5 +406,6 @@
 
   /* oferece o contato ao abrir, uma vez por visita, só no celular: é nele que o cartão é encostado.
      No computador a página abre direto; o botão Salvar contato continua disponível. */
-  if ((iphone || android) && document.body.getAttribute('data-vista') === 'inicio') setTimeout(abrir, 2100);
+  /* espera a abertura terminar; se a pessoa já foi para o catálogo ou abriu outra folha, não interrompe */
+  if (iphone || android) setTimeout(function () { if (document.body.getAttribute('data-vista') === 'inicio' && !aberta) abrir(); }, calmo ? 900 : 2100);
 })();
