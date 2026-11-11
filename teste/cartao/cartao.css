@@ -63,6 +63,9 @@ h1 img { mix-blend-mode: multiply; display: block; width: min(64vw, 270px); heig
 .folha-contato[hidden], .veu[hidden] { display: none; }
 .folha-contato h2 { margin: 0; font-size: 24px; font-weight: 600; line-height: 1.15; text-align: center; }
 .folha-contato p { margin: 0 0 10px; text-align: center; color: var(--cinza); }
+.folha-contato .dica { margin: 4px 6px 0; font-size: 14.500px; line-height: 1.35; color: var(--tinta); background: #eef4de; border-radius: 14px; padding: 10px 12px; }
+.aviso { position: sticky; bottom: 10px; }
+.aviso:not(:empty) { background: var(--tinta); color: #fff; border-radius: 16px; padding: 12px 14px; }
 @media (prefers-reduced-motion: no-preference) { .folha-contato { animation: sobe .3s cubic-bezier(.2, .8, .2, 1); } @keyframes sobe { from { transform: translateY(60px); opacity: 0; } } }
 @media (max-width: 350px) { .faixa { padding: 6px 10px 5px; } .botao.bloco { padding: 12px 9px 11px; } .botao.bloco b { font-size: 13.500px; letter-spacing: -.02em; } .botao.bloco small { font-size: 11.500px; } .botao.principal b { font-size: 19px; } .bola { flex-basis: 40px; width: 40px; height: 40px; } }
 @media (min-width: 700px) { body { padding: 28px 0 0; } .topo { border-radius: 34px; } }
