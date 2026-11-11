@@ -603,3 +603,7 @@ body.com-folha { overscroll-behavior-y: none; }
 .chips.sub { margin-top: 8px; }
 .chips.sub[hidden] { display: none; }
 .chips.sub .chip { min-height: 38px; padding: 0 14px; font-size: 13.5px; }
+
+/* vitrine: cada peça abre no catálogo, então o cursor avisa que dá para clicar */
+.fila .foto { cursor: pointer; }
+.fila.passando:active .foto { cursor: grabbing; }
