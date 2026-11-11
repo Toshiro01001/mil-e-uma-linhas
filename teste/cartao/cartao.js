@@ -56,16 +56,18 @@
     new IntersectionObserver(function (v) { flutua.hidden = v[0].isIntersecting || document.body.classList.contains('com-folha'); }, { threshold: 0 }).observe($('b-whats'));
   }
 
-  /* vitrine: as fotos passam sozinhas para a direita. Para ao tocar, ao passar o mouse, ao receber o foco ou pelo botão Pausar.
-     Quem pediu menos movimento no aparelho recebe a fila parada, para deslizar com o dedo. */
-  var grade = $('grade'), fotos = L.fotos || [];
+  /* vitrine: as fotos passam sozinhas da esquerda para a direita (entram pela esquerda e saem pela direita).
+     Anda por transformação, que é lisa e não pesa. Dá para arrastar com o dedo ou o mouse e andar com as setas do teclado; para pelo botão Pausar
+     e enquanto a fila tem o foco do teclado. Passar o mouse ou tocar numa foto só aproxima a foto. Quem pediu menos movimento recebe a fila parada, para deslizar. */
+  var grade = $('grade'), fotos = L.fotos || [], trilho = document.createElement('div');
+  trilho.className = 'trilho'; grade.appendChild(trilho);
   function cartaoFoto(f, copia) {
     var d = document.createElement('div');
     d.className = 'foto cor-' + (f.cor || 'a');
-    if (f.arquivo) { var q = document.createElement('span'); q.className = 'foto-quadro'; var im = document.createElement('img'); im.src = f.arquivo; im.alt = copia ? '' : f.legenda; im.width = 720; im.height = 720; im.loading = 'lazy'; im.decoding = 'async'; q.appendChild(im); d.appendChild(q); var leg = document.createElement('span'); leg.className = 'foto-nome'; leg.textContent = f.legenda; if (!copia) leg.setAttribute('aria-hidden', 'true'); d.appendChild(leg); }
+    if (f.arquivo) { var q = document.createElement('span'); q.className = 'foto-quadro'; var im = document.createElement('img'); im.src = f.arquivo; im.alt = copia ? '' : f.legenda; im.width = 720; im.height = 720; im.loading = 'lazy'; im.decoding = 'async'; im.draggable = false; q.appendChild(im); d.appendChild(q); var leg = document.createElement('span'); leg.className = 'foto-nome'; leg.textContent = f.legenda; if (!copia) leg.setAttribute('aria-hidden', 'true'); d.appendChild(leg); }
     else { d.setAttribute('role', 'img'); d.setAttribute('aria-label', f.legenda); var selo = document.createElement('span'); selo.className = 'selo'; selo.setAttribute('aria-hidden', 'true'); selo.textContent = 'Foto em breve'; d.appendChild(selo); }
     if (copia) { d.setAttribute('aria-hidden', 'true'); d.removeAttribute('role'); d.removeAttribute('aria-label'); }
-    grade.appendChild(d);
+    trilho.appendChild(d);
   }
   fotos.forEach(function (f) { cartaoFoto(f, false); });
   if (!fotos.length) document.querySelector('.pecas').hidden = true;
@@ -73,21 +75,20 @@
   if (fotos.length > 2 && !calmo && window.requestAnimationFrame) {
     fotos.forEach(function (f) { cartaoFoto(f, true); });
     grade.classList.add('passando');
-    var parada = false, manual = false, ocupada = 0, antesT = 0, pos = -1, botao = $('pausa');
+    var x = 0, manual = false, focada = false, arrasta = false, ultX = 0, espera = 0, antesT = 0, tocada = null, botao = $('pausa');
     botao.hidden = false;
     botao.addEventListener('click', function () { manual = !manual; botao.textContent = manual ? 'Continuar' : 'Pausar'; botao.setAttribute('aria-pressed', manual ? 'true' : 'false'); });
-    function segura() { ocupada = Date.now() + 2500; pos = -1; }
-    ['pointerdown', 'touchstart', 'wheel', 'keydown'].forEach(function (ev) { grade.addEventListener(ev, segura, { passive: true }); });
-    grade.addEventListener('mouseenter', function () { parada = true; }); grade.addEventListener('mouseleave', function () { parada = false; pos = -1; });
-    grade.addEventListener('focusin', function () { parada = true; }); grade.addEventListener('focusout', function () { parada = false; pos = -1; });
+    function volta() { var g = parseFloat(getComputedStyle(trilho).columnGap) || 0; return (trilho.scrollWidth + g) / 2; }
+    function poe() { var v = volta(); if (v > 0) { x = ((x % v) + v) % v; trilho.style.transform = 'translate3d(' + (-x).toFixed(2) + 'px,0,0)'; } }
+    grade.addEventListener('pointerdown', function (ev) { if (ev.pointerType === 'mouse' && ev.button !== 0) return; arrasta = true; ultX = ev.clientX; tocada = ev.target.closest ? ev.target.closest('.foto') : null; if (tocada) tocada.classList.add('tocada'); });
+    function solta() { if (!arrasta) return; arrasta = false; espera = Date.now() + 1200; if (tocada) { tocada.classList.remove('tocada'); tocada = null; } }
+    addEventListener('pointermove', function (ev) { if (!arrasta) return; x -= ev.clientX - ultX; ultX = ev.clientX; poe(); });
+    addEventListener('pointerup', solta); addEventListener('pointercancel', solta);
+    grade.addEventListener('focus', function () { focada = true; }); grade.addEventListener('blur', function () { focada = false; });
+    grade.addEventListener('keydown', function (ev) { if (ev.key !== 'ArrowRight' && ev.key !== 'ArrowLeft') return; ev.preventDefault(); x += (ev.key === 'ArrowRight' ? 1 : -1) * volta() / fotos.length; poe(); });
     function passo(t) {
-      var meio = grade.scrollWidth / 2, dt = Math.min(64, t - (antesT || t)); antesT = t;
-      if (meio > grade.clientWidth && !parada && !manual && !document.hidden && Date.now() > ocupada) {
-        if (pos < 0) pos = grade.scrollLeft;
-        pos -= dt * 0.03; /* cerca de 30 px por segundo, para a direita */
-        if (pos <= 0) pos += meio;
-        grade.scrollLeft = pos;
-      } else if (grade.scrollLeft <= 0 && meio > 0) { grade.scrollLeft = meio; }
+      var dt = Math.min(64, t - (antesT || t)); antesT = t;
+      if (!manual && !focada && !arrasta && !document.hidden && Date.now() > espera) { x -= dt * 0.035; poe(); } /* cerca de 35 px por segundo, da esquerda para a direita */
       requestAnimationFrame(passo);
     }
     requestAnimationFrame(passo);
