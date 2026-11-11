@@ -52,8 +52,8 @@ window.LOJA = {
      São fotos de catálogo das marcas que a loja revende; a dona ainda vai dizer se pode usar. Sem preço nem tamanho: isso muda e a loja responde pelo WhatsApp. */
   tipos: [['v', 'Vestidos'], ['c', 'Conjuntos'], ['b', 'Blusas'], ['m', 'Masculino']],
   mensagemPeca: 'Olá! Vim pelo cartão da loja e gostei desta peça do catálogo: ',
-  /* fundo do topo: 'mural' (fotos das peças em colunas), 'seda' (vídeo de tecido em movimento) ou 'seda+mural' (os dois juntos) */
-  fundoTopo: 'mural',
+  /* fundo do catálogo: 'seda' põe o vídeo de tecido em movimento atrás das peças; qualquer outro valor deixa só a trama de pontos */
+  fundoCatalogo: 'seda',
   mensagemLista: 'Olá! Vim pelo cartão da loja e gostei destas peças do catálogo:',
   catalogo: [
     { arquivo: 'fotos/c-04.webp', grande: 'fotos/g/c-04.webp', legenda: 'Vestido marrom midi', tipo: 'v' },

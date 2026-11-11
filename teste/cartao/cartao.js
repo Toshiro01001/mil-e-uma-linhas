@@ -318,20 +318,6 @@
   /* mural do topo: colunas com fotos de peças da loja que sobem e descem devagar atrás do título, escurecidas para o texto continuar legível.
      Usa as mesmas fotos do catálogo (nada novo para baixar depois), anda só por transformação e para quando o topo sai da tela. Com "reduzir movimento", fica parado. */
   (function () {
-    var modo = (/[?&]fundo=([a-z+]+)/.exec(location.search.replace(/%2B/gi, '+')) || [0, L.fundoTopo || 'mural'])[1];
-    /* vídeo de tecido: mudo, em repetição, sem controles. Só entra para quem não pediu menos movimento nem economia de dados; para os outros fica a imagem parada. */
-    if (modo.indexOf('seda') === 0) {
-      var poupa = navigator.connection && navigator.connection.saveData, seda;
-      if (calmo || poupa) { seda = document.createElement('img'); seda.src = 'video/seda-capa.webp'; seda.alt = ''; }
-      else {
-        seda = document.createElement('video'); seda.muted = true; seda.loop = true; seda.autoplay = true; seda.playsInline = true; seda.setAttribute('muted', ''); seda.setAttribute('playsinline', ''); seda.preload = 'metadata'; seda.poster = 'video/seda-capa.webp'; seda.disablePictureInPicture = true;
-        [['video/seda.webm', 'video/webm'], ['video/seda.mp4', 'video/mp4']].forEach(function (par) { var o = document.createElement('source'); o.src = par[0]; o.type = par[1]; seda.appendChild(o); });
-        if ('IntersectionObserver' in window) new IntersectionObserver(function (v) { if (v[0].isIntersecting) { var t = seda.play(); if (t && t.catch) t.catch(function () { /* o aparelho não deixou tocar sozinho: fica a capa */ }); } else seda.pause(); }).observe($('heroi'));
-      }
-      seda.className = 'seda'; $('fundo').insertBefore(seda, $('fundo').firstChild); $('fundo').classList.add('com-seda');
-      if (modo === 'seda') { $('fundo').classList.add('com-mural'); return; }
-      $('fundo').classList.add('mural-leve');
-    }
     if (CAT.length < 10) return;
     var mural = document.createElement('div'), COLUNAS = 5, POR = 4, passo = Math.max(1, Math.floor(CAT.length / (COLUNAS * POR))), k = 0, carregou = false;
     mural.className = 'mural';
@@ -345,9 +331,27 @@
       }
       mural.appendChild(col);
     }
-    $('fundo').insertBefore(mural, $('fundo').querySelector('canvas'));
+    $('fundo').insertBefore(mural, $('fundo').firstChild);
     if ('IntersectionObserver' in window) new IntersectionObserver(function (v) { mural.classList.toggle('parado', !v[0].isIntersecting); }).observe($('heroi'));
   })();
+  /* fundo do catálogo: vídeo de tecido em movimento, mudo e em repetição, atrás da trama de pontos. É criado só quando o catálogo abre e toca só enquanto ele está na tela.
+     Para quem pediu menos movimento ou economia de dados, fica a imagem parada. */
+  var seda = null;
+  function ligarSeda(liga) {
+    if (L.fundoCatalogo !== 'seda') return;
+    if (!seda && liga) {
+      var poupa = navigator.connection && navigator.connection.saveData;
+      if (calmo || poupa) { seda = document.createElement('img'); seda.src = 'video/seda-capa.webp'; seda.alt = ''; }
+      else {
+        seda = document.createElement('video'); seda.muted = true; seda.loop = true; seda.playsInline = true; seda.setAttribute('muted', ''); seda.setAttribute('playsinline', ''); seda.preload = 'auto'; seda.poster = 'video/seda-capa.webp'; seda.disablePictureInPicture = true;
+        [['video/seda.webm', 'video/webm'], ['video/seda.mp4', 'video/mp4']].forEach(function (par) { var o = document.createElement('source'); o.src = par[0]; o.type = par[1]; seda.appendChild(o); });
+      }
+      seda.className = 'seda'; seda.setAttribute('aria-hidden', 'true'); $('catalogo').insertBefore(seda, $('catalogo').firstChild); $('catalogo').classList.add('com-seda');
+    }
+    if (!seda || seda.tagName !== 'VIDEO') return;
+    if (liga && !document.hidden) { var t = seda.play(); if (t && t.catch) t.catch(function () { /* o aparelho não deixou tocar sozinho: fica a capa */ }); } else seda.pause();
+  }
+  document.addEventListener('visibilitychange', function () { ligarSeda(document.body.getAttribute('data-vista') === 'catalogo'); });
   function limpo(t) { return t.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, ''); }
   function filtrar() {
     var q = limpo(termo.trim());
@@ -525,7 +529,7 @@
     if (qual === 'catalogo') $('aba-inicio').removeAttribute('aria-current'); else $('aba-inicio').setAttribute('aria-current', 'page');
     if (qual === 'catalogo') $('aba-catalogo').setAttribute('aria-current', 'page'); else $('aba-catalogo').removeAttribute('aria-current');
     if (qual === 'catalogo' && !pintado) { pintado = true; pintarCatalogo(); }
-    scrollTo(0, 0); sacola();
+    scrollTo(0, 0); sacola(); ligarSeda(qual === 'catalogo');
     if (qual === 'catalogo') { embaralha($('t-cat'), 'Catálogo'); if (luzX < -900) apontar(innerWidth * .7, innerHeight * .3); setTimeout(focar, 700); }
   }
   function pecaDoEndereco(h) { var id = h.indexOf('#peca-') === 0 ? h.slice(6) : '', p = null; CAT.forEach(function (c) { if (id && c.id === id) p = c; }); return p; }

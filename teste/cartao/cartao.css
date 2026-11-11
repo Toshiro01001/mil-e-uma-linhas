@@ -562,8 +562,6 @@ body.com-folha { overscroll-behavior-y: none; }
 }
 @media (prefers-reduced-motion: reduce) { .mural-col { transform: translateY(-12%); } }
 
-/* ===== Vídeo de tecido no topo (opção 'seda' em dados.js) ===== */
-.seda { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
-.fundo.com-seda canvas { position: absolute; inset: 0; mix-blend-mode: screen; }
-.fundo.com-seda.com-aurora canvas { opacity: .55; }
-.fundo.mural-leve .mural.pronto { opacity: .34; mix-blend-mode: luminosity; }
+/* ===== Vídeo de tecido no fundo do catálogo (fundoCatalogo: 'seda' em dados.js) ===== */
+.seda { position: fixed; inset: 0; z-index: -2; width: 100%; height: 100%; object-fit: cover; pointer-events: none; }
+#catalogo.com-seda .trama { background: radial-gradient(circle, rgba(255, 255, 255, .09) 1px, transparent 1.4px) 0 0 / 22px 22px, linear-gradient(180deg, rgba(21, 25, 20, .5) 0%, rgba(21, 25, 20, .72) 100%); }
