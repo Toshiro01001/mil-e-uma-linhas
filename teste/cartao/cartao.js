@@ -315,6 +315,25 @@
   var CORACAO = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20s-7-4.400-7-9.600A4 4 0 0 1 12 8a4 4 0 0 1 7 2.400C19 15.600 12 20 12 20z"/></svg>';
   TIPOS.forEach(function (t) { nomeTipo[t[0]] = t[1]; });
   CAT.forEach(function (p) { p.id = (p.arquivo.match(/(\d+)\.\w+$/) || [0, ''])[1]; });
+  /* mural do topo: colunas com fotos de peças da loja que sobem e descem devagar atrás do título, escurecidas para o texto continuar legível.
+     Usa as mesmas fotos do catálogo (nada novo para baixar depois), anda só por transformação e para quando o topo sai da tela. Com "reduzir movimento", fica parado. */
+  (function () {
+    if (CAT.length < 10) return;
+    var mural = document.createElement('div'), COLUNAS = 5, POR = 4, passo = Math.max(1, Math.floor(CAT.length / (COLUNAS * POR))), k = 0, carregou = false;
+    mural.className = 'mural';
+    for (var c = 0; c < COLUNAS; c++) {
+      var col = document.createElement('div'); col.className = 'mural-col';
+      for (var volta = 0; volta < 2; volta++) for (var i = 0; i < POR; i++) {
+        var im = document.createElement('img'), p = CAT[((c * POR + i) * passo + c) % CAT.length];
+        im.src = p.arquivo; im.alt = ''; im.width = 600; im.height = 750; im.decoding = 'async'; im.setAttribute('fetchpriority', 'low'); im.draggable = false;
+        if (!carregou) im.addEventListener('load', function () { if (!carregou) { carregou = true; mural.classList.add('pronto'); $('fundo').classList.add('com-mural'); } });
+        col.appendChild(im);
+      }
+      mural.appendChild(col);
+    }
+    $('fundo').insertBefore(mural, $('fundo').firstChild);
+    if ('IntersectionObserver' in window) new IntersectionObserver(function (v) { mural.classList.toggle('parado', !v[0].isIntersecting); }).observe($('heroi'));
+  })();
   function limpo(t) { return t.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, ''); }
   function filtrar() {
     var q = limpo(termo.trim());

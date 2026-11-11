@@ -539,3 +539,25 @@ body.com-folha { overscroll-behavior-y: none; }
   .folha::before { width: 48px; height: 5px; margin-left: -24px; }
   .folha::after { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 28px; }
 }
+
+/* ===== Mural do topo: fotos de peças em colunas que sobem e descem devagar, atrás do título ===== */
+.mural { position: absolute; inset: -14% -10%; display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; align-items: start; transform: rotate(-7deg) scale(1.06); opacity: 0; transition: opacity 1.4s; }
+.mural.pronto { opacity: 1; }
+.mural-col { display: flex; flex-direction: column; gap: 10px; padding-bottom: 10px; animation: mural-sobe 70s linear infinite; will-change: transform; }
+.mural-col:nth-child(even) { animation-name: mural-desce; animation-duration: 84s; }
+.mural-col:nth-child(n+4) { display: none; }
+.mural-col img { width: 100%; height: auto; aspect-ratio: 4 / 5; object-fit: cover; border-radius: 14px; filter: saturate(.8); }
+.mural.parado .mural-col { animation-play-state: paused; }
+@keyframes mural-sobe { to { transform: translateY(-50%); } }
+@keyframes mural-desce { from { transform: translateY(-50%); } }
+.fundo.com-mural canvas { position: absolute; inset: 0; mix-blend-mode: screen; }
+.fundo.com-mural.com-aurora canvas { opacity: .5; }
+.fundo.com-mural::after { background: radial-gradient(120% 60% at 20% 58%, rgba(21, 25, 20, .7) 0%, rgba(21, 25, 20, .3) 75%), linear-gradient(180deg, rgba(21, 25, 20, .72) 0%, rgba(21, 25, 20, .42) 30%, rgba(21, 25, 20, .9) 100%); }
+.fundo.com-mural ~ .pontos { opacity: .5; }
+@media (min-width: 900px) {
+  .mural { grid-template-columns: repeat(5, 1fr); gap: 14px; inset: -30% -6%; }
+  .mural-col { gap: 14px; padding-bottom: 14px; }
+  .mural-col:nth-child(n+4) { display: flex; }
+  .fundo.com-mural::after { background: linear-gradient(90deg, rgba(21, 25, 20, .95) 0%, rgba(21, 25, 20, .82) 42%, rgba(21, 25, 20, .5) 100%), linear-gradient(180deg, rgba(21, 25, 20, .7) 0%, rgba(21, 25, 20, 0) 30%, rgba(21, 25, 20, .9) 100%); }
+}
+@media (prefers-reduced-motion: reduce) { .mural-col { transform: translateY(-12%); } }
