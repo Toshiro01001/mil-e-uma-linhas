@@ -561,3 +561,9 @@ body.com-folha { overscroll-behavior-y: none; }
   .fundo.com-mural::after { background: linear-gradient(90deg, rgba(21, 25, 20, .95) 0%, rgba(21, 25, 20, .82) 42%, rgba(21, 25, 20, .5) 100%), linear-gradient(180deg, rgba(21, 25, 20, .7) 0%, rgba(21, 25, 20, 0) 30%, rgba(21, 25, 20, .9) 100%); }
 }
 @media (prefers-reduced-motion: reduce) { .mural-col { transform: translateY(-12%); } }
+
+/* ===== Vídeo de tecido no topo (opção 'seda' em dados.js) ===== */
+.seda { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.fundo.com-seda canvas { position: absolute; inset: 0; mix-blend-mode: screen; }
+.fundo.com-seda.com-aurora canvas { opacity: .55; }
+.fundo.mural-leve .mural.pronto { opacity: .34; mix-blend-mode: luminosity; }

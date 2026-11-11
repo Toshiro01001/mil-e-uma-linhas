@@ -318,6 +318,20 @@
   /* mural do topo: colunas com fotos de peças da loja que sobem e descem devagar atrás do título, escurecidas para o texto continuar legível.
      Usa as mesmas fotos do catálogo (nada novo para baixar depois), anda só por transformação e para quando o topo sai da tela. Com "reduzir movimento", fica parado. */
   (function () {
+    var modo = (/[?&]fundo=([a-z+]+)/.exec(location.search.replace(/%2B/gi, '+')) || [0, L.fundoTopo || 'mural'])[1];
+    /* vídeo de tecido: mudo, em repetição, sem controles. Só entra para quem não pediu menos movimento nem economia de dados; para os outros fica a imagem parada. */
+    if (modo.indexOf('seda') === 0) {
+      var poupa = navigator.connection && navigator.connection.saveData, seda;
+      if (calmo || poupa) { seda = document.createElement('img'); seda.src = 'video/seda-capa.webp'; seda.alt = ''; }
+      else {
+        seda = document.createElement('video'); seda.muted = true; seda.loop = true; seda.autoplay = true; seda.playsInline = true; seda.setAttribute('muted', ''); seda.setAttribute('playsinline', ''); seda.preload = 'metadata'; seda.poster = 'video/seda-capa.webp'; seda.disablePictureInPicture = true;
+        [['video/seda.webm', 'video/webm'], ['video/seda.mp4', 'video/mp4']].forEach(function (par) { var o = document.createElement('source'); o.src = par[0]; o.type = par[1]; seda.appendChild(o); });
+        if ('IntersectionObserver' in window) new IntersectionObserver(function (v) { if (v[0].isIntersecting) { var t = seda.play(); if (t && t.catch) t.catch(function () { /* o aparelho não deixou tocar sozinho: fica a capa */ }); } else seda.pause(); }).observe($('heroi'));
+      }
+      seda.className = 'seda'; $('fundo').insertBefore(seda, $('fundo').firstChild); $('fundo').classList.add('com-seda');
+      if (modo === 'seda') { $('fundo').classList.add('com-mural'); return; }
+      $('fundo').classList.add('mural-leve');
+    }
     if (CAT.length < 10) return;
     var mural = document.createElement('div'), COLUNAS = 5, POR = 4, passo = Math.max(1, Math.floor(CAT.length / (COLUNAS * POR))), k = 0, carregou = false;
     mural.className = 'mural';
@@ -331,7 +345,7 @@
       }
       mural.appendChild(col);
     }
-    $('fundo').insertBefore(mural, $('fundo').firstChild);
+    $('fundo').insertBefore(mural, $('fundo').querySelector('canvas'));
     if ('IntersectionObserver' in window) new IntersectionObserver(function (v) { mural.classList.toggle('parado', !v[0].isIntersecting); }).observe($('heroi'));
   })();
   function limpo(t) { return t.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, ''); }
@@ -345,7 +359,9 @@
   }
   function pintarPeca(i) {
     atual = (i + lista.length) % lista.length; var p = lista[atual], f = $('p-foto');
-    perto(false); f.src = p.arquivo; f.alt = p.legenda; f.style.animation = 'none'; void f.offsetWidth; f.style.animation = '';
+    perto(false); f.src = p.arquivo; f.alt = p.legenda;
+    /* a foto grande, mais nítida para a lupa, só é pedida quando a peça é aberta; enquanto ela não chega, fica a do catálogo */
+    if (p.grande && !folhaPeca.classList.contains('rolando')) { var maior = new Image(); maior.onload = function () { if (lista[atual] === p && aberta === folhaPeca) f.src = p.grande; }; maior.src = p.grande; } f.style.animation = 'none'; void f.offsetWidth; f.style.animation = '';
     if (folhaPeca.classList.contains('rolando')) $('p-nome').textContent = p.legenda; else embaralha($('p-nome'), p.legenda);
     $('p-cat').textContent = (nomeTipo[p.tipo] || '') + (lista.length > 1 ? ' / ' + (atual + 1) + ' de ' + lista.length : '');
     $('p-whats').href = 'https://wa.me/' + L.whatsapp + '?text=' + encodeURIComponent((L.mensagemPeca || '') + p.legenda + '.');
