@@ -334,6 +334,24 @@
     $('fundo').insertBefore(mural, $('fundo').firstChild);
     if ('IntersectionObserver' in window) new IntersectionObserver(function (v) { mural.classList.toggle('parado', !v[0].isIntersecting); }).observe($('heroi'));
   })();
+  /* fundo do catálogo: vídeo de tecido em movimento, mudo e em repetição, atrás da trama de pontos. É criado só quando o catálogo abre e toca só enquanto ele está na tela.
+     Para quem pediu menos movimento ou economia de dados, fica a imagem parada. */
+  var seda = null;
+  function ligarSeda(liga) {
+    if (L.fundoCatalogo !== 'seda') return;
+    if (!seda && liga) {
+      var poupa = navigator.connection && navigator.connection.saveData;
+      if (calmo || poupa) { seda = document.createElement('img'); seda.src = 'video/seda-capa.webp'; seda.alt = ''; }
+      else {
+        seda = document.createElement('video'); seda.muted = true; seda.loop = true; seda.playsInline = true; seda.setAttribute('muted', ''); seda.setAttribute('playsinline', ''); seda.preload = 'auto'; seda.poster = 'video/seda-capa.webp'; seda.disablePictureInPicture = true;
+        [['video/seda.webm', 'video/webm'], ['video/seda.mp4', 'video/mp4']].forEach(function (par) { var o = document.createElement('source'); o.src = par[0]; o.type = par[1]; seda.appendChild(o); });
+      }
+      seda.className = 'seda'; seda.setAttribute('aria-hidden', 'true'); $('catalogo').insertBefore(seda, $('catalogo').firstChild); $('catalogo').classList.add('com-seda');
+    }
+    if (!seda || seda.tagName !== 'VIDEO') return;
+    if (liga && !document.hidden) { var t = seda.play(); if (t && t.catch) t.catch(function () { /* o aparelho não deixou tocar sozinho: fica a capa */ }); } else seda.pause();
+  }
+  document.addEventListener('visibilitychange', function () { ligarSeda(document.body.getAttribute('data-vista') === 'catalogo'); });
   function limpo(t) { return t.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, ''); }
   function filtrar() {
     var q = limpo(termo.trim());
@@ -345,7 +363,9 @@
   }
   function pintarPeca(i) {
     atual = (i + lista.length) % lista.length; var p = lista[atual], f = $('p-foto');
-    perto(false); f.src = p.arquivo; f.alt = p.legenda; f.style.animation = 'none'; void f.offsetWidth; f.style.animation = '';
+    perto(false); f.src = p.arquivo; f.alt = p.legenda;
+    /* a foto grande, mais nítida para a lupa, só é pedida quando a peça é aberta; enquanto ela não chega, fica a do catálogo */
+    if (p.grande && !folhaPeca.classList.contains('rolando')) { var maior = new Image(); maior.onload = function () { if (lista[atual] === p && aberta === folhaPeca) f.src = p.grande; }; maior.src = p.grande; } f.style.animation = 'none'; void f.offsetWidth; f.style.animation = '';
     if (folhaPeca.classList.contains('rolando')) $('p-nome').textContent = p.legenda; else embaralha($('p-nome'), p.legenda);
     $('p-cat').textContent = (nomeTipo[p.tipo] || '') + (lista.length > 1 ? ' / ' + (atual + 1) + ' de ' + lista.length : '');
     $('p-whats').href = 'https://wa.me/' + L.whatsapp + '?text=' + encodeURIComponent((L.mensagemPeca || '') + p.legenda + '.');
@@ -509,7 +529,7 @@
     if (qual === 'catalogo') $('aba-inicio').removeAttribute('aria-current'); else $('aba-inicio').setAttribute('aria-current', 'page');
     if (qual === 'catalogo') $('aba-catalogo').setAttribute('aria-current', 'page'); else $('aba-catalogo').removeAttribute('aria-current');
     if (qual === 'catalogo' && !pintado) { pintado = true; pintarCatalogo(); }
-    scrollTo(0, 0); sacola();
+    scrollTo(0, 0); sacola(); ligarSeda(qual === 'catalogo');
     if (qual === 'catalogo') { embaralha($('t-cat'), 'Catálogo'); if (luzX < -900) apontar(innerWidth * .7, innerHeight * .3); setTimeout(focar, 700); }
   }
   function pecaDoEndereco(h) { var id = h.indexOf('#peca-') === 0 ? h.slice(6) : '', p = null; CAT.forEach(function (c) { if (id && c.id === id) p = c; }); return p; }
