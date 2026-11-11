@@ -1,4 +1,4 @@
-/* Dados da loja. Tudo o que muda de um cliente para outro fica só aqui. Nesta versão de teste, os endereços das redes e o WhatsApp são os que a loja divulga; o horário ainda é de exemplo. */
+/* Dados da loja. Tudo o que muda de um cliente para outro fica só aqui. Nesta versão de teste, os endereços das redes e o WhatsApp são os que a loja divulga; o horário veio da ficha da loja no Google e a entrega em casa é uma suposição a confirmar. */
 window.LOJA = {
   nome: 'HAI OUTLET',
   logo: 'logo.webp',
@@ -26,9 +26,12 @@ window.LOJA = {
   /* central de atendimento: a página de links que a loja já usa */
   central: 'https://linktr.ee/hai_outlet',
   email: '',
-  /* horário por dia da semana, de domingo (0) a sábado (6); null é dia fechado. Só a quarta-feira foi vista no perfil da loja: o resto é exemplo. */
-  horario: [null, ['08:00', '19:00'], ['08:00', '19:00'], ['08:00', '19:00'], ['08:00', '19:00'], ['08:00', '19:00'], ['08:00', '19:00']],
-  horarioExemplo: true,
+  /* horário por dia da semana, de domingo (0) a sábado (6); null é dia fechado. Tirado da ficha da loja no Google; a dona ainda vai confirmar. */
+  horario: [null, ['08:30', '17:00'], ['08:30', '18:30'], ['08:30', '18:30'], ['08:30', '18:30'], ['08:30', '18:30'], ['08:30', '17:00']],
+  horarioExemplo: false,
+  /* entrega em casa: presumida por enquanto; a dona ainda vai confirmar */
+  entrega: true,
+  mensagemEntrega: 'Olá! Vim pelo cartão da loja e quero pedir uma entrega.',
   fuso: 'America/Cuiaba',
   qr: 'qr.svg?v=1',
   contato: 'contato.vcf?v=5',

@@ -109,6 +109,7 @@
   var ICONE = {
     whats: '<path d="M4 20l1.400-4.200A8 8 0 1 1 8.600 19L4 20z"/>',
     email: '<rect x="3.500" y="5.500" width="17" height="13" rx="3"/><path d="M4.500 7.500l7.500 5.500 7.500-5.500"/>',
+    entrega: '<path d="M3 7h11v9H3zM14 10h4l3 3v3h-7M7.500 19a1.800 1.800 0 1 0 0-3.600 1.800 1.800 0 0 0 0 3.600zM17.500 19a1.800 1.800 0 1 0 0-3.600 1.800 1.800 0 0 0 0 3.600z"/>',
     central: '<path d="M9 17H7a5 5 0 0 1 0-10h2M15 7h2a5 5 0 0 1 0 10h-2M8.500 12h7"/>'
   };
   function linha(tipo, titulo, valor, url, rotulo) {
@@ -120,6 +121,7 @@
     $('fale-lista').appendChild(a);
   }
   if (L.whatsapp) linha('whats', 'WhatsApp', L.whatsappTexto || 'Abre a conversa no aplicativo.', $('b-whats').href, 'Abrir conversa com a ' + nome + ' no WhatsApp');
+  if (L.whatsapp && L.entrega) linha('entrega', 'Pedir entrega', 'Combine pelo WhatsApp.', 'https://wa.me/' + L.whatsapp + '?text=' + encodeURIComponent(L.mensagemEntrega), 'Pedir uma entrega para a ' + nome + ' pelo WhatsApp');
   if (L.email) linha('email', 'E-mail', L.email, 'mailto:' + L.email, 'Escrever um e-mail para a ' + nome);
   if (L.central) linha('central', 'Central de atendimento', 'Todos os links da loja em um lugar.', L.central, 'Abrir a central de atendimento da ' + nome);
   if (!$('fale-lista').children.length) $('fale').hidden = true;
