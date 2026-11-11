@@ -7,13 +7,20 @@
 <meta name="theme-color" content="#ffffff">
 <title>Teste do cartão de aproximação</title>
 <link rel="preload" href="fonte/outfit.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="cartao.css?v=9">
+<link rel="stylesheet" href="cartao.css?v=10">
 </head>
 <body>
+<div class="pilula" id="pilula" hidden>
+  <img id="pilula-logo" width="36" height="36" alt="">
+  <span class="pilula-nome"><b id="pilula-nome"></b><small id="pilula-onde"></small></span>
+  <i class="pilula-risco" aria-hidden="true"></i>
+  <span class="pilula-estado" id="pilula-estado"><i class="ponto" aria-hidden="true"></i><span id="pilula-texto"></span></span>
+</div>
 <main class="pagina" id="conteudo">
   <div class="lado">
   <header class="topo">
     <span class="folhao fa" aria-hidden="true"></span><span class="folhao fb" aria-hidden="true"></span>
+    <span class="etiqueta e1" id="etiqueta1" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-6.200 7-11.500A7 7 0 0 0 5 9.500C5 14.800 12 21 12 21z"/><circle cx="12" cy="9.500" r="2.500"/></svg><span></span></span><span class="etiqueta e2" id="etiqueta2" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l2.200 5.600L20 9.300l-4.400 3.900 1.300 5.800L12 16l-4.900 3 1.300-5.800L4 9.300l5.800-.700L12 3z"/></svg><span></span></span>
     <h1><img id="logo" width="640" height="640" alt=""></h1>
     <div class="faixas">
       <p class="faixa escura" id="frase"></p>
@@ -57,12 +64,16 @@
 
   <section class="local" id="local" aria-labelledby="t-local">
     <h2 id="t-local">Onde fica</h2>
-    <div class="mapa" id="mapa"></div>
-    <p class="endereco" id="endereco"></p>
+    <div class="mapa-cartao">
+      <p class="mapa-topo"><span class="luzes" aria-hidden="true"><i></i><i></i><i></i></span><b id="mapa-nome"></b></p>
+      <div class="mapa" id="mapa"></div>
+      <p class="endereco"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-6.200 7-11.500A7 7 0 0 0 5 9.500C5 14.800 12 21 12 21z"/><circle cx="12" cy="9.500" r="2.500"/></svg><span id="endereco"></span></p>
+    </div>
     <a class="botao centro" id="b-rota" rel="noopener"><span><b>Ver como chegar</b></span></a>
     <p class="nota-mapa">O mapa é do Google e segue a política de privacidade do Google.</p>
   </section>
 
+  <div class="banda">
   <section class="cartela" id="horario" aria-labelledby="t-horario" hidden>
     <h2 id="t-horario">Horário</h2>
     <p class="estado" id="estado"></p>
@@ -74,6 +85,7 @@
     <h2 id="t-fale">Fale com a loja</h2>
     <div class="linhas" id="fale-lista"></div>
   </section>
+  </div>
 
   <section class="pecas" aria-labelledby="t-pecas">
     <h2 id="t-pecas">Espiar as novidades</h2>
@@ -87,7 +99,7 @@
   <p class="aviso" id="aviso" role="status" aria-live="polite"></p>
   </div>
 </main>
-<footer class="rodape"><span id="rodape-nome"></span><span>Página feita por <a href="https://mileumalinhas.com.br" rel="noopener">Mil e Uma Linhas!</a></span></footer>
+<footer class="rodape"><span class="rodape-fundo" id="rodape-fundo" aria-hidden="true"></span><span id="rodape-nome"></span><span>Página feita por <a href="https://mileumalinhas.com.br" rel="noopener">Mil e Uma Linhas!</a></span></footer>
 
 <a class="flutua" id="flutua" rel="noopener" hidden>
   <i class="bola"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20l1.400-4.200A8 8 0 1 1 8.600 19L4 20z"/></svg></i>
@@ -103,12 +115,17 @@
 </section>
 <section class="folha-contato" id="folha-qr" role="dialog" aria-modal="true" aria-labelledby="t-qr" hidden>
   <h2 id="t-qr">Indicar a loja</h2>
-  <p>Aponte a câmera de um celular para o código.</p>
-  <img class="qr" id="qr" width="232" height="232" alt="Código com o endereço desta página">
+  <p>Mostre este código para quem estiver por perto.</p>
+  <div class="moldura">
+    <span class="moldura-selo">Aponte a câmera</span>
+    <i class="canto c1" aria-hidden="true"></i><i class="canto c2" aria-hidden="true"></i><i class="canto c3" aria-hidden="true"></i><i class="canto c4" aria-hidden="true"></i>
+    <i class="varredura" aria-hidden="true"></i>
+    <img class="qr" id="qr" width="232" height="232" alt="Código com o endereço desta página">
+  </div>
   <button type="button" class="botao principal centro" id="q-enviar"><span><b>Enviar o link</b></span></button>
   <button type="button" class="botao centro quieto" id="q-fechar"><span><b>Fechar</b></span></button>
 </section>
-<script src="dados.js?v=7"></script>
-<script src="cartao.js?v=8"></script>
+<script src="dados.js?v=8"></script>
+<script src="cartao.js?v=9"></script>
 </body>
 </html>

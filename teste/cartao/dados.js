@@ -11,6 +11,9 @@ window.LOJA = {
     ['🛍️', 'Venha se apaixonar e encontre o look perfeito!']
   ],
   onde: 'Dentro do Comper Nova CPA, em Cuiabá',
+  /* nome curto do lugar e uma frase curta tirada do texto da própria loja, para as etiquetas do topo */
+  ondeCurto: 'Comper Nova CPA',
+  etiqueta: 'Todos os tamanhos',
   whatsapp: '556599406901',
   whatsappTexto: '(65) 9940-6901',
   mensagemWhats: 'Olá! Vim pelo cartão da loja.',

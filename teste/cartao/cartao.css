@@ -160,3 +160,97 @@ h1 img { mix-blend-mode: multiply; display: block; width: min(64vw, 270px); heig
   .aviso { bottom: 24px; max-width: 520px; justify-self: center; }
 }
 @media (min-width: 960px) and (min-height: 900px) { .lado { position: sticky; top: 28px; } }
+
+/* ===== encorpado: peças inspiradas em um sistema de design de referência, refeitas com as cores e a letra da loja ===== */
+body { background-image: radial-gradient(rgba(13, 15, 10, .055) 1px, transparent 1.2px), radial-gradient(60% 40% at 100% 34%, rgba(164, 207, 69, .28), transparent 70%), radial-gradient(70% 36% at 0% 72%, rgba(164, 207, 69, .22), transparent 70%); background-size: 22px 22px, auto, auto; background-repeat: repeat, no-repeat, no-repeat; }
+.vidro { background: rgba(255, 255, 255, .7); }
+
+/* pílula do alto */
+.pilula { position: fixed; z-index: 5; top: max(10px, env(safe-area-inset-top)); left: 50%; transform: translateX(-50%); display: flex; align-items: center; gap: 10px; padding: 5px 16px 5px 5px; border-radius: 999px; background: rgba(255, 255, 255, .78); -webkit-backdrop-filter: blur(14px) saturate(1.4); backdrop-filter: blur(14px) saturate(1.4); border: 1px solid rgba(13, 15, 10, .12); box-shadow: 0 10px 30px rgba(13, 15, 10, .14); white-space: nowrap; }
+.pilula[hidden], body.com-folha .pilula { display: none; }
+.pilula img { width: 36px; height: 36px; border-radius: 50%; background: #fff; border: 1px solid rgba(13, 15, 10, .12); object-fit: cover; }
+.pilula-nome { display: grid; line-height: 1.1; }
+.pilula-nome b { font-size: 14px; font-weight: 600; }
+.pilula-nome small { font-size: 11px; color: var(--cinza); }
+.pilula-risco { width: 1px; height: 22px; background: rgba(13, 15, 10, .14); }
+.pilula-estado { display: flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 500; }
+.pilula-estado.fechada .ponto { background: #9a3b2e; }
+@media (prefers-reduced-motion: no-preference) { .pilula { animation: desce .3s cubic-bezier(.2, .8, .2, 1); } @keyframes desce { from { opacity: 0; transform: translate(-50%, -14px); } } .pilula-estado.aberta .ponto { animation: pulsa 2.4s ease-out infinite; } }
+
+/* etiquetas soltas ao redor do logotipo */
+.etiqueta { position: absolute; z-index: 1; display: inline-flex; align-items: center; gap: 6px; padding: 6px 11px 6px 9px; border-radius: 12px; background: rgba(255, 255, 255, .82); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); border: 1px solid rgba(13, 15, 10, .12); box-shadow: 0 8px 20px rgba(13, 15, 10, .1); font-size: 12px; font-weight: 500; white-space: nowrap; }
+.etiqueta[hidden] { display: none; }
+.etiqueta svg { width: 13px; height: 13px; fill: none; stroke: var(--verde-escuro); stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+.e1 { left: 12px; top: 196px; transform: rotate(-6deg); }
+.e2 { right: 12px; top: 34px; transform: rotate(4deg); }
+@media (max-width: 370px) { .etiqueta { display: none; } }
+@media (prefers-reduced-motion: no-preference) { .e1 { animation: boia 5s ease-in-out infinite; } .e2 { animation: boia2 6s ease-in-out .6s infinite; } @keyframes boia { 50% { transform: rotate(-6deg) translateY(-6px); } } @keyframes boia2 { 50% { transform: rotate(4deg) translateY(-7px); } } }
+
+/* frases da loja em mosaico */
+.sobre { padding: 0; background: none; border: 0; box-shadow: none; -webkit-backdrop-filter: none; backdrop-filter: none; }
+.sobre ul { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.sobre li { position: relative; overflow: hidden; flex-direction: column; align-items: flex-start; gap: 12px; padding: 16px 14px; border: 1px solid rgba(13, 15, 10, .1); border-radius: 24px; background: rgba(255, 255, 255, .72); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); box-shadow: 0 14px 34px rgba(13, 15, 10, .07); font-size: 15.500px; }
+.sobre li:first-child { grid-column: 1 / -1; padding: 22px 18px 24px; background: var(--tinta); color: #fff; font-size: 22px; font-weight: 600; line-height: 1.15; border-color: var(--tinta); }
+.sobre li:first-child::after { content: ""; position: absolute; right: -54px; bottom: -64px; width: 170px; height: 170px; border-radius: 50%; border: 26px solid rgba(164, 207, 69, .2); }
+.sobre li:first-child .emoji { background: var(--verde-vivo); }
+.sobre li:first-child span:last-child { position: relative; max-width: 14em; text-wrap: balance; }
+.sobre li:nth-child(4) { grid-column: 1 / -1; flex-direction: row; align-items: center; background: var(--verde-vivo); border-color: var(--tinta); font-weight: 500; }
+.sobre li:nth-child(4) .emoji { background: #fff; }
+
+/* mapa dentro de um cartão */
+.mapa-cartao { border: 1.500px solid var(--tinta); border-radius: 24px; overflow: hidden; background: var(--papel); box-shadow: 0 3px 0 var(--tinta); margin-bottom: 14px; }
+.mapa-topo { display: flex; align-items: center; gap: 10px; margin: 0; padding: 10px 14px; background: var(--tinta); color: #fff; font-size: 14px; }
+.mapa-topo b { font-weight: 500; }
+.luzes { display: flex; gap: 5px; } .luzes i { width: 8px; height: 8px; border-radius: 50%; background: rgba(255, 255, 255, .25); } .luzes i:first-child { background: var(--verde-vivo); }
+.mapa-cartao .mapa { border: 0; border-radius: 0; }
+.mapa-cartao .endereco { display: flex; gap: 8px; align-items: flex-start; margin: 0; padding: 12px 14px; border-top: 1px solid rgba(13, 15, 10, .1); }
+.endereco svg { flex: 0 0 18px; width: 18px; height: 18px; margin-top: 2px; fill: none; stroke: var(--verde-escuro); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+/* banda escura: horário e contatos */
+.banda { position: relative; margin: 28px -14px 0; padding: 26px 14px 28px; border-radius: 32px; background: var(--tinta); color: #fff; overflow: hidden; display: grid; gap: 24px; }
+.banda::before { content: ""; position: absolute; inset: 0; background-image: radial-gradient(rgba(255, 255, 255, .16) 1px, transparent 1.2px); background-size: 26px 26px; opacity: .6; pointer-events: none; }
+.banda .cartela { position: relative; margin: 0; }
+.banda .estado.aberta { color: var(--verde-vivo); } .banda .estado.fechada { color: #ffb4a6; }
+.banda .semana, .banda .linhas { background: rgba(255, 255, 255, .07); border-color: rgba(255, 255, 255, .14); box-shadow: none; }
+.banda .semana li, .banda .linha { border-top-color: rgba(255, 255, 255, .12); color: #fff; }
+.banda .semana small { color: var(--tinta); }
+.banda .linha small { color: #cfd6c2; } .banda .linha .seta { stroke: #cfd6c2; }
+.banda .linha:active { background: rgba(255, 255, 255, .08); }
+.banda .linha:focus-visible { outline-color: var(--verde-vivo); }
+.banda .nota-mapa { color: #b8c0aa; }
+
+/* fotos com selo */
+.foto { position: relative; box-shadow: 0 3px 0 var(--tinta); }
+.selo { position: absolute; left: 12px; top: 12px; padding: 5px 10px; border-radius: 999px; background: rgba(255, 255, 255, .8); border: 1px solid rgba(13, 15, 10, .12); font-size: 12px; font-weight: 500; }
+.fila { padding-bottom: 14px; }
+
+/* código com moldura */
+.moldura { position: relative; width: min(64vw, 256px); margin: 14px auto 12px; padding: 12px; border-radius: 26px; background: #eef4de; }
+.moldura .qr { width: 100%; margin: 0; border: 0; border-radius: 16px; padding: 8px; }
+.moldura-selo { position: absolute; z-index: 1; top: -11px; left: 50%; transform: translateX(-50%); padding: 4px 12px; border-radius: 999px; background: var(--tinta); color: #fff; font-size: 12px; font-weight: 600; white-space: nowrap; }
+.canto { position: absolute; width: 16px; height: 16px; border: 0 solid var(--tinta); }
+.c1 { left: 5px; top: 5px; border-width: 2.500px 0 0 2.500px; border-top-left-radius: 8px; } .c2 { right: 5px; top: 5px; border-width: 2.500px 2.500px 0 0; border-top-right-radius: 8px; }
+.c3 { left: 5px; bottom: 5px; border-width: 0 0 2.500px 2.500px; border-bottom-left-radius: 8px; } .c4 { right: 5px; bottom: 5px; border-width: 0 2.500px 2.500px 0; border-bottom-right-radius: 8px; }
+.varredura { display: none; }
+@media (prefers-reduced-motion: no-preference) { .varredura { display: block; position: absolute; z-index: 1; left: 14px; right: 14px; top: 12%; height: 2px; border-radius: 2px; background: linear-gradient(90deg, transparent, var(--verde-escuro), transparent); animation: varre 3s ease-in-out infinite; } @keyframes varre { 0% { top: 12%; opacity: 0; } 12%, 88% { opacity: .9; } 100% { top: 88%; opacity: 0; } } }
+
+/* rodapé com o nome grande ao fundo */
+.rodape { position: relative; overflow: hidden; padding-top: 30px; }
+.rodape > * { position: relative; }
+.rodape .rodape-fundo { position: absolute; left: 50%; top: -6px; transform: translateX(-50%); font-size: min(21vw, 150px); font-weight: 700; letter-spacing: -.03em; line-height: 1; white-space: nowrap; color: rgba(255, 255, 255, .05); pointer-events: none; }
+
+@media (min-width: 960px) {
+  .corpo > .banda { grid-column: 1 / -1; margin: 0; padding: 30px 28px 32px; grid-template-columns: 1fr 1fr; gap: 28px; align-items: start; }
+  .sobre ul { grid-template-columns: 1.3fr 1fr 1fr; }
+  .sobre li:first-child { grid-column: 1; grid-row: 1 / 3; font-size: 27px; justify-content: space-between; min-height: 230px; }
+  .sobre li:nth-child(4) { grid-column: 2 / 4; }
+  .sobre li:nth-child(2) { border-top: 1px solid rgba(13, 15, 10, .1); }
+  .e1 { top: 170px; left: 18px; } .e2 { right: 18px; }
+  .rodape { padding-top: 48px; padding-bottom: 40px; }
+  .mapa-cartao { margin-bottom: 16px; }
+}
+.rodape span.rodape-fundo { font-size: min(21vw, 150px); font-weight: 700; letter-spacing: -.03em; color: rgba(255, 255, 255, .05); }
+.rodape #rodape-nome { font-size: 18px; font-weight: 600; letter-spacing: .04em; color: #fff; }
+.e1 { top: 98px; left: 10px; } .e2 { top: 24px; }
+@media (min-width: 960px) { .e1 { top: 104px; left: 16px; } .e2 { top: 22px; right: 16px; } }
+.e1 { top: 62px; } @media (min-width: 960px) { .e1 { top: 60px; } }

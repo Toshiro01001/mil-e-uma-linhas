@@ -8,6 +8,9 @@
 
   var nome = L.nome;
   document.title = nome; $('logo').src = L.logo; $('logo').alt = nome; $('rodape-nome').textContent = nome;
+  $('rodape-fundo').textContent = nome; $('mapa-nome').textContent = L.ondeCurto || nome;
+  [['etiqueta1', L.ondeCurto], ['etiqueta2', L.etiqueta]].forEach(function (p) { if (p[1]) { $(p[0]).hidden = false; $(p[0]).lastChild.textContent = p[1]; } });
+  $('pilula-logo').src = L.logo; $('pilula-nome').textContent = nome; $('pilula-onde').textContent = L.ondeCurto || '';
   $('frase').textContent = L.frase; $('onde').textContent = L.onde;
   if (L.frase2) $('frase2').textContent = L.frase2; else $('frase2').hidden = true;
   function ligar(id, url, rotulo) { var a = $(id); if (!url) { a.hidden = true; return; } a.href = url; a.target = '_blank'; a.setAttribute('aria-label', rotulo); }
@@ -41,6 +44,9 @@
   });
   if (!(L.sobre || []).length) $('sobre').hidden = true;
 
+  /* pílula com o nome da loja, que aparece no alto quando o topo sai de vista */
+  if ('IntersectionObserver' in window) new IntersectionObserver(function (v) { $('pilula').hidden = v[0].isIntersecting; }, { threshold: 0 }).observe(document.querySelector('.topo'));
+
   /* atalho do WhatsApp que aparece no pé da tela quando o botão grande sai de vista */
   var flutua = $('flutua');
   flutua.href = $('b-whats').href; flutua.target = '_blank'; flutua.setAttribute('aria-label', 'Abrir conversa com a ' + nome + ' no WhatsApp');
@@ -52,6 +58,7 @@
   (L.fotos || []).forEach(function (f) {
     var d = document.createElement('div');
     d.className = 'foto cor-' + f.cor; d.setAttribute('role', 'img'); d.setAttribute('aria-label', f.legenda);
+    if (!f.arquivo) { var selo = document.createElement('span'); selo.className = 'selo'; selo.setAttribute('aria-hidden', 'true'); selo.textContent = 'Foto em breve'; d.appendChild(selo); }
     if (f.arquivo) { var im = document.createElement('img'); im.src = f.arquivo; im.alt = f.legenda; im.loading = 'lazy'; d.appendChild(im); d.removeAttribute('role'); d.removeAttribute('aria-label'); }
     grade.appendChild(d);
   });
@@ -78,6 +85,7 @@
     var e = estado(), frase = e.texto + (e.resto ? ', ' + e.resto : '') + '.';
     $('agora').hidden = false; $('agora').className = 'agora ' + (e.aberta ? 'aberta' : 'fechada'); $('agora-texto').textContent = e.texto + (e.resto ? ' · ' + e.resto : '');
     $('estado').className = 'estado ' + (e.aberta ? 'aberta' : 'fechada'); $('estado').textContent = frase;
+    $('pilula-estado').className = 'pilula-estado ' + (e.aberta ? 'aberta' : 'fechada'); $('pilula-texto').textContent = e.aberta ? 'Aberta' : 'Fechada';
   }
   if (L.horario && L.horario.length === 7) {
     $('horario').hidden = false; $('nota-horario').hidden = !L.horarioExemplo;
