@@ -344,3 +344,118 @@ h1 { font: 500 clamp(31px, 9.4vw, 76px)/1.04 var(--serifa); letter-spacing: -.02
   .vem, .atalhos.vem .atalho, .sobre.vem li { opacity: 1; transform: none; }
   .acao-pontos { display: none; }
 }
+
+/* ===== Camada nova: abertura, botões com tinta, luz no topo, linha do dia e ferramentas do catálogo ===== */
+@property --giro { syntax: '<angle>'; inherits: false; initial-value: 0deg; }
+
+/* abertura: a logo aparece, o fio verde corre e a cortina sobe. É só CSS: se o script falhar, a página abre do mesmo jeito. */
+.abre { position: fixed; inset: 0; z-index: 100; display: grid; place-items: center; background: var(--mata); animation: abre-sai .8s var(--curva) 1.150s both; }
+.abre-selo { display: grid; justify-items: center; gap: 20px; }
+.abre img { width: 92px; height: 92px; border-radius: 50%; background: #fff; animation: abre-logo .9s var(--solta) both; }
+.abre i { width: 120px; height: 2px; border-radius: 2px; overflow: hidden; background: rgba(255, 255, 255, .12); }
+.abre i::after { content: ''; display: block; height: 100%; background: var(--verde); transform-origin: 0 50%; animation: abre-fio 1.050s var(--curva) both; }
+@keyframes abre-logo { from { opacity: 0; transform: scale(.7); } }
+@keyframes abre-fio { from { transform: scaleX(0); } }
+@keyframes abre-sai { from { clip-path: inset(0 0 0 0); visibility: visible; } to { clip-path: inset(0 0 100% 0); visibility: hidden; } }
+.barra { animation-delay: 1.350s; }
+#frase { --atraso: 1350ms; }
+.tag { animation-delay: 1.200s, 3.800s; }
+
+/* topo: campo de pontos, luz que segue o ponteiro e etiqueta que inclina */
+.pontos { position: absolute; inset: 0; z-index: -1; pointer-events: none; background: radial-gradient(circle, rgba(255, 255, 255, .16) 1px, transparent 1.4px) 0 0 / 22px 22px; -webkit-mask: radial-gradient(90% 75% at 72% 18%, #000 0%, transparent 72%); mask: radial-gradient(90% 75% at 72% 18%, #000 0%, transparent 72%); }
+.heroi::after { content: ''; position: absolute; inset: 0; z-index: -1; pointer-events: none; opacity: 0; transition: opacity .6s; background: radial-gradient(440px circle at var(--mx, 50%) var(--my, 50%), rgba(164, 207, 69, .2), transparent 70%); }
+.heroi.com-luz::after { opacity: 1; }
+.tag-papel { transform: perspective(700px) rotateY(var(--ry, 0deg)) rotateX(var(--rx, 0deg)); transition: transform .45s var(--solta); }
+.digita { position: relative; }
+.digita i { visibility: hidden; font-style: normal; }
+.digita b { position: absolute; inset: 0; font-weight: inherit; }
+.digita b::after { content: ''; display: inline-block; width: .55em; height: 1em; margin-left: 2px; vertical-align: -.12em; background: var(--verde); animation: pisca .8s steps(2) infinite; }
+.digita.pronto b::after { animation: pisca .8s steps(2) 3 forwards; opacity: 0; }
+@keyframes pisca { 50% { opacity: 0; } }
+
+/* botões: a tinta entra pela esquerda, o texto troca de cor e as setas andam */
+.acao::before { content: ''; position: absolute; inset: 0; z-index: -1; border-radius: inherit; background: var(--obs); clip-path: inset(0 100% 0 0 round 999px); transition: clip-path .6s var(--solta); }
+.acao-pontos { z-index: -2; }
+.acao.escura::before { background: var(--verde); }
+.acao.vazada::before { background: var(--verde); }
+.acao .vai { transition: transform .5s var(--solta); }
+.acao:active::before { clip-path: inset(0 0 0 0 round 999px); }
+.acao:active { color: var(--verde); }
+.acao.escura:active, .acao.vazada:active { color: var(--obs); }
+@media (hover: hover) {
+  .acao:hover::before { clip-path: inset(0 0 0 0 round 999px); }
+  .acao:hover { color: var(--verde); }
+  .acao.escura:hover, .acao.vazada:hover { color: var(--obs); background: var(--obs); }
+  .acao.vazada:hover { background: transparent; }
+  .acao:hover .vai { transform: translateX(6px); }
+}
+/* botão de vidro: um traço verde dá a volta na borda */
+.acao.vazada { border: 1px solid transparent; background: linear-gradient(#1a2116, #1a2116) padding-box, conic-gradient(from var(--giro), rgba(255, 255, 255, .26) 0 62%, var(--verde) 78%, rgba(255, 255, 255, .26) 94%) border-box; animation: giro 5s linear infinite; }
+@keyframes giro { to { --giro: 360deg; } }
+
+/* linha do dia no horário */
+.dia { margin: 14px 0 4px; }
+.dia-trilho { position: relative; height: 6px; border-radius: 6px; background: rgba(28, 32, 28, .1); }
+.dia-trilho i { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 6px; background: var(--obs); transition: width 1.2s var(--solta); }
+.dia.aberta .dia-trilho i { background: linear-gradient(to right, var(--verde-escuro), var(--verde)); }
+.dia-trilho b { position: absolute; top: 50%; width: 14px; height: 14px; margin: -7px 0 0 -7px; border-radius: 50%; background: #fff; border: 3px solid var(--obs); transition: left 1.2s var(--solta); }
+.dia.aberta .dia-trilho b { border-color: var(--verde-escuro); box-shadow: 0 0 0 0 rgba(79, 116, 23, .45); animation: pulsa-escuro 2.4s infinite; }
+@keyframes pulsa-escuro { 70% { box-shadow: 0 0 0 9px rgba(79, 116, 23, 0); } 100% { box-shadow: 0 0 0 0 rgba(79, 116, 23, 0); } }
+.dia-pes { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; margin-top: 10px; font: 500 11px/1.2 var(--maquina); letter-spacing: .08em; color: var(--cinza); }
+.dia-pes strong { font: 600 13.5px/1.2 var(--texto); letter-spacing: 0; color: var(--obs); }
+
+/* catálogo: busca, sorteio, coração e lista */
+.cat-ferramentas { display: grid; gap: 10px; margin-top: 22px; }
+.busca { display: flex; align-items: center; gap: 10px; min-height: 54px; padding: 0 18px; border-radius: 999px; border: 1px solid rgba(28, 32, 28, .2); background: var(--papel); color: var(--cinza); transition: border-color .25s, box-shadow .25s; }
+.busca:focus-within { border-color: var(--obs); box-shadow: 0 0 0 4px rgba(164, 207, 69, .35); }
+.busca input { flex: 1; min-width: 0; border: 0; outline: 0; background: none; font: 400 16px var(--texto); color: var(--obs); -webkit-appearance: none; appearance: none; }
+.busca input::placeholder { color: #8b8e86; }
+.cat-ferramentas .acao { min-height: 54px; }
+.cat-ferramentas + .chips { margin-top: 14px; }
+.chip-lista { border-color: var(--verde-escuro); }
+.cat-vazio { padding: 40px 0; font: 400 22px/1.3 var(--serifa); max-width: 26ch; }
+.peca { animation: none; }
+.peca-li { position: relative; animation: chega .8s var(--solta) both; animation-delay: calc(min(var(--i), 11) * 45ms); }
+.gosto { position: absolute; top: 8px; right: 8px; display: grid; place-items: center; width: 44px; height: 44px; border-radius: 50%; background: rgba(246, 245, 242, .92); color: var(--obs); transition: background-color .3s, color .3s, transform .3s var(--solta); }
+.gosto svg { width: 19px; height: 19px; }
+.gosto:active { transform: scale(.88); }
+.gosto[aria-pressed="true"] { background: var(--obs); color: var(--verde); }
+.gosto[aria-pressed="true"] svg { fill: currentColor; animation: pulo .5s var(--solta); }
+@keyframes pulo { 0% { transform: scale(.5); } 60% { transform: scale(1.25); } }
+.sacola { position: fixed; z-index: 36; left: 50%; bottom: calc(14px + env(safe-area-inset-bottom)); transform: translateX(-50%); width: min(calc(100% - 20px), 480px); display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 7px 7px 7px 20px; border-radius: 999px; color: #fff; background: rgba(21, 25, 20, .88); border: 1px solid var(--fio-claro); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); box-shadow: 0 10px 30px rgba(21, 25, 20, .3); animation: sobe-botao .6s var(--solta) both; }
+.sacola > span { display: grid; min-width: 0; }
+.sacola b { font-weight: 600; font-size: 14.5px; white-space: nowrap; }
+.sacola small { font-size: 11.5px; color: rgba(255, 255, 255, .62); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.sacola .acao { min-height: 46px; padding: 0 18px; font-size: 15px; flex: none; }
+body[data-vista="catalogo"] .rodape { padding-bottom: calc(120px + env(safe-area-inset-bottom)); }
+
+/* folha da peça: setas, guardar e mostrar */
+.peca-grande { position: relative; touch-action: pan-y; }
+.p-seta { position: absolute; top: 50%; display: grid; place-items: center; width: 44px; height: 44px; margin-top: -22px; border-radius: 50%; background: rgba(246, 245, 242, .92); color: var(--obs); transition: background-color .3s, transform .3s var(--solta); }
+.p-ant { left: 8px; } .p-prox { right: 8px; }
+.p-seta:hover { background: var(--verde); }
+.p-seta:active { transform: scale(.9); }
+.folha-peca.rolando .peca-grande img { animation: rola .11s linear both; }
+.folha-peca.rolando .p-seta { visibility: hidden; }
+@keyframes rola { from { transform: translateY(14%); opacity: .5; } }
+.folha-acoes { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.leve { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 48px; padding: 0 10px; border-radius: 999px; border: 1px solid rgba(28, 32, 28, .2); background: var(--papel); font-size: 14px; font-weight: 500; transition: background-color .3s, color .3s, border-color .3s; }
+.leve svg { width: 18px; height: 18px; }
+.leve:hover { border-color: var(--obs); }
+.leve[aria-pressed="true"] { background: var(--obs); color: #fff; border-color: var(--obs); }
+.leve[aria-pressed="true"] svg { fill: var(--verde); stroke: var(--verde); }
+
+@media (min-width: 560px) {
+  .cat-ferramentas { grid-template-columns: minmax(0, 420px) auto; justify-content: start; }
+}
+@media (min-width: 900px) {
+  .sacola { left: auto; right: 28px; transform: none; animation-name: sobe-lado; }
+  .peca-grande { max-height: 48dvh; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .abre { display: none; }
+  .digita b::after { display: none; }
+}
+.cat-topo { grid-template-columns: minmax(0, 1fr); }
+@media (max-width: 559px) { .cat-ferramentas { grid-template-columns: minmax(0, 1fr); } }
+.busca input { width: 100%; }

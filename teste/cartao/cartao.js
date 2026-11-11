@@ -21,7 +21,24 @@
       fora.appendChild(dentro); el.appendChild(fora); el.appendChild(document.createTextNode(' '));
     });
   }
-  palavras($('frase'), L.frase); $('onde').textContent = L.onde;
+  palavras($('frase'), L.frase);
+  /* rótulo do endereço: aparece letra por letra, como digitado. O espaço dele já fica reservado, para nada pular na tela. */
+  (function (el, texto) {
+    var fantasma = document.createElement('i'), visto = document.createElement('b'), i = 0;
+    el.setAttribute('aria-label', texto); fantasma.textContent = texto; fantasma.setAttribute('aria-hidden', 'true'); visto.setAttribute('aria-hidden', 'true'); el.appendChild(fantasma); el.appendChild(visto);
+    if (calmo) { visto.textContent = texto; return; }
+    setTimeout(function passo() { visto.textContent = texto.slice(0, ++i); if (i < texto.length) setTimeout(passo, 26); else el.classList.add('pronto'); }, 1500);
+  })($('onde'), L.onde);
+  /* no computador, a etiqueta inclina e uma luz verde acompanha o ponteiro no topo */
+  if (!calmo && window.matchMedia && window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+    var topo = $('heroi');
+    topo.addEventListener('pointermove', function (ev) {
+      var r = topo.getBoundingClientRect(), px = (ev.clientX - r.left) / r.width, py = (ev.clientY - r.top) / r.height;
+      topo.style.setProperty('--mx', (px * 100).toFixed(1) + '%'); topo.style.setProperty('--my', (py * 100).toFixed(1) + '%');
+      topo.style.setProperty('--ry', ((px - .5) * 28).toFixed(1) + 'deg'); topo.style.setProperty('--rx', ((.5 - py) * 18).toFixed(1) + 'deg'); topo.classList.add('com-luz');
+    });
+    topo.addEventListener('pointerleave', function () { topo.classList.remove('com-luz'); topo.style.setProperty('--ry', '0deg'); topo.style.setProperty('--rx', '0deg'); });
+  }
   requestAnimationFrame(function () { $('frase').classList.add('anda'); });
   if (L.frase2) $('frase2').textContent = L.frase2; else $('frase2').hidden = true;
   /* etiqueta pendurada: um toque dá um empurrão nela */
@@ -59,7 +76,7 @@
 
   /* atalho do WhatsApp que aparece no pé da tela quando o botão grande sai de vista */
   var flutua = $('flutua'), botaoVisto = true;
-  function flutuar() { flutua.hidden = document.body.classList.contains('com-folha') || (document.body.getAttribute('data-vista') === 'inicio' && botaoVisto); }
+  function flutuar() { flutua.hidden = document.body.classList.contains('com-folha') || !$('sacola').hidden || (document.body.getAttribute('data-vista') === 'inicio' && botaoVisto); }
   flutua.href = $('b-whats').href; flutua.target = '_blank'; flutua.setAttribute('aria-label', 'Abrir conversa com a ' + nome + ' no WhatsApp');
   if ('IntersectionObserver' in window) {
     new IntersectionObserver(function (v) { botaoVisto = v[0].isIntersecting; flutuar(); }, { threshold: 0 }).observe($('b-whats'));
@@ -123,6 +140,15 @@
     var e = estado(), frase = e.texto + (e.resto ? ', ' + e.resto : '') + '.';
     $('agora').hidden = false; $('agora').className = 'agora ' + (e.aberta ? 'aberta' : 'fechada'); $('agora-texto').textContent = frase;
     $('estado').className = 'estado ' + (e.aberta ? 'aberta' : 'fechada'); $('estado').textContent = frase;
+    /* linha do dia: mostra em que ponto do expediente a loja está e quanto falta para abrir ou fechar */
+    var ag = agoraNaLoja(), hd = L.horario[ag.dia];
+    function dur(m) { var hr = Math.floor(m / 60), mi = m % 60; return hr ? hr + 'h' + (mi ? ' ' + mi + 'min' : '') : mi + 'min'; }
+    if (hd) {
+      var ab = minutos(hd[0]), fe = minutos(hd[1]), parte = Math.max(0, Math.min(1, (ag.min - ab) / (fe - ab)));
+      $('dia').hidden = false; $('dia-fio').style.width = (parte * 100).toFixed(1) + '%'; $('dia-marca').style.left = (parte * 100).toFixed(1) + '%';
+      $('dia').className = 'dia ' + (e.aberta ? 'aberta' : 'fechada'); $('dia-a').textContent = hora(hd[0]); $('dia-b').textContent = hora(hd[1]);
+      $('dia-resto').textContent = ag.min < ab ? 'Abre em ' + dur(ab - ag.min) : ag.min < fe ? 'Fecha em ' + dur(fe - ag.min) : 'Encerrado por hoje';
+    } else $('dia').hidden = true;
     var hh = L.horario[agoraNaLoja().dia]; $('hoje-grande').hidden = false; $('hoje-grande').firstChild.textContent = hh ? hora(hh[0]) + ' às ' + hora(hh[1]) : 'Fechada';
     $('barra-estado').hidden = false; $('barra-estado').className = 'barra-estado ' + (e.aberta ? 'aberta' : 'fechada'); $('barra-texto').textContent = e.aberta ? 'Aberta' : 'Fechada';
   }
@@ -179,7 +205,7 @@
   $('f-salvar').href = L.contato; $('f-salvar').setAttribute('download', 'contato-da-loja.vcf');
   function mostrar(qual, foco) { if (aberta) aberta.hidden = true; else antes = document.activeElement; aberta = qual; qual.hidden = false; veu.hidden = false; document.body.classList.add('com-folha'); flutuar(); foco.focus(); }
   function abrir() { mostrar(folha, $('f-salvar')); }
-  function fechar() { if (!aberta) return; aberta.hidden = true; aberta = null; veu.hidden = true; document.body.classList.remove('com-folha'); flutuar(); if (antes && antes.focus) antes.focus(); }
+  function fechar() { if (!aberta) return; if (aberta === folhaPeca && location.hash.indexOf('#peca-') === 0 && history.replaceState) history.replaceState(null, '', '#catalogo'); aberta.hidden = true; aberta = null; veu.hidden = true; document.body.classList.remove('com-folha'); flutuar(); if (antes && antes.focus) antes.focus(); }
   $('b-contato').addEventListener('click', abrir);
   $('f-nao').addEventListener('click', fechar); $('p-fechar').addEventListener('click', fechar);
   veu.addEventListener('click', fechar);
@@ -249,28 +275,61 @@
     });
   }
 
-  /* catálogo: todas as peças em grade, com filtro por tipo. Tocar numa peça abre a foto grande e o botão que leva a pergunta ao WhatsApp já com o nome dela. */
-  var CAT = L.catalogo || [], TIPOS = L.tipos || [], nomeTipo = {}, filtro = '', gradeCat = $('cat-grade'), chips = $('chips');
+  /* catálogo: todas as peças em grade, com busca, filtro por tipo e a lista de quem visita.
+     Tocar numa peça abre a foto grande; dali dá para passar para a próxima, guardar na lista, mostrar a alguém ou perguntar no WhatsApp.
+     A lista vive só na memória desta tela: nada é gravado no aparelho nem enviado; some ao fechar a página. */
+  var CAT = L.catalogo || [], TIPOS = L.tipos || [], nomeTipo = {}, filtro = '', termo = '', gradeCat = $('cat-grade'), chips = $('chips'), lista = [], atual = -1, gostei = [], pintado = false, chipLista = null;
+  var CORACAO = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20s-7-4.400-7-9.600A4 4 0 0 1 12 8a4 4 0 0 1 7 2.400C19 15.600 12 20 12 20z"/></svg>';
   TIPOS.forEach(function (t) { nomeTipo[t[0]] = t[1]; });
-  function verPeca(p, de) {
-    $('p-foto').src = p.arquivo; $('p-foto').alt = p.legenda; $('p-nome').textContent = p.legenda; $('p-cat').textContent = nomeTipo[p.tipo] || '';
+  CAT.forEach(function (p) { p.id = (p.arquivo.match(/(\d+)\.\w+$/) || [0, ''])[1]; });
+  function limpo(t) { return t.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, ''); }
+  function filtrar() {
+    var q = limpo(termo.trim());
+    return CAT.filter(function (p) { return (filtro === '*' ? gostei.indexOf(p) >= 0 : !filtro || p.tipo === filtro) && (!q || limpo(p.legenda + ' ' + (nomeTipo[p.tipo] || '')).indexOf(q) >= 0); });
+  }
+  function marcarGosto() {
+    var p = lista[atual], dentro = !!p && gostei.indexOf(p) >= 0;
+    $('p-gosto').setAttribute('aria-pressed', dentro ? 'true' : 'false'); $('p-gosto').lastChild.textContent = dentro ? 'Na sua lista' : 'Guardar na lista';
+  }
+  function pintarPeca(i) {
+    atual = (i + lista.length) % lista.length; var p = lista[atual], f = $('p-foto');
+    f.src = p.arquivo; f.alt = p.legenda; f.style.animation = 'none'; void f.offsetWidth; f.style.animation = '';
+    $('p-nome').textContent = p.legenda; $('p-cat').textContent = (nomeTipo[p.tipo] || '') + (lista.length > 1 ? ' / ' + (atual + 1) + ' de ' + lista.length : '');
     $('p-whats').href = 'https://wa.me/' + L.whatsapp + '?text=' + encodeURIComponent((L.mensagemPeca || '') + p.legenda + '.');
     $('p-whats').setAttribute('aria-label', 'Perguntar sobre ' + p.legenda + ' no WhatsApp da ' + nome);
-    mostrar(folhaPeca, $('p-whats'));
+    $('p-ant').hidden = $('p-prox').hidden = lista.length < 2; marcarGosto();
+    if (history.replaceState) history.replaceState(null, '', '#peca-' + p.id);
   }
+  function verPeca(p) { if (lista.indexOf(p) < 0) lista = CAT.slice(); pintarPeca(lista.indexOf(p)); if (aberta !== folhaPeca) mostrar(folhaPeca, $('p-whats')); }
+  function sacola() {
+    var n = gostei.length;
+    $('sacola').hidden = !n || document.body.getAttribute('data-vista') !== 'catalogo';
+    $('sacola-n').textContent = n + (n === 1 ? ' peça na sua lista' : ' peças na sua lista');
+    $('sacola-zap').href = 'https://wa.me/' + L.whatsapp + '?text=' + encodeURIComponent((L.mensagemLista || '') + '\n' + gostei.map(function (p) { return '- ' + p.legenda; }).join('\n'));
+    $('sacola-zap').setAttribute('aria-label', 'Enviar a sua lista de ' + n + (n === 1 ? ' peça' : ' peças') + ' para o WhatsApp da ' + nome);
+    [].forEach.call(gradeCat.querySelectorAll('.gosto'), function (b) { b.setAttribute('aria-pressed', gostei.indexOf(b.peca) >= 0 ? 'true' : 'false'); });
+    if (chipLista) { chipLista.hidden = !n; chipLista.lastChild.textContent = n; }
+    if (filtro === '*') { if (!n) { filtro = ''; [].forEach.call(chips.children, function (c, k) { c.setAttribute('aria-pressed', k === 0 ? 'true' : 'false'); }); } if (pintado) pintarCatalogo(); }
+    flutuar(); marcarGosto();
+  }
+  function alternar(p) { var k = gostei.indexOf(p); if (k < 0) gostei.push(p); else gostei.splice(k, 1); sacola(); }
   function pintarCatalogo() {
-    var lista = CAT.filter(function (p) { return !filtro || p.tipo === filtro; });
-    gradeCat.textContent = '';
+    lista = filtrar(); gradeCat.textContent = '';
     lista.forEach(function (p, i) {
-      var li = document.createElement('li'), b = document.createElement('button'), q = document.createElement('span'), im = document.createElement('img'), pe = document.createElement('span'), n = document.createElement('b'), t = document.createElement('small');
-      b.type = 'button'; b.className = 'peca'; b.style.setProperty('--i', i); b.setAttribute('aria-label', p.legenda + '. Ver de perto.');
+      var li = document.createElement('li'), b = document.createElement('button'), g = document.createElement('button'), q = document.createElement('span'), im = document.createElement('img'), pe = document.createElement('span'), n = document.createElement('b'), t = document.createElement('small');
+      li.className = 'peca-li'; li.style.setProperty('--i', i);
+      b.type = 'button'; b.className = 'peca'; b.setAttribute('aria-label', p.legenda + '. Ver de perto.');
       q.className = 'peca-quadro'; im.src = p.arquivo; im.alt = ''; im.width = 600; im.height = 750; im.loading = i < 4 ? 'eager' : 'lazy'; im.decoding = 'async'; q.appendChild(im);
       pe.className = 'peca-pe'; n.textContent = p.legenda; t.textContent = nomeTipo[p.tipo] || ''; pe.appendChild(n); pe.appendChild(t);
-      b.appendChild(q); b.appendChild(pe); b.addEventListener('click', function () { verPeca(p, b); });
-      li.appendChild(b); gradeCat.appendChild(li);
+      b.appendChild(q); b.appendChild(pe); b.addEventListener('click', function () { verPeca(p); });
+      g.type = 'button'; g.className = 'gosto'; g.peca = p; g.innerHTML = CORACAO; g.setAttribute('aria-label', 'Guardar ' + p.legenda + ' na minha lista'); g.setAttribute('aria-pressed', gostei.indexOf(p) >= 0 ? 'true' : 'false');
+      g.addEventListener('click', function () { alternar(p); });
+      li.appendChild(b); li.appendChild(g); gradeCat.appendChild(li);
     });
-    $('cat-conta').textContent = lista.length + (lista.length === 1 ? ' peça' : ' peças') + (filtro ? ' em ' + nomeTipo[filtro] : '');
+    $('cat-vazio').hidden = lista.length > 0;
+    $('cat-conta').textContent = lista.length + (lista.length === 1 ? ' peça' : ' peças') + (filtro === '*' ? ' na sua lista' : filtro ? ' em ' + nomeTipo[filtro] : '') + (termo.trim() ? ' com "' + termo.trim() + '"' : '');
   }
+  function repintar() { if (calmo) { pintarCatalogo(); return; } gradeCat.classList.add('troca'); setTimeout(function () { pintarCatalogo(); gradeCat.classList.remove('troca'); }, 180); }
   function chip(id, rotulo, n) {
     var b = document.createElement('button'), q = document.createElement('sup');
     b.type = 'button'; b.className = 'chip'; b.textContent = rotulo; q.textContent = n; q.setAttribute('aria-hidden', 'true'); b.appendChild(q);
@@ -278,33 +337,68 @@
     b.addEventListener('click', function () {
       if (filtro === id) return; filtro = id;
       [].forEach.call(chips.children, function (c) { c.setAttribute('aria-pressed', c === b ? 'true' : 'false'); });
-      if (calmo) { pintarCatalogo(); return; }
-      gradeCat.classList.add('troca'); setTimeout(function () { pintarCatalogo(); gradeCat.classList.remove('troca'); }, 180);
+      repintar();
     });
-    chips.appendChild(b);
+    chips.appendChild(b); return b;
   }
   if (CAT.length) {
     chip('', 'Tudo', CAT.length);
     TIPOS.forEach(function (t) { var n = CAT.filter(function (p) { return p.tipo === t[0]; }).length; if (n) chip(t[0], t[1], n); });
+    chipLista = chip('*', 'Minha lista', 0); chipLista.hidden = true; chipLista.classList.add('chip-lista');
+    var esperaBusca = 0;
+    $('busca').addEventListener('input', function () { termo = $('busca').value; clearTimeout(esperaBusca); esperaBusca = setTimeout(repintar, 140); });
+    $('p-ant').addEventListener('click', function () { pintarPeca(atual - 1); });
+    $('p-prox').addEventListener('click', function () { pintarPeca(atual + 1); });
+    $('p-gosto').addEventListener('click', function () { if (lista[atual]) alternar(lista[atual]); });
+    document.addEventListener('keydown', function (ev) { if (aberta !== folhaPeca || lista.length < 2) return; if (ev.key === 'ArrowRight') pintarPeca(atual + 1); if (ev.key === 'ArrowLeft') pintarPeca(atual - 1); });
+    /* deslizar o dedo sobre a foto também troca de peça */
+    var dedoX = null;
+    $('p-quadro').addEventListener('pointerdown', function (ev) { dedoX = ev.clientX; });
+    $('p-quadro').addEventListener('pointerup', function (ev) { if (dedoX === null || lista.length < 2) return; var dx = ev.clientX - dedoX; dedoX = null; if (Math.abs(dx) > 40) pintarPeca(atual + (dx < 0 ? 1 : -1)); });
+    $('p-enviar').addEventListener('click', function () {
+      var p = lista[atual]; if (!p) return;
+      var url = location.href.split('#')[0].split('?')[0] + '#peca-' + p.id;
+      if (navigator.share) { navigator.share({ title: p.legenda + ' na ' + nome, url: url }).catch(function () { /* a pessoa desistiu */ }); return; }
+      if (navigator.clipboard && navigator.clipboard.writeText) { navigator.clipboard.writeText(url).then(function () { aviso('Link desta peça copiado. É só colar na conversa.'); }, function () { aviso('Copie o endereço desta página para mostrar a peça.'); }); return; }
+      aviso('Copie o endereço desta página para mostrar a peça.');
+    });
+    /* Me surpreenda: sorteia uma peça entre as que estão na tela; as fotos passam rápido antes de parar na sorteada */
+    $('surpresa').addEventListener('click', function () {
+      if (!pintado) { pintado = true; pintarCatalogo(); }
+      if (!lista.length) lista = CAT.slice();
+      var alvo = lista[Math.floor(Math.random() * lista.length)], k = 0;
+      if (calmo || lista.length < 3) { verPeca(alvo); return; }
+      verPeca(lista[Math.floor(Math.random() * lista.length)]); folhaPeca.classList.add('rolando');
+      var t = setInterval(function () {
+        k++;
+        if (k >= 8 || aberta !== folhaPeca) { clearInterval(t); folhaPeca.classList.remove('rolando'); if (aberta === folhaPeca) pintarPeca(lista.indexOf(alvo)); return; }
+        pintarPeca(Math.floor(Math.random() * lista.length));
+      }, 110);
+    });
   } else { $('aba-catalogo').hidden = true; $('b-catalogo').hidden = true; }
 
-  /* duas vistas na mesma página: Início e Catálogo. O endereço ganha #catalogo, então o botão de voltar do celular funciona e dá para mandar o link direto do catálogo. */
-  var pintado = false;
+  /* duas vistas na mesma página: Início e Catálogo. O endereço ganha #catalogo, então o botão de voltar do celular funciona e dá para mandar o link direto do catálogo.
+     Cada peça também tem o seu endereço (#peca-49): quem recebe o link cai direto na foto dela. */
   function trocar(qual) {
     document.body.setAttribute('data-vista', qual);
     $('inicio').hidden = qual !== 'inicio'; $('catalogo').hidden = qual !== 'catalogo';
     if (qual === 'catalogo') $('aba-inicio').removeAttribute('aria-current'); else $('aba-inicio').setAttribute('aria-current', 'page');
     if (qual === 'catalogo') $('aba-catalogo').setAttribute('aria-current', 'page'); else $('aba-catalogo').removeAttribute('aria-current');
     if (qual === 'catalogo' && !pintado) { pintado = true; pintarCatalogo(); }
-    scrollTo(0, 0); flutuar();
+    scrollTo(0, 0); sacola();
   }
+  function pecaDoEndereco(h) { var id = h.indexOf('#peca-') === 0 ? h.slice(6) : '', p = null; CAT.forEach(function (c) { if (id && c.id === id) p = c; }); return p; }
   function vista(primeira) {
-    var qual = location.hash === '#catalogo' && CAT.length ? 'catalogo' : 'inicio';
-    if (qual === document.body.getAttribute('data-vista') && !primeira) { if (location.hash === '#inicio' || location.hash === '#catalogo') scrollTo({ top: 0, behavior: calmo ? 'auto' : 'smooth' }); return; }
-    if (aberta) fechar();
-    if (primeira || calmo) { trocar(qual); return; }
-    if (document.startViewTransition) { document.startViewTransition(function () { trocar(qual); }); return; }
-    trocar(qual); var el = $(qual); el.classList.remove('entra'); void el.offsetWidth; el.classList.add('entra');
+    var h = location.hash, peca = pecaDoEndereco(h), qual = CAT.length && (h === '#catalogo' || h.indexOf('#peca-') === 0) ? 'catalogo' : 'inicio';
+    if (qual === document.body.getAttribute('data-vista') && !primeira) {
+      if (peca) { verPeca(peca); return; }
+      if (h === '#inicio' || h === '#catalogo') { if (aberta) fechar(); scrollTo({ top: 0, behavior: calmo ? 'auto' : 'smooth' }); }
+      return;
+    }
+    if (aberta) { aberta.hidden = true; aberta = null; veu.hidden = true; document.body.classList.remove('com-folha'); }
+    if (primeira || calmo) { trocar(qual); if (peca) verPeca(peca); return; }
+    if (document.startViewTransition) { document.startViewTransition(function () { trocar(qual); if (peca) verPeca(peca); }); return; }
+    trocar(qual); var el = $(qual); el.classList.remove('entra'); void el.offsetWidth; el.classList.add('entra'); if (peca) verPeca(peca);
   }
   addEventListener('hashchange', function () { vista(false); });
   [].forEach.call(document.querySelectorAll('a[href="#inicio"], a[href="#catalogo"]'), function (a) { a.addEventListener('click', function () { if (location.hash === a.getAttribute('href')) vista(false); }); });
@@ -312,5 +406,6 @@
 
   /* oferece o contato ao abrir, uma vez por visita, só no celular: é nele que o cartão é encostado.
      No computador a página abre direto; o botão Salvar contato continua disponível. */
-  if ((iphone || android) && document.body.getAttribute('data-vista') === 'inicio') setTimeout(abrir, 900);
+  /* espera a abertura terminar; se a pessoa já foi para o catálogo ou abriu outra folha, não interrompe */
+  if (iphone || android) setTimeout(function () { if (document.body.getAttribute('data-vista') === 'inicio' && !aberta) abrir(); }, calmo ? 900 : 2100);
 })();
