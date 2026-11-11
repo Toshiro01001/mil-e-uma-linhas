@@ -117,9 +117,14 @@ h1 { font: 500 clamp(31px, 9.4vw, 76px)/1.04 var(--serifa); letter-spacing: -.02
 .atalho:hover i { background: var(--verde); border-color: var(--verde); color: var(--obs); transform: rotate(-8deg) scale(1.06); }
 .atalho:active { transform: scale(.98); }
 
-.sobre ul { margin-top: 16px; border-top: 1px solid var(--fio); }
-.sobre li { display: grid; grid-template-columns: 34px 1fr; align-items: baseline; padding: 18px 0; border-bottom: 1px solid var(--fio); font: 400 clamp(21px, 5.6vw, 30px)/1.22 var(--serifa); background: var(--areia); }
-.sobre li .num { width: 7px; height: 7px; border-radius: 50%; background: var(--verde-escuro); align-self: center; }
+/* a loja: painel escuro com a frase principal em destaque e as outras em cartões com desenho */
+.sobre-painel { position: relative; overflow: hidden; isolation: isolate; border-radius: var(--raio); background: var(--mata); color: #fff; padding: 28px 20px 20px; }
+.sobre-painel::before { content: ''; position: absolute; z-index: -1; right: -30%; top: -45%; width: 90%; aspect-ratio: 1; border-radius: 50%; background: radial-gradient(closest-side, rgba(164, 207, 69, .3), transparent); pointer-events: none; }
+.sobre-frase { margin-top: 14px; font: 400 clamp(30px, 8.6vw, 46px)/1.08 var(--serifa); letter-spacing: -.01em; text-wrap: balance; }
+.sobre ul { margin-top: 26px; display: grid; gap: 10px; }
+.sobre li { display: grid; grid-template-columns: 44px 1fr; gap: 14px; align-items: center; padding: 13px 14px; border-radius: 18px; background: rgba(255, 255, 255, .06); border: 1px solid var(--fio-claro); font: 500 16px/1.35 var(--texto); color: rgba(255, 255, 255, .92); }
+.sobre li i { display: grid; place-items: center; width: 44px; height: 44px; border-radius: 50%; background: var(--verde); color: var(--obs); }
+.sobre li svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
 .emoji { display: none; }
 
 /* vitrine que passa sozinha */
@@ -314,9 +319,10 @@ h1 { font: 500 clamp(31px, 9.4vw, 76px)/1.04 var(--serifa); letter-spacing: -.02
   .bloco { padding-top: 120px; }
   .atalhos { grid-template-columns: repeat(4, 1fr); gap: 14px; padding-top: 28px; }
   .atalho { min-height: 168px; padding: 20px; }
-  .sobre { display: grid; grid-template-columns: 1fr 3fr; align-items: start; }
-  .sobre ul { margin-top: 0; }
-  .sobre li { grid-template-columns: 56px 1fr; padding: 24px 0; font-size: 34px; }
+  .sobre-painel { padding: 56px 56px 48px; }
+  .sobre-frase { max-width: 16ch; font-size: 64px; }
+  .sobre ul { margin-top: 44px; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  .sobre li { grid-template-columns: 1fr; gap: 26px; align-content: space-between; min-height: 172px; padding: 22px; border-radius: 22px; font-size: 18px; }
   .foto { width: 27cqw; }
   .dupla-mapa { grid-template-columns: 1.4fr 1fr; align-items: center; gap: 56px; }
   .mapa { aspect-ratio: 16 / 10; }
@@ -565,3 +571,6 @@ body.com-folha { overscroll-behavior-y: none; }
 /* ===== Vídeo de tecido no fundo do catálogo (fundoCatalogo: 'seda' em dados.js) ===== */
 .seda { position: fixed; inset: 0; z-index: -2; width: 100%; height: 100%; object-fit: cover; pointer-events: none; }
 #catalogo.com-seda .trama { background: radial-gradient(circle, rgba(255, 255, 255, .09) 1px, transparent 1.4px) 0 0 / 22px 22px, linear-gradient(180deg, rgba(21, 25, 20, .5) 0%, rgba(21, 25, 20, .72) 100%); }
+
+/* início sem os fios verticais ao fundo: atrás dos blocos eles pareciam uma imagem que não carregou */
+#inicio .folhas::before { display: none; }
