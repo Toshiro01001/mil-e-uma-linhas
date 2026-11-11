@@ -50,7 +50,11 @@ window.LOJA = {
   ],
   /* catálogo: tipos de peça e fotos do Instagram da própria loja, recortadas do pescoço para baixo para não mostrar o rosto de ninguém.
      São fotos de catálogo das marcas que a loja revende; a dona ainda vai dizer se pode usar. Sem preço nem tamanho: isso muda e a loja responde pelo WhatsApp. */
-  tipos: [['v', 'Vestidos'], ['c', 'Conjuntos'], ['b', 'Blusas'], ['m', 'Masculino']],
+  /* grupos do catálogo, na ordem em que aparecem. Um grupo sem nenhuma peça não é mostrado.
+     Para uma peça entrar em Fitness, acrescente grupo: 'x' nela, por exemplo: { arquivo: '...', legenda: '...', tipo: 'c', grupo: 'x' } */
+  grupos: [['f', 'Feminino'], ['m', 'Masculino'], ['x', 'Fitness']],
+  /* tipos de peça: código, nome e o grupo a que pertencem */
+  tipos: [['v', 'Vestidos', 'f'], ['c', 'Conjuntos', 'f'], ['b', 'Blusas', 'f'], ['m', 'Masculino', 'm']],
   mensagemPeca: 'Olá! Vim pelo cartão da loja e gostei desta peça do catálogo: ',
   /* fundo do catálogo: 'seda' põe o vídeo de tecido em movimento atrás das peças; qualquer outro valor deixa só a trama de pontos */
   fundoCatalogo: 'seda',
@@ -98,7 +102,7 @@ window.LOJA = {
     { arquivo: 'fotos/c-19.webp', legenda: 'Blusa branca de um ombro', tipo: 'b' },
     { arquivo: 'fotos/c-16.webp', grande: 'fotos/g/c-16.webp', legenda: 'Blusa cinza de gola alta', tipo: 'b' },
     { arquivo: 'fotos/c-33.webp', grande: 'fotos/g/c-33.webp', legenda: 'Camiseta preta', tipo: 'b' },
-    { arquivo: 'fotos/c-20.webp', grande: 'fotos/g/c-20.webp', legenda: 'Jaqueta preta esportiva', tipo: 'b' },
+    { arquivo: 'fotos/c-20.webp', grande: 'fotos/g/c-20.webp', legenda: 'Jaqueta preta esportiva', tipo: 'b', grupo: 'x' },
     { arquivo: 'fotos/c-46.webp', grande: 'fotos/g/c-46.webp', legenda: 'Colete jeans com cinto', tipo: 'b' }
   ]
 };

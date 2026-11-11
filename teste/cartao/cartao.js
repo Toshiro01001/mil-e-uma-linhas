@@ -321,9 +321,12 @@
   /* catálogo: todas as peças em grade, com busca, filtro por tipo e a lista de quem visita.
      Tocar numa peça abre a foto grande; dali dá para passar para a próxima, guardar na lista, mostrar a alguém ou perguntar no WhatsApp.
      A lista vive só na memória desta tela: nada é gravado no aparelho nem enviado; some ao fechar a página. */
-  var CAT = L.catalogo || [], TIPOS = L.tipos || [], nomeTipo = {}, filtro = '', termo = '', gradeCat = $('cat-grade'), chips = $('chips'), lista = [], atual = -1, gostei = [], pintado = false, chipLista = null;
+  var CAT = L.catalogo || [], TIPOS = L.tipos || [], nomeTipo = {}, GRUPOS = L.grupos || [], nomeGrupo = {}, grupoDoTipo = {}, grupo = '', filtro = '', termo = '', gradeCat = $('cat-grade'), chips = $('chips'), subchips = $('subchips'), lista = [], atual = -1, gostei = [], pintado = false, chipLista = null;
   var CORACAO = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20s-7-4.400-7-9.600A4 4 0 0 1 12 8a4 4 0 0 1 7 2.400C19 15.600 12 20 12 20z"/></svg>';
-  TIPOS.forEach(function (t) { nomeTipo[t[0]] = t[1]; });
+  TIPOS.forEach(function (t) { nomeTipo[t[0]] = t[1]; grupoDoTipo[t[0]] = t[2] || ''; });
+  GRUPOS.forEach(function (g) { nomeGrupo[g[0]] = g[1]; });
+  /* o grupo da peça vem dela mesma (campo "grupo") ou, se ela não disser, do tipo a que pertence */
+  function grupoDe(p) { return p.grupo || grupoDoTipo[p.tipo] || ''; }
   CAT.forEach(function (p) { p.id = (p.arquivo.match(/(\d+)\.\w+$/) || [0, ''])[1]; });
   /* mural do topo: colunas com fotos de peças da loja que sobem e descem devagar atrás do título, escurecidas para o texto continuar legível.
      Usa as mesmas fotos do catálogo (nada novo para baixar depois), anda só por transformação e para quando o topo sai da tela. Com "reduzir movimento", fica parado. */
@@ -365,7 +368,7 @@
   function limpo(t) { return t.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, ''); }
   function filtrar() {
     var q = limpo(termo.trim());
-    return CAT.filter(function (p) { return (filtro === '*' ? gostei.indexOf(p) >= 0 : !filtro || p.tipo === filtro) && (!q || limpo(p.legenda + ' ' + (nomeTipo[p.tipo] || '')).indexOf(q) >= 0); });
+    return CAT.filter(function (p) { return (grupo === '*' ? gostei.indexOf(p) >= 0 : (!grupo || grupoDe(p) === grupo) && (!filtro || p.tipo === filtro)) && (!q || limpo(p.legenda + ' ' + (nomeTipo[p.tipo] || '') + ' ' + (nomeGrupo[grupoDe(p)] || '')).indexOf(q) >= 0); });
   }
   function marcarGosto() {
     var p = lista[atual], dentro = !!p && gostei.indexOf(p) >= 0;
@@ -427,7 +430,7 @@
     if (melhor !== null && dist < innerHeight * .5 && itens.length) apontar(innerWidth / 2, melhor + itens[0].getBoundingClientRect().width * .6);
     for (var k = 0; k < itens.length; k++) {
       var li = itens[k], dentro = melhor !== null && Math.abs(li.getBoundingClientRect().top - melhor) < 6 && dist < innerHeight * .5;
-      if (dentro && !li.classList.contains('foco')) { li.classList.add('foco'); var n = li.querySelector('.peca-pe b'); if (n) embaralha(n, n.getAttribute('data-nome') || (n.setAttribute('data-nome', n.textContent), n.textContent)); }
+      if (dentro && !li.classList.contains('foco')) { li.classList.add('foco'); var n = li.querySelector('.peca-pe b'), g = li.querySelector('.gosto'), pc = g && g.peca; /* no celular o nome embaralha só na primeira vez que a peça entra em foco; repetir a cada rolagem cansava */ if (n && pc && !pc.jaMostrou) { pc.jaMostrou = true; embaralha(n, pc.legenda); } }
       else if (!dentro) li.classList.remove('foco');
     }
   }
@@ -455,7 +458,7 @@
     $('sacola-zap').setAttribute('aria-label', 'Enviar a sua lista de ' + n + (n === 1 ? ' peça' : ' peças') + ' para o WhatsApp da ' + nome);
     [].forEach.call(gradeCat.querySelectorAll('.gosto'), function (b) { b.setAttribute('aria-pressed', gostei.indexOf(b.peca) >= 0 ? 'true' : 'false'); });
     if (chipLista) { chipLista.hidden = !n; chipLista.lastChild.textContent = n; }
-    if (filtro === '*') { if (!n) { filtro = ''; [].forEach.call(chips.children, function (c, k) { c.setAttribute('aria-pressed', k === 0 ? 'true' : 'false'); }); } if (pintado) pintarCatalogo(); }
+    if (grupo === '*') { if (!n) { grupo = ''; pintarTipos(); [].forEach.call(chips.children, function (c, k) { c.setAttribute('aria-pressed', k === 0 ? 'true' : 'false'); }); } if (pintado) pintarCatalogo(); }
     flutuar(); marcarGosto();
   }
   function alternar(p) { var k = gostei.indexOf(p); if (k < 0) gostei.push(p); else gostei.splice(k, 1); sacola(); }
@@ -474,24 +477,35 @@
       li.appendChild(b); li.appendChild(g); gradeCat.appendChild(li);
     });
     $('cat-vazio').hidden = lista.length > 0; focar();
-    $('cat-conta').textContent = lista.length + (lista.length === 1 ? ' peça' : ' peças') + (filtro === '*' ? ' na sua lista' : filtro ? ' em ' + nomeTipo[filtro] : '') + (termo.trim() ? ' com "' + termo.trim() + '"' : '');
+    $('cat-conta').textContent = lista.length + (lista.length === 1 ? ' peça' : ' peças') + (grupo === '*' ? ' na sua lista' : filtro ? ' em ' + nomeTipo[filtro] : grupo ? ' em ' + nomeGrupo[grupo] : '') + (termo.trim() ? ' com "' + termo.trim() + '"' : '');
   }
   function repintar() { if (calmo) { pintarCatalogo(); return; } gradeCat.classList.add('troca'); setTimeout(function () { pintarCatalogo(); gradeCat.classList.remove('troca'); }, 180); }
-  function chip(id, rotulo, n) {
+  /* um botão de filtro; "onde" é a fileira em que ele entra e "aoTocar" diz o que muda */
+  function chip(onde, rotulo, n, ligado, aoTocar) {
     var b = document.createElement('button'), q = document.createElement('sup');
     b.type = 'button'; b.className = 'chip'; b.textContent = rotulo; q.textContent = n; q.setAttribute('aria-hidden', 'true'); b.appendChild(q);
-    b.setAttribute('aria-pressed', id === filtro ? 'true' : 'false');
+    b.setAttribute('aria-pressed', ligado ? 'true' : 'false');
     b.addEventListener('click', function () {
-      if (filtro === id) return; filtro = id;
-      [].forEach.call(chips.children, function (c) { c.setAttribute('aria-pressed', c === b ? 'true' : 'false'); });
-      repintar();
+      if (b.getAttribute('aria-pressed') === 'true') return;
+      [].forEach.call(onde.children, function (c) { c.setAttribute('aria-pressed', c === b ? 'true' : 'false'); });
+      aoTocar(); repintar();
     });
-    chips.appendChild(b); return b;
+    onde.appendChild(b); return b;
   }
+  /* segunda fileira: os tipos de peça dentro do grupo escolhido. Só aparece quando o grupo tem mais de um tipo. */
+  function pintarTipos() {
+    subchips.textContent = ''; filtro = '';
+    var doGrupo = TIPOS.filter(function (t) { return grupo && grupo !== '*' && CAT.some(function (p) { return p.tipo === t[0] && grupoDe(p) === grupo; }); });
+    subchips.hidden = doGrupo.length < 2; if (subchips.hidden) return;
+    chip(subchips, 'Todos', CAT.filter(function (p) { return grupoDe(p) === grupo; }).length, true, function () { filtro = ''; });
+    doGrupo.forEach(function (t) { chip(subchips, t[1], CAT.filter(function (p) { return p.tipo === t[0] && grupoDe(p) === grupo; }).length, false, function () { filtro = t[0]; }); });
+  }
+  function escolherGrupo(g) { return function () { grupo = g; pintarTipos(); }; }
   if (CAT.length) {
-    chip('', 'Tudo', CAT.length);
-    TIPOS.forEach(function (t) { var n = CAT.filter(function (p) { return p.tipo === t[0]; }).length; if (n) chip(t[0], t[1], n); });
-    chipLista = chip('*', 'Minha lista', 0); chipLista.hidden = true; chipLista.classList.add('chip-lista');
+    chip(chips, 'Tudo', CAT.length, true, escolherGrupo(''));
+    if (GRUPOS.length) GRUPOS.forEach(function (g) { var n = CAT.filter(function (p) { return grupoDe(p) === g[0]; }).length; if (n) chip(chips, g[1], n, false, escolherGrupo(g[0])); });
+    else TIPOS.forEach(function (t) { var n = CAT.filter(function (p) { return p.tipo === t[0]; }).length; if (n) chip(chips, t[1], n, false, function () { grupo = ''; filtro = t[0]; }); });
+    chipLista = chip(chips, 'Minha lista', 0, false, escolherGrupo('*')); chipLista.hidden = true; chipLista.classList.add('chip-lista');
     var esperaBusca = 0;
     $('busca').addEventListener('input', function () { termo = $('busca').value; clearTimeout(esperaBusca); esperaBusca = setTimeout(repintar, 140); });
     $('p-ant').addEventListener('click', function () { pintarPeca(atual - 1); });

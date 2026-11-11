@@ -596,3 +596,10 @@ body.com-folha { overscroll-behavior-y: none; }
 #inicio .caixa { background: rgba(255, 255, 255, .38); border-color: rgba(255, 255, 255, .75); -webkit-backdrop-filter: blur(16px) saturate(1.35); backdrop-filter: blur(16px) saturate(1.35); box-shadow: 0 18px 40px -26px rgba(28, 32, 28, .4); }
 #inicio .caixa-dentro { background: linear-gradient(180deg, rgba(255, 255, 255, .86) 0%, rgba(255, 255, 255, .7) 100%); }
 #inicio .pausa { background: rgba(255, 255, 255, .6); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); }
+
+/* catálogo sem os fios verticais ao fundo */
+#catalogo .folhas::before { display: none; }
+/* segunda fileira de filtros: os tipos dentro do grupo escolhido, um pouco menores */
+.chips.sub { margin-top: 8px; }
+.chips.sub[hidden] { display: none; }
+.chips.sub .chip { min-height: 38px; padding: 0 14px; font-size: 13.5px; }
