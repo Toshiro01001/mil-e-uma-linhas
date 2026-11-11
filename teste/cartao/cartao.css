@@ -43,7 +43,7 @@ h2 { font: 500 clamp(30px, 8vw, 44px)/1.08 var(--serifa); letter-spacing: -.01em
 .barra-marca img { width: 32px; height: 32px; border-radius: 50%; background: #fff; object-fit: cover; }
 .barra-marca b { font: 600 12px/1 var(--texto); letter-spacing: .08em; display: none; }
 .abas { position: relative; display: grid; grid-template-columns: 1fr 1fr; background: rgba(255, 255, 255, .06); border-radius: 999px; padding: 3px; }
-.abas a { position: relative; z-index: 1; min-width: 86px; min-height: 38px; display: grid; place-items: center; padding: 0 14px; font-size: 14px; font-weight: 500; text-decoration: none; color: rgba(255, 255, 255, .72); border-radius: 999px; transition: color .3s; }
+.abas a { position: relative; z-index: 1; min-width: 86px; min-height: 44px; display: grid; place-items: center; padding: 0 14px; font-size: 14px; font-weight: 500; text-decoration: none; color: rgba(255, 255, 255, .72); border-radius: 999px; transition: color .3s; }
 .abas a[aria-current] { color: var(--obs); }
 .abas-marca { position: absolute; top: 3px; bottom: 3px; left: 3px; width: calc(50% - 3px); border-radius: 999px; background: var(--verde); transition: transform .55s var(--solta); }
 body[data-vista="catalogo"] .abas-marca { transform: translateX(100%); }
