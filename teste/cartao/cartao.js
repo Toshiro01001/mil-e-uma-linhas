@@ -121,7 +121,21 @@
     botao.hidden = false;
     botao.addEventListener('click', function () { manual = !manual; botao.textContent = manual ? 'Continuar' : 'Pausar'; botao.setAttribute('aria-pressed', manual ? 'true' : 'false'); });
     function volta() { var g = parseFloat(getComputedStyle(trilho).columnGap) || 0; return (trilho.scrollWidth + g) / 2; }
-    function poe() { var v = volta(); if (v > 0) { x = ((x % v) + v) % v; trilho.style.transform = 'translate3d(' + (-x).toFixed(2) + 'px,0,0)'; } }
+    /* parede curva: as fotos das pontas viram de leve para o centro, como em uma vitrine em arco.
+       As posições são medidas uma vez (e de novo ao redimensionar); a cada quadro só as fotos visíveis recebem o giro. */
+    var medidas = [], largFila = 0, recuo = 0;
+    function medir() { medidas = [].map.call(trilho.children, function (el) { return { el: el, c: el.offsetLeft + el.offsetWidth / 2, curvo: false }; }); largFila = grade.clientWidth; recuo = parseFloat(getComputedStyle(grade).paddingLeft) || 0; }
+    function curvar() {
+      if (!largFila) return; var meio = largFila / 2;
+      for (var i = 0; i < medidas.length; i++) {
+        var m = medidas[i], r = (m.c - x + recuo - meio) / meio;
+        if (r > -1.6 && r < 1.6) { m.el.style.transform = 'perspective(700px) rotateY(' + (-r * 20).toFixed(2) + 'deg)'; m.curvo = true; }
+        else if (m.curvo) { m.el.style.transform = ''; m.curvo = false; }
+      }
+    }
+    var esperaMedida = 0;
+    addEventListener('resize', function () { clearTimeout(esperaMedida); esperaMedida = setTimeout(function () { medir(); curvar(); }, 160); });
+    function poe() { var v = volta(); if (v > 0) { x = ((x % v) + v) % v; trilho.style.transform = 'translate3d(' + (-x).toFixed(2) + 'px,0,0)'; if (!medidas.length) medir(); curvar(); } }
     grade.addEventListener('pointerdown', function (ev) { if (ev.pointerType === 'mouse' && ev.button !== 0) return; arrasta = true; arrastou = 0; ultX = ev.clientX; tocada = ev.target.closest ? ev.target.closest('.foto') : null; if (tocada) tocada.classList.add('tocada'); });
     function solta() { if (!arrasta) return; arrasta = false; espera = Date.now() + 1200; if (tocada) { tocada.classList.remove('tocada'); tocada = null; } }
     addEventListener('pointermove', function (ev) { if (!arrasta) return; arrastou += Math.abs(ev.clientX - ultX); x -= ev.clientX - ultX; ultX = ev.clientX; poe(); });
