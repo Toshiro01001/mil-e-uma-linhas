@@ -157,6 +157,7 @@
     aviso('Copie o endereço desta página e envie para quem quiser.');
   });
 
-  /* oferece o contato ao abrir, uma vez por visita */
-  setTimeout(abrir, 600);
+  /* oferece o contato ao abrir, uma vez por visita, só no celular: é nele que o cartão é encostado.
+     No computador a página abre direto; o botão Salvar contato continua disponível. */
+  if (iphone || android) setTimeout(abrir, 600);
 })();
