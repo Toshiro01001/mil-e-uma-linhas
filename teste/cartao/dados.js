@@ -14,6 +14,8 @@ window.LOJA = {
   /* nome curto do lugar e uma frase curta tirada do texto da própria loja, para as etiquetas do topo */
   ondeCurto: 'Comper Nova CPA',
   etiqueta: 'Todos os tamanhos',
+  /* fita que corre no alto da página: só palavras que a própria loja usa */
+  fita: ['Todos os tamanhos', 'Todos os gostos', 'Looks incríveis', 'Qualidade e variedade', 'Comper Nova CPA'],
   whatsapp: '556599406901',
   whatsappTexto: '(65) 9940-6901',
   mensagemWhats: 'Olá! Vim pelo cartão da loja.',

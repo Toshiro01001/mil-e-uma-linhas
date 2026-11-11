@@ -4,12 +4,14 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex, nofollow">
-<meta name="theme-color" content="#ffffff">
+<meta name="theme-color" content="#0f1115">
 <title>Teste do cartão de aproximação</title>
-<link rel="preload" href="fonte/outfit.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="cartao.css?v=11">
+<link rel="preload" href="fonte/archivo.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="cartao.css?v=13">
 </head>
 <body>
+<div class="fundo" id="fundo" aria-hidden="true"><canvas id="aurora"></canvas><i></i><i></i><i></i></div>
+<div class="fita" id="fita" aria-hidden="true" hidden><div class="fita-fila"><div class="fita-tk"></div><div class="fita-tk"></div></div></div>
 <div class="pilula" id="pilula" hidden>
   <img id="pilula-logo" width="36" height="36" alt="">
   <span class="pilula-nome"><b id="pilula-nome"></b><small id="pilula-onde"></small></span>
@@ -34,6 +36,7 @@
     <a class="botao principal" id="b-whats" rel="noopener">
       <i class="bola"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20l1.400-4.200A8 8 0 1 1 8.600 19L4 20z"/></svg></i>
       <span><b>Chamar no WhatsApp</b><small>Abre a conversa no aplicativo.</small></span>
+      <svg class="vai" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
     </a>
     <div class="quadra">
       <a class="botao bloco" id="b-insta" rel="noopener">
@@ -82,12 +85,21 @@
   <section class="cartela" id="horario" aria-labelledby="t-horario" hidden>
     <h2 id="t-horario">Horário</h2>
     <p class="estado" id="estado"></p>
+    <p class="hoje-grande" id="hoje-grande" hidden><b></b><span>Hoje</span></p>
     <ul class="semana" id="semana"></ul>
     <p class="nota-mapa" id="nota-horario" hidden>Horários de exemplo, a confirmar com a loja.</p>
   </section>
 
   <section class="cartela" id="fale" aria-labelledby="t-fale">
     <h2 id="t-fale">Fale com a loja</h2>
+    <form class="recado" id="recado" hidden>
+      <label class="rotulo" for="recado-texto">Escreva para a loja</label>
+      <div class="recado-linha">
+        <input id="recado-texto" type="text" maxlength="300" placeholder="Ex.: tem esta blusa no G?" autocomplete="off" enterkeyhint="send">
+        <button type="submit" class="botao-serio"><span>Enviar no WhatsApp</span></button>
+      </div>
+      <p class="recado-nota">Abre o WhatsApp com a sua mensagem. Nada é guardado nesta página.</p>
+    </form>
     <div class="linhas" id="fale-lista"></div>
   </section>
   </div>
@@ -125,7 +137,7 @@
   <button type="button" class="botao principal centro" id="q-enviar"><span><b>Enviar o link</b></span></button>
   <button type="button" class="botao centro quieto" id="q-fechar"><span><b>Fechar</b></span></button>
 </section>
-<script src="dados.js?v=10"></script>
-<script src="cartao.js?v=12"></script>
+<script src="dados.js?v=11"></script>
+<script src="cartao.js?v=14"></script>
 </body>
 </html>
