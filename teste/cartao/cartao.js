@@ -65,11 +65,21 @@
   $('b-contato').setAttribute('aria-label', 'Salvar o contato da ' + nome + ' na agenda');
   $('b-indicar').setAttribute('aria-label', 'Indicar a ' + nome + ': mostra o código da página e envia o link');
 
-  /* frases da própria loja, cada uma com o seu emoji */
-  var ul = $('sobre-lista');
-  (L.sobre || []).forEach(function (par) { /* o emoji da frase fica só nos dados; a página nova usa um ponto verde */
-    var li = document.createElement('li'), e = document.createElement('span'), t = document.createElement('span');
-    e.className = 'num'; e.setAttribute('aria-hidden', 'true'); t.textContent = par[1]; li.style.setProperty('--i', ul.children.length);
+  /* frases da própria loja: a primeira vira o título do painel e as outras viram cartões com um desenho.
+     O desenho é escolhido pelo emoji que acompanha a frase nos dados; sem desenho conhecido, fica um ponto. */
+  var DESENHOS = {
+    '✨': '<path d="M12 3.500l1.900 5.100 5.100 1.900-5.100 1.900-1.900 5.100-1.900-5.100L5 10.500l5.100-1.900z"/><path d="M18.500 16v4M16.500 18h4"/>',
+    '👗': '<path d="M12 8.500V7a2 2 0 1 0-2-2"/><path d="M12 8.500l8.200 6.100a1.100 1.100 0 0 1-.7 2H4.500a1.100 1.100 0 0 1-.7-2z"/>',
+    '🔥': '<path d="M3.500 12.300V4.500h7.800l9.200 9.200-7.800 7.800z"/><circle cx="8" cy="9" r="1.300"/>',
+    '🛍️': '<path d="M5 8.500h14l-1 11.500H6z"/><path d="M9 8.500V7a3 3 0 0 1 6 0v1.500"/>'
+  };
+  var ul = $('sobre-lista'), frases = (L.sobre || []).slice();
+  if (frases.length) $('t-sobre').textContent = frases.shift()[1];
+  frases.forEach(function (par) {
+    var li = document.createElement('li'), e = document.createElement('i'), t = document.createElement('span');
+    e.setAttribute('aria-hidden', 'true');
+    e.innerHTML = '<svg viewBox="0 0 24 24">' + (DESENHOS[par[0]] || '<circle cx="12" cy="12" r="3"/>') + '</svg>';
+    t.textContent = par[1]; li.style.setProperty('--i', ul.children.length);
     li.appendChild(e); li.appendChild(t); ul.appendChild(li);
   });
   if (!(L.sobre || []).length) $('sobre').hidden = true;

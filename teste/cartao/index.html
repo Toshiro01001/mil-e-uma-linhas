@@ -9,7 +9,7 @@
 <title>HAI OUTLET</title>
 <link rel="preload" href="fonte/playfair.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fonte/inter.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="cartao.css?v=45">
+<link rel="stylesheet" href="cartao.css?v=46">
 </head>
 <body data-vista="inicio">
 <div class="abre" aria-hidden="true"><div class="abre-selo"><img src="logo.webp" width="92" height="92" alt=""><i></i></div></div>
@@ -71,9 +71,11 @@
   </nav>
 
   <section class="sobre bloco" id="sobre" aria-labelledby="t-sobre">
-    <p class="rotulo">A loja</p>
-    <h2 id="t-sobre" class="so-leitor">Sobre a loja</h2>
-    <ul id="sobre-lista"></ul>
+    <div class="sobre-painel">
+      <p class="rotulo claro">A loja</p>
+      <h2 id="t-sobre" class="sobre-frase"></h2>
+      <ul id="sobre-lista"></ul>
+    </div>
   </section>
 
   <section class="pecas bloco" aria-labelledby="t-pecas">
@@ -207,6 +209,6 @@
   <button type="button" class="quieto" id="p-fechar">Fechar</button>
 </section>
 <script src="dados.js?v=15"></script>
-<script src="cartao.js?v=45"></script>
+<script src="cartao.js?v=46"></script>
 </body>
 </html>
