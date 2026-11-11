@@ -217,7 +217,7 @@
     $('fale-lista').appendChild(a);
   }
   if (L.whatsapp) linha('whats', 'WhatsApp', L.whatsappTexto || 'Abre a conversa no aplicativo.', $('b-whats').href, 'Abrir conversa com a ' + nome + ' no WhatsApp');
-  if (L.whatsapp && L.entrega) linha('entrega', 'Pedir entrega', 'Combine pelo WhatsApp.', 'https://wa.me/' + L.whatsapp + '?text=' + encodeURIComponent(L.mensagemEntrega), 'Pedir uma entrega para a ' + nome + ' pelo WhatsApp');
+  if (L.whatsapp && L.entrega) linha('entrega', 'Delivery', 'Solicitar entrega pelo WhatsApp.', 'https://wa.me/' + L.whatsapp + '?text=' + encodeURIComponent(L.mensagemEntrega), 'Solicitar entrega da ' + nome + ' pelo WhatsApp');
   if (L.email) linha('email', 'E-mail', L.email, 'mailto:' + L.email, 'Escrever um e-mail para a ' + nome);
   if (L.central) linha('central', 'Central de atendimento', 'Todos os links da loja em um lugar.', L.central, 'Abrir a central de atendimento da ' + nome);
   if (!$('fale-lista').children.length) $('fale').hidden = true;

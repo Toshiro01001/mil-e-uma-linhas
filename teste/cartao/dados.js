@@ -10,12 +10,12 @@ window.LOJA = {
     ['🔥', 'Promoções sempre rolando para você economizar!'],
     ['🛍️', 'Venha se apaixonar e encontre o look perfeito!']
   ],
-  onde: 'Dentro do Comper Nova CPA, em Cuiabá',
+  onde: 'Dentro do Supermercado Comper CPA, em Cuiabá',
   /* nome curto do lugar e uma frase curta tirada do texto da própria loja, para as etiquetas do topo */
-  ondeCurto: 'Comper Nova CPA',
+  ondeCurto: 'Supermercado Comper CPA',
   etiqueta: 'Todos os tamanhos',
   /* fita que corre no alto da página: só palavras que a própria loja usa */
-  fita: ['Todos os tamanhos', 'Todos os gostos', 'Looks incríveis', 'Qualidade e variedade', 'Comper Nova CPA'],
+  fita: ['Todos os tamanhos', 'Todos os gostos', 'Looks incríveis', 'Qualidade e variedade', 'Supermercado Comper CPA'],
   whatsapp: '556599406901',
   whatsappTexto: '(65) 9940-6901',
   mensagemWhats: 'Olá! Vim pelo cartão da loja.',
@@ -33,7 +33,7 @@ window.LOJA = {
   horarioExemplo: false,
   /* entrega em casa: presumida por enquanto; a dona ainda vai confirmar */
   entrega: true,
-  mensagemEntrega: 'Olá! Vim pelo cartão da loja e quero pedir uma entrega.',
+  mensagemEntrega: 'Olá! Vim pelo cartão da loja e quero solicitar uma entrega.',
   fuso: 'America/Cuiaba',
   qr: 'qr.svg?v=1',
   contato: 'contato.vcf?v=5',
