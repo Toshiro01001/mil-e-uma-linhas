@@ -9,12 +9,23 @@
   var nome = L.nome;
   document.title = nome; $('logo').src = L.logo; $('logo').alt = nome; $('rodape-nome').textContent = nome;
   $('rodape-fundo').textContent = nome; $('mapa-nome').textContent = L.ondeCurto || nome;
-  [['etiqueta1', L.ondeCurto], ['etiqueta2', L.etiqueta]].forEach(function (p) { if (p[1]) { $(p[0]).hidden = false; $(p[0]).lastChild.textContent = p[1]; } });
-  $('pilula-logo').src = L.logo; $('pilula-nome').textContent = nome; $('pilula-onde').textContent = L.ondeCurto || '';
-  /* fita do alto: as mesmas palavras duas vezes, para a volta não dar salto */
-  if ((L.fita || []).length) { $('fita').hidden = false; [].forEach.call(document.querySelectorAll('.fita-tk'), function (tk) { L.fita.forEach(function (t) { var s = document.createElement('span'); s.textContent = t; tk.appendChild(s); var p = document.createElement('i'); p.textContent = '/'; tk.appendChild(p); }); }); }
-  $('frase').textContent = L.frase; $('onde').textContent = L.onde;
+  $('barra-logo').src = L.logo; $('barra-nome').textContent = nome;
+  $('tag-a').textContent = L.etiqueta || ''; $('tag-b').textContent = L.ondeCurto || '';
+  var calmo = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  /* título em palavras: cada uma sobe de trás de uma máscara, uma depois da outra. O leitor de tela recebe a frase inteira. */
+  function palavras(el, texto) {
+    el.textContent = ''; el.setAttribute('aria-label', texto);
+    texto.split(' ').forEach(function (p, i) {
+      var fora = document.createElement('span'), dentro = document.createElement('span');
+      fora.className = 'pal'; fora.setAttribute('aria-hidden', 'true'); dentro.textContent = p; dentro.style.setProperty('--i', i);
+      fora.appendChild(dentro); el.appendChild(fora); el.appendChild(document.createTextNode(' '));
+    });
+  }
+  palavras($('frase'), L.frase); $('onde').textContent = L.onde;
+  requestAnimationFrame(function () { $('frase').classList.add('anda'); });
   if (L.frase2) $('frase2').textContent = L.frase2; else $('frase2').hidden = true;
+  /* etiqueta pendurada: um toque dá um empurrão nela */
+  $('tag').addEventListener('click', function () { var t = $('tag'); t.classList.remove('empurra'); void t.offsetWidth; t.classList.add('empurra'); });
   function ligar(id, url, rotulo) { var a = $(id); if (!url) { a.hidden = true; return; } a.href = url; a.target = '_blank'; a.setAttribute('aria-label', rotulo); }
   ligar('b-whats', 'https://wa.me/' + L.whatsapp + '?text=' + encodeURIComponent(L.mensagemWhats), 'Abrir conversa com a ' + nome + ' no WhatsApp');
   ligar('b-insta', L.instagram, 'Abrir o Instagram da ' + nome);
@@ -39,21 +50,19 @@
 
   /* frases da própria loja, cada uma com o seu emoji */
   var ul = $('sobre-lista');
-  (L.sobre || []).forEach(function (par) {
+  (L.sobre || []).forEach(function (par) { /* o emoji da frase fica só nos dados; a página nova usa um ponto verde */
     var li = document.createElement('li'), e = document.createElement('span'), t = document.createElement('span');
-    e.className = 'emoji'; e.setAttribute('aria-hidden', 'true'); e.textContent = par[0]; t.textContent = par[1];
+    e.className = 'num'; e.setAttribute('aria-hidden', 'true'); t.textContent = par[1]; li.style.setProperty('--i', ul.children.length);
     li.appendChild(e); li.appendChild(t); ul.appendChild(li);
   });
   if (!(L.sobre || []).length) $('sobre').hidden = true;
 
-  /* pílula com o nome da loja, que aparece no alto quando o topo sai de vista */
-  if ('IntersectionObserver' in window) new IntersectionObserver(function (v) { $('pilula').hidden = v[0].isIntersecting; }, { threshold: 0 }).observe(document.querySelector('.topo'));
-
   /* atalho do WhatsApp que aparece no pé da tela quando o botão grande sai de vista */
-  var flutua = $('flutua');
+  var flutua = $('flutua'), botaoVisto = true;
+  function flutuar() { flutua.hidden = document.body.classList.contains('com-folha') || (document.body.getAttribute('data-vista') === 'inicio' && botaoVisto); }
   flutua.href = $('b-whats').href; flutua.target = '_blank'; flutua.setAttribute('aria-label', 'Abrir conversa com a ' + nome + ' no WhatsApp');
   if ('IntersectionObserver' in window) {
-    new IntersectionObserver(function (v) { flutua.hidden = v[0].isIntersecting || document.body.classList.contains('com-folha'); }, { threshold: 0 }).observe($('b-whats'));
+    new IntersectionObserver(function (v) { botaoVisto = v[0].isIntersecting; flutuar(); }, { threshold: 0 }).observe($('b-whats'));
   }
 
   /* vitrine: as fotos passam sozinhas da esquerda para a direita (entram pela esquerda e saem pela direita).
@@ -71,7 +80,6 @@
   }
   fotos.forEach(function (f) { cartaoFoto(f, false); });
   if (!fotos.length) document.querySelector('.pecas').hidden = true;
-  var calmo = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (fotos.length > 2 && !calmo && window.requestAnimationFrame) {
     fotos.forEach(function (f) { cartaoFoto(f, true); });
     grade.classList.add('passando');
@@ -113,10 +121,10 @@
   }
   function pintarEstado() {
     var e = estado(), frase = e.texto + (e.resto ? ', ' + e.resto : '') + '.';
-    $('agora').hidden = false; $('agora').className = 'agora ' + (e.aberta ? 'aberta' : 'fechada'); $('agora-texto').textContent = e.texto + (e.resto ? ' · ' + e.resto : '');
+    $('agora').hidden = false; $('agora').className = 'agora ' + (e.aberta ? 'aberta' : 'fechada'); $('agora-texto').textContent = frase;
     $('estado').className = 'estado ' + (e.aberta ? 'aberta' : 'fechada'); $('estado').textContent = frase;
     var hh = L.horario[agoraNaLoja().dia]; $('hoje-grande').hidden = false; $('hoje-grande').firstChild.textContent = hh ? hora(hh[0]) + ' às ' + hora(hh[1]) : 'Fechada';
-    $('pilula-estado').className = 'pilula-estado ' + (e.aberta ? 'aberta' : 'fechada'); $('pilula-texto').textContent = e.aberta ? 'Aberta' : 'Fechada';
+    $('barra-estado').hidden = false; $('barra-estado').className = 'barra-estado ' + (e.aberta ? 'aberta' : 'fechada'); $('barra-texto').textContent = e.aberta ? 'Aberta' : 'Fechada';
   }
   if (L.horario && L.horario.length === 7) {
     $('horario').hidden = false; $('nota-horario').hidden = !L.horarioExemplo;
@@ -167,13 +175,13 @@
   }
 
   /* folhas que sobem do pé da tela: a do contato e a de indicar a loja */
-  var folha = $('folha'), folhaQr = $('folha-qr'), veu = $('veu'), antes = null, aberta = null;
+  var folha = $('folha'), folhaQr = $('folha-qr'), folhaPeca = $('folha-peca'), veu = $('veu'), antes = null, aberta = null;
   $('f-salvar').href = L.contato; $('f-salvar').setAttribute('download', 'contato-da-loja.vcf');
-  function mostrar(qual, foco) { if (aberta) aberta.hidden = true; else antes = document.activeElement; aberta = qual; qual.hidden = false; veu.hidden = false; document.body.classList.add('com-folha'); $('flutua').hidden = true; foco.focus(); }
+  function mostrar(qual, foco) { if (aberta) aberta.hidden = true; else antes = document.activeElement; aberta = qual; qual.hidden = false; veu.hidden = false; document.body.classList.add('com-folha'); flutuar(); foco.focus(); }
   function abrir() { mostrar(folha, $('f-salvar')); }
-  function fechar() { if (!aberta) return; aberta.hidden = true; aberta = null; veu.hidden = true; document.body.classList.remove('com-folha'); if (antes && antes.focus) antes.focus(); }
+  function fechar() { if (!aberta) return; aberta.hidden = true; aberta = null; veu.hidden = true; document.body.classList.remove('com-folha'); flutuar(); if (antes && antes.focus) antes.focus(); }
   $('b-contato').addEventListener('click', abrir);
-  $('f-nao').addEventListener('click', fechar);
+  $('f-nao').addEventListener('click', fechar); $('p-fechar').addEventListener('click', fechar);
   veu.addEventListener('click', fechar);
   document.addEventListener('keydown', function (ev) { if (ev.key === 'Escape' && aberta) fechar(); });
   /* Cada sistema termina de um jeito, e nenhum salva sem a pessoa confirmar. A página diz o próximo toque antes de o celular mudar de tela.
@@ -222,22 +230,87 @@
     gl.bindBuffer(gl.ARRAY_BUFFER, gl.createBuffer()); gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 1, -1, -1, 1, 1, 1]), gl.STATIC_DRAW);
     var pa = gl.getAttribLocation(prog, 'a'); gl.enableVertexAttribArray(pa); gl.vertexAttribPointer(pa, 2, gl.FLOAT, false, 0, 0);
     var ur = gl.getUniformLocation(prog, 'r'), ut = gl.getUniformLocation(prog, 't'), ultimo = 0, t0 = Math.random() * 40;
-    function medida() { var w = Math.max(160, Math.round(innerWidth * .35)), hh = Math.max(160, Math.round(innerHeight * .35)); if (tela.width !== w || tela.height !== hh) { tela.width = w; tela.height = hh; gl.viewport(0, 0, w, hh); } }
+    function medida() { var w = Math.max(160, Math.round(tela.clientWidth * .35)), hh = Math.max(160, Math.round(tela.clientHeight * .35)); if (tela.width !== w || tela.height !== hh) { tela.width = w; tela.height = hh; gl.viewport(0, 0, w, hh); } }
     function desenha(seg) { medida(); gl.uniform2f(ur, tela.width, tela.height); gl.uniform1f(ut, t0 + seg); gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4); }
     $('fundo').classList.add('com-aurora'); desenha(0);
     tela.addEventListener('webglcontextlost', function (ev) { ev.preventDefault(); $('fundo').classList.remove('com-aurora'); });
     if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) { addEventListener('resize', function () { desenha(0); }); return; }
-    function laco(agora) { if (!document.hidden && agora - ultimo > 33 && $('fundo').classList.contains('com-aurora')) { ultimo = agora; desenha(agora / 1000); } requestAnimationFrame(laco); }
+    var aVista = true; if ('IntersectionObserver' in window) new IntersectionObserver(function (v) { aVista = v[0].isIntersecting; }).observe($('heroi'));
+    function laco(agora) { if (!document.hidden && aVista && agora - ultimo > 33 && $('fundo').classList.contains('com-aurora')) { ultimo = agora; desenha(agora / 1000); } requestAnimationFrame(laco); }
     requestAnimationFrame(laco);
   })();
 
-  /* as seções surgem ao entrar na tela, uma vez. Sem isso para quem pediu menos movimento. */
+  /* as seções surgem ao entrar na tela, uma vez, e o título delas sobe palavra por palavra. Sem isso para quem pediu menos movimento. */
   if (!calmo && 'IntersectionObserver' in window) {
     var surge = new IntersectionObserver(function (v) { v.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('veio'); surge.unobserve(e.target); } }); }, { rootMargin: '0px 0px -8% 0px' });
-    [].forEach.call(document.querySelectorAll('.corpo > section, .corpo > .banda, .corpo > .indicar'), function (el) { el.classList.add('vem'); surge.observe(el); });
+    [].forEach.call(document.querySelectorAll('#inicio .atalhos, #inicio .bloco'), function (el) {
+      [].forEach.call(el.querySelectorAll('h2:not(.so-leitor)'), function (h) { palavras(h, h.textContent); });
+      el.classList.add('vem'); surge.observe(el);
+    });
   }
+
+  /* catálogo: todas as peças em grade, com filtro por tipo. Tocar numa peça abre a foto grande e o botão que leva a pergunta ao WhatsApp já com o nome dela. */
+  var CAT = L.catalogo || [], TIPOS = L.tipos || [], nomeTipo = {}, filtro = '', gradeCat = $('cat-grade'), chips = $('chips');
+  TIPOS.forEach(function (t) { nomeTipo[t[0]] = t[1]; });
+  function verPeca(p, de) {
+    $('p-foto').src = p.arquivo; $('p-foto').alt = p.legenda; $('p-nome').textContent = p.legenda; $('p-cat').textContent = nomeTipo[p.tipo] || '';
+    $('p-whats').href = 'https://wa.me/' + L.whatsapp + '?text=' + encodeURIComponent((L.mensagemPeca || '') + p.legenda + '.');
+    $('p-whats').setAttribute('aria-label', 'Perguntar sobre ' + p.legenda + ' no WhatsApp da ' + nome);
+    mostrar(folhaPeca, $('p-whats'));
+  }
+  function pintarCatalogo() {
+    var lista = CAT.filter(function (p) { return !filtro || p.tipo === filtro; });
+    gradeCat.textContent = '';
+    lista.forEach(function (p, i) {
+      var li = document.createElement('li'), b = document.createElement('button'), q = document.createElement('span'), im = document.createElement('img'), pe = document.createElement('span'), n = document.createElement('b'), t = document.createElement('small');
+      b.type = 'button'; b.className = 'peca'; b.style.setProperty('--i', i); b.setAttribute('aria-label', p.legenda + '. Ver de perto.');
+      q.className = 'peca-quadro'; im.src = p.arquivo; im.alt = ''; im.width = 600; im.height = 750; im.loading = i < 4 ? 'eager' : 'lazy'; im.decoding = 'async'; q.appendChild(im);
+      pe.className = 'peca-pe'; n.textContent = p.legenda; t.textContent = nomeTipo[p.tipo] || ''; pe.appendChild(n); pe.appendChild(t);
+      b.appendChild(q); b.appendChild(pe); b.addEventListener('click', function () { verPeca(p, b); });
+      li.appendChild(b); gradeCat.appendChild(li);
+    });
+    $('cat-conta').textContent = lista.length + (lista.length === 1 ? ' peça' : ' peças') + (filtro ? ' em ' + nomeTipo[filtro] : '');
+  }
+  function chip(id, rotulo, n) {
+    var b = document.createElement('button'), q = document.createElement('sup');
+    b.type = 'button'; b.className = 'chip'; b.textContent = rotulo; q.textContent = n; q.setAttribute('aria-hidden', 'true'); b.appendChild(q);
+    b.setAttribute('aria-pressed', id === filtro ? 'true' : 'false');
+    b.addEventListener('click', function () {
+      if (filtro === id) return; filtro = id;
+      [].forEach.call(chips.children, function (c) { c.setAttribute('aria-pressed', c === b ? 'true' : 'false'); });
+      if (calmo) { pintarCatalogo(); return; }
+      gradeCat.classList.add('troca'); setTimeout(function () { pintarCatalogo(); gradeCat.classList.remove('troca'); }, 180);
+    });
+    chips.appendChild(b);
+  }
+  if (CAT.length) {
+    chip('', 'Tudo', CAT.length);
+    TIPOS.forEach(function (t) { var n = CAT.filter(function (p) { return p.tipo === t[0]; }).length; if (n) chip(t[0], t[1], n); });
+  } else { $('aba-catalogo').hidden = true; $('b-catalogo').hidden = true; }
+
+  /* duas vistas na mesma página: Início e Catálogo. O endereço ganha #catalogo, então o botão de voltar do celular funciona e dá para mandar o link direto do catálogo. */
+  var pintado = false;
+  function trocar(qual) {
+    document.body.setAttribute('data-vista', qual);
+    $('inicio').hidden = qual !== 'inicio'; $('catalogo').hidden = qual !== 'catalogo';
+    if (qual === 'catalogo') $('aba-inicio').removeAttribute('aria-current'); else $('aba-inicio').setAttribute('aria-current', 'page');
+    if (qual === 'catalogo') $('aba-catalogo').setAttribute('aria-current', 'page'); else $('aba-catalogo').removeAttribute('aria-current');
+    if (qual === 'catalogo' && !pintado) { pintado = true; pintarCatalogo(); }
+    scrollTo(0, 0); flutuar();
+  }
+  function vista(primeira) {
+    var qual = location.hash === '#catalogo' && CAT.length ? 'catalogo' : 'inicio';
+    if (qual === document.body.getAttribute('data-vista') && !primeira) { if (location.hash === '#inicio' || location.hash === '#catalogo') scrollTo({ top: 0, behavior: calmo ? 'auto' : 'smooth' }); return; }
+    if (aberta) fechar();
+    if (primeira || calmo) { trocar(qual); return; }
+    if (document.startViewTransition) { document.startViewTransition(function () { trocar(qual); }); return; }
+    trocar(qual); var el = $(qual); el.classList.remove('entra'); void el.offsetWidth; el.classList.add('entra');
+  }
+  addEventListener('hashchange', function () { vista(false); });
+  [].forEach.call(document.querySelectorAll('a[href="#inicio"], a[href="#catalogo"]'), function (a) { a.addEventListener('click', function () { if (location.hash === a.getAttribute('href')) vista(false); }); });
+  vista(true);
 
   /* oferece o contato ao abrir, uma vez por visita, só no celular: é nele que o cartão é encostado.
      No computador a página abre direto; o botão Salvar contato continua disponível. */
-  if (iphone || android) setTimeout(abrir, 600);
+  if ((iphone || android) && document.body.getAttribute('data-vista') === 'inicio') setTimeout(abrir, 900);
 })();
