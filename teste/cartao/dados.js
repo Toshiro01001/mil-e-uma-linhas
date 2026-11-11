@@ -102,7 +102,7 @@ window.LOJA = {
     { arquivo: 'fotos/c-19.webp', legenda: 'Blusa branca de um ombro', tipo: 'b' },
     { arquivo: 'fotos/c-16.webp', grande: 'fotos/g/c-16.webp', legenda: 'Blusa cinza de gola alta', tipo: 'b' },
     { arquivo: 'fotos/c-33.webp', grande: 'fotos/g/c-33.webp', legenda: 'Camiseta preta', tipo: 'b' },
-    { arquivo: 'fotos/c-20.webp', grande: 'fotos/g/c-20.webp', legenda: 'Jaqueta preta esportiva', tipo: 'b' },
+    { arquivo: 'fotos/c-20.webp', grande: 'fotos/g/c-20.webp', legenda: 'Jaqueta preta esportiva', tipo: 'b', grupo: 'x' },
     { arquivo: 'fotos/c-46.webp', grande: 'fotos/g/c-46.webp', legenda: 'Colete jeans com cinto', tipo: 'b' }
   ]
 };
