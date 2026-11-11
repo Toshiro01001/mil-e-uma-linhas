@@ -15,6 +15,8 @@
   var espera = 0;
   window.addEventListener('resize', function () { cancelAnimationFrame(espera); espera = requestAnimationFrame(ajustar); });
   window.addEventListener('mul:tema', ajustar);
+  window.addEventListener('hashchange', function () { requestAnimationFrame(ajustar); });   /* a aba ativa pode ser mais larga que as outras */
+  window.addEventListener('load', ajustar);
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(ajustar);
   var pedido = document.getElementById('carrinho-topo');
   if (pedido && 'MutationObserver' in window) new MutationObserver(ajustar).observe(pedido, { attributes: true, childList: true, subtree: true, characterData: true });
