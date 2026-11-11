@@ -9,7 +9,7 @@
 <title>HAI OUTLET</title>
 <link rel="preload" href="fonte/playfair.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fonte/inter.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="cartao.css?v=47">
+<link rel="stylesheet" href="cartao.css?v=48">
 </head>
 <body data-vista="inicio">
 <div class="abre" aria-hidden="true"><div class="abre-selo"><img src="logo.webp" width="92" height="92" alt=""><i></i></div></div>
@@ -151,7 +151,8 @@
         <label class="busca"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.500"/><path d="M16 16l4.500 4.500"/></svg><span class="so-leitor">Procurar peça pelo nome</span><input id="busca" type="search" placeholder="Procurar: vestido, polo, azul" autocomplete="off" enterkeyhint="search"></label>
         <button type="button" class="acao escura" id="surpresa"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="4"/><circle cx="9" cy="9" r=".800"/><circle cx="15" cy="15" r=".800"/><circle cx="15" cy="9" r=".800"/><circle cx="9" cy="15" r=".800"/></svg><b>Me surpreenda</b></button>
       </div>
-      <div class="chips" id="chips" role="group" aria-label="Filtrar peças por tipo"></div>
+      <div class="chips" id="chips" role="group" aria-label="Filtrar peças por grupo"></div>
+      <div class="chips sub" id="subchips" role="group" aria-label="Filtrar por tipo de peça" hidden></div>
       <p class="cat-conta" id="cat-conta" role="status" aria-live="polite"></p>
     </header>
     <ul class="cat-grade" id="cat-grade"></ul>
@@ -208,7 +209,7 @@
   <p class="dica">A conversa abre já com o nome desta peça.</p>
   <button type="button" class="quieto" id="p-fechar">Fechar</button>
 </section>
-<script src="dados.js?v=15"></script>
-<script src="cartao.js?v=46"></script>
+<script src="dados.js?v=16"></script>
+<script src="cartao.js?v=47"></script>
 </body>
 </html>
