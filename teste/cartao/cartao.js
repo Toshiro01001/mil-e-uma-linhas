@@ -54,15 +54,42 @@
     new IntersectionObserver(function (v) { flutua.hidden = v[0].isIntersecting || document.body.classList.contains('com-folha'); }, { threshold: 0 }).observe($('b-whats'));
   }
 
-  var grade = $('grade');
-  (L.fotos || []).forEach(function (f) {
+  /* vitrine: as fotos passam sozinhas para a direita. Para ao tocar, ao passar o mouse, ao receber o foco ou pelo botão Pausar.
+     Quem pediu menos movimento no aparelho recebe a fila parada, para deslizar com o dedo. */
+  var grade = $('grade'), fotos = L.fotos || [];
+  function cartaoFoto(f, copia) {
     var d = document.createElement('div');
-    d.className = 'foto cor-' + f.cor; d.setAttribute('role', 'img'); d.setAttribute('aria-label', f.legenda);
-    if (!f.arquivo) { var selo = document.createElement('span'); selo.className = 'selo'; selo.setAttribute('aria-hidden', 'true'); selo.textContent = 'Foto em breve'; d.appendChild(selo); }
-    if (f.arquivo) { var im = document.createElement('img'); im.src = f.arquivo; im.alt = f.legenda; im.loading = 'lazy'; d.appendChild(im); d.removeAttribute('role'); d.removeAttribute('aria-label'); }
+    d.className = 'foto cor-' + (f.cor || 'a');
+    if (f.arquivo) { var im = document.createElement('img'); im.src = f.arquivo; im.alt = copia ? '' : f.legenda; im.width = 720; im.height = 720; im.loading = 'lazy'; im.decoding = 'async'; d.appendChild(im); }
+    else { d.setAttribute('role', 'img'); d.setAttribute('aria-label', f.legenda); var selo = document.createElement('span'); selo.className = 'selo'; selo.setAttribute('aria-hidden', 'true'); selo.textContent = 'Foto em breve'; d.appendChild(selo); }
+    if (copia) { d.setAttribute('aria-hidden', 'true'); d.removeAttribute('role'); d.removeAttribute('aria-label'); }
     grade.appendChild(d);
-  });
-  if (!(L.fotos || []).length) document.querySelector('.pecas').hidden = true;
+  }
+  fotos.forEach(function (f) { cartaoFoto(f, false); });
+  if (!fotos.length) document.querySelector('.pecas').hidden = true;
+  var calmo = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (fotos.length > 2 && !calmo && window.requestAnimationFrame) {
+    fotos.forEach(function (f) { cartaoFoto(f, true); });
+    grade.classList.add('passando');
+    var parada = false, manual = false, ocupada = 0, antesT = 0, pos = -1, botao = $('pausa');
+    botao.hidden = false;
+    botao.addEventListener('click', function () { manual = !manual; botao.textContent = manual ? 'Continuar' : 'Pausar'; botao.setAttribute('aria-pressed', manual ? 'true' : 'false'); });
+    function segura() { ocupada = Date.now() + 2500; pos = -1; }
+    ['pointerdown', 'touchstart', 'wheel', 'keydown'].forEach(function (ev) { grade.addEventListener(ev, segura, { passive: true }); });
+    grade.addEventListener('mouseenter', function () { parada = true; }); grade.addEventListener('mouseleave', function () { parada = false; pos = -1; });
+    grade.addEventListener('focusin', function () { parada = true; }); grade.addEventListener('focusout', function () { parada = false; pos = -1; });
+    function passo(t) {
+      var meio = grade.scrollWidth / 2, dt = Math.min(64, t - (antesT || t)); antesT = t;
+      if (meio > grade.clientWidth && !parada && !manual && !document.hidden && Date.now() > ocupada) {
+        if (pos < 0) pos = grade.scrollLeft;
+        pos -= dt * 0.03; /* cerca de 30 px por segundo, para a direita */
+        if (pos <= 0) pos += meio;
+        grade.scrollLeft = pos;
+      } else if (grade.scrollLeft <= 0 && meio > 0) { grade.scrollLeft = meio; }
+      requestAnimationFrame(passo);
+    }
+    requestAnimationFrame(passo);
+  }
 
   /* horário: aberta ou fechada agora, pelo relógio da cidade da loja e não pelo do celular de quem visita */
   var DIAS = ['domingo', 'segunda', 'terça', 'quarta', 'quinta', 'sexta', 'sábado'];

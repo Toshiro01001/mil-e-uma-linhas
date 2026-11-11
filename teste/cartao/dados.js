@@ -25,7 +25,7 @@ window.LOJA = {
   endereco: 'Rua Jornalista Amaro de Figueiredo Falcão, 333, CPA I, Cuiabá, MT',
   /* central de atendimento: a página de links que a loja já usa */
   central: 'https://linktr.ee/hai_outlet',
-  email: '',
+  email: 'haioutlet@gmail.com',
   /* horário por dia da semana, de domingo (0) a sábado (6); null é dia fechado. Tirado da ficha da loja no Google; a dona ainda vai confirmar. */
   horario: [null, ['08:30', '17:00'], ['08:30', '18:30'], ['08:30', '18:30'], ['08:30', '18:30'], ['08:30', '18:30'], ['08:30', '17:00']],
   horarioExemplo: false,
@@ -35,8 +35,15 @@ window.LOJA = {
   fuso: 'America/Cuiaba',
   qr: 'qr.svg?v=1',
   contato: 'contato.vcf?v=5',
+  /* fotos tiradas do Instagram da própria loja, recortadas do pescoço para baixo para não mostrar o rosto de ninguém. A dona ainda vai dizer se pode usar. */
   fotos: [
-    { cor: 'a', legenda: 'Foto de peça 1' }, { cor: 'b', legenda: 'Foto de peça 2' },
-    { cor: 'c', legenda: 'Foto de peça 3' }, { cor: 'd', legenda: 'Foto de peça 4' }
+    { arquivo: 'fotos/peca-1.webp', legenda: 'Regatas bordadas no cabide' },
+    { arquivo: 'fotos/peca-2.webp', legenda: 'Vestido rosa com bolsa clara' },
+    { arquivo: 'fotos/peca-3.webp', legenda: 'Blusa verde-limão com short-saia preto' },
+    { arquivo: 'fotos/peca-4.webp', legenda: 'Camiseta verde com short verde-oliva' },
+    { arquivo: 'fotos/peca-5.webp', legenda: 'Conjunto amarelo de alças' },
+    { arquivo: 'fotos/peca-6.webp', legenda: 'Vestido marrom midi' },
+    { arquivo: 'fotos/peca-7.webp', legenda: 'Camisa e short amarelo-claro' },
+    { arquivo: 'fotos/peca-8.webp', legenda: 'Regata preta com short branco' }
   ]
 };

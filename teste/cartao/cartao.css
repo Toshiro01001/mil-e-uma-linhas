@@ -254,3 +254,14 @@ body { background-image: radial-gradient(rgba(13, 15, 10, .055) 1px, transparent
 .e1 { top: 98px; left: 10px; } .e2 { top: 24px; }
 @media (min-width: 960px) { .e1 { top: 104px; left: 16px; } .e2 { top: 22px; right: 16px; } }
 .e1 { top: 62px; } @media (min-width: 960px) { .e1 { top: 60px; } }
+
+/* vitrine */
+.pecas-topo { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin: 0 0 10px; }
+.pecas-topo h2 { margin: 0; }
+.pausa { flex: none; min-height: 36px; padding: 6px 14px; border: 1.500px solid var(--tinta); border-radius: 999px; background: var(--papel); color: var(--tinta); font: inherit; font-size: 13px; font-weight: 500; cursor: pointer; }
+.pausa[hidden] { display: none; }
+.pausa:focus-visible { outline: 3px solid var(--verde-escuro); outline-offset: 2px; }
+.foto { flex-basis: 58%; aspect-ratio: 1 / 1; background: #fff; }
+.fila.passando { scroll-snap-type: none; }
+.fila:focus-visible { outline: 3px solid var(--verde-escuro); outline-offset: 2px; border-radius: 22px; }
+@media (min-width: 960px) { .foto { flex-basis: 30%; } }

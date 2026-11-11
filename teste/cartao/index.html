@@ -7,7 +7,7 @@
 <meta name="theme-color" content="#ffffff">
 <title>Teste do cartão de aproximação</title>
 <link rel="preload" href="fonte/outfit.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="cartao.css?v=10">
+<link rel="stylesheet" href="cartao.css?v=11">
 </head>
 <body>
 <div class="pilula" id="pilula" hidden>
@@ -62,6 +62,11 @@
     <ul id="sobre-lista"></ul>
   </section>
 
+  <section class="pecas" aria-labelledby="t-pecas">
+    <div class="pecas-topo"><h2 id="t-pecas">Espiar as novidades</h2><button type="button" class="pausa" id="pausa" hidden>Pausar</button></div>
+    <div class="fila" id="grade" tabindex="0" aria-label="Fotos de peças da loja. Elas passam sozinhas; deslize para o lado para ver no seu ritmo."></div>
+  </section>
+
   <section class="local" id="local" aria-labelledby="t-local">
     <h2 id="t-local">Onde fica</h2>
     <div class="mapa-cartao">
@@ -86,11 +91,6 @@
     <div class="linhas" id="fale-lista"></div>
   </section>
   </div>
-
-  <section class="pecas" aria-labelledby="t-pecas">
-    <h2 id="t-pecas">Espiar as novidades</h2>
-    <div class="fila" id="grade" tabindex="0" aria-label="Fotos de peças da loja. Deslize para o lado."></div>
-  </section>
 
   <button type="button" class="botao indicar" id="b-indicar">
     <i class="bola"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15V4M8 8l4-4 4 4M5 13v6h14v-6"/></svg></i>
@@ -125,7 +125,7 @@
   <button type="button" class="botao principal centro" id="q-enviar"><span><b>Enviar o link</b></span></button>
   <button type="button" class="botao centro quieto" id="q-fechar"><span><b>Fechar</b></span></button>
 </section>
-<script src="dados.js?v=9"></script>
-<script src="cartao.js?v=11"></script>
+<script src="dados.js?v=10"></script>
+<script src="cartao.js?v=12"></script>
 </body>
 </html>
