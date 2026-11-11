@@ -19,7 +19,7 @@ window.LOJA = {
   lat: -15.5594108,
   lng: -56.0532517,
   endereco: 'Rua Jornalista Amaro de Figueiredo Falcão, 333, CPA I, Cuiabá, MT',
-  contato: 'contato.vcf?v=3',
+  contato: 'contato.vcf?v=4',
   fotos: [
     { cor: 'a', legenda: 'Foto de peça 1' }, { cor: 'b', legenda: 'Foto de peça 2' },
     { cor: 'c', legenda: 'Foto de peça 3' }, { cor: 'd', legenda: 'Foto de peça 4' }
