@@ -1504,3 +1504,17 @@ h2.pv-on:not(.pv-ok) .pv-i { transform: translateY(110%); }
 [data-tema="empresa"] h2.pv-on .fino .pv-i { color: transparent; background: linear-gradient(180deg, #4D6463, #93A7A5); -webkit-background-clip: text; background-clip: text; }
 
 @media print { .hero .luz, .mural-proj { display: none; } }
+
+/* tema Agenda em telas médias: a barra aperta aos poucos para todas as abas caberem sem cortar a primeira */
+@media (min-width: 901px) and (max-width: 1240px) {
+  [data-tema="agenda"] .abas .temas-rot { display: none; }
+  [data-tema="agenda"] .abas { font-size: 15px; }
+  [data-tema="agenda"] .abas nav a { padding: 8px 10px; }
+  [data-tema="agenda"] .temas { padding: 0 4px 0 2px; gap: 0; }
+}
+@media (min-width: 901px) and (max-width: 1060px) {
+  [data-tema="agenda"] .abas { font-size: 14px; padding: 4px 6px; }
+  [data-tema="agenda"] .abas nav { gap: 0; }
+  [data-tema="agenda"] .abas nav a { padding: 8px 7px; }
+  [data-tema="agenda"] .temas button { font-size: 12px; padding: 4px 6px; }
+}
