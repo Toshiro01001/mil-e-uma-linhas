@@ -95,17 +95,24 @@
   /* vitrine: as fotos passam sozinhas da esquerda para a direita (entram pela esquerda e saem pela direita).
      Anda por transformação, que é lisa e não pesa. Dá para arrastar com o dedo ou o mouse e andar com as setas do teclado; para pelo botão Pausar
      e enquanto a fila tem o foco do teclado. Passar o mouse ou tocar numa foto só aproxima a foto. Quem pediu menos movimento recebe a fila parada, para deslizar. */
-  var grade = $('grade'), fotos = L.fotos || [], trilho = document.createElement('div');
+  /* a vitrine mostra todas as peças do catálogo; tocar ou clicar em uma delas leva ao catálogo com essa peça aberta.
+     Sem catálogo nos dados, ela volta a usar a lista curta "fotos", que não abre nada. */
+  var grade = $('grade'), fotos = (L.catalogo && L.catalogo.length) ? L.catalogo : (L.fotos || []), trilho = document.createElement('div'), arrastou = 0;
   trilho.className = 'trilho'; grade.appendChild(trilho);
   function cartaoFoto(f, copia) {
     var d = document.createElement('div');
-    d.className = 'foto cor-' + (f.cor || 'a');
+    d.className = 'foto cor-' + (f.cor || 'a'); d.peca = f;
     if (f.arquivo) { var q = document.createElement('span'); q.className = 'foto-quadro'; var im = document.createElement('img'); im.src = f.arquivo; im.alt = copia ? '' : f.legenda; im.width = 720; im.height = 720; im.loading = 'lazy'; im.decoding = 'async'; im.draggable = false; q.appendChild(im); d.appendChild(q); var leg = document.createElement('span'); leg.className = 'foto-nome'; leg.textContent = f.legenda; if (!copia) leg.setAttribute('aria-hidden', 'true'); d.appendChild(leg); }
     else { d.setAttribute('role', 'img'); d.setAttribute('aria-label', f.legenda); var selo = document.createElement('span'); selo.className = 'selo'; selo.setAttribute('aria-hidden', 'true'); selo.textContent = 'Foto em breve'; d.appendChild(selo); }
     if (copia) { d.setAttribute('aria-hidden', 'true'); d.removeAttribute('role'); d.removeAttribute('aria-label'); }
     trilho.appendChild(d);
   }
   fotos.forEach(function (f) { cartaoFoto(f, false); });
+  grade.addEventListener('click', function (ev) {
+    var el = ev.target.closest ? ev.target.closest('.foto') : null;
+    if (!el || !el.peca || !el.peca.id || arrastou > 8) return;   /* quem arrastou a fila não quis abrir a peça */
+    location.hash = '#peca-' + el.peca.id;
+  });
   if (!fotos.length) document.querySelector('.pecas').hidden = true;
   if (fotos.length > 2 && !calmo && window.requestAnimationFrame) {
     fotos.forEach(function (f) { cartaoFoto(f, true); });
@@ -115,9 +122,9 @@
     botao.addEventListener('click', function () { manual = !manual; botao.textContent = manual ? 'Continuar' : 'Pausar'; botao.setAttribute('aria-pressed', manual ? 'true' : 'false'); });
     function volta() { var g = parseFloat(getComputedStyle(trilho).columnGap) || 0; return (trilho.scrollWidth + g) / 2; }
     function poe() { var v = volta(); if (v > 0) { x = ((x % v) + v) % v; trilho.style.transform = 'translate3d(' + (-x).toFixed(2) + 'px,0,0)'; } }
-    grade.addEventListener('pointerdown', function (ev) { if (ev.pointerType === 'mouse' && ev.button !== 0) return; arrasta = true; ultX = ev.clientX; tocada = ev.target.closest ? ev.target.closest('.foto') : null; if (tocada) tocada.classList.add('tocada'); });
+    grade.addEventListener('pointerdown', function (ev) { if (ev.pointerType === 'mouse' && ev.button !== 0) return; arrasta = true; arrastou = 0; ultX = ev.clientX; tocada = ev.target.closest ? ev.target.closest('.foto') : null; if (tocada) tocada.classList.add('tocada'); });
     function solta() { if (!arrasta) return; arrasta = false; espera = Date.now() + 1200; if (tocada) { tocada.classList.remove('tocada'); tocada = null; } }
-    addEventListener('pointermove', function (ev) { if (!arrasta) return; x -= ev.clientX - ultX; ultX = ev.clientX; poe(); });
+    addEventListener('pointermove', function (ev) { if (!arrasta) return; arrastou += Math.abs(ev.clientX - ultX); x -= ev.clientX - ultX; ultX = ev.clientX; poe(); });
     addEventListener('pointerup', solta); addEventListener('pointercancel', solta);
     grade.addEventListener('focus', function () { focada = true; }); grade.addEventListener('blur', function () { focada = false; });
     grade.addEventListener('keydown', function (ev) { if (ev.key !== 'ArrowRight' && ev.key !== 'ArrowLeft') return; ev.preventDefault(); x += (ev.key === 'ArrowRight' ? 1 : -1) * volta() / fotos.length; poe(); });
