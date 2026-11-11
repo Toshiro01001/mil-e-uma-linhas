@@ -73,9 +73,9 @@ h1 { font: 500 clamp(31px, 9.4vw, 76px)/1.04 var(--serifa); letter-spacing: -.02
 
 /* etiqueta de roupa pendurada */
 .pendura { order: -1; display: flex; justify-content: center; margin: -76px 0 6px; pointer-events: none; }
-.tag { pointer-events: auto; position: relative; display: block; padding-top: 62px; transform-origin: 50% 0; animation: cai 2.6s var(--curva) both, balanca 7s ease-in-out 2.6s infinite; will-change: transform; }
+.tag { pointer-events: auto; position: relative; display: block; padding-top: 94px; transform-origin: 50% 0; animation: cai 2.6s var(--curva) both, balanca 7s ease-in-out 2.6s infinite; will-change: transform; }
 .tag.empurra { animation: empurra 2.2s var(--curva) both, balanca 7s ease-in-out 2.2s infinite; }
-.tag-fio { position: absolute; left: 50%; top: 0; width: 1px; height: 74px; background: rgba(255, 255, 255, .55); }
+.tag-fio { position: absolute; left: 50%; top: 0; width: 1px; height: 106px; background: rgba(255, 255, 255, .55); }
 .tag-papel { position: relative; display: grid; justify-items: center; gap: 6px; width: 118px; padding: 20px 10px 10px; background: var(--areia); color: var(--obs); border-radius: 14px 14px 10px 10px; clip-path: polygon(22% 0, 78% 0, 100% 12%, 100% 100%, 0 100%, 0 12%); box-shadow: inset 0 0 0 1px rgba(28, 32, 28, .08); }
 .tag-furo { position: absolute; top: 9px; left: 50%; width: 9px; height: 9px; margin-left: -4.5px; border-radius: 50%; background: var(--mata); box-shadow: 0 0 0 2px rgba(28, 32, 28, .15); }
 .tag-papel img { width: 76px; height: 76px; mix-blend-mode: multiply; }
