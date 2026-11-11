@@ -7,7 +7,7 @@
 <meta name="theme-color" content="#ffffff">
 <title>Teste do cartão de aproximação</title>
 <link rel="preload" href="fonte/outfit.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="cartao.css?v=4">
+<link rel="stylesheet" href="cartao.css?v=6">
 </head>
 <body>
 <main class="pagina" id="conteudo">
@@ -46,6 +46,11 @@
     </div>
   </nav>
 
+  <section class="sobre" id="sobre" aria-labelledby="t-sobre">
+    <h2 id="t-sobre" class="so-leitor">Sobre a loja</h2>
+    <ul id="sobre-lista"></ul>
+  </section>
+
   <section class="pecas" aria-labelledby="t-pecas">
     <h2 id="t-pecas">Espiar as novidades</h2>
     <div class="fila" id="grade" tabindex="0" aria-label="Fotos de peças da loja. Deslize para o lado."></div>
@@ -59,6 +64,10 @@
 </main>
 <footer class="rodape"><span id="rodape-nome"></span><span>Página feita por <a href="https://mileumalinhas.com.br" rel="noopener">Mil e Uma Linhas!</a></span></footer>
 
+<a class="flutua" id="flutua" rel="noopener" hidden>
+  <i class="bola"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20l1.400-4.200A8 8 0 1 1 8.600 19L4 20z"/></svg></i>
+  <b>Chamar no WhatsApp</b>
+</a>
 <div class="veu" id="veu" hidden></div>
 <section class="folha-contato" id="folha" role="dialog" aria-modal="true" aria-labelledby="t-folha" hidden>
   <h2 id="t-folha">Salvar o contato da loja?</h2>
@@ -67,7 +76,7 @@
   <p class="dica" id="f-dica"></p>
   <button type="button" class="botao centro quieto" id="f-nao"><span><b>Agora não</b></span></button>
 </section>
-<script src="dados.js?v=3"></script>
-<script src="cartao.js?v=3"></script>
+<script src="dados.js?v=4"></script>
+<script src="cartao.js?v=4"></script>
 </body>
 </html>

@@ -18,6 +18,22 @@
   $('b-contato').setAttribute('aria-label', 'Salvar o contato da ' + nome + ' na agenda');
   $('b-indicar').setAttribute('aria-label', 'Enviar o link da página da ' + nome + ' para alguém');
 
+  /* frases da própria loja, cada uma com o seu emoji */
+  var ul = $('sobre-lista');
+  (L.sobre || []).forEach(function (par) {
+    var li = document.createElement('li'), e = document.createElement('span'), t = document.createElement('span');
+    e.className = 'emoji'; e.setAttribute('aria-hidden', 'true'); e.textContent = par[0]; t.textContent = par[1];
+    li.appendChild(e); li.appendChild(t); ul.appendChild(li);
+  });
+  if (!(L.sobre || []).length) $('sobre').hidden = true;
+
+  /* atalho do WhatsApp que aparece no pé da tela quando o botão grande sai de vista */
+  var flutua = $('flutua');
+  flutua.href = $('b-whats').href; flutua.target = '_blank'; flutua.setAttribute('aria-label', 'Abrir conversa com a ' + nome + ' no WhatsApp');
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(function (v) { flutua.hidden = v[0].isIntersecting || document.body.classList.contains('com-folha'); }, { threshold: 0 }).observe($('b-whats'));
+  }
+
   var grade = $('grade');
   (L.fotos || []).forEach(function (f) {
     var d = document.createElement('div');
@@ -30,7 +46,7 @@
   /* contato */
   var folha = $('folha'), veu = $('veu'), antes = null;
   $('f-salvar').href = L.contato; $('f-salvar').setAttribute('download', 'contato-da-loja.vcf');
-  function abrir() { antes = document.activeElement; folha.hidden = false; veu.hidden = false; document.body.classList.add('com-folha'); $('f-salvar').focus(); }
+  function abrir() { antes = document.activeElement; folha.hidden = false; veu.hidden = false; document.body.classList.add('com-folha'); $('flutua').hidden = true; $('f-salvar').focus(); }
   function fechar() { folha.hidden = true; veu.hidden = true; document.body.classList.remove('com-folha'); if (antes && antes.focus) antes.focus(); }
   $('b-contato').addEventListener('click', abrir);
   $('f-nao').addEventListener('click', fechar);

@@ -2,8 +2,14 @@
 window.LOJA = {
   nome: 'HAI OUTLET',
   logo: 'logo.webp',
-  frase: 'Faça as pazes com o seu guarda-roupa',
-  frase2: 'Roupas femininas, masculinas e acessórios',
+  frase: 'Estilo que valoriza você, em todos os tamanhos e gostos!',
+  frase2: 'Qualidade, variedade e looks incríveis esperam por você!',
+  sobre: [
+    ['✨', 'Seu estilo, seu corpo, sua melhor versão!'],
+    ['👗', 'Looks incríveis para todos os gostos e tamanhos.'],
+    ['🔥', 'Promoções sempre rolando para você economizar!'],
+    ['🛍️', 'Venha se apaixonar e encontre o look perfeito!']
+  ],
   onde: 'Dentro do supermercado, em Cuiabá',
   whatsapp: '5565900000000',
   mensagemWhats: 'Olá! Vim pelo cartão da loja.',
