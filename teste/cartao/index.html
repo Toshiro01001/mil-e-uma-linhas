@@ -4,140 +4,184 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex, nofollow">
-<meta name="theme-color" content="#0f1115">
-<title>Teste do cartão de aproximação</title>
-<link rel="preload" href="fonte/archivo.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="cartao.css?v=14">
+<meta name="theme-color" content="#151914">
+<meta name="referrer" content="no-referrer">
+<title>HAI OUTLET</title>
+<link rel="preload" href="fonte/playfair.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonte/inter.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="cartao.css?v=20">
 </head>
-<body>
-<div class="fundo" id="fundo" aria-hidden="true"><canvas id="aurora"></canvas><i></i><i></i><i></i></div>
-<div class="fita" id="fita" aria-hidden="true" hidden><div class="fita-fila"><div class="fita-tk"></div><div class="fita-tk"></div></div></div>
-<div class="pilula" id="pilula" hidden>
-  <img id="pilula-logo" width="36" height="36" alt="">
-  <span class="pilula-nome"><b id="pilula-nome"></b><small id="pilula-onde"></small></span>
-  <i class="pilula-risco" aria-hidden="true"></i>
-  <span class="pilula-estado" id="pilula-estado"><i class="ponto" aria-hidden="true"></i><span id="pilula-texto"></span></span>
-</div>
-<main class="pagina" id="conteudo">
-  <div class="lado">
-  <header class="topo">
-    <span class="folhao fa" aria-hidden="true"></span><span class="folhao fb" aria-hidden="true"></span>
-    <span class="etiqueta e1" id="etiqueta1" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-6.200 7-11.500A7 7 0 0 0 5 9.500C5 14.800 12 21 12 21z"/><circle cx="12" cy="9.500" r="2.500"/></svg><span></span></span><span class="etiqueta e2" id="etiqueta2" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l2.200 5.600L20 9.300l-4.400 3.900 1.300 5.800L12 16l-4.900 3 1.300-5.800L4 9.300l5.800-.700L12 3z"/></svg><span></span></span>
-    <h1><img id="logo" width="640" height="640" alt=""></h1>
-    <div class="faixas">
-      <p class="faixa escura" id="frase"></p>
-      <p class="faixa verde" id="frase2"></p>
-    </div>
-    <p class="onde"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-6.2 7-11.500A7 7 0 0 0 5 9.500C5 14.800 12 21 12 21z"/><circle cx="12" cy="9.500" r="2.500"/></svg><span id="onde"></span></p>
-    <p class="agora" id="agora" hidden><i class="ponto" aria-hidden="true"></i><span id="agora-texto"></span></p>
-  </header>
+<body data-vista="inicio">
+<a class="pular" href="#conteudo">Ir para o conteúdo</a>
 
-  <nav class="botoes" aria-label="Contatos da loja">
-    <a class="botao principal" id="b-whats" rel="noopener">
-      <i class="bola"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20l1.400-4.200A8 8 0 1 1 8.600 19L4 20z"/></svg></i>
-      <span><b>Chamar no WhatsApp</b><small>Abre a conversa no aplicativo.</small></span>
-      <svg class="vai" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-    </a>
-    <div class="quadra">
-      <a class="botao bloco" id="b-insta" rel="noopener">
-        <i class="bola"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="5"/><circle cx="12" cy="12" r="3.600"/><circle cx="16.600" cy="7.400" r=".600"/></svg></i>
-        <span><b>Ver o Instagram</b><small>Abre o perfil da loja.</small></span>
-      </a>
-      <a class="botao bloco" id="b-tiktok" rel="noopener">
-        <i class="bola"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 9v6l5.500-3L10 9z"/><rect x="3.500" y="4.500" width="17" height="15" rx="4"/></svg></i>
-        <span><b>Ver o TikTok</b><small>Abre o perfil da loja.</small></span>
-      </a>
-      <a class="botao bloco" id="b-mapa" rel="noopener">
-        <i class="bola"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-6.200 7-11.500A7 7 0 0 0 5 9.500C5 14.800 12 21 12 21z"/><circle cx="12" cy="9.500" r="2.500"/></svg></i>
-        <span><b>Ver como chegar</b><small>Abre o mapa com a rota.</small></span>
-      </a>
-      <button type="button" class="botao bloco" id="b-contato">
-        <i class="bola"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10" cy="8.500" r="3.500"/><path d="M3.500 20c.600-3.600 3.200-5.500 6.500-5.500s5.900 1.900 6.500 5.500M19 8v6M16 11h6"/></svg></i>
-        <span><b>Salvar contato</b><small>Nome e telefone da loja.</small></span>
-      </button>
-    </div>
+<header class="barra" id="barra">
+  <a class="barra-marca" href="#inicio" aria-label="Voltar ao início"><img id="barra-logo" width="32" height="32" alt=""><b id="barra-nome"></b></a>
+  <nav class="abas" aria-label="Partes da página">
+    <a href="#inicio" id="aba-inicio" aria-current="page">Início</a>
+    <a href="#catalogo" id="aba-catalogo">Catálogo</a>
+    <i class="abas-marca" aria-hidden="true"></i>
   </nav>
-  </div>
+  <span class="barra-estado" id="barra-estado" hidden><i class="ponto" aria-hidden="true"></i><span id="barra-texto"></span></span>
+</header>
 
-  <div class="corpo">
-  <section class="sobre" id="sobre" aria-labelledby="t-sobre">
+<main id="conteudo">
+<div class="vista" id="inicio">
+  <section class="heroi" id="heroi">
+    <div class="fundo" id="fundo" aria-hidden="true"><canvas id="aurora"></canvas></div>
+    <div class="fios" aria-hidden="true"></div>
+    <div class="heroi-dentro">
+      <div class="heroi-texto">
+        <p class="rotulo claro" id="onde"></p>
+        <h1 id="frase"></h1>
+        <p class="heroi-apoio" id="frase2"></p>
+        <p class="agora" id="agora" hidden><i class="ponto" aria-hidden="true"></i><span id="agora-texto"></span></p>
+        <div class="heroi-acoes">
+          <a class="acao" id="b-whats" rel="noopener">
+            <span class="acao-pontos" aria-hidden="true"></span>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20l1.400-4.200A8 8 0 1 1 8.600 19L4 20z"/></svg>
+            <b>Chamar no WhatsApp</b>
+            <svg class="vai" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+          <a class="acao vazada" href="#catalogo" id="b-catalogo"><b>Ver o catálogo</b><svg class="vai" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        </div>
+        <p class="acao-nota">O WhatsApp abre no aplicativo. Não pede cadastro.</p>
+      </div>
+      <div class="pendura" aria-hidden="false">
+        <button type="button" class="tag" id="tag" aria-label="Etiqueta da loja. Toque para balançar.">
+          <span class="tag-fio" aria-hidden="true"></span>
+          <span class="tag-papel">
+            <i class="tag-furo" aria-hidden="true"></i>
+            <img id="logo" width="640" height="640" alt="">
+            <span class="tag-linha" aria-hidden="true"></span>
+            <span class="tag-texto"><span id="tag-a"></span><span id="tag-b"></span></span>
+          </span>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <div class="folhas">
+  <nav class="atalhos" aria-label="Contatos da loja">
+    <a class="atalho" id="b-insta" rel="noopener"><i><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="5"/><circle cx="12" cy="12" r="3.600"/><circle cx="16.600" cy="7.400" r=".600"/></svg></i><span><b>Instagram</b><small>Abre o perfil da loja.</small></span></a>
+    <a class="atalho" id="b-tiktok" rel="noopener"><i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 4v10.500a3.500 3.500 0 1 1-3.500-3.500M14 4c.400 2.600 2 4.200 4.500 4.500"/></svg></i><span><b>TikTok</b><small>Abre o perfil da loja.</small></span></a>
+    <a class="atalho" id="b-mapa" rel="noopener"><i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-6.500-6-6.500-11.500a6.500 6.500 0 0 1 13 0C18.500 15 12 21 12 21z"/><circle cx="12" cy="9.500" r="2.500"/></svg></i><span><b>Como chegar</b><small>Abre o mapa com a rota.</small></span></a>
+    <button type="button" class="atalho" id="b-contato"><i><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10" cy="8.500" r="3.500"/><path d="M3.500 19.500c.800-3.400 3.400-5 6.500-5s5.700 1.600 6.500 5M18.500 8v6M15.500 11h6"/></svg></i><span><b>Salvar contato</b><small>Nome e telefone da loja.</small></span></button>
+  </nav>
+
+  <section class="sobre bloco" id="sobre" aria-labelledby="t-sobre">
+    <p class="rotulo">A loja</p>
     <h2 id="t-sobre" class="so-leitor">Sobre a loja</h2>
     <ul id="sobre-lista"></ul>
   </section>
 
-  <section class="pecas" aria-labelledby="t-pecas">
-    <div class="pecas-topo"><h2 id="t-pecas">Espiar as novidades</h2><button type="button" class="pausa" id="pausa" hidden>Pausar</button></div>
-    <div class="fila" id="grade" tabindex="0" aria-label="Fotos de peças da loja. Elas passam sozinhas; arraste ou use as setas para ver no seu ritmo."></div>
-  </section>
-
-  <section class="local" id="local" aria-labelledby="t-local">
-    <h2 id="t-local">Onde fica</h2>
-    <div class="mapa-cartao">
-      <p class="mapa-topo"><span class="luzes" aria-hidden="true"><i></i><i></i><i></i></span><b id="mapa-nome"></b></p>
-      <div class="mapa" id="mapa"></div>
-      <p class="endereco"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-6.200 7-11.500A7 7 0 0 0 5 9.500C5 14.800 12 21 12 21z"/><circle cx="12" cy="9.500" r="2.500"/></svg><span id="endereco"></span></p>
+  <section class="pecas bloco" aria-labelledby="t-pecas">
+    <div class="bloco-topo">
+      <div><p class="rotulo">Vitrine</p><h2 id="t-pecas">Espiar as novidades</h2></div>
+      <button type="button" class="pausa" id="pausa" hidden>Pausar</button>
     </div>
-    <a class="botao centro" id="b-rota" rel="noopener"><span><b>Ver como chegar</b></span></a>
-    <p class="nota-mapa">O mapa é do Google e segue a política de privacidade do Google.</p>
+    <div class="fila" id="grade" tabindex="0" aria-label="Fotos de peças da loja. Elas passam sozinhas; arraste ou use as setas para ver no seu ritmo."></div>
+    <a class="elo" href="#catalogo"><span>Ver o catálogo completo</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
   </section>
 
-  <div class="banda">
-  <section class="cartela" id="horario" aria-labelledby="t-horario" hidden>
-    <h2 id="t-horario">Horário</h2>
-    <p class="estado" id="estado"></p>
-    <p class="hoje-grande" id="hoje-grande" hidden><b></b><span>Hoje</span></p>
-    <ul class="semana" id="semana"></ul>
-    <p class="nota-mapa" id="nota-horario" hidden>Horários de exemplo, a confirmar com a loja.</p>
-  </section>
-
-  <section class="cartela" id="fale" aria-labelledby="t-fale">
-    <h2 id="t-fale">Fale com a loja</h2>
-    <form class="recado" id="recado" hidden>
-      <label class="rotulo" for="recado-texto">Escreva para a loja</label>
-      <div class="recado-linha">
-        <input id="recado-texto" type="text" maxlength="300" placeholder="Ex.: tem esta blusa no G?" autocomplete="off" enterkeyhint="send">
-        <button type="submit" class="botao-serio"><span>Enviar no WhatsApp</span></button>
+  <section class="local bloco" id="local" aria-labelledby="t-local">
+    <div class="bloco-topo"><div><p class="rotulo">Endereço</p><h2 id="t-local">Onde fica</h2></div></div>
+    <div class="dupla-mapa">
+      <div class="caixa"><div class="caixa-dentro mapa-cartao">
+        <div class="mapa" id="mapa"></div>
+      </div></div>
+      <div class="local-texto">
+        <p class="local-nome" id="mapa-nome"></p>
+        <p class="endereco" id="endereco"></p>
+        <a class="acao escura" id="b-rota" rel="noopener"><b>Ver como chegar</b><svg class="vai" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        <p class="nota">O mapa é do Google e segue a política de privacidade do Google.</p>
       </div>
-      <p class="recado-nota">Abre o WhatsApp com a sua mensagem. Nada é guardado nesta página.</p>
-    </form>
-    <div class="linhas" id="fale-lista"></div>
+    </div>
   </section>
+
+  <div class="banda bloco">
+    <section class="caixa" id="horario" aria-labelledby="t-horario" hidden><div class="caixa-dentro">
+      <p class="rotulo">Atendimento</p>
+      <h2 id="t-horario">Horário</h2>
+      <p class="estado" id="estado"></p>
+      <p class="hoje-grande" id="hoje-grande" hidden><b></b><span>Hoje</span></p>
+      <ul class="semana" id="semana"></ul>
+      <p class="nota" id="nota-horario" hidden>Horários de exemplo, a confirmar com a loja.</p>
+    </div></section>
+
+    <section class="caixa" id="fale" aria-labelledby="t-fale"><div class="caixa-dentro">
+      <p class="rotulo">Contato</p>
+      <h2 id="t-fale">Fale com a loja</h2>
+      <form class="recado" id="recado" hidden>
+        <label for="recado-texto">Escreva para a loja</label>
+        <div class="recado-linha">
+          <input id="recado-texto" type="text" maxlength="300" placeholder="Ex.: tem esta blusa no G?" autocomplete="off" enterkeyhint="send">
+          <button type="submit" class="acao escura"><b>Enviar no WhatsApp</b></button>
+        </div>
+        <p class="nota">Abre o WhatsApp com a sua mensagem. Nada é guardado nesta página.</p>
+      </form>
+      <div class="linhas" id="fale-lista"></div>
+    </div></section>
   </div>
 
-  <button type="button" class="botao indicar" id="b-indicar">
-    <i class="bola"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15V4M8 8l4-4 4 4M5 13v6h14v-6"/></svg></i>
-    <span><b>Indicar a loja</b><small>Mostra o código e manda o link.</small></span>
-  </button>
-  <p class="aviso" id="aviso" role="status" aria-live="polite"></p>
+  <div class="bloco indicar-bloco">
+    <button type="button" class="indicar" id="b-indicar">
+      <span><b>Indicar a loja</b><small>Mostra o código e manda o link.</small></span>
+      <i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15V4M8 8l4-4 4 4M5 13v5a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-5"/></svg></i>
+    </button>
   </div>
+  </div>
+</div>
+
+<div class="vista" id="catalogo" hidden>
+  <div class="folhas cat">
+    <header class="cat-topo">
+      <p class="rotulo">Peças da loja</p>
+      <h2 id="t-cat" tabindex="-1">Catálogo</h2>
+      <p class="cat-apoio">Toque em uma peça para ver de perto e perguntar tamanho e preço pelo WhatsApp.</p>
+      <div class="chips" id="chips" role="group" aria-label="Filtrar peças por tipo"></div>
+      <p class="cat-conta" id="cat-conta" role="status" aria-live="polite"></p>
+    </header>
+    <ul class="cat-grade" id="cat-grade"></ul>
+    <p class="nota cat-nota">Fotos do Instagram da loja. As peças mudam com frequência: confirme com a loja o que está disponível.</p>
+  </div>
+</div>
 </main>
+
+<p class="aviso" id="aviso" role="status" aria-live="polite"></p>
 <footer class="rodape"><span class="rodape-fundo" id="rodape-fundo" aria-hidden="true"></span><span id="rodape-nome"></span><span>Página feita por <a href="https://mileumalinhas.com.br" rel="noopener">Mil e Uma Linhas!</a></span></footer>
 
 <a class="flutua" id="flutua" rel="noopener" hidden>
-  <i class="bola"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20l1.400-4.200A8 8 0 1 1 8.600 19L4 20z"/></svg></i>
+  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20l1.400-4.200A8 8 0 1 1 8.600 19L4 20z"/></svg>
   <b>Chamar no WhatsApp</b>
 </a>
 <div class="veu" id="veu" hidden></div>
-<section class="folha-contato" id="folha" role="dialog" aria-modal="true" aria-labelledby="t-folha" hidden>
+<section class="folha" id="folha" role="dialog" aria-modal="true" aria-labelledby="t-folha" hidden>
   <h2 id="t-folha">Salvar o contato da loja?</h2>
   <p>Vai para a agenda do seu celular.</p>
-  <a class="botao principal centro" id="f-salvar"><span><b>Salvar contato</b></span></a>
+  <a class="acao escura cheia" id="f-salvar"><b>Salvar contato</b></a>
   <p class="dica" id="f-dica"></p>
-  <button type="button" class="botao centro quieto" id="f-nao"><span><b>Agora não</b></span></button>
+  <button type="button" class="quieto" id="f-nao">Agora não</button>
 </section>
-<section class="folha-contato" id="folha-qr" role="dialog" aria-modal="true" aria-labelledby="t-qr" hidden>
+<section class="folha" id="folha-qr" role="dialog" aria-modal="true" aria-labelledby="t-qr" hidden>
   <h2 id="t-qr">Indicar a loja</h2>
   <p>Mostre este código para quem estiver por perto.</p>
   <div class="moldura">
-    <span class="moldura-selo">Aponte a câmera</span>
     <i class="canto c1" aria-hidden="true"></i><i class="canto c2" aria-hidden="true"></i><i class="canto c3" aria-hidden="true"></i><i class="canto c4" aria-hidden="true"></i>
     <i class="varredura" aria-hidden="true"></i>
     <img class="qr" id="qr" width="232" height="232" alt="Código com o endereço desta página">
   </div>
-  <button type="button" class="botao principal centro" id="q-enviar"><span><b>Enviar o link</b></span></button>
-  <button type="button" class="botao centro quieto" id="q-fechar"><span><b>Fechar</b></span></button>
+  <button type="button" class="acao escura cheia" id="q-enviar"><b>Enviar o link</b></button>
+  <button type="button" class="quieto" id="q-fechar">Fechar</button>
 </section>
-<script src="dados.js?v=11"></script>
-<script src="cartao.js?v=15"></script>
+<section class="folha folha-peca" id="folha-peca" role="dialog" aria-modal="true" aria-labelledby="p-nome" hidden>
+  <div class="peca-grande"><img id="p-foto" width="720" height="720" alt=""></div>
+  <p class="rotulo" id="p-cat"></p>
+  <h2 id="p-nome"></h2>
+  <a class="acao escura cheia" id="p-whats" rel="noopener" target="_blank"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20l1.400-4.200A8 8 0 1 1 8.600 19L4 20z"/></svg><b>Perguntar no WhatsApp</b></a>
+  <p class="dica">A conversa abre já com o nome desta peça.</p>
+  <button type="button" class="quieto" id="p-fechar">Fechar</button>
+</section>
+<script src="dados.js?v=12"></script>
+<script src="cartao.js?v=20"></script>
 </body>
 </html>
