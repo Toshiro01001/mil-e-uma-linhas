@@ -7,10 +7,11 @@
 <meta name="theme-color" content="#ffffff">
 <title>Teste do cartão de aproximação</title>
 <link rel="preload" href="fonte/outfit.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="cartao.css?v=8">
+<link rel="stylesheet" href="cartao.css?v=9">
 </head>
 <body>
 <main class="pagina" id="conteudo">
+  <div class="lado">
   <header class="topo">
     <span class="folhao fa" aria-hidden="true"></span><span class="folhao fb" aria-hidden="true"></span>
     <h1><img id="logo" width="640" height="640" alt=""></h1>
@@ -19,6 +20,7 @@
       <p class="faixa verde" id="frase2"></p>
     </div>
     <p class="onde"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-6.2 7-11.500A7 7 0 0 0 5 9.500C5 14.800 12 21 12 21z"/><circle cx="12" cy="9.500" r="2.500"/></svg><span id="onde"></span></p>
+    <p class="agora" id="agora" hidden><i class="ponto" aria-hidden="true"></i><span id="agora-texto"></span></p>
   </header>
 
   <nav class="botoes" aria-label="Contatos da loja">
@@ -45,7 +47,9 @@
       </button>
     </div>
   </nav>
+  </div>
 
+  <div class="corpo">
   <section class="sobre" id="sobre" aria-labelledby="t-sobre">
     <h2 id="t-sobre" class="so-leitor">Sobre a loja</h2>
     <ul id="sobre-lista"></ul>
@@ -59,6 +63,18 @@
     <p class="nota-mapa">O mapa é do Google e segue a política de privacidade do Google.</p>
   </section>
 
+  <section class="cartela" id="horario" aria-labelledby="t-horario" hidden>
+    <h2 id="t-horario">Horário</h2>
+    <p class="estado" id="estado"></p>
+    <ul class="semana" id="semana"></ul>
+    <p class="nota-mapa" id="nota-horario" hidden>Horários de exemplo, a confirmar com a loja.</p>
+  </section>
+
+  <section class="cartela" id="fale" aria-labelledby="t-fale">
+    <h2 id="t-fale">Fale com a loja</h2>
+    <div class="linhas" id="fale-lista"></div>
+  </section>
+
   <section class="pecas" aria-labelledby="t-pecas">
     <h2 id="t-pecas">Espiar as novidades</h2>
     <div class="fila" id="grade" tabindex="0" aria-label="Fotos de peças da loja. Deslize para o lado."></div>
@@ -66,9 +82,10 @@
 
   <button type="button" class="botao indicar" id="b-indicar">
     <i class="bola"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15V4M8 8l4-4 4 4M5 13v6h14v-6"/></svg></i>
-    <span><b>Indicar a loja</b><small>Manda o link desta página.</small></span>
+    <span><b>Indicar a loja</b><small>Mostra o código e manda o link.</small></span>
   </button>
   <p class="aviso" id="aviso" role="status" aria-live="polite"></p>
+  </div>
 </main>
 <footer class="rodape"><span id="rodape-nome"></span><span>Página feita por <a href="https://mileumalinhas.com.br" rel="noopener">Mil e Uma Linhas!</a></span></footer>
 
@@ -84,7 +101,14 @@
   <p class="dica" id="f-dica"></p>
   <button type="button" class="botao centro quieto" id="f-nao"><span><b>Agora não</b></span></button>
 </section>
-<script src="dados.js?v=6"></script>
-<script src="cartao.js?v=7"></script>
+<section class="folha-contato" id="folha-qr" role="dialog" aria-modal="true" aria-labelledby="t-qr" hidden>
+  <h2 id="t-qr">Indicar a loja</h2>
+  <p>Aponte a câmera de um celular para o código.</p>
+  <img class="qr" id="qr" width="232" height="232" alt="Código com o endereço desta página">
+  <button type="button" class="botao principal centro" id="q-enviar"><span><b>Enviar o link</b></span></button>
+  <button type="button" class="botao centro quieto" id="q-fechar"><span><b>Fechar</b></span></button>
+</section>
+<script src="dados.js?v=7"></script>
+<script src="cartao.js?v=8"></script>
 </body>
 </html>
