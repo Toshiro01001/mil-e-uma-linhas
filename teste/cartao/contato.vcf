@@ -1,0 +1,9 @@
+BEGIN:VCARD
+VERSION:3.0
+N:;HAI OUTLET (teste);;;
+FN:HAI OUTLET (teste)
+ORG:HAI OUTLET (teste)
+TEL;TYPE=CELL,VOICE:+55 65 90000-0000
+ADR;TYPE=WORK:;;Rua de Exemplo, s/n;Cuiabá;MT;;Brasil
+URL:https://mileumalinhas.com.br
+END:VCARD

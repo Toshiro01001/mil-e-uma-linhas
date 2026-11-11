@@ -1,0 +1,68 @@
+@font-face { font-family: Outfit; src: url(fonte/outfit.woff2) format("woff2"); font-weight: 100 900; font-display: swap; }
+:root { --fundo: #f1f4ea; --papel: #fff; --tinta: #0d0f0a; --cinza: #565c4e; --verde: #8db53c; --verde-vivo: #a4cf45; --verde-escuro: #4f7417; --linha: #dbe2cd; }
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--fundo); color: var(--tinta); font: 16px/1.4 Outfit, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif; }
+body.com-folha { overflow: hidden; }
+.pagina { max-width: 480px; margin: 0 auto; padding: 0 14px 26px; }
+
+/* topo: o logotipo da loja sobre branco, com duas folhas grandes da marca saindo dos cantos */
+.topo { position: relative; margin: 0 -14px; padding: max(22px, env(safe-area-inset-top)) 14px 20px; background: var(--papel); text-align: center; overflow: hidden; border-radius: 0 0 34px 34px; box-shadow: 0 10px 30px rgba(13, 15, 10, .07); }
+.folhao { position: absolute; width: 210px; height: 330px; border-radius: 50%; background: var(--verde); }
+.fa { left: -150px; top: -150px; transform: rotate(38deg); }
+.fb { width: 150px; height: 250px; right: -112px; top: 64px; transform: rotate(28deg); background: var(--tinta); }
+h1 { position: relative; margin: 0; }
+h1 img { mix-blend-mode: multiply; display: block; width: min(64vw, 270px); height: auto; margin: 0 auto -6px; }
+.faixas { position: relative; display: grid; justify-items: center; gap: 0; margin-top: 2px; }
+.faixa { margin: 0; padding: 8px 16px; white-space: nowrap; font-weight: 600; font-size: min(4.700vw, 20px); line-height: 1.15; border-radius: 10px; }
+.faixa.escura { background: var(--tinta); color: #fff; transform: rotate(-2.200deg); }
+.faixa.verde { background: var(--verde-vivo); color: var(--tinta); font-weight: 500; font-size: min(3.700vw, 15.500px); transform: rotate(-2.200deg) translate(10px, -1px); }
+.onde { position: relative; display: flex; justify-content: center; align-items: center; gap: 6px; margin: 16px 0 0; text-align: left; font-weight: 500; font-size: 15px; }
+.onde svg { flex: 0 0 18px; width: 18px; height: 18px; fill: none; stroke: var(--verde-escuro); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+.botoes { display: grid; gap: 10px; margin-top: 16px; }
+.botao { display: flex; align-items: center; gap: 13px; width: 100%; min-height: 66px; padding: 11px 14px; border: 1.500px solid var(--tinta); border-radius: 22px; background: var(--papel); color: var(--tinta); font: inherit; text-align: left; text-decoration: none; cursor: pointer; -webkit-tap-highlight-color: transparent; box-shadow: 0 3px 0 var(--tinta); transition: transform .08s, box-shadow .08s; }
+.botao:active { transform: translateY(3px); box-shadow: 0 1px 0 var(--tinta); }
+.botao:focus-visible { outline: 3px solid var(--verde-escuro); outline-offset: 3px; }
+.bola { flex: 0 0 44px; width: 44px; height: 44px; border-radius: 50%; background: var(--verde-vivo); display: grid; place-items: center; }
+.bola svg { width: 24px; height: 24px; fill: none; stroke: var(--tinta); stroke-width: 1.900; stroke-linecap: round; stroke-linejoin: round; }
+.botao span { display: grid; min-width: 0; }
+.botao b { font-size: 17px; font-weight: 600; }
+.botao small { font-size: 13px; color: var(--cinza); }
+.botao.principal { background: var(--tinta); color: #fff; min-height: 76px; }
+.botao.principal b { font-size: 21px; font-weight: 600; }
+.botao.principal small { color: #cfd6c2; }
+.quadra { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.botao.bloco { flex-direction: column; align-items: flex-start; gap: 9px; padding: 13px 12px 12px; min-height: 0; }
+.botao.bloco b { font-size: 15.500px; }
+.botao.bloco small { font-size: 12.500px; }
+.botao.indicar { margin-top: 18px; background: var(--verde-vivo); }
+.botao.indicar .bola { background: var(--tinta); }
+.botao.indicar .bola svg { stroke: #fff; }
+.botao.indicar small { color: #2c3a12; }
+.botao.centro { justify-content: center; text-align: center; min-height: 58px; }
+.botao.principal.centro { background: var(--verde-vivo); color: var(--tinta); }
+.botao.quieto { border-color: transparent; background: transparent; box-shadow: none; }
+
+.pecas { margin: 24px 0 0; }
+.pecas h2 { margin: 0 0 10px; font-size: 23px; font-weight: 600; line-height: 1.1; }
+.pecas h2::after { content: ""; display: inline-block; width: 34px; height: 12px; margin-left: 10px; border-radius: 100% 0 100% 0; background: var(--verde); transform: rotate(-12deg); }
+.fila { display: flex; gap: 10px; margin: 0 -14px; padding: 2px 14px 10px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; }
+.fila::-webkit-scrollbar { display: none; }
+.foto { flex: 0 0 62%; aspect-ratio: 3 / 4; border-radius: 22px; border: 1.500px solid var(--tinta); overflow: hidden; scroll-snap-align: center; background: #e6eadc; }
+.foto img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.cor-a { background: linear-gradient(160deg, #eef2e4, #c4dc93); } .cor-b { background: linear-gradient(160deg, #f6f2ea, #e0d4bf); }
+.cor-c { background: linear-gradient(160deg, #f3f3f3, #d4d8cd); } .cor-d { background: linear-gradient(160deg, #eef2e4, #a9cf6c); }
+.aviso { min-height: 1.500em; margin: 12px 4px 0; text-align: center; font-weight: 600; color: var(--verde-escuro); }
+.rodape { margin-top: 8px; padding: 22px 16px max(22px, env(safe-area-inset-bottom)); background: var(--tinta); color: #cfd6c2; text-align: center; font-size: 13px; display: grid; gap: 4px; }
+.rodape span:first-child { font-size: 18px; font-weight: 600; letter-spacing: .04em; color: #fff; }
+.rodape a { color: var(--verde-vivo); }
+
+.veu { position: fixed; inset: 0; background: rgba(13, 15, 10, .55); }
+.folha-contato { position: fixed; left: 0; right: 0; bottom: 0; max-width: 480px; margin: 0 auto; padding: 24px 16px max(18px, env(safe-area-inset-bottom)); background: var(--papel); border-radius: 28px 28px 0 0; border-top: 6px solid var(--verde-vivo); box-shadow: 0 -12px 40px rgba(13, 15, 10, .25); display: grid; gap: 8px; }
+.folha-contato[hidden], .veu[hidden] { display: none; }
+.folha-contato h2 { margin: 0; font-size: 24px; font-weight: 600; line-height: 1.15; text-align: center; }
+.folha-contato p { margin: 0 0 10px; text-align: center; color: var(--cinza); }
+@media (prefers-reduced-motion: no-preference) { .folha-contato { animation: sobe .3s cubic-bezier(.2, .8, .2, 1); } @keyframes sobe { from { transform: translateY(60px); opacity: 0; } } }
+@media (max-width: 350px) { .faixa { padding: 6px 10px 5px; } .botao.bloco { padding: 12px 9px 11px; } .botao.bloco b { font-size: 13.500px; letter-spacing: -.02em; } .botao.bloco small { font-size: 11.500px; } .botao.principal b { font-size: 19px; } .bola { flex-basis: 40px; width: 40px; height: 40px; } }
+@media (min-width: 700px) { body { padding: 28px 0 0; } .topo { border-radius: 34px; } }
