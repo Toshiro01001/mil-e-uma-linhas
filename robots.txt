@@ -1,4 +1,3 @@
 User-agent: *
 Allow: /
-Disallow: /teste/
 Sitemap: https://mileumalinhas.com.br/sitemap.xml
