@@ -206,6 +206,39 @@
   function mostrar(qual, foco) { if (aberta) aberta.hidden = true; else antes = document.activeElement; aberta = qual; qual.hidden = false; veu.hidden = false; document.body.classList.add('com-folha'); flutuar(); foco.focus(); }
   function abrir() { mostrar(folha, $('f-salvar')); }
   function fechar() { if (!aberta) return; if (aberta === folhaPeca && location.hash.indexOf('#peca-') === 0 && history.replaceState) history.replaceState(null, '', '#catalogo'); aberta.hidden = true; aberta = null; veu.hidden = true; document.body.classList.remove('com-folha'); flutuar(); if (antes && antes.focus) antes.focus(); }
+  /* no celular, as folhas descem com o dedo: arrastar para baixo acompanha o movimento e, passando de um terço da folha ou com um puxão rápido, fecha.
+     Enquanto uma folha está aberta, o gesto não chega ao navegador, então puxar para baixo não recarrega mais a página. */
+  (function () {
+    var y0 = null, x0 = 0, t0 = 0, dy = 0, arrastando = false, qual = null;
+    function solta(fecha) {
+      var f = qual; if (!f) return; qual = null; arrastando = false; y0 = null;
+      f.style.transition = 'transform .28s cubic-bezier(.2, .8, .3, 1)'; veu.style.transition = 'opacity .28s';
+      if (fecha) { f.style.transform = 'translateY(105%)'; veu.style.opacity = '0'; setTimeout(function () { fechar(); f.style.transition = f.style.transform = ''; veu.style.transition = veu.style.opacity = ''; }, 260); }
+      else { f.style.transform = ''; veu.style.opacity = ''; setTimeout(function () { f.style.transition = ''; veu.style.transition = ''; }, 300); }
+    }
+    [folha, folhaQr, folhaPeca].forEach(function (f) {
+      f.addEventListener('touchstart', function (ev) {
+        if (ev.touches.length !== 1 || innerWidth >= 900 || $('p-quadro').classList.contains('perto')) { y0 = null; return; }
+        y0 = ev.touches[0].clientY; x0 = ev.touches[0].clientX; t0 = Date.now(); dy = 0; arrastando = false; qual = f;
+      }, { passive: true });
+      f.addEventListener('touchmove', function (ev) {
+        if (y0 === null || qual !== f) return;
+        dy = ev.touches[0].clientY - y0; var dx = ev.touches[0].clientX - x0;
+        if (!arrastando) {
+          if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 8) { y0 = null; return; }   /* gesto de lado: troca de peça */
+          if (dy < 0 && f.scrollHeight > f.clientHeight + 2) { y0 = null; return; }      /* para cima: rola a folha, se ela for mais alta que a tela */
+          if (dy > 6 && f.scrollTop <= 0) { arrastando = true; f.style.transition = 'none'; veu.style.transition = 'none'; }
+        }
+        if (!arrastando) { if (dy > 0 && f.scrollTop <= 0 && ev.cancelable) ev.preventDefault(); return; }
+        if (ev.cancelable) ev.preventDefault();
+        var d = Math.max(0, dy); f.style.transform = 'translateY(' + d.toFixed(0) + 'px)'; veu.style.opacity = Math.max(.25, 1 - d / (f.offsetHeight * 1.1)).toFixed(2);
+      }, { passive: false });
+      function fim() { if (qual !== f) return; if (!arrastando) { qual = null; y0 = null; return; } var rapido = dy > 40 && dy / Math.max(1, Date.now() - t0) > .55; solta(dy > f.offsetHeight / 3 || rapido); }
+      f.addEventListener('touchend', fim); f.addEventListener('touchcancel', function () { if (qual === f) solta(false); });
+    });
+    /* o fundo escurecido também segura o gesto, para a página de trás não rolar nem recarregar */
+    veu.addEventListener('touchmove', function (ev) { if (ev.cancelable) ev.preventDefault(); }, { passive: false });
+  })();
   $('b-contato').addEventListener('click', abrir);
   $('f-nao').addEventListener('click', fechar); $('p-fechar').addEventListener('click', fechar);
   veu.addEventListener('click', fechar);
@@ -418,12 +451,13 @@
     document.addEventListener('keydown', function (ev) { if (aberta !== folhaPeca || lista.length < 2) return; if (ev.key === 'ArrowRight') pintarPeca(atual + 1); if (ev.key === 'ArrowLeft') pintarPeca(atual - 1); });
     /* deslizar o dedo sobre a foto também troca de peça */
     var dedoX = null;
-    $('p-quadro').addEventListener('pointerdown', function (ev) { dedoX = ev.clientX; });
+    var dedoY = 0;
+    $('p-quadro').addEventListener('pointerdown', function (ev) { dedoX = ev.clientX; dedoY = ev.clientY; });
     $('p-quadro').addEventListener('pointermove', function (ev) { if ($('p-quadro').classList.contains('perto')) mirar(ev); });
     $('p-quadro').addEventListener('pointerup', function (ev) {
       if (dedoX === null) return; var dx = ev.clientX - dedoX, eraPerto = $('p-quadro').classList.contains('perto'); dedoX = null;
       if (ev.target.closest && ev.target.closest('.p-seta')) return;
-      if (Math.abs(dx) < 8) { if (!folhaPeca.classList.contains('rolando')) { mirar(ev); perto(!eraPerto); } return; }
+      if (Math.abs(dx) < 8) { if (Math.abs(ev.clientY - dedoY) < 8 && !folhaPeca.classList.contains('rolando')) { mirar(ev); perto(!eraPerto); } return; }
       if (!eraPerto && lista.length > 1 && Math.abs(dx) > 40) pintarPeca(atual + (dx < 0 ? 1 : -1));
     });
     $('p-enviar').addEventListener('click', function () {

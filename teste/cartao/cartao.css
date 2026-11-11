@@ -530,3 +530,12 @@ body[data-vista="catalogo"] { background: var(--mata); }
 #catalogo .peca-ver { background: var(--verde); color: var(--obs); }
 #catalogo :focus-visible { outline-color: var(--verde); }
 body[data-vista="catalogo"] .rodape { border-top: 1px solid var(--fio-claro); border-radius: 0; margin-top: 40px; }
+
+/* folhas no celular: descem com o dedo. Com uma folha aberta, a página de trás fica presa e o navegador não recarrega ao puxar. */
+html:has(body.com-folha) { overscroll-behavior-y: none; }
+body.com-folha { overscroll-behavior-y: none; }
+.folha { overscroll-behavior: contain; touch-action: pan-y; }
+@media (max-width: 899px) {
+  .folha::before { width: 48px; height: 5px; margin-left: -24px; }
+  .folha::after { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 28px; }
+}
