@@ -574,3 +574,25 @@ body.com-folha { overscroll-behavior-y: none; }
 
 /* início sem os fios verticais ao fundo: atrás dos blocos eles pareciam uma imagem que não carregou */
 #inicio .folhas::before { display: none; }
+
+/* ---------- brisa: o fundo claro do início deixa de ser liso ----------
+   Três manchas grandes de cor (verde da marca, creme quente e verde fundo) flutuam devagar atrás dos blocos,
+   com um grão fino por cima. A camada fica presa à tela enquanto a página rola. Só "transform" é animado,
+   então o celular não redesenha nada a cada quadro. Com movimento reduzido, as manchas ficam paradas. */
+.brisa { position: sticky; top: 0; z-index: -1; height: 100vh; margin: 0 calc(50% - 50vw) -100vh; overflow: hidden; pointer-events: none; }
+.brisa i { position: absolute; border-radius: 50%; will-change: transform; }
+.brisa i:nth-child(1) { width: 92vmax; height: 92vmax; left: -34vmax; top: -30vmax; background: radial-gradient(closest-side, rgba(164, 207, 69, .42), rgba(164, 207, 69, 0)); animation: brisa-a 24s ease-in-out infinite alternate; }
+.brisa i:nth-child(2) { width: 84vmax; height: 84vmax; right: -36vmax; top: 18vh; background: radial-gradient(closest-side, rgba(255, 214, 150, .6), rgba(255, 214, 150, 0)); animation: brisa-b 30s ease-in-out infinite alternate; }
+.brisa i:nth-child(3) { width: 80vmax; height: 80vmax; left: 4vw; bottom: -46vmax; background: radial-gradient(closest-side, rgba(79, 116, 23, .3), rgba(79, 116, 23, 0)); animation: brisa-c 36s ease-in-out infinite alternate; }
+.brisa::after { content: ''; position: absolute; inset: 0; opacity: .5; mix-blend-mode: soft-light; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .5 0 0 0 0 .5 0 0 0 0 .5 0 0 0 .55 0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23g)'/%3E%3C/svg%3E"); }
+@keyframes brisa-a { to { transform: translate3d(22vmax, 16vmax, 0) scale(1.15); } }
+@keyframes brisa-b { to { transform: translate3d(-26vmax, 12vmax, 0) scale(.88); } }
+@keyframes brisa-c { to { transform: translate3d(18vmax, -20vmax, 0) scale(1.2); } }
+@media (prefers-reduced-motion: reduce) { .brisa i { animation: none; } }
+
+/* os cartões claros viram vidro fosco, para a cor do fundo aparecer através deles */
+#inicio .atalho { background: rgba(255, 255, 255, .58); border-color: rgba(255, 255, 255, .8); -webkit-backdrop-filter: blur(16px) saturate(1.35); backdrop-filter: blur(16px) saturate(1.35); box-shadow: 0 10px 30px -18px rgba(28, 32, 28, .35), inset 0 1px 0 rgba(255, 255, 255, .9); }
+#inicio .atalho:hover { background: var(--obs); border-color: var(--obs); }
+#inicio .caixa { background: rgba(255, 255, 255, .38); border-color: rgba(255, 255, 255, .75); -webkit-backdrop-filter: blur(16px) saturate(1.35); backdrop-filter: blur(16px) saturate(1.35); box-shadow: 0 18px 40px -26px rgba(28, 32, 28, .4); }
+#inicio .caixa-dentro { background: linear-gradient(180deg, rgba(255, 255, 255, .86) 0%, rgba(255, 255, 255, .7) 100%); }
+#inicio .pausa { background: rgba(255, 255, 255, .6); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); }
