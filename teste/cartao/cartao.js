@@ -14,7 +14,21 @@
   ligar('b-whats', 'https://wa.me/' + L.whatsapp + '?text=' + encodeURIComponent(L.mensagemWhats), 'Abrir conversa com a ' + nome + ' no WhatsApp');
   ligar('b-insta', L.instagram, 'Abrir o Instagram da ' + nome);
   ligar('b-tiktok', L.tiktok, 'Abrir o TikTok da ' + nome);
-  ligar('b-mapa', L.mapa, 'Abrir o mapa com a rota até a ' + nome);
+  /* localização: o botão abre o aplicativo de mapas já com a rota; o mapa na página só é pedido ao Google quando a pessoa rola até ele */
+  var ponto = L.lat + ',' + L.lng, rota = 'https://www.google.com/maps/dir/?api=1&destination=' + encodeURIComponent(ponto);
+  ligar('b-mapa', rota, 'Abrir o mapa com a rota até a ' + nome);
+  ligar('b-rota', rota, 'Abrir o mapa com a rota até a ' + nome);
+  $('endereco').textContent = L.endereco;
+  function porMapa() {
+    var q = document.createElement('iframe');
+    q.src = 'https://www.google.com/maps?q=' + encodeURIComponent(ponto) + '&z=16&hl=pt-BR&output=embed';
+    q.title = 'Mapa com a localização da ' + nome; q.loading = 'lazy'; q.referrerPolicy = 'no-referrer'; q.setAttribute('allowfullscreen', '');
+    $('mapa').appendChild(q);
+  }
+  if ('IntersectionObserver' in window) {
+    var olho = new IntersectionObserver(function (v) { if (v[0].isIntersecting) { olho.disconnect(); porMapa(); } }, { rootMargin: '300px' });
+    olho.observe($('mapa'));
+  } else porMapa();
   $('b-contato').setAttribute('aria-label', 'Salvar o contato da ' + nome + ' na agenda');
   $('b-indicar').setAttribute('aria-label', 'Enviar o link da página da ' + nome + ' para alguém');
 

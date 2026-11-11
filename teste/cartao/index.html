@@ -7,7 +7,7 @@
 <meta name="theme-color" content="#ffffff">
 <title>Teste do cartão de aproximação</title>
 <link rel="preload" href="fonte/outfit.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="cartao.css?v=6">
+<link rel="stylesheet" href="cartao.css?v=7">
 </head>
 <body>
 <main class="pagina" id="conteudo">
@@ -51,6 +51,14 @@
     <ul id="sobre-lista"></ul>
   </section>
 
+  <section class="local" id="local" aria-labelledby="t-local">
+    <h2 id="t-local">Onde fica</h2>
+    <div class="mapa" id="mapa"></div>
+    <p class="endereco" id="endereco"></p>
+    <a class="botao centro" id="b-rota" rel="noopener"><span><b>Ver como chegar</b></span></a>
+    <p class="nota-mapa">O mapa é do Google e segue a política de privacidade do Google.</p>
+  </section>
+
   <section class="pecas" aria-labelledby="t-pecas">
     <h2 id="t-pecas">Espiar as novidades</h2>
     <div class="fila" id="grade" tabindex="0" aria-label="Fotos de peças da loja. Deslize para o lado."></div>
@@ -76,7 +84,7 @@
   <p class="dica" id="f-dica"></p>
   <button type="button" class="botao centro quieto" id="f-nao"><span><b>Agora não</b></span></button>
 </section>
-<script src="dados.js?v=4"></script>
-<script src="cartao.js?v=4"></script>
+<script src="dados.js?v=5"></script>
+<script src="cartao.js?v=5"></script>
 </body>
 </html>

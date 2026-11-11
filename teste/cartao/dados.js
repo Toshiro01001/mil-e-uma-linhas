@@ -10,14 +10,16 @@ window.LOJA = {
     ['🔥', 'Promoções sempre rolando para você economizar!'],
     ['🛍️', 'Venha se apaixonar e encontre o look perfeito!']
   ],
-  onde: 'Dentro do supermercado, em Cuiabá',
+  onde: 'Dentro do Comper Nova CPA, em Cuiabá',
   whatsapp: '5565900000000',
   mensagemWhats: 'Olá! Vim pelo cartão da loja.',
   instagram: 'https://www.instagram.com/',
   tiktok: 'https://www.tiktok.com/',
-  mapa: 'https://www.google.com/maps/search/?api=1&query=Cuiab%C3%A1%2C%20MT',
-  endereco: 'Rua de Exemplo, s/n, Cuiabá, MT',
-  contato: 'contato.vcf?v=2',
+  /* ponto do supermercado onde a loja fica, tirado do Google Maps */
+  lat: -15.5594108,
+  lng: -56.0532517,
+  endereco: 'Rua Jornalista Amaro de Figueiredo Falcão, 333, CPA I, Cuiabá, MT',
+  contato: 'contato.vcf?v=3',
   fotos: [
     { cor: 'a', legenda: 'Foto de peça 1' }, { cor: 'b', legenda: 'Foto de peça 2' },
     { cor: 'c', legenda: 'Foto de peça 3' }, { cor: 'd', legenda: 'Foto de peça 4' }
