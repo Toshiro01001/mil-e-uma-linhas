@@ -318,12 +318,31 @@
   function perto(liga) { var q = $('p-quadro'); q.classList.toggle('perto', !!liga); $('p-lupa').textContent = liga ? 'Toque para afastar' : 'Toque para aproximar'; if (!liga) { q.style.removeProperty('--zx'); q.style.removeProperty('--zy'); } }
   function mirar(ev) { var q = $('p-quadro'), r = q.getBoundingClientRect(); q.style.setProperty('--zx', Math.max(0, Math.min(100, (ev.clientX - r.left) / r.width * 100)).toFixed(1) + '%'); q.style.setProperty('--zy', Math.max(0, Math.min(100, (ev.clientY - r.top) / r.height * 100)).toFixed(1) + '%'); }
   /* no celular, as peças da fileira que está no meio da tela entram "em foco": ganham a mira nos cantos, o aviso Ver de perto e o nome embaralha */
+  /* trama do catálogo: uma malha de pontos que acende em volta do ponteiro (ou da fileira em foco, no celular), com um rastro mais lento atrás.
+     Um laço só escreve as quatro coordenadas; ele para sozinho quando a luz chega ao lugar. */
+  var tramaEl = $('trama'), alvoX = -999, alvoY = -999, luzX = -999, luzY = -999, rastroX = -999, rastroY = -999, tramaViva = false, tramaT = 0;
+  function tramaPasso(t) {
+    var d = Math.min(50, t - (tramaT || t)) || 16; tramaT = t;
+    var k = 1 - Math.pow(1 - .12, d / 16.7), kr = 1 - Math.pow(1 - .045, d / 16.7);
+    luzX += (alvoX - luzX) * k; luzY += (alvoY - luzY) * k; rastroX += (alvoX - rastroX) * kr; rastroY += (alvoY - rastroY) * kr;
+    tramaEl.style.setProperty('--lx', luzX.toFixed(1) + 'px'); tramaEl.style.setProperty('--ly', luzY.toFixed(1) + 'px'); tramaEl.style.setProperty('--rx', rastroX.toFixed(1) + 'px'); tramaEl.style.setProperty('--ry', rastroY.toFixed(1) + 'px');
+    if (document.hidden || document.body.getAttribute('data-vista') !== 'catalogo' || (Math.abs(alvoX - rastroX) < .4 && Math.abs(alvoY - rastroY) < .4)) { tramaViva = false; return; }
+    requestAnimationFrame(tramaPasso);
+  }
+  function apontar(px, py) {
+    alvoX = px; alvoY = py;
+    if (luzX < -900 || calmo) { luzX = rastroX = px; luzY = rastroY = py; }
+    if (calmo) { tramaEl.style.setProperty('--lx', px + 'px'); tramaEl.style.setProperty('--ly', py + 'px'); tramaEl.style.setProperty('--rx', px + 'px'); tramaEl.style.setProperty('--ry', py + 'px'); return; }
+    if (!tramaViva && window.requestAnimationFrame) { tramaViva = true; tramaT = 0; requestAnimationFrame(tramaPasso); }
+  }
+  addEventListener('pointermove', function (ev) { if (document.body.getAttribute('data-vista') === 'catalogo' && !aberta) apontar(ev.clientX, ev.clientY); }, { passive: true });
   var semPonteiro = !(window.matchMedia && window.matchMedia('(hover: hover) and (pointer: fine)').matches), focoMarcado = false;
   function focar() {
     focoMarcado = false;
     if (!semPonteiro || calmo || document.body.getAttribute('data-vista') !== 'catalogo') return;
     var meio = innerHeight * .46, melhor = null, dist = 1e9, itens = gradeCat.children;
     for (var i = 0; i < itens.length; i++) { var r = itens[i].getBoundingClientRect(), d = Math.abs(r.top + r.height * .42 - meio); if (d < dist - 4) { dist = d; melhor = r.top; } }
+    if (melhor !== null && dist < innerHeight * .5 && itens.length) apontar(innerWidth / 2, melhor + itens[0].getBoundingClientRect().width * .6);
     for (var k = 0; k < itens.length; k++) {
       var li = itens[k], dentro = melhor !== null && Math.abs(li.getBoundingClientRect().top - melhor) < 6 && dist < innerHeight * .5;
       if (dentro && !li.classList.contains('foco')) { li.classList.add('foco'); var n = li.querySelector('.peca-pe b'); if (n) embaralha(n, n.getAttribute('data-nome') || (n.setAttribute('data-nome', n.textContent), n.textContent)); }
@@ -438,7 +457,7 @@
     if (qual === 'catalogo') $('aba-catalogo').setAttribute('aria-current', 'page'); else $('aba-catalogo').removeAttribute('aria-current');
     if (qual === 'catalogo' && !pintado) { pintado = true; pintarCatalogo(); }
     scrollTo(0, 0); sacola();
-    if (qual === 'catalogo') { embaralha($('t-cat'), 'Catálogo'); setTimeout(focar, 700); }
+    if (qual === 'catalogo') { embaralha($('t-cat'), 'Catálogo'); if (luzX < -900) apontar(innerWidth * .7, innerHeight * .3); setTimeout(focar, 700); }
   }
   function pecaDoEndereco(h) { var id = h.indexOf('#peca-') === 0 ? h.slice(6) : '', p = null; CAT.forEach(function (c) { if (id && c.id === id) p = c; }); return p; }
   function vista(primeira) {

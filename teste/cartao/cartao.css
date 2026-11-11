@@ -501,3 +501,32 @@ body[data-vista="catalogo"] .rodape { padding-bottom: calc(120px + env(safe-area
 @media (prefers-reduced-motion: reduce) { .peca-quadro, .peca-quadro img { transform: none; } }
 .peca-ver { white-space: nowrap; }
 @media (max-width: 359px) { .peca-ver { letter-spacing: .06em; padding: 0 10px; } }
+
+/* ===== Catálogo como palco escuro: trama de pontos que acende, peças como quadros de galeria ===== */
+body[data-vista="catalogo"] { background: var(--mata); }
+#catalogo { position: relative; color: #fff; isolation: isolate; }
+.trama { position: fixed; inset: 0; z-index: -1; pointer-events: none; background: radial-gradient(circle, rgba(255, 255, 255, .09) 1px, transparent 1.4px) 0 0 / 22px 22px; }
+.trama::before, .trama::after { content: ''; position: absolute; inset: 0; background: radial-gradient(circle, var(--verde) 1.2px, transparent 1.7px) 0 0 / 22px 22px; }
+.trama::before { -webkit-mask: radial-gradient(230px circle at var(--lx, -999px) var(--ly, -999px), #000 0%, transparent 72%); mask: radial-gradient(230px circle at var(--lx, -999px) var(--ly, -999px), #000 0%, transparent 72%); }
+.trama::after { opacity: .5; -webkit-mask: radial-gradient(380px circle at var(--rx, -999px) var(--ry, -999px), #000 0%, transparent 70%); mask: radial-gradient(380px circle at var(--rx, -999px) var(--ry, -999px), #000 0%, transparent 70%); }
+#catalogo .folhas::before { background-image: linear-gradient(to right, var(--fio-claro) 1px, transparent 1px); border-right-color: var(--fio-claro); }
+#catalogo .rotulo, #catalogo .cat-conta { color: var(--cinza-claro); }
+#catalogo .cat-apoio, #catalogo .nota { color: rgba(255, 255, 255, .68); }
+#catalogo .busca { background: rgba(255, 255, 255, .06); border-color: rgba(255, 255, 255, .16); color: var(--cinza-claro); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); }
+#catalogo .busca:focus-within { border-color: var(--verde); box-shadow: 0 0 0 4px rgba(164, 207, 69, .22); }
+#catalogo .busca input { color: #fff; }
+#catalogo .busca input::placeholder { color: rgba(255, 255, 255, .5); }
+#catalogo .acao.escura { background: var(--verde); color: var(--obs); }
+#catalogo .acao.escura::before { background: #fff; }
+#catalogo .chip { background: rgba(255, 255, 255, .05); border-color: rgba(255, 255, 255, .16); color: #fff; }
+#catalogo .chip sup { color: var(--cinza-claro); }
+#catalogo .chip:hover { border-color: var(--verde); }
+#catalogo .chip[aria-pressed="true"] { background: var(--verde); color: var(--obs); border-color: var(--verde); }
+#catalogo .chip[aria-pressed="true"] sup { color: var(--obs); }
+#catalogo .cat-grade { background: none; }
+#catalogo .peca-pe small { color: var(--cinza-claro); }
+#catalogo .peca-quadro { background: #ecebe6; box-shadow: 0 0 0 1px rgba(255, 255, 255, .08); }
+#catalogo .peca-li.foco .peca-quadro { box-shadow: 0 0 0 1px var(--verde), 0 24px 50px -20px rgba(164, 207, 69, .35); }
+#catalogo .peca-ver { background: var(--verde); color: var(--obs); }
+#catalogo :focus-visible { outline-color: var(--verde); }
+body[data-vista="catalogo"] .rodape { border-top: 1px solid var(--fio-claro); border-radius: 0; margin-top: 40px; }
