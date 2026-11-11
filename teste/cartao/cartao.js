@@ -198,6 +198,38 @@
     aviso('Copie o endereço desta página e envie para quem quiser.');
   });
 
+  /* fundo: faixas de luz que escorrem devagar, nas cores da loja. É desenhado pela placa de vídeo, em tamanho reduzido e a 30 quadros por segundo,
+     para não pesar no celular. Para quando a aba fica escondida; com "reduzir movimento", desenha um quadro só. Sem suporte, ficam as manchas do CSS. */
+  (function () {
+    var tela = $('aurora'), gl = null;
+    try { gl = tela.getContext('webgl', { antialias: false, alpha: false, powerPreference: 'low-power' }); } catch (e) { gl = null; }
+    if (!gl) { tela.hidden = true; return; }
+    var FRAG = 'precision mediump float;uniform vec2 r;uniform float t;' +
+      'float h(vec2 p){return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453);}' +
+      'float n(vec2 p){vec2 i=floor(p),f=fract(p);f=f*f*(3.-2.*f);return mix(mix(h(i),h(i+vec2(1.,0.)),f.x),mix(h(i+vec2(0.,1.)),h(i+vec2(1.,1.)),f.x),f.y);}' +
+      'float fbm(vec2 p){float v=0.,a=.5;for(int i=0;i<4;i++){v+=a*n(p);p=p*2.02+7.3;a*=.5;}return v;}' +
+      'void main(){vec2 p=(gl_FragCoord.xy-.5*r)/min(r.x,r.y);float a=-.5;vec2 q=vec2(p.x*cos(a)-p.y*sin(a),p.x*sin(a)+p.y*cos(a));q.x*=1.5;q.y*=.45;' +
+      'float w=fbm(q*1.1+vec2(t*.05,t*.02));float s=fbm(vec2(q.x*1.1+w*1.7+t*.04,q.y*.7-t*.06));float s2=fbm(vec2(q.x*1.6-w+t*.03+4.,q.y*.5+t*.05+9.));' +
+      'vec3 c=mix(vec3(.03,.05,.03),vec3(.22,.36,.08),smoothstep(.28,.72,s));c=mix(c,vec3(.55,.72,.2),smoothstep(.56,.9,s)*.75);c=mix(c,vec3(.93,.96,.84),smoothstep(.7,.95,s2)*.2);' +
+      'c*=mix(.4,1.,smoothstep(1.35,.15,length(p)));gl_FragColor=vec4(c,1.);}';
+    function sombra(tipo, txt) { var o = gl.createShader(tipo); gl.shaderSource(o, txt); gl.compileShader(o); return gl.getShaderParameter(o, gl.COMPILE_STATUS) ? o : null; }
+    var v = sombra(gl.VERTEX_SHADER, 'attribute vec2 a;void main(){gl_Position=vec4(a,0.,1.);}'), f = sombra(gl.FRAGMENT_SHADER, FRAG), prog = gl.createProgram();
+    if (!v || !f) { tela.hidden = true; return; }
+    gl.attachShader(prog, v); gl.attachShader(prog, f); gl.linkProgram(prog);
+    if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) { tela.hidden = true; return; }
+    gl.useProgram(prog);
+    gl.bindBuffer(gl.ARRAY_BUFFER, gl.createBuffer()); gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 1, -1, -1, 1, 1, 1]), gl.STATIC_DRAW);
+    var pa = gl.getAttribLocation(prog, 'a'); gl.enableVertexAttribArray(pa); gl.vertexAttribPointer(pa, 2, gl.FLOAT, false, 0, 0);
+    var ur = gl.getUniformLocation(prog, 'r'), ut = gl.getUniformLocation(prog, 't'), ultimo = 0, t0 = Math.random() * 40;
+    function medida() { var w = Math.max(160, Math.round(innerWidth * .35)), hh = Math.max(160, Math.round(innerHeight * .35)); if (tela.width !== w || tela.height !== hh) { tela.width = w; tela.height = hh; gl.viewport(0, 0, w, hh); } }
+    function desenha(seg) { medida(); gl.uniform2f(ur, tela.width, tela.height); gl.uniform1f(ut, t0 + seg); gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4); }
+    $('fundo').classList.add('com-aurora'); desenha(0);
+    tela.addEventListener('webglcontextlost', function (ev) { ev.preventDefault(); $('fundo').classList.remove('com-aurora'); });
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) { addEventListener('resize', function () { desenha(0); }); return; }
+    function laco(agora) { if (!document.hidden && agora - ultimo > 33 && $('fundo').classList.contains('com-aurora')) { ultimo = agora; desenha(agora / 1000); } requestAnimationFrame(laco); }
+    requestAnimationFrame(laco);
+  })();
+
   /* as seções surgem ao entrar na tela, uma vez. Sem isso para quem pediu menos movimento. */
   if (!calmo && 'IntersectionObserver' in window) {
     var surge = new IntersectionObserver(function (v) { v.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('veio'); surge.unobserve(e.target); } }); }, { rootMargin: '0px 0px -8% 0px' });

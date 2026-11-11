@@ -429,3 +429,73 @@ h2, .local h2, .pecas h2, .cartela h2 { font-size: clamp(22px, 5.6vw, 28px); fon
 }
 @media (max-width: 350px) { .botao.principal b { font-size: 17px; } .vai { display: none; } .fita-tk { font-size: 9px; } }
 @media (min-width: 960px) { .hoje-grande b { font-size: 30px; white-space: nowrap; } .hoje-grande { flex-wrap: wrap; gap: 6px 12px; } }
+
+/* ===================== teste de fundo: aurora escura =====================
+   Fundo quase preto com faixas de luz nas cores da loja (verde, verde-claro e um toque de creme) que se movem devagar, como apoio atrás do conteúdo.
+   O topo com o logotipo continua claro; o resto passa a ser lido em claro sobre escuro. */
+:root { --noite: #0f1115; --face: #18181b; --borda: #27272a; --texto: #f4f4f5; --texto2: #a1a1aa; }
+body { background: var(--noite); color: var(--texto); }
+.fundo { background: var(--noite); background-image: linear-gradient(rgba(255, 255, 255, .035) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, .035) 1px, transparent 1px); background-size: 100% 72px, 72px 100%; }
+.fundo::after { background: radial-gradient(120% 80% at 50% 0%, transparent 40%, rgba(15, 17, 21, .78) 100%); }
+.fundo::before { content: ""; position: absolute; left: 50%; top: 42%; width: 150vmax; height: 150vmax; margin: -75vmax 0 0 -75vmax; background: conic-gradient(from 0deg, transparent 0 18%, rgba(164, 207, 69, .16) 26%, transparent 38% 56%, rgba(238, 244, 222, .08) 64%, transparent 74% 100%); filter: blur(60px); }
+.fundo i { opacity: .55; filter: blur(90px); mix-blend-mode: screen; }
+.fundo i:nth-child(1) { background: radial-gradient(closest-side, rgba(164, 207, 69, .8), transparent); }
+.fundo i:nth-child(2) { background: radial-gradient(closest-side, rgba(79, 116, 23, .8), transparent); }
+.fundo i:nth-child(3) { background: radial-gradient(closest-side, rgba(238, 244, 222, .22), transparent); }
+@media (prefers-reduced-motion: no-preference) { .fundo::before { animation: gira 70s linear infinite; } @keyframes gira { to { transform: rotate(360deg); } } }
+
+.topo { color: var(--tinta); border-color: transparent; }
+h2, .local h2, .pecas h2, .cartela h2 { color: var(--texto); }
+.botao { background: rgba(255, 255, 255, .04); border-color: rgba(244, 244, 245, .28); color: var(--texto); }
+.botao::before { background: var(--texto); }
+.botao small { color: var(--texto2); }
+.bola { border-color: rgba(244, 244, 245, .4); } .bola svg { stroke: var(--texto); }
+.botao:active, .botao:active small { color: var(--tinta); } .botao:active .bola { border-color: var(--tinta); } .botao:active .bola svg { stroke: var(--tinta); }
+.botao.principal { background: var(--verde-vivo); border-color: var(--verde-vivo); color: var(--tinta); }
+.botao.principal small { color: #2c3a12; }
+.botao.principal::before { background: var(--texto); }
+.botao.principal .bola { background: var(--tinta); border-color: var(--tinta); } .botao.principal .bola svg { stroke: var(--verde-vivo); }
+.botao.principal:active .bola svg { stroke: var(--texto); }
+.botao.indicar { color: var(--tinta); border-color: var(--verde-vivo); } .botao.indicar .bola svg { stroke: var(--verde-vivo); }
+.botao.quieto { color: var(--tinta); }
+.folha-contato .botao.principal.centro { border-color: var(--tinta); }
+@media (hover: hover) {
+  .botao:hover, .botao:hover small { color: var(--tinta); } .botao:hover .bola { border-color: var(--tinta); } .botao:hover .bola svg { stroke: var(--tinta); }
+  .botao.principal:hover .bola svg { stroke: var(--texto); }
+  .botao.principal.centro:hover { color: var(--osso); }
+  .botao.indicar:hover small { color: #2c3a12; } .botao.indicar:hover .bola { background: var(--tinta); border-color: var(--tinta); } .botao.indicar:hover .bola svg { stroke: var(--verde-vivo); }
+}
+.sobre li { background: rgba(24, 24, 27, .72); border-color: var(--borda); color: var(--texto); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); }
+.sobre li:first-child { background: var(--verde-vivo); border-color: var(--verde-vivo); color: var(--tinta); }
+.sobre li:first-child::after { background: linear-gradient(135deg, transparent 50%, rgba(16, 16, 16, .9) 50%); }
+.sobre li:first-child .emoji { background: var(--tinta); border-color: var(--tinta); }
+.sobre li:nth-child(4) { background: rgba(24, 24, 27, .72); border-color: var(--verde-vivo); color: var(--texto); }
+.emoji { border-color: var(--borda); background: rgba(255, 255, 255, .04); }
+.sobre li:nth-child(4) .emoji { background: rgba(255, 255, 255, .04); }
+.foto-quadro { border-color: var(--borda); background: var(--face); }
+.foto-nome { color: var(--texto2); }
+.pausa { color: var(--texto); border-bottom-color: var(--texto); }
+.mapa-cartao { border-color: var(--borda); background: var(--face); }
+.mapa-topo { background: #050607; }
+.mapa-cartao .endereco { border-top-color: var(--borda); color: var(--texto); }
+.endereco svg { stroke: var(--verde-vivo); }
+.nota-mapa { color: var(--texto2); }
+.banda { background: rgba(24, 24, 27, .78); border: 1px solid var(--borda); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); }
+.pilula { background: rgba(24, 24, 27, .86); border-color: var(--borda); color: var(--texto); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); }
+.pilula-nome small { color: var(--texto2); } .pilula-risco { background: var(--borda); }
+.pilula .ponto { background: var(--verde-vivo); } .pilula-estado.fechada .ponto { background: #f87171; }
+.flutua { background: var(--verde-vivo); color: var(--tinta); border-color: var(--verde-vivo); }
+.flutua .bola { background: var(--tinta); border-color: var(--tinta); } .flutua .bola svg { stroke: var(--verde-vivo); }
+.aviso:not(:empty) { background: var(--texto); color: var(--tinta); }
+.folha-contato { color: var(--tinta); } .folha-contato h2 { color: var(--tinta); }
+.rodape { background: #050607; border-top: 1px solid var(--borda); }
+.fita { background: #050607; border-bottom: 1px solid var(--borda); }
+.fita-tk i { color: var(--verde-vivo); opacity: .9; }
+.botao:focus-visible, .pausa:focus-visible, .fila:focus-visible { outline-color: var(--verde-vivo); }
+@media (min-width: 700px) { .topo { border-color: transparent; } }
+
+/* a aurora de verdade é desenhada num quadro (canvas) atrás de tudo; as manchas acima ficam só para o aparelho que não consegue desenhá-la */
+#aurora { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.fundo.com-aurora i, .fundo.com-aurora::before { display: none; }
+.fundo.com-aurora { background-image: none; }
+.fundo.com-aurora::after { background: linear-gradient(180deg, rgba(15, 17, 21, .1), rgba(15, 17, 21, .5) 70%, rgba(15, 17, 21, .75)); }
