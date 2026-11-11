@@ -52,6 +52,7 @@ window.LOJA = {
      São fotos de catálogo das marcas que a loja revende; a dona ainda vai dizer se pode usar. Sem preço nem tamanho: isso muda e a loja responde pelo WhatsApp. */
   tipos: [['v', 'Vestidos'], ['c', 'Conjuntos'], ['b', 'Blusas'], ['m', 'Masculino']],
   mensagemPeca: 'Olá! Vim pelo cartão da loja e gostei desta peça do catálogo: ',
+  mensagemLista: 'Olá! Vim pelo cartão da loja e gostei destas peças do catálogo:',
   catalogo: [
     { arquivo: 'fotos/c-04.webp', legenda: 'Vestido marrom midi', tipo: 'v' },
     { arquivo: 'fotos/c-01.webp', legenda: 'Blusa verde-oliva com short claro', tipo: 'c' },

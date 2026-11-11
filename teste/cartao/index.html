@@ -9,9 +9,10 @@
 <title>HAI OUTLET</title>
 <link rel="preload" href="fonte/playfair.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fonte/inter.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="cartao.css?v=22">
+<link rel="stylesheet" href="cartao.css?v=30">
 </head>
 <body data-vista="inicio">
+<div class="abre" aria-hidden="true"><div class="abre-selo"><img src="logo.webp" width="92" height="92" alt=""><i></i></div></div>
 <a class="pular" href="#conteudo">Ir para o conteúdo</a>
 
 <header class="barra" id="barra">
@@ -29,9 +30,10 @@
   <section class="heroi" id="heroi">
     <div class="fundo" id="fundo" aria-hidden="true"><canvas id="aurora"></canvas></div>
     <div class="fios" aria-hidden="true"></div>
+    <div class="pontos" aria-hidden="true"></div>
     <div class="heroi-dentro">
       <div class="heroi-texto">
-        <p class="rotulo claro" id="onde"></p>
+        <p class="rotulo claro digita" id="onde"></p>
         <h1 id="frase"></h1>
         <p class="heroi-apoio" id="frase2"></p>
         <p class="agora" id="agora" hidden><i class="ponto" aria-hidden="true"></i><span id="agora-texto"></span></p>
@@ -40,9 +42,9 @@
             <span class="acao-pontos" aria-hidden="true"></span>
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20l1.400-4.200A8 8 0 1 1 8.600 19L4 20z"/></svg>
             <b>Chamar no WhatsApp</b>
-            <svg class="vai" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            <svg class="vai" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 7l5 5-5 5" opacity=".45"/><path d="M12 7l5 5-5 5"/></svg>
           </a>
-          <a class="acao vazada" href="#catalogo" id="b-catalogo"><b>Ver o catálogo</b><svg class="vai" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+          <a class="acao vazada" href="#catalogo" id="b-catalogo"><b>Ver o catálogo</b><svg class="vai" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 7l5 5-5 5" opacity=".45"/><path d="M12 7l5 5-5 5"/></svg></a>
         </div>
         <p class="acao-nota">O WhatsApp abre no aplicativo. Não pede cadastro.</p>
       </div>
@@ -80,7 +82,7 @@
       <button type="button" class="pausa" id="pausa" hidden>Pausar</button>
     </div>
     <div class="fila" id="grade" tabindex="0" aria-label="Fotos de peças da loja. Elas passam sozinhas; arraste ou use as setas para ver no seu ritmo."></div>
-    <a class="elo" href="#catalogo"><span>Ver o catálogo completo</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+    <a class="elo" href="#catalogo"><span>Ver o catálogo completo</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 7l5 5-5 5" opacity=".45"/><path d="M12 7l5 5-5 5"/></svg></a>
   </section>
 
   <section class="local bloco" id="local" aria-labelledby="t-local">
@@ -92,7 +94,7 @@
       <div class="local-texto">
         <p class="local-nome" id="mapa-nome"></p>
         <p class="endereco" id="endereco"></p>
-        <a class="acao escura" id="b-rota" rel="noopener"><b>Ver como chegar</b><svg class="vai" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        <a class="acao escura" id="b-rota" rel="noopener"><b>Ver como chegar</b><svg class="vai" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 7l5 5-5 5" opacity=".45"/><path d="M12 7l5 5-5 5"/></svg></a>
         <p class="nota">O mapa é do Google e segue a política de privacidade do Google.</p>
       </div>
     </div>
@@ -104,6 +106,10 @@
       <h2 id="t-horario">Horário</h2>
       <p class="estado" id="estado"></p>
       <p class="hoje-grande" id="hoje-grande" hidden><b></b><span>Hoje</span></p>
+      <div class="dia" id="dia" hidden>
+        <div class="dia-trilho" aria-hidden="true"><i id="dia-fio"></i><b id="dia-marca"></b></div>
+        <p class="dia-pes"><span id="dia-a"></span><strong id="dia-resto"></strong><span id="dia-b"></span></p>
+      </div>
       <ul class="semana" id="semana"></ul>
       <p class="nota" id="nota-horario" hidden>Horários de exemplo, a confirmar com a loja.</p>
     </div></section>
@@ -138,10 +144,15 @@
       <p class="rotulo">Peças da loja</p>
       <h2 id="t-cat" tabindex="-1">Catálogo</h2>
       <p class="cat-apoio">Toque em uma peça para ver de perto e perguntar tamanho e preço pelo WhatsApp.</p>
+      <div class="cat-ferramentas">
+        <label class="busca"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.500"/><path d="M16 16l4.500 4.500"/></svg><span class="so-leitor">Procurar peça pelo nome</span><input id="busca" type="search" placeholder="Procurar: vestido, polo, azul" autocomplete="off" enterkeyhint="search"></label>
+        <button type="button" class="acao escura" id="surpresa"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="4"/><circle cx="9" cy="9" r=".800"/><circle cx="15" cy="15" r=".800"/><circle cx="15" cy="9" r=".800"/><circle cx="9" cy="15" r=".800"/></svg><b>Me surpreenda</b></button>
+      </div>
       <div class="chips" id="chips" role="group" aria-label="Filtrar peças por tipo"></div>
       <p class="cat-conta" id="cat-conta" role="status" aria-live="polite"></p>
     </header>
     <ul class="cat-grade" id="cat-grade"></ul>
+    <p class="cat-vazio" id="cat-vazio" hidden>Nenhuma peça com esse nome. Tente outra palavra ou toque em Tudo.</p>
     <p class="nota cat-nota">Fotos do Instagram da loja. As peças mudam com frequência: confirme com a loja o que está disponível.</p>
   </div>
 </div>
@@ -154,6 +165,10 @@
   <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20l1.400-4.200A8 8 0 1 1 8.600 19L4 20z"/></svg>
   <b>Chamar no WhatsApp</b>
 </a>
+<div class="sacola" id="sacola" hidden>
+  <span><b id="sacola-n"></b><small>A lista fica só nesta tela.</small></span>
+  <a class="acao" id="sacola-zap" rel="noopener" target="_blank"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20l1.400-4.200A8 8 0 1 1 8.600 19L4 20z"/></svg><b>Enviar lista</b></a>
+</div>
 <div class="veu" id="veu" hidden></div>
 <section class="folha" id="folha" role="dialog" aria-modal="true" aria-labelledby="t-folha" hidden>
   <h2 id="t-folha">Salvar o contato da loja?</h2>
@@ -174,14 +189,22 @@
   <button type="button" class="quieto" id="q-fechar">Fechar</button>
 </section>
 <section class="folha folha-peca" id="folha-peca" role="dialog" aria-modal="true" aria-labelledby="p-nome" hidden>
-  <div class="peca-grande"><img id="p-foto" width="720" height="720" alt=""></div>
+  <div class="peca-grande" id="p-quadro">
+    <img id="p-foto" width="600" height="750" alt="">
+    <button type="button" class="p-seta p-ant" id="p-ant" aria-label="Peça anterior"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 6l-6 6 6 6"/></svg></button>
+    <button type="button" class="p-seta p-prox" id="p-prox" aria-label="Próxima peça"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 6l6 6-6 6"/></svg></button>
+  </div>
   <p class="rotulo" id="p-cat"></p>
   <h2 id="p-nome"></h2>
   <a class="acao escura cheia" id="p-whats" rel="noopener" target="_blank"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20l1.400-4.200A8 8 0 1 1 8.600 19L4 20z"/></svg><b>Perguntar no WhatsApp</b></a>
+  <div class="folha-acoes">
+    <button type="button" class="leve" id="p-gosto" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20s-7-4.400-7-9.600A4 4 0 0 1 12 8a4 4 0 0 1 7 2.400C19 15.600 12 20 12 20z"/></svg><span>Guardar na lista</span></button>
+    <button type="button" class="leve" id="p-enviar"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15V4M8 8l4-4 4 4M5 13v5a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-5"/></svg><span>Mostrar a alguém</span></button>
+  </div>
   <p class="dica">A conversa abre já com o nome desta peça.</p>
   <button type="button" class="quieto" id="p-fechar">Fechar</button>
 </section>
-<script src="dados.js?v=12"></script>
-<script src="cartao.js?v=20"></script>
+<script src="dados.js?v=13"></script>
+<script src="cartao.js?v=30"></script>
 </body>
 </html>
