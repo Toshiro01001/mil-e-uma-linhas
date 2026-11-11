@@ -69,10 +69,10 @@
   /* Cada sistema termina de um jeito, e nenhum salva sem a pessoa confirmar. A página diz o próximo toque antes de o celular mudar de tela.
      iPhone: abre a ficha do contato; o botão de salvar fica no fim dela. Android: baixa a ficha e pede para abrir e importar. */
   var ua = navigator.userAgent || '', iphone = /iPhone|iPad|iPod/.test(ua) || (/Macintosh/.test(ua) && navigator.maxTouchPoints > 1), android = /Android/.test(ua);
-  var DICA = iphone ? 'Vai abrir a ficha da loja. Nela, toque em "Criar Novo Contato", abaixo do telefone.'
+  var DICA = iphone ? 'O iPhone vai abrir uma tela dele com o nome da loja. Nela, toque em "Criar Novo Contato".'
     : android ? 'Depois, toque em "Abrir" no alto da tela, escolha Contatos e toque em "Importar".'
       : 'O contato é baixado como arquivo. Abra o arquivo para salvar.';
-  var DEPOIS = iphone ? 'Para salvar, toque em "Criar Novo Contato" na ficha, abaixo do telefone. O ✓ do alto só fecha.'
+  var DEPOIS = iphone ? 'Para salvar, toque em "Criar Novo Contato" na tela do iPhone com o nome da loja. O ✓ do alto só fecha.'
     : android ? 'Contato baixado. Toque em "Abrir", escolha Contatos e toque em "Importar".'
       : 'Contato baixado. Abra o arquivo para salvar na agenda.';
   $('f-dica').textContent = DICA;
