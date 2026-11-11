@@ -1505,16 +1505,53 @@ h2.pv-on:not(.pv-ok) .pv-i { transform: translateY(110%); }
 
 @media print { .hero .luz, .mural-proj { display: none; } }
 
-/* tema Agenda em telas médias: a barra aperta aos poucos para todas as abas caberem sem cortar a primeira */
-@media (min-width: 901px) and (max-width: 1240px) {
-  [data-tema="agenda"] .abas .temas-rot { display: none; }
-  [data-tema="agenda"] .abas { font-size: 15px; }
-  [data-tema="agenda"] .abas nav a { padding: 8px 10px; }
-  [data-tema="agenda"] .temas { padding: 0 4px 0 2px; gap: 0; }
-}
-@media (min-width: 901px) and (max-width: 1060px) {
-  [data-tema="agenda"] .abas { font-size: 14px; padding: 4px 6px; }
-  [data-tema="agenda"] .abas nav { gap: 0; }
-  [data-tema="agenda"] .abas nav a { padding: 8px 7px; }
-  [data-tema="agenda"] .temas button { font-size: 12px; padding: 4px 6px; }
-}
+/* ---------- barra de abas em telas médias (js/barra.js) ----------
+   Quando as abas não cabem, o script mede e liga os degraus .ap1 a .ap5, um por vez, até caber.
+   Cada degrau aperta um pouco mais; nada some além do rótulo "aparência", dos números do tema ASCII
+   e, por último, do texto "Meu pedido" (o ícone e a contagem ficam). Sem script, a barra rola de lado como antes. */
+.abas.ap1 .temas-rot { display: none; }
+.abas.ap1 .temas { padding: 0 6px 0 0; gap: 0; }
+.abas.ap3 .carrinho-rot { display: none; }
+.abas.ap3 .temas button { padding: 4px 6px; }
+.abas.ap4 .temas button { font-size: 12px; padding: 4px 5px; }
+.abas.ap4 .marca { padding-left: 10px; padding-right: 8px; }
+.abas.ap5 .temas button { padding: 4px 3px; }
+
+[data-tema="ascii"] .abas.ap1 nav a { padding: 9px 8px; }
+[data-tema="ascii"] .abas.ap2 nav a i { display: none; }
+[data-tema="ascii"] .abas.ap3 { gap: 8px; }
+[data-tema="ascii"] .abas.ap3 nav a { padding: 9px 6px; }
+[data-tema="ascii"] .abas.ap4 { font-size: 12.5px; }
+[data-tema="ascii"] .abas.ap5 { font-size: 12px; gap: 4px; }
+[data-tema="ascii"] .abas.ap5 nav a { padding: 9px 3px; }
+[data-tema="ascii"] .abas.ap5 .temas button { font-size: 11.5px; padding: 4px 2px; }
+[data-tema="ascii"] .abas.ap5 .marca { padding-left: 8px; padding-right: 4px; }
+
+[data-tema="empresa"] .abas.ap1 nav a { padding: 8px 9px; }
+[data-tema="empresa"] .abas.ap2 { gap: 8px; }
+[data-tema="empresa"] .abas.ap2 nav a { letter-spacing: .08em; padding: 8px 7px; }
+[data-tema="empresa"] .abas.ap4 nav { padding: 0 3px; }
+[data-tema="empresa"] .abas.ap4 nav a { letter-spacing: .04em; padding: 8px 5px; font-size: 11px; }
+[data-tema="empresa"] .abas.ap5 { gap: 4px; }
+[data-tema="empresa"] .abas.ap5 nav a { letter-spacing: .02em; padding: 8px 4px; }
+
+[data-tema="loja"] .abas.ap1 nav a { padding: 9px 8px; }
+[data-tema="loja"] .abas.ap1 nav a::after { left: 8px; right: 8px; }
+[data-tema="loja"] .abas.ap2 { gap: 8px; }
+[data-tema="loja"] .abas.ap2 nav a { letter-spacing: .08em; padding: 9px 6px; }
+[data-tema="loja"] .abas.ap2 nav a::after { left: 6px; right: 6px; }
+[data-tema="loja"] .abas.ap2 .marca { letter-spacing: .04em; font-size: 14px; }
+[data-tema="loja"] .abas.ap4 nav a { letter-spacing: .04em; padding: 9px 4px; font-size: 11px; }
+[data-tema="loja"] .abas.ap4 nav a::after { left: 4px; right: 4px; }
+[data-tema="loja"] .abas.ap5 { gap: 4px; }
+[data-tema="loja"] .abas.ap5 nav a { letter-spacing: .02em; padding: 9px 3px; }
+[data-tema="loja"] .abas.ap5 .marca { letter-spacing: 0; font-size: 13px; }
+
+[data-tema="agenda"] .abas.ap1 { font-size: 15px; }
+[data-tema="agenda"] .abas.ap1 nav a { padding: 8px 10px; }
+[data-tema="agenda"] .abas.ap2 nav { gap: 0; }
+[data-tema="agenda"] .abas.ap2 nav a { padding: 8px 8px; }
+[data-tema="agenda"] .abas.ap4 { font-size: 14px; padding: 4px 6px; gap: 8px; }
+[data-tema="agenda"] .abas.ap4 nav a { padding: 8px 6px; }
+[data-tema="agenda"] .abas.ap5 { font-size: 13.5px; gap: 4px; }
+[data-tema="agenda"] .abas.ap5 nav a { padding: 8px 5px; }
