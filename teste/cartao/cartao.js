@@ -11,6 +11,8 @@
   $('rodape-fundo').textContent = nome; $('mapa-nome').textContent = L.ondeCurto || nome;
   [['etiqueta1', L.ondeCurto], ['etiqueta2', L.etiqueta]].forEach(function (p) { if (p[1]) { $(p[0]).hidden = false; $(p[0]).lastChild.textContent = p[1]; } });
   $('pilula-logo').src = L.logo; $('pilula-nome').textContent = nome; $('pilula-onde').textContent = L.ondeCurto || '';
+  /* fita do alto: as mesmas palavras duas vezes, para a volta não dar salto */
+  if ((L.fita || []).length) { $('fita').hidden = false; [].forEach.call(document.querySelectorAll('.fita-tk'), function (tk) { L.fita.forEach(function (t) { var s = document.createElement('span'); s.textContent = t; tk.appendChild(s); var p = document.createElement('i'); p.textContent = '/'; tk.appendChild(p); }); }); }
   $('frase').textContent = L.frase; $('onde').textContent = L.onde;
   if (L.frase2) $('frase2').textContent = L.frase2; else $('frase2').hidden = true;
   function ligar(id, url, rotulo) { var a = $(id); if (!url) { a.hidden = true; return; } a.href = url; a.target = '_blank'; a.setAttribute('aria-label', rotulo); }
@@ -60,7 +62,7 @@
   function cartaoFoto(f, copia) {
     var d = document.createElement('div');
     d.className = 'foto cor-' + (f.cor || 'a');
-    if (f.arquivo) { var im = document.createElement('img'); im.src = f.arquivo; im.alt = copia ? '' : f.legenda; im.width = 720; im.height = 720; im.loading = 'lazy'; im.decoding = 'async'; d.appendChild(im); }
+    if (f.arquivo) { var q = document.createElement('span'); q.className = 'foto-quadro'; var im = document.createElement('img'); im.src = f.arquivo; im.alt = copia ? '' : f.legenda; im.width = 720; im.height = 720; im.loading = 'lazy'; im.decoding = 'async'; q.appendChild(im); d.appendChild(q); var leg = document.createElement('span'); leg.className = 'foto-nome'; leg.textContent = f.legenda; if (!copia) leg.setAttribute('aria-hidden', 'true'); d.appendChild(leg); }
     else { d.setAttribute('role', 'img'); d.setAttribute('aria-label', f.legenda); var selo = document.createElement('span'); selo.className = 'selo'; selo.setAttribute('aria-hidden', 'true'); selo.textContent = 'Foto em breve'; d.appendChild(selo); }
     if (copia) { d.setAttribute('aria-hidden', 'true'); d.removeAttribute('role'); d.removeAttribute('aria-label'); }
     grade.appendChild(d);
@@ -112,6 +114,7 @@
     var e = estado(), frase = e.texto + (e.resto ? ', ' + e.resto : '') + '.';
     $('agora').hidden = false; $('agora').className = 'agora ' + (e.aberta ? 'aberta' : 'fechada'); $('agora-texto').textContent = e.texto + (e.resto ? ' · ' + e.resto : '');
     $('estado').className = 'estado ' + (e.aberta ? 'aberta' : 'fechada'); $('estado').textContent = frase;
+    var hh = L.horario[agoraNaLoja().dia]; $('hoje-grande').hidden = false; $('hoje-grande').firstChild.textContent = hh ? hora(hh[0]) + ' às ' + hora(hh[1]) : 'Fechada';
     $('pilula-estado').className = 'pilula-estado ' + (e.aberta ? 'aberta' : 'fechada'); $('pilula-texto').textContent = e.aberta ? 'Aberta' : 'Fechada';
   }
   if (L.horario && L.horario.length === 7) {
@@ -152,6 +155,15 @@
   if (L.email) linha('email', 'E-mail', L.email, 'mailto:' + L.email, 'Escrever um e-mail para a ' + nome);
   if (L.central) linha('central', 'Central de atendimento', 'Todos os links da loja em um lugar.', L.central, 'Abrir a central de atendimento da ' + nome);
   if (!$('fale-lista').children.length) $('fale').hidden = true;
+  /* recado: a pessoa escreve aqui e a mensagem segue pelo WhatsApp dela. A página não guarda nem envia nada por conta própria. */
+  if (L.whatsapp) {
+    $('recado').hidden = false;
+    $('recado').addEventListener('submit', function (ev) {
+      ev.preventDefault();
+      var t = $('recado-texto').value.replace(/\s+/g, ' ').trim();
+      window.open('https://wa.me/' + L.whatsapp + '?text=' + encodeURIComponent(t || L.mensagemWhats), '_blank', 'noopener');
+    });
+  }
 
   /* folhas que sobem do pé da tela: a do contato e a de indicar a loja */
   var folha = $('folha'), folhaQr = $('folha-qr'), veu = $('veu'), antes = null, aberta = null;
@@ -185,6 +197,12 @@
     if (navigator.clipboard && navigator.clipboard.writeText) { navigator.clipboard.writeText(url).then(function () { aviso('Link copiado. É só colar na conversa.'); }, function () { aviso('Copie o endereço desta página e envie para quem quiser.'); }); return; }
     aviso('Copie o endereço desta página e envie para quem quiser.');
   });
+
+  /* as seções surgem ao entrar na tela, uma vez. Sem isso para quem pediu menos movimento. */
+  if (!calmo && 'IntersectionObserver' in window) {
+    var surge = new IntersectionObserver(function (v) { v.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('veio'); surge.unobserve(e.target); } }); }, { rootMargin: '0px 0px -8% 0px' });
+    [].forEach.call(document.querySelectorAll('.corpo > section, .corpo > .banda, .corpo > .indicar'), function (el) { el.classList.add('vem'); surge.observe(el); });
+  }
 
   /* oferece o contato ao abrir, uma vez por visita, só no celular: é nele que o cartão é encostado.
      No computador a página abre direto; o botão Salvar contato continua disponível. */
