@@ -2,8 +2,8 @@
 // Nada daqui é carregado antes de a pessoa tocar em "Aceitar". Sem os dois IDs abaixo, este arquivo não faz nada.
 (function () {
   'use strict';
-  var GA_ID = '';     // ID de medição do Google Analytics 4, no formato G-XXXXXXXXXX
-  var PIXEL_ID = '';  // ID do Pixel da Meta, só números (15 ou 16 dígitos)
+  var GA_ID = 'G-FGK3Y3S8ZJ';     // ID de medição do Google Analytics 4, no formato G-XXXXXXXXXX
+  var PIXEL_ID = '4824625814524904';  // ID do Pixel da Meta, só números (15 ou 16 dígitos)
 
   if (!/^G-[A-Z0-9]{6,14}$/.test(GA_ID)) GA_ID = '';
   if (!/^\d{15,16}$/.test(PIXEL_ID)) PIXEL_ID = '';
