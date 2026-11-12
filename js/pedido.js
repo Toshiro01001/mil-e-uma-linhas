@@ -301,6 +301,7 @@ window.MUL_PEDIDO = (function () {
   }
 
   function concluir(j) {
+    try { document.dispatchEvent(new CustomEvent('mul:pedido-enviado')); } catch (e) {}
     $('fin-protocolo').textContent = j.protocolo;
     listar($('fin-ok-itens'), j.itens);
     $('fin-ok-total').textContent = j.prazo_txt ? 'Prazo somado: ' + j.prazo_txt + '. O orçamento com o preço chega por escrito depois da nossa conversa.' + (j.nota ? ' Você pediu nota fiscal: eu confirmo os dados na conversa.' : '') : '';

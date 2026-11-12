@@ -4,7 +4,7 @@ Meu código, seu site. Site principal em [mileumalinhas.com.br](https://mileumal
 
 ![Início do site Mil e Uma Linhas!](img/site.webp)
 
-Site estático em HTML, CSS e JavaScript puro, sem dependências, sem cookies e sem nenhuma requisição a terceiros. O navegador guarda só a aparência escolhida e, nas demonstrações, os dados de teste.
+Site estático em HTML, CSS e JavaScript puro, sem dependências. Cookies e requisições a terceiros só existem se a pessoa aceitar a medição de visitas (Google Analytics e Pixel da Meta); sem o aceite, nada de fora é carregado. O navegador guarda a aparência escolhida, a escolha sobre a medição e, nas demonstrações, os dados de teste.
 
 | Pasta ou arquivo | Para que serve |
 |---|---|
@@ -16,6 +16,7 @@ Site estático em HTML, CSS e JavaScript puro, sem dependências, sem cookies e 
 | `js/orcamento.js` | Montador do pedido e carrinho (fica salvo no aparelho do cliente). **O site não mostra preços:** a lista `PEDIDOS` tem os serviços, planos, adicionais e prazos, e `LINGUAGENS` alimenta a aba que explica cada linguagem. A tabela de preços fica só no servidor de cobranças, que é privado. Mudou a lista `PEDIDOS`? Gere de novo o catálogo do servidor (veja o README dele) |
 | `js/pedido.js` | Tela de finalização: confere o carrinho, pede nome, e-mail e WhatsApp, e uma descrição de 500 a 3.000 caracteres do que o cliente quer. Envia ao meu servidor; se ele estiver fora, oferece o e-mail com tudo escrito |
 | `js/guia.js` | Aba que explica o que cada linguagem faz. É só informação: quem escolhe a linguagem de cada projeto sou eu |
+| `js/medicao.js` | Aviso de consentimento e medição de visitas. Os IDs do Google Analytics e do Pixel da Meta ficam no topo do arquivo; sem eles, o arquivo não faz nada. Os dois só são carregados depois do toque em **Aceitar**, e o botão **Medição**, no rodapé, deixa a pessoa mudar a escolha |
 | `js/demos.js` | As demonstrações. Tudo roda no navegador de quem usa |
 | `js/linguagens.js` | A mesma regra em 16 linguagens; cada programa foi compilado ou executado de verdade |
 | `vitrine/` | Sistemas de demonstração, cada um em sua pasta, com aviso e rodapé comuns em `assinatura.css` |
