@@ -10,7 +10,7 @@ Site estático em HTML, CSS e JavaScript puro, sem dependências, sem cookies e 
 |---|---|
 | `index.html` | Conteúdo de todas as abas |
 | `css/site.css` | Aparência |
-| `js/boot.js` | Prepara as abas e impede que o site seja embutido em outro |
+| Trecho no início do `index.html` | Roda antes de a página ser desenhada: aplica a aparência escolhida e impede que o site seja embutido em outro. Fica dentro da página para não custar um arquivo a mais, e a política de segurança só o aceita pelo código de conferência (`sha256`). Mudou o trecho? Gere o código de novo |
 | `js/app.js` | Abas, logo em ASCII, números de linha e terminal |
 | `js/temas.js` | As 5 aparências e suas capas interativas |
 | `js/orcamento.js` | Montador do pedido e carrinho (fica salvo no aparelho do cliente). **O site não mostra preços:** a lista `PEDIDOS` tem os serviços, planos, adicionais e prazos, e `LINGUAGENS` alimenta a aba que explica cada linguagem. A tabela de preços fica só no servidor de cobranças, que é privado. Mudou a lista `PEDIDOS`? Gere de novo o catálogo do servidor (veja o README dele) |
