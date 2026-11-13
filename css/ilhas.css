@@ -64,6 +64,20 @@
 .pe-fio { max-width: 1024px; margin: var(--lin) auto 0; font-family: var(--mono); font-size: 13px; }
 @media (max-width: 620px) { .pe-topo { grid-template-columns: 1fr 1fr; } .pe-nome { grid-column: 1 / -1; } }
 
+/* ---------- roda de projetos (aba projetos) ---------- */
+.ilha-roda:empty, .ilha-letras-vaga:empty { display: none; }
+.ilha-roda { margin: 0 0 calc(var(--lin) * 1.5); }
+.ilha-roda-caixa { height: clamp(380px, 62vh, 560px); border: 1px solid var(--traco); border-radius: 4px; overflow: hidden; background: rgba(16,20,24,.55); }
+.ilha-roda-caixa .ww-root { --ww-bg: transparent; --ww-fg: var(--papel); --ww-muted: var(--cinza); --ww-card: var(--painel); --ww-shadow: rgba(var(--verde-rgb), .22); --ww-chip: rgba(16,20,24,.88); height: 100%; min-height: 0; font-family: var(--titulo); }
+@media (max-width: 760px) { .ilha-roda-caixa { height: min(52vh, 400px); } }
+
+/* ---------- arte em letras (início) ---------- */
+.ilha-letras-vaga { display: contents; }
+.ilha-letras { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: clamp(20px, 4vw, 48px); align-items: center; }
+.ilha-letras-arte { position: relative; aspect-ratio: 3 / 2; overflow: hidden; border: 1px solid var(--traco); border-radius: 4px; }
+.ilha-letras p { margin: 10px 0 0; color: var(--cinza); }
+@media (max-width: 760px) { .ilha-letras { grid-template-columns: 1fr; } }
+
 /* ---------- rastro de pixels ---------- */
 .ilha-rastro { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
 html:not(.ilhas-on) .ilha-rastro { display: none; }
@@ -530,4 +544,205 @@ canvas.gf-sheet-art[data-ready] { opacity: 1; filter: none; }
     transition-delay: 0s !important;
     animation: none !important;
   }
+}
+
+/* o que o projeto pode trocar com uma classe (altura, largura, margem): na camada base, que vem antes das classes de
+   componente e dos utilitários (Tailwind v4) e perde para o CSS fora de camada (Tailwind v3, CSS Modules, CSS comum) */
+@layer base {
+  .ww-root { position: relative; width: 100%; height: 100%; min-height: 24rem; margin: 0; }
+}
+.ww-root[hidden] { display: none; }
+.ww-root {
+  --ww-bg: #0a0a0a;
+  --ww-fg: #fafafa;
+  --ww-muted: #a1a1aa;
+  --ww-card: #27272a;
+  --ww-shadow: rgba(250, 250, 250, .12);
+  --ww-chip: rgba(10, 10, 10, .85);
+  box-sizing: border-box;
+  overflow: hidden;
+  isolation: isolate;
+  background: var(--ww-bg);
+  color: var(--ww-fg);
+  /* nada de texto herdado da página: a roda fica igual em qualquer projeto */
+  font-family: ui-sans-serif, system-ui, -apple-system, "SF Pro Text", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  font-variant: normal;
+  font-feature-settings: normal;
+  font-variation-settings: normal;
+  line-height: 1.5;
+  letter-spacing: normal;
+  word-spacing: normal;
+  text-align: left;
+  text-transform: none;
+  text-indent: 0;
+  text-shadow: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+.ww-root[data-theme="light"] {
+  --ww-bg: #ffffff;
+  --ww-fg: #0a0a0a;
+  --ww-muted: #71717a;
+  --ww-card: #f4f4f5;
+  --ww-shadow: rgba(10, 10, 10, .12);
+  --ww-chip: rgba(255, 255, 255, .85);
+}
+.ww-root *, .ww-root *::before, .ww-root *::after { box-sizing: border-box; }
+
+/* a roda: pega a rolagem, o arraste na vertical (o dedo na horizontal continua rolando a página para o lado) e o teclado */
+.ww-stage {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  cursor: grab;
+  touch-action: pan-x;
+  outline: none;
+}
+.ww-stage:active { cursor: grabbing; }
+.ww-stage:focus-visible { outline: 2px solid var(--ww-fg); outline-offset: -4px; }
+.ww-wheel { position: absolute; top: 50%; left: 50%; margin: 0; transform-style: preserve-3d; }
+
+.ww-card {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+  margin: 0;
+  padding: 0;
+  color: inherit;
+  text-decoration: none;
+  outline: none;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  -webkit-user-drag: none;
+}
+.ww-face {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border-radius: 8px;
+  background: var(--ww-card);
+  box-shadow: 0 18px 40px -18px var(--ww-shadow);
+}
+.ww-img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  margin: 0;
+  object-fit: cover;
+  -webkit-user-drag: none;
+}
+
+/* o selo do hover, embaixo à direita do cartão com link */
+.ww-action {
+  position: absolute;
+  right: 12px;
+  bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin: 0;
+  padding: 4px 10px;
+  border-radius: 9999px;
+  background: var(--ww-chip);
+  color: var(--ww-fg);
+  font-size: .7rem;
+  line-height: 1.5;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(4px);
+  transition: opacity .15s cubic-bezier(.4, 0, .2, 1), transform .15s cubic-bezier(.4, 0, .2, 1);
+}
+.ww-action svg { display: block; flex-shrink: 0; width: 10px; height: 10px; }
+@media (hover: hover) {
+  .ww-card:hover .ww-action { opacity: 1; transform: translateY(0); }
+}
+
+/* o título do anel, no centro, e o da peça da frente, à esquerda dela */
+.ww-label {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  margin: 0;
+  letter-spacing: -.025em;
+  white-space: nowrap;
+  pointer-events: none;
+}
+.ww-title {
+  position: absolute;
+  top: 50%;
+  left: 8%;
+  margin: 0;
+  letter-spacing: -.025em;
+  white-space: nowrap;
+  opacity: 0;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+/* a lista, no alto à direita */
+.ww-index {
+  position: absolute;
+  top: 7.5%;
+  right: 2.5%;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  text-align: right;
+  line-height: 1.75;
+  color: var(--ww-muted);
+}
+.ww-index li { margin: 0; padding: 0; }
+.ww-index button {
+  display: inline;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  letter-spacing: inherit;
+  text-align: inherit;
+  text-transform: none;
+  cursor: pointer;
+  outline: none;
+  -webkit-appearance: none;
+  appearance: none;
+  transition: color .15s cubic-bezier(.4, 0, .2, 1);
+}
+.ww-index button[aria-current] { color: var(--ww-fg); font-weight: 500; }
+.ww-index button:focus-visible { outline: 1px solid var(--ww-fg); }
+
+@media (prefers-reduced-motion: reduce) {
+  .ww-root, .ww-root * { transition-duration: .01ms !important; }
+}
+/* Apoteose: o estilo dos dois canvas (a arte e a lente). No original estas declarações eram escritas por código, num
+   style.cssText em cada canvas; aqui moram em arquivo, porque a página só aceita folha de estilo em arquivo. São as
+   mesmas declarações, na mesma ordem. O canvas da lente recebe depois, por element.style, inset: auto, left, top,
+   visibility, will-change, width, height e transform, que vencem esta classe. */
+.apoteose-canvas {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  letter-spacing: 0;
+  word-spacing: 0;
+  font-kerning: none;
+  font-variant-ligatures: none;
+  font-feature-settings: normal;
+  text-rendering: geometricPrecision;
 }
