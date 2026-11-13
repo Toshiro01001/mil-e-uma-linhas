@@ -73,6 +73,13 @@
 .ilha-letras p { margin: 10px 0 0; color: var(--cinza); }
 @media (max-width: 760px) { .ilha-letras { grid-template-columns: 1fr; } }
 
+/* ---------- montador do pedido em React ---------- */
+.orc-react-vaga, .orc-react { display: contents; }
+/* Moldura: luz nas bordas do resumo, só no tema ASCII */
+.ilhas-on .orc-resumo { isolation: isolate; overflow: hidden; }
+@media (max-width: 900px) { .ilhas-on .orc-resumo { position: relative; } }
+.orc-resumo > .moldura { position: absolute; inset: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; display: block; max-width: none; }
+
 /* ---------- rastro de pixels ---------- */
 .ilha-rastro { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 60; pointer-events: none; mix-blend-mode: screen; }
 html:not(.ilhas-on) .ilha-rastro { display: none; }

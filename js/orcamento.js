@@ -163,8 +163,12 @@ window.MUL_ORC = (function () {
     if (P.planos[p].mensal) return 'serviço mensal, primeira campanha em ' + diasTxt(dias);
     return diasTxt(dias);
   }
+  /* Quando a tela em React (js/ilhas.js) assume o montador, "externo" é a função que avisa o React de cada mudança:
+     as funções de desenho abaixo deixam de mexer na página e os valores de horas e urgência passam a morar aqui.
+     Sem o React, tudo segue como antes, lendo e escrevendo direto na página. */
+  var externo = null, horasV = 20, prazoV = 1;
   function atual() {
-    var horas = +$('#orc-horas').value, prazo = +$('#orc-prazo').value;
+    var horas = externo ? horasV : +$('#orc-horas').value, prazo = externo ? prazoV : +$('#orc-prazo').value;
     return { tipo: tipo, plano: plano, marc: Object.assign({}, marcados), horas: horas, prazo: prazo, dias: prazoDe(tipo, plano, marcados, horas, prazo) };
   }
   function descrever(it) {
@@ -186,6 +190,7 @@ window.MUL_ORC = (function () {
   }
 
   function renderTipos() {
+    if (externo) return;
     var box = $('#orc-tipos'); box.textContent = '';
     Object.keys(PEDIDOS).forEach(function (k) {
       var b = el('button', 'pilula', PEDIDOS[k].nome); b.type = 'button'; b.setAttribute('role', 'tab');
@@ -195,6 +200,7 @@ window.MUL_ORC = (function () {
     });
   }
   function renderPlanos() {
+    if (externo) return;
     var P = PEDIDOS[tipo], box = $('#orc-planos'); box.textContent = '';
     P.planos.forEach(function (pl, i) {
       var b = el('button', 'orc-plano'); b.type = 'button'; b.setAttribute('role', 'radio');
@@ -208,6 +214,7 @@ window.MUL_ORC = (function () {
     });
   }
   function renderExtras() {
+    if (externo) return;
     var P = PEDIDOS[tipo], box = $('#orc-extras'); box.textContent = '';
     var tit = box.previousElementSibling;
     if (tit) tit.hidden = !(P.extras && P.extras.length);
@@ -235,17 +242,22 @@ window.MUL_ORC = (function () {
     });
     $('#orc-horas-caixa').hidden = !P.horas;
   }
+  function notaTxt(it) {
+    var P = PEDIDOS[it.tipo];
+    var n = ['O preço sai por escrito depois que conversarmos sobre o projeto, sem compromisso. O prazo conta em dias úteis (segunda a sexta) e só começa depois da entrada de 50%, da aprovação do escopo e do recebimento de todo o material.'];
+    if (it.tipo === 'trafego') n.unshift('O prazo é até a primeira campanha no ar.');
+    if (it.prazo > 1) n.unshift('Urgente: prazo cerca de 30% menor, quando a agenda permitir.');
+    if (P.nota) n.unshift(P.nota);
+    n.push('Depois da entrega eu explico por cima como usar e deixo meu contato (e-mail e WhatsApp) para qualquer dúvida.');
+    return n.join(' ');
+  }
   function atualizar() {
-    var it = atual(), P = PEDIDOS[tipo];
+    if (externo) return externo();
+    var it = atual();
     $('#orc-valor').textContent = descrever(it);
     $('#orc-dias').textContent = 'Prazo estimado: ' + prazoTxt(it.tipo, it.plano, it.dias);
     $('#orc-horas-val').textContent = it.horas + ' horas';
-    var n = ['O preço sai por escrito depois que conversarmos sobre o projeto, sem compromisso. O prazo conta em dias úteis (segunda a sexta) e só começa depois da entrada de 50%, da aprovação do escopo e do recebimento de todo o material.'];
-    if (tipo === 'trafego') n.unshift('O prazo é até a primeira campanha no ar.');
-    if (+$('#orc-prazo').value > 1) n.unshift('Urgente: prazo cerca de 30% menor, quando a agenda permitir.');
-    if (P.nota) n.unshift(P.nota);
-    n.push('Depois da entrega eu explico por cima como usar e deixo meu contato (e-mail e WhatsApp) para qualquer dúvida.');
-    $('#orc-nota').textContent = n.join(' ');
+    $('#orc-nota').textContent = notaTxt(it);
   }
   /* guarda só as escolhas; o prazo é refeito com a tabela atual ao abrir de novo */
   function guardar() {
@@ -280,8 +292,9 @@ window.MUL_ORC = (function () {
     if (!a) return;
     setTimeout(function () { var t = $('#t-carrinho'); if (t && !t.closest('[hidden]')) t.scrollIntoView({ block: 'start' }); }, 60);
   });
-  function mudou() { guardar(); contador(); ouvintes.forEach(function (f) { f(); }); }
+  function mudou() { guardar(); contador(); ouvintes.forEach(function (f) { f(); }); if (externo) externo(); }
   function renderCarrinho() {
+    if (externo) return mudou();
     var ul = $('#orc-carrinho'); ul.textContent = '';
     if (!carrinho.length) ul.appendChild(el('li', 'vazio', 'Nada adicionado ainda. Monte um item e clique em Adicionar ao pedido.'));
     carrinho.forEach(function (it, i) {
@@ -355,6 +368,7 @@ window.MUL_ORC = (function () {
   function iniciar() {
     if (pronto) return;
     pronto = true;
+    if (externo) { escolher(tipo, 0); return mudou(); }
     $('#orc-prazo').addEventListener('change', atualizar);
     $('#orc-horas').addEventListener('input', atualizar);
     $('#orc-add').addEventListener('click', function () {
@@ -412,6 +426,28 @@ window.MUL_ORC = (function () {
     },
     textoEmail: texto,
     esvaziar: function () { carrinho = []; if (pronto) renderCarrinho(); else mudou(); },
-    aoMudar: function (f) { ouvintes.push(f); }
+    aoMudar: function (f) { ouvintes.push(f); },
+    /* usados pela tela em React do montador (js/ilhas.js) */
+    assumir: function (f) {
+      if (!externo) { var h = $('#orc-horas'), p = $('#orc-prazo'); if (h) horasV = +h.value || 20; if (p) prazoV = +p.value === 1.25 ? 1.25 : 1; }
+      externo = f;
+    },
+    ver: function () {
+      var it = atual();
+      return {
+        tipo: tipo, plano: plano, marc: it.marc, horas: it.horas, urgente: it.prazo > 1,
+        descricao: descrever(it), prazo: prazoTxt(it.tipo, it.plano, it.dias), nota: notaTxt(it),
+        itens: carrinho.map(function (c) { return { descricao: descrever(c), prazo: prazoTxt(c.tipo, c.plano, c.dias) }; }),
+        soma: diasTxt(somaDias()), max: MAX_ITENS
+      };
+    },
+    escolher: function (k) { escolher(k, 0); },
+    porPlano: function (i) { if (PEDIDOS[tipo].planos[i]) { plano = i; atualizar(); } },
+    marcar: function (i, v) { if (i >= 0 && i < (PEDIDOS[tipo].extras || []).length) { marcados[i] = !!v; atualizar(); } },
+    porHoras: function (n) { horasV = Math.min(160, Math.max(5, Math.round(n / 5) * 5 || 20)); atualizar(); },
+    porUrgente: function (v) { prazoV = v ? 1.25 : 1; atualizar(); },
+    adicionarAtual: function () { if (carrinho.length >= MAX_ITENS) return false; carrinho.push(atual()); renderCarrinho(); return true; },
+    remover: function (i) { if (i >= 0 && i < carrinho.length && i % 1 === 0) { carrinho.splice(i, 1); renderCarrinho(); } },
+    AJUDA: AJUDA
   };
 })();
