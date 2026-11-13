@@ -11,6 +11,7 @@
 .palco-gl canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
 .palco-topografia canvas { opacity: 1; }
 .palco-pontilhado canvas { image-rendering: pixelated; }
+.palco-ascii canvas { opacity: .8; }
 @media (max-width: 760px) {
   .ilha-palco { height: 400px; }
   .palco-topografia canvas { opacity: .8; }
@@ -79,7 +80,7 @@
 @media (max-width: 760px) { .ilha-letras { grid-template-columns: 1fr; } }
 
 /* ---------- rastro de pixels ---------- */
-.ilha-rastro { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
+.ilha-rastro { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 60; pointer-events: none; mix-blend-mode: screen; }
 html:not(.ilhas-on) .ilha-rastro { display: none; }
 
 /* ---------- desfoque progressivo nos cartões de projeto ---------- */
