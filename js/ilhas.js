@@ -6234,8 +6234,8 @@ const cp = (e) => (oi.add(e), () => oi.delete(e)), Fr = matchMedia("(prefers-red
   const r = document.createElement("div");
   return r.className = e, t.insertBefore(r, n || null), r;
 }, fp = (e) => {
-  const t = e.replace(/\s+/g, " ").trim().match(/^.*?[.!?](?=\s|$)/);
-  return t ? t[0] : e.trim();
+  const t = e.replace(/\s+/g, " ").trim().match(/^.*?[.!?:](?=\s|$)/);
+  return t ? t[0].replace(/:$/, ".") : e.trim();
 };
 function dp() {
   const e = [...document.querySelectorAll(".arvore button[data-svc]")].map((n) => {
