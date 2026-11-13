@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; base-uri 'none'; form-action 'none'">
 <meta name="referrer" content="no-referrer">
 <title>Automação de vendas para relojoaria | Mil e Uma Linhas!</title>
 <meta name="description" content="Demonstração de automação de vendas: atendimento que recomenda o modelo e mensagens do anúncio à troca da bateria, com autorização do cliente.">
@@ -23,32 +23,104 @@
 <meta property="og:image:alt" content="Mil e Uma Linhas!: meu código, seu site.">
 <meta name="twitter:image" content="https://mileumalinhas.com.br/og.png?v=20261109">
 <meta name="twitter:card" content="summary_large_image">
-<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
-<link rel="preload" href="fontes/familjen-grotesk-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="estilo.css?v=20261113">
-<link rel="stylesheet" href="../assinatura.css">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml" >
+<link rel="preload" as="image" href="frames/cap-1/0001.webp" fetchpriority="high">
+<link rel="stylesheet" href="loader.css" >
+<script src="boot.js" ></script>
+<link rel="stylesheet" href="../assinatura.css" >
+  <script type="module" crossorigin src="./assets/index-FE8qztz5.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/index-DEKL4lYm.css">
 </head>
 <body>
+<svg width="0" height="0" class="so-leitor" aria-hidden="true"><symbol id="star" viewBox="0 0 100 100"><path fill-rule="evenodd" d="M50 0 L66 50 L50 100 L34 50 Z M50 42 a8 8 0 1 0 .01 0 Z"/></symbol></svg>
+
+<div class="loader" aria-hidden="true">
+  <div class="loader__dial">
+    <svg viewBox="-10 -10 220 220"><g class="loader__ticks"></g><circle class="loader__track" cx="100" cy="100" r="88"/><circle class="loader__arc" cx="100" cy="100" r="88" pathLength="1" transform="rotate(-90 100 100)"/><circle class="loader__tip" cx="100" cy="12" r="3"/></svg>
+    <svg class="loader__star" viewBox="0 0 100 100"><use href="#star"/></svg>
+  </div>
+  <p class="loader__foot"><span>Dando corda</span><span><b class="loader__h">00</b> h / 72 h</span></p>
+</div>
+
 <aside class="faixa" aria-label="Aviso de demonstração">
   <p>Sistema de demonstração. Loja, modelos e preços são fictícios. Nenhuma mensagem é enviada. <a href="../index.html">Ver outros sistemas</a></p>
   <button type="button" id="restaurar">Restaurar dados de exemplo</button>
 </aside>
 
-<header class="cab">
-  <p class="marca">Ponteiro Alto, relojoaria em Cuiabá</p>
-  <nav aria-label="Seções">
-    <a href="#ciclo">O ciclo</a>
-    <a href="#atendimento">Atendimento</a>
-    <a href="#regras">Regras</a>
-    <a href="#conta">A conta</a>
-    <a href="#como">Como funciona</a>
+<header class="nav" id="nav">
+  <a class="nav__logo" href="#peca" data-go="topo" aria-label="Ponteiro Alto, início"><svg class="nav__star" viewBox="0 0 100 100" aria-hidden="true"><use href="#star"/></svg><span>Ponteiro Alto</span></a>
+  <nav class="nav__links" aria-label="Seções">
+    <a href="#peca" data-go="mecanismo">Mecanismo</a><a href="#colecao" data-go="colecao">Coleção</a><a href="#atelie" data-go="atelie">Ateliê</a><a href="#garantia" data-go="garantia">Garantia</a><a href="#sistema" data-go="sistema">O sistema</a>
   </nav>
+  <div class="nav__fim"><a class="btn btn--ghost btn--s nav__reservar" href="#reserva" data-go="reserva"><span class="btn__l">Reservar</span></a><button type="button" class="nav__menu" aria-expanded="false" aria-controls="menu">Menu</button></div>
 </header>
+<div class="menu" id="menu" hidden>
+  <nav aria-label="Menu">
+    <a href="#peca" data-go="mecanismo"><i>01</i>Mecanismo</a><a href="#colecao" data-go="colecao"><i>02</i>Coleção</a><a href="#atelie" data-go="atelie"><i>03</i>Ateliê</a><a href="#garantia" data-go="garantia"><i>04</i>Garantia</a><a href="#sistema" data-go="sistema"><i>05</i>O sistema</a><a href="#reserva" data-go="reserva"><i>06</i>Reservar</a>
+  </nav>
+</div>
 
 <main>
+<section class="peca" id="peca" aria-labelledby="t-hero">
+  <div class="peca__stage"><div class="peca__scene">
+    <canvas class="film" aria-hidden="true"></canvas>
+    <div class="veil" aria-hidden="true"></div>
+    <div class="hero">
+      <h1 class="hero__title" id="t-hero"><span class="line"><span class="line__in">Ponteiro</span></span><span class="line"><span class="line__in">Alto</span></span></h1>
+      <p class="hero__lead">Um relógio automático com 72 horas de reserva. Você tira à noite e ele ainda marca a hora na segunda.</p>
+      <p class="hero__cta"><a class="btn btn--light" href="#reserva" data-go="reserva"><span class="btn__l">Reservar o meu</span></a><a class="seta" href="#peca" data-go="mecanismo">Abrir o mecanismo <span aria-hidden="true">→</span></a></p>
+    </div>
+    <div class="beat beat--1"><h2 class="beat__h"><span class="line"><span class="line__in">Dá para ver</span></span><span class="line"><span class="line__in">o tempo passar.</span></span></h2><p class="beat__p">O mostrador é vazado: pelo vidro aparece o calibre inteiro trabalhando.</p></div>
+    <div class="beat beat--2"><h2 class="beat__h"><span class="line"><span class="line__in">Oito batidas</span></span><span class="line"><span class="line__in">por segundo.</span></span></h2><p class="beat__p">O balanço vai e volta 691.200 vezes por dia. É ele que divide o segundo.</p></div>
+    <div class="beat beat--3"><h2 class="beat__h"><span class="line"><span class="line__in">186 peças.</span></span><span class="line"><span class="line__in">Montadas à mão.</span></span></h2></div>
+    <div class="callouts" aria-hidden="true">
+      <div class="callout"><svg class="callout__line"><line x1="0" y1="0" x2="0" y2="0" pathLength="1"/></svg><i class="callout__dot"></i><p class="callout__t"><b>01 · Mostrador</b><span>Esqueletado, o calibre à vista</span></p></div><div class="callout"><svg class="callout__line"><line x1="0" y1="0" x2="0" y2="0" pathLength="1"/></svg><i class="callout__dot"></i><p class="callout__t"><b>02 · Balanço</b><span>Oscila 8 vezes por segundo</span></p></div><div class="callout"><svg class="callout__line"><line x1="0" y1="0" x2="0" y2="0" pathLength="1"/></svg><i class="callout__dot"></i><p class="callout__t"><b>03 · Rotor</b><span>Carrega a mola com o pulso</span></p></div><div class="callout"><svg class="callout__line"><line x1="0" y1="0" x2="0" y2="0" pathLength="1"/></svg><i class="callout__dot"></i><p class="callout__t"><b>04 · Caixa</b><span>Aço 316L, 40 mm, 50 m</span></p></div>
+    </div>
+    <div class="ficha">
+      <h2 class="ficha__h"><span class="line"><span class="line__in">72 horas</span></span><span class="line"><span class="line__in">de reserva.</span></span></h2>
+      <p class="ficha__p">Você tira na sexta à noite e ele ainda marca a hora na segunda.</p>
+      <p class="ficha__spec">Aço 316L · 40 mm · Safira · 50 m</p>
+      <div class="ficha__buy"><p class="ficha__price"><small>R$</small>14.800</p><a class="btn btn--light" href="#reserva" data-go="reserva"><span class="btn__l">Reservar o meu</span></a></div>
+    </div>
+  </div></div>
+</section>
+
+<section class="colecao" id="colecao" aria-labelledby="t-colecao">
+  <div class="colecao__stage">
+    <h2 class="colecao__h" id="t-colecao"><span class="line"><span class="line__in">Um calibre. Três noites.</span></span></h2>
+    <div class="colecao__track">
+      <img class="cw" src="img/colecao-noite.webp" width="800" height="1200" alt="Relógio Noite, mostrador azul-noite e pulseira de couro azul" draggable="false">
+      <img class="cw" src="img/colecao-musgo.webp" width="800" height="1200" alt="Relógio Musgo, aro cinza e pulseira de couro verde-musgo" draggable="false">
+      <img class="cw" src="img/colecao-areia.webp" width="800" height="1200" alt="Relógio Areia, mostrador creme e pulseira de couro caramelo" draggable="false">
+    </div>
+    <p class="colecao__name" aria-live="polite"><span>Noite</span><span>Musgo</span><span>Areia</span></p>
+    <p class="colecao__desc"></p>
+    <div class="colecao__dots" role="group" aria-label="Versão"><button type="button" data-i="0" aria-label="Noite"></button><button type="button" data-i="1" aria-label="Musgo"></button><button type="button" data-i="2" aria-label="Areia"></button></div>
+  </div>
+</section>
+
+<section class="atelie" id="atelie" aria-labelledby="t-atelie">
+  <div class="atelie__stage">
+    <img class="atelie__img" src="img/atelie-montagem.webp" width="1800" height="1200" alt="Mãos com uma pinça encaixando uma engrenagem no relógio aberto, na bancada" loading="lazy">
+    <div class="atelie__shade" aria-hidden="true"></div>
+    <div class="atelie__text"><h2 class="atelie__h" id="t-atelie"><span class="line"><span class="line__in">Um relojoeiro só,</span></span><span class="line"><span class="line__in">do começo ao fim.</span></span></h2><p class="atelie__p">Vinte e um dias na bancada, nas mãos da mesma pessoa. O nome de quem montou vai gravado no fundo.</p></div>
+  </div>
+</section>
+
+<section class="garantia" id="garantia" aria-labelledby="t-garantia">
+  <img class="garantia__img" src="img/garantia-fundo.webp" width="1024" height="1536" alt="Fundo do relógio em safira, com o rotor dourado à vista e a pulseira verde fechada" loading="lazy">
+  <div class="garantia__text"><h2 class="garantia__h" id="t-garantia"><span class="line"><span class="line__in">Dez anos</span></span><span class="line"><span class="line__in">de garantia.</span></span></h2><p class="garantia__p">E revisão pela vida toda, feita por quem montou.</p></div>
+</section>
+
+<div class="sistema" id="sistema">
+  <div class="sistema__abre">
+    <h2 class="sistema__h"><span class="line"><span class="line__in">Por trás do balcão,</span></span><span class="line"><span class="line__in">um sistema que lembra.</span></span></h2>
+    <p class="sistema__p">Esta página é a vitrine. O que eu vendo para a loja é o que vem agora: o sistema que acompanha cada cliente, do anúncio à troca da bateria. Teste à vontade.</p>
+  </div>
+
   <section id="ciclo" class="ciclo" aria-labelledby="t-ciclo">
     <div class="ciclo-texto">
-      <h1 id="t-ciclo">Do anúncio à troca da bateria, a loja não esquece nenhum cliente</h1>
+      <h2 id="t-ciclo">Do anúncio à troca da bateria, a loja não esquece nenhum cliente</h2>
       <p>Um relógio não é venda de uma vez só: tem ajuste de pulseira, bateria, revisão e presente de aniversário. Avance o ponteiro e veja o que o sistema faz sozinho em cada momento.</p>
       <div class="controles">
         <button type="button" id="avancar" class="principal">Avançar o ponteiro</button>
@@ -61,7 +133,7 @@
     </figure>
     <div class="conversa" aria-labelledby="t-conversa">
       <h2 id="t-conversa">Conversa com <span id="nome-conversa"></span></h2>
-      <ol id="mensagens" aria-live="polite" tabindex="0" aria-label="Mensagens do ciclo"></ol>
+      <ol id="mensagens" data-lenis-prevent aria-live="polite" tabindex="0" aria-label="Mensagens do ciclo"></ol>
       <p id="sem-msg" class="vazio">Toque em "Avançar o ponteiro" para começar pelo anúncio.</p>
     </div>
   </section>
@@ -132,8 +204,24 @@
       </div>
     </div>
   </section>
-</main>
 
+</div>
+
+<section class="reserva" id="reserva" aria-labelledby="t-reserva">
+  <h2 class="reserva__h" id="t-reserva"><span class="line"><span class="line__in">Venha dar</span></span><span class="line"><span class="line__in">corda.</span></span></h2>
+  <p class="reserva__p">O ateliê recebe com hora marcada, de terça a sábado. Loja fictícia: nada é enviado.</p>
+  <form class="form" novalidate>
+    <label class="campo"><span>Nome</span><input name="nome" autocomplete="off" maxlength="40"></label>
+    <label class="campo"><span>WhatsApp</span><input name="whats" inputmode="tel" autocomplete="off" maxlength="20"></label>
+    <button type="submit" class="btn btn--light"><span class="btn__l">Agendar visita</span></button>
+  </form>
+  <p class="form__msg" role="status"></p>
+</section>
+<div class="foot">
+  <p class="foot__links"><span><a href="#sistema" data-go="sistema">O sistema</a><a href="#reserva" data-go="reserva">Atendimento</a><a href="#peca" data-go="topo">Voltar ao topo</a></span><span>Site de demonstração · Marca fictícia</span></p>
+  <p class="foot__word" role="img" aria-label="Ponteiro Alto"><span aria-hidden="true">P</span><span aria-hidden="true">O</span><span aria-hidden="true">N</span><span aria-hidden="true">T</span><span aria-hidden="true">E</span><span aria-hidden="true">I</span><span aria-hidden="true">R</span><span aria-hidden="true">O</span><span aria-hidden="true">&nbsp;</span><span aria-hidden="true">A</span><span aria-hidden="true">L</span><span aria-hidden="true">T</span><span aria-hidden="true">O</span></p>
+</div>
+</main>
 <footer class="rodape-mil">
   <div>
     <p class="rm-marca"><a href="../../">mil e uma linhas<b>!</b></a></p>
@@ -141,7 +229,7 @@
   </div>
   <nav class="rm-links" aria-label="Próximos passos"><a class="cheio" href="../../#orcamento/vendas">Montar um orçamento</a><a href="../index.html">Ver outros sistemas</a><a href="mailto:contato@mileumalinhas.com.br?subject=Quero%20um%20sistema%20assim">Escrever um e-mail</a></nav>
 </footer>
-<script src="app.js"></script>
-<script src="visual.js?v=20261113" type="module"></script>
+<div class="cursor" aria-hidden="true"><i></i></div>
+<script src="app.js" ></script>
 </body>
 </html>
