@@ -1,6 +1,6 @@
 /* Mil e Uma Linhas!  Estilo das ilhas em React (js/ilhas.js). Tudo aqui só vale no tema ASCII, marcado por html.ilhas-on.
    Componentes: palco em shader (Topografia e Pontilhado), linha de comando, esteira, rodapé em retícula,
-   rastro de pixels e desfoque progressivo nos cartões de projeto. */
+   Cursor Ghost atrás do mouse e desfoque progressivo nos cartões de projeto. */
 
 /* ---------- palco no topo das abas ---------- */
 .ilhas-on .folhas { position: relative; isolation: isolate; }
@@ -80,9 +80,10 @@
 @media (max-width: 900px) { .ilhas-on .orc-resumo { position: relative; } }
 .orc-resumo > .moldura { position: absolute; inset: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; display: block; max-width: none; }
 
-/* ---------- rastro de pixels ---------- */
-.ilha-rastro { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 60; pointer-events: none; mix-blend-mode: screen; }
-html:not(.ilhas-on) .ilha-rastro { display: none; }
+/* ---------- Cursor Ghost: cópias da seta atrás do mouse ---------- */
+.ilha-fantasma { position: fixed; inset: 0; z-index: 60; pointer-events: none; overflow: hidden; }
+.ilha-fantasma svg { position: absolute; left: 0; top: 0; display: block; opacity: 0; will-change: transform, opacity; }
+html:not(.ilhas-on) .ilha-fantasma { display: none; }
 
 /* ---------- desfoque progressivo nos cartões de projeto ---------- */
 .ilha-borrao, .ilha-seta { display: none; }
@@ -686,10 +687,14 @@ canvas.gf-sheet-art[data-ready] { opacity: 1; filter: none; }
 .ilha-ancora .offer__cta:disabled { opacity: .5; cursor: default; }
 .ilha-ancora .offer__cta:hover, .ilha-ancora .offer__cta:focus-visible { border-color: var(--verde); outline-color: var(--verde); }
 .ilha-ancora .offer__list li, .ilha-ancora .offer__addons li { align-items: flex-start; line-height: 1.35; }
-.ilha-ancora .offer__addons li { flex-wrap: wrap; align-items: center; gap: 6px 10px; }
+/* três colunas fixas: nome, botão "i" e prazo. Assim os "i" ficam um embaixo do outro, com ou sem ajuda na linha */
+.ilha-ancora .offer__addons li { display: grid; grid-template-columns: minmax(0, 1fr) 34px minmax(6.5em, 9.5em); align-items: center; gap: 6px 10px; }
+.ilha-ancora .offer__addons .orc-info { grid-column: 2; justify-self: center; }
+.ilha-ancora .offer__addons .offer__add-price { grid-column: 3; }
+.ilha-ancora .offer__addons .orc-ajuda { grid-column: 1 / -1; }
 .ilha-ancora .offer__addon { flex: 1; width: auto; min-height: 32px; }
 .ilha-ancora .offer__add-price { text-align: right; }
-.ilha-ancora .offer__addons .orc-ajuda { flex-basis: 100%; margin: 0 0 6px 30px; }
+.ilha-ancora .offer__addons .orc-ajuda { margin: 0 0 6px 30px; }
 .ilha-ancora .offer__horas { display: block; margin-top: 4px; font-size: 15px; }
 .ilha-ancora .offer__horas input { display: block; width: 100%; margin-top: 8px; }
 .ilha-ancora .offer__quote p { color: var(--papel); }
