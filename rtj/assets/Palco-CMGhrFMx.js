@@ -3876,11 +3876,11 @@ void main() {
   gl_Position = projectionMatrix * mv;
 
   float tam = uPasso * uRet.w * mix(1.5, 0.75 + 0.75 * aDado.y, retrato) * (1.0 + solto * (0.9 + uVel * 1.6)) * (1.0 + emp * 0.9);
-  gl_PointSize = clamp(tam * 0.36 * uEscala / max(0.3, -mv.z), 1.5, 40.0);
+  gl_PointSize = clamp(tam * 0.36 * uEscala / max(0.3, -mv.z), 1.5, mix(40.0, 9.0, solto));
 
   vGlifo = retrato > 0.5 ? aDado.x : floor(4.0 + fract(sd * 53.0) * (uGlifos - 4.0));
   vLuz = mix(0.4 + 0.6 * fract(sd * 91.7), aDado.y, retrato) * mix(1.0, 0.18 + 0.82 * smoothstep(-0.35, 0.7, nf.z), esfera) + emp * 0.5;
-  vVer = smoothstep(46.0, 22.0, -mv.z) * smoothstep(0.6, 2.4, -mv.z) * mix(1.0, step(0.6, fract(sd * 5.7)), solto);
+  vVer = smoothstep(46.0, 22.0, -mv.z) * smoothstep(0.6, 2.4, -mv.z) * mix(1.0, step(0.8, fract(sd * 5.7)) * 0.75, solto);
   // a abertura e o fecho são do monograma: os caracteres surgem quando ele se desfaz e somem quando volta
   vVer *= (i < 0.5 ? k : 1.0) * (1.0 - esfera);
 }
@@ -3927,40 +3927,43 @@ void main() {
     luz += acesa(i) / (1.0 + d * d * 0.16);
   }
   vec3 cor;
-  if (vFace < 1.5) {                                   // paredes
-    float u = vP.z, v = vP.y + HH;                     // v: altura a partir do chão
-    vec3 papel = vec3(0.76, 0.64, 0.30);
-    float listra = 0.9 + 0.1 * step(0.5, fract(u * 1.6));
-    float seta = smoothstep(0.42, 0.5, abs(fract(u * 1.6 + abs(fract(v * 1.3) - 0.5) * 0.6) - 0.5)) * 0.07;
-    float mancha = 0.72 + 0.28 * ruido(vec2(u * 0.35, v * 0.5 + vFace * 9.0));
-    float escorrido = 1.0 - 0.25 * smoothstep(0.4, 0.9, ruido(vec2(u * 2.2, v * 0.25 + 4.0))) * smoothstep(HH * 2.0, 0.0, v);
-    cor = papel * (listra - seta) * mancha * escorrido;
-    cor = mix(cor, vec3(0.20, 0.15, 0.07), step(v, 0.28));       // rodapé
-    // portas para salas escuras, alternando os lados
+  vec3 preto = vec3(0.012, 0.0, 0.0), sangue = vec3(0.34, 0.0, 0.0), vermelho = vec3(0.88, 0.04, 0.0), branco = vec3(1.0, 0.96, 0.93);
+  float brilho = 0.0;                                  // o que acende por conta própria (fios e luminárias)
+  if (vFace < 1.5) {                                   // paredes: preto embaixo, vermelho subindo
+    float u = vP.z, v = (vP.y + HH) / (HH * 2.0);      // v: 0 no chão, 1 no teto
+    cor = mix(preto, sangue, smoothstep(0.0, 1.0, v) * (0.55 + 0.45 * ruido(vec2(u * 0.18, v * 2.0 + vFace * 7.0))));
+    float ripa = smoothstep(0.46, 0.5, abs(fract(u * 0.5) - 0.5));          // ripas verticais discretas
+    cor *= 1.0 - ripa * 0.55;
+    float fio = smoothstep(0.012, 0.0, abs(v - 0.5));                         // um fio vermelho correndo a parede
+    brilho += fio * 0.55;
+    cor = mix(cor, vermelho, fio);
+    // portas para salas escuras, com batente claro
     float vao = vP.z / 21.0 + vFace * 0.5;
-    float px = abs(fract(vao) - 0.5) * 21.0;
-    float porta = step(px, 1.5) * step(v, HH * 2.0 - 1.1);
-    float moldura = step(px, 1.72) * step(v, HH * 2.0 - 0.9) - porta;
-    cor = mix(cor, vec3(0.30, 0.24, 0.11), moldura);
-    cor = mix(cor, vec3(0.0), porta * 0.97);
-  } else if (vFace < 2.5) {                            // forro
+    float px = abs(fract(vao) - 0.5) * 21.0, alt = v * HH * 2.0;
+    float porta = step(px, 1.5) * step(alt, HH * 2.0 - 1.1);
+    float moldura = step(px, 1.58) * step(alt, HH * 2.0 - 1.02) - porta;
+    cor = mix(cor, branco * 0.5, moldura); brilho += moldura * 0.18;
+    cor = mix(cor, vec3(0.0), porta);
+  } else if (vFace < 2.5) {                            // forro: placas pretas e luminárias brancas
     vec2 q = vec2(vP.x, vP.z) / 1.15;
     vec2 g = abs(fract(q) - 0.5);
     float junta = smoothstep(0.47, 0.5, max(g.x, g.y));
-    cor = vec3(0.70, 0.67, 0.56) * (0.9 + 0.1 * h2(floor(q))) * (1.0 - junta * 0.55);
+    cor = mix(vec3(0.05, 0.005, 0.005), sangue * 0.7, junta);
     float zl = (iz + 0.5) * VAO;
     float painel = step(abs(vP.x), 1.15) * step(abs(vP.z - zl), 0.62);
     float on = acesa(iz);
-    cor = mix(cor, vec3(1.0, 0.98, 0.88) * (0.25 + 2.6 * on), painel);
-    luz = mix(luz, 1.0, painel);
-  } else {                                             // carpete
-    float fio = 0.8 + 0.2 * h2(floor(vP.xz * 46.0));
-    float gasto = 0.75 + 0.25 * ruido(vP.xz * 0.6);
-    cor = vec3(0.46, 0.38, 0.19) * fio * gasto;
+    cor = mix(cor, branco, painel); brilho += painel * (0.15 + 1.6 * on);
+  } else {                                             // piso preto polido: devolve a luz em vermelho
+    float zl = (iz + 0.5) * VAO;
+    float reflexo = exp(-pow((vP.z - zl) / 1.6, 2.0)) * exp(-pow(vP.x / 2.2, 2.0)) * acesa(iz);
+    cor = preto + sangue * 0.25 * ruido(vP.xz * 0.5) + vermelho * reflexo * 0.5;
+    float risca = smoothstep(0.03, 0.0, abs(abs(vP.x) - (HW - 0.5)));        // dois fios brancos de guia no chão
+    brilho += risca * 0.35; cor = mix(cor, branco, risca * 0.8);
   }
-  cor *= 0.035 + luz * 1.25;
-  float longe = smoothstep(9.0, 44.0, vDist);
-  cor = mix(cor, vec3(0.045, 0.0, 0.0), longe);        // o fundo some num preto avermelhado
+  cor = cor * (0.2 + luz * 1.05) + cor * brilho;
+  cor = min(cor, vec3(1.0));
+  float longe = smoothstep(8.0, 40.0, vDist);
+  cor = mix(cor, vec3(0.03, 0.0, 0.0), longe);        // o fundo some no preto
   cor *= smoothstep(0.2, 2.0, vDist);
   gl_FragColor = vec4(cor, uVer);
 }
