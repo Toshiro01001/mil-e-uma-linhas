@@ -11,7 +11,12 @@
 .palco-gl canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
 .palco-topografia canvas { opacity: 1; }
 .palco-pontilhado canvas { image-rendering: pixelated; }
-.palco-ascii canvas { opacity: .8; }
+/* ASCII Studio nas demos: os símbolos ficam só nas laterais; atrás do texto (a coluna central de 1120 px) o fundo é liso, para ler sem esforço */
+.palco-ascii canvas { opacity: .7;
+  -webkit-mask-image: linear-gradient(90deg, #000 0, #000 calc(50% - 660px), transparent calc(50% - 570px), transparent calc(50% + 570px), #000 calc(50% + 660px), #000 100%);
+  mask-image: linear-gradient(90deg, #000 0, #000 calc(50% - 660px), transparent calc(50% - 570px), transparent calc(50% + 570px), #000 calc(50% + 660px), #000 100%); }
+/* em tela estreita não sobra lateral: os símbolos viram uma textura bem fraca, só no alto */
+@media (max-width: 1320px) { .palco-ascii canvas { opacity: .16; -webkit-mask-image: linear-gradient(#000 0, transparent 55%); mask-image: linear-gradient(#000 0, transparent 55%); } }
 @media (max-width: 760px) {
   .ilha-palco { height: 400px; }
   .palco-topografia canvas { opacity: .8; }
