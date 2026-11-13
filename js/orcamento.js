@@ -436,7 +436,7 @@ window.MUL_ORC = (function () {
       var it = atual();
       return {
         tipo: tipo, plano: plano, marc: it.marc, horas: it.horas, urgente: it.prazo > 1,
-        descricao: descrever(it), prazo: prazoTxt(it.tipo, it.plano, it.dias), nota: notaTxt(it),
+        descricao: descrever(it), prazo: prazoTxt(it.tipo, it.plano, it.dias), dias: it.dias, nota: notaTxt(it),
         itens: carrinho.map(function (c) { return { descricao: descrever(c), prazo: prazoTxt(c.tipo, c.plano, c.dias) }; }),
         soma: diasTxt(somaDias()), max: MAX_ITENS
       };
