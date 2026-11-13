@@ -8,7 +8,7 @@
 <title>Agenda on-line para clínica, demonstração | Mil e Uma Linhas!</title>
 <meta name="description" content="Demonstração de site com agendamento para clínica: especialidade, profissional, dia e horário, com tela da recepção. Empresa e dados fictícios.">
 <link rel="canonical" href="https://mileumalinhas.com.br/vitrine/agenda/">
-<meta name="theme-color" content="#101418">
+<meta name="theme-color" content="#f4f0ec">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="pt_BR">
 <meta property="og:site_name" content="Mil e Uma Linhas!">
@@ -24,10 +24,12 @@
 <meta name="twitter:image" content="https://mileumalinhas.com.br/og.png?v=20261109">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="../../favicon.svg" type="image/svg+xml">
-<link rel="preload" href="fontes/familjen-grotesk-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="estilo.css">
+<link rel="preload" href="fontes/instrument-serif-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fontes/manrope-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="estilo.css?v=20261113">
 <link rel="stylesheet" href="../assinatura.css">
 <script src="app.js" defer></script>
+<script src="visual.js?v=20261113" type="module"></script>
 </head>
 <body>
 <aside class="faixa" aria-label="Aviso de demonstração">
@@ -36,7 +38,7 @@
 </aside>
 <header class="topo">
   <a class="marca" href="#inicio">
-    <svg viewBox="0 0 40 40" width="30" height="30" aria-hidden="true"><g fill="#ffc93c"><circle cx="20" cy="9" r="8"/><circle cx="30.5" cy="16.6" r="8"/><circle cx="26.5" cy="29" r="8"/><circle cx="13.5" cy="29" r="8"/><circle cx="9.5" cy="16.6" r="8"/></g><circle cx="20" cy="20" r="4.5" fill="#22163b"/></svg>
+    <svg viewBox="0 0 40 40" width="30" height="30" aria-hidden="true"><g fill="#c99a2e"><circle cx="20" cy="9" r="8"/><circle cx="30.5" cy="16.6" r="8"/><circle cx="26.5" cy="29" r="8"/><circle cx="13.5" cy="29" r="8"/><circle cx="9.5" cy="16.6" r="8"/></g><circle cx="20" cy="20" r="4.5" fill="#1c1c1c"/></svg>
     Clínica Ipê de Agosto
   </a>
   <nav aria-label="Seções">
@@ -52,9 +54,13 @@
       <div>
         <h1>Sua consulta, marcada em quatro escolhas.</h1>
         <p>Especialidade, profissional, dia e horário. A agenda só oferece o que está livre, e o que você marca aparece na mesma hora para a recepção.</p>
+        <p class="abertura-acoes"><a class="pilula cheia" href="#agendar">Marcar consulta</a><a class="pilula" href="#consultas">Minhas consultas</a></p>
         <p class="endereco">Rua Inventada das Flores, 100, Cuiabá. Segunda a sábado, das 8h às 18h. Endereço fictício.</p>
       </div>
-      <svg class="flor" viewBox="0 0 200 200" aria-hidden="true"><g fill="#ffc93c"><ellipse cx="100" cy="48" rx="38" ry="46"/><ellipse cx="100" cy="48" rx="38" ry="46" transform="rotate(72 100 100)"/><ellipse cx="100" cy="48" rx="38" ry="46" transform="rotate(144 100 100)"/><ellipse cx="100" cy="48" rx="38" ry="46" transform="rotate(216 100 100)"/><ellipse cx="100" cy="48" rx="38" ry="46" transform="rotate(288 100 100)"/></g><circle cx="100" cy="100" r="19" fill="#5a2a8c"/></svg>
+      <div class="palco" id="palco">
+        <svg class="flor" viewBox="0 0 200 200" aria-hidden="true"><g fill="#d9ac3f"><ellipse cx="100" cy="48" rx="38" ry="46"/><ellipse cx="100" cy="48" rx="38" ry="46" transform="rotate(72 100 100)"/><ellipse cx="100" cy="48" rx="38" ry="46" transform="rotate(144 100 100)"/><ellipse cx="100" cy="48" rx="38" ry="46" transform="rotate(216 100 100)"/><ellipse cx="100" cy="48" rx="38" ry="46" transform="rotate(288 100 100)"/></g><circle cx="100" cy="100" r="19" fill="#150f1d"/></svg>
+        <p class="palco-nota">O ipê-amarelo floresce em agosto.</p>
+      </div>
     </section>
 
     <section id="agendar" class="agendar" aria-labelledby="t-agendar">
