@@ -22,6 +22,7 @@ Site estático em HTML, CSS e JavaScript puro, sem dependências. Cookies e requ
 | `vitrine/` | Sistemas de demonstração, cada um em sua pasta, com aviso e rodapé comuns em `assinatura.css` |
 | `fonts/` | Bricolage Grotesque e JetBrains Mono, servidas daqui (licença OFL) |
 | `pagar/` | Página de pagamento por Pix: lê o código do link (`?c=`), busca valor, referência e situação no meu servidor de cobranças (Cloudflare Workers e D1, repositório privado) e gera o QR Code e o código copia e cola no navegador, no padrão BR Code do Banco Central |
+| `rtj/` | Meu portfólio pessoal, em endereço sem link no site e fora dos buscadores. É a versão compilada de um projeto React, Vite e three.js: um retrato feito de caracteres que vira as palavras DEV e M1L!, um túnel com cinco projetos e os meus contatos. Usa as fotos de `img/projetos/` |
 
 Para rodar no computador, sirva a pasta com qualquer servidor local, como `python3 -m http.server`.
 
