@@ -53,7 +53,7 @@ a{color:inherit;text-underline-offset:4px;text-decoration-thickness:1px}
 .palco canvas:active{cursor:grabbing}
 .flor{width:min(52%,280px);height:auto}
 .palco--vivo .flor{display:none}
-.palco-nota{position:absolute;z-index:1;left:1.3rem;bottom:1rem;margin:0;font-family:var(--serifa);font-style:italic;font-size:1.15rem;color:#f4f0ec;background:var(--palco);padding:.05rem .7rem .15rem;border-radius:99px;pointer-events:none}
+.abertura .palco-nota{position:absolute;z-index:1;left:1.3rem;bottom:1rem;margin:0;font-family:var(--serifa);font-style:italic;font-size:1.15rem;color:#f4f0ec;background:var(--palco);padding:.05rem .7rem .15rem;border-radius:99px;pointer-events:none}
 
 .agendar,.consultas,.recepcao,.como{padding:clamp(2rem,5vw,4.5rem) var(--margem)}
 .agendar h2,.consultas h2,.recepcao h2,.como h2{font-size:clamp(2.3rem,5vw,3.9rem)}
