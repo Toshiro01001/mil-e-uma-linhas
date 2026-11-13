@@ -3830,7 +3830,7 @@ uniform float uFase, uTempo, uChegada, uMov, uAspecto, uEscala, uPasso, uGlifos,
 uniform vec2 uMouse, uInclina;
 uniform vec4 uRet, uTxt, uFim;
 attribute vec3 aT1, aT2, aTun, aFim, aDado;
-varying float vGlifo, vLuz, vVer;
+varying float vGlifo, vLuz, vVer, vPreto;
 
 vec3 gira(vec3 p, vec2 a) {
   float c = cos(a.x), s = sin(a.x);
@@ -3881,12 +3881,15 @@ void main() {
   vGlifo = retrato > 0.5 ? aDado.x : floor(4.0 + fract(sd * 53.0) * (uGlifos - 4.0));
   vLuz = mix(0.4 + 0.6 * fract(sd * 91.7), aDado.y, retrato) * mix(1.0, 0.18 + 0.82 * smoothstep(-0.35, 0.7, nf.z), esfera) + emp * 0.5;
   vVer = smoothstep(46.0, 22.0, -mv.z) * smoothstep(0.6, 2.4, -mv.z) * mix(1.0, step(0.8, fract(sd * 5.7)) * 0.75, solto);
+  // nas palavras (DEV e M1L!), um terço dos grãos é preto: a palavra fica salpicada, como tinta falhada
+  float palavra = i < 0.5 ? k : i < 1.5 ? 1.0 : i < 2.5 ? 1.0 - k : 0.0;
+  vPreto = step(fract(sd * 71.3), 0.34) * palavra;
   // a abertura e o fecho são do monograma: os caracteres surgem quando ele se desfaz e somem quando volta
   vVer *= (i < 0.5 ? k : 1.0) * (1.0 - esfera);
 }
 `,pd=`
 precision highp float;
-varying float vGlifo, vLuz, vVer;
+varying float vGlifo, vLuz, vVer, vPreto;
 
 // Cada partícula é um ponto redondo simples, de borda suave.
 void main() {
@@ -3896,7 +3899,8 @@ void main() {
   vec3 escuro = vec3(0.5, 0.01, 0.0), vermelho = vec3(0.92, 0.05, 0.02), branco = vec3(1.0, 0.97, 0.95);
   vec3 cor = mix(escuro, vermelho, smoothstep(0.03, 0.5, vLuz));
   cor = mix(cor, branco, smoothstep(0.45, 1.0, vLuz));
-  gl_FragColor = vec4(cor, tinta * (0.5 + 0.5 * min(1.0, vLuz * 1.6)) * vVer);
+  float alfa = tinta * (0.5 + 0.5 * min(1.0, vLuz * 1.6)) * vVer;
+  gl_FragColor = vec4(mix(cor, vec3(0.015), vPreto), mix(alfa, tinta * vVer, vPreto));
 }
 `,md=[{c:"R",x:0,l:943,d:[["M",74,0],["L",74,688],["L",670,688],["Q",747,688,798.5,656],["Q",850,624,876,572],["Q",902,520,902,460],["Q",902,391,871.5,337.5],["Q",841,284,782,252],["L",918,0],["L",639,0],["L",535,215],["L",321,215],["L",321,0],["Z"],["M",321,386],["L",583,386],["Q",611,386,630,403.5],["Q",649,421,649,452],["Q",649,473,640,487.5],["Q",631,502,616.5,509.5],["Q",602,517,583,517],["L",321,517],["Z"]]},{c:"T",x:943,l:877,d:[["M",315,0],["L",315,499],["L",23,499],["L",23,688],["L",854,688],["L",854,499],["L",562,499],["L",562,0],["Z"]]},{c:"J",x:1820,l:764,d:[["M",358,-12],["Q",250,-12,175,15],["Q",100,42,61,100.5],["Q",22,159,22,251],["L",22,267],["L",255,267],["L",255,248],["Q",255,200,279,179.5],["Q",303,159,349,159],["Q",402,159,426.5,183.5],["Q",451,208,451,266],["L",451,688],["L",699,688],["L",699,273],["Q",699,173,658,110],["Q",617,47,541,17.5],["Q",465,-12,358,-12],["Z"]]}],gd=2584,Ir={letras:md,largura:gd},_d=2,vd=[[-1.5,.5,1.2],[.1,1.5,2],[1.6,-.5,1.4]];function xd(i){const t=document.createElement("canvas");t.width=1024,t.height=512;const e=t.getContext("2d"),n=e.createLinearGradient(0,0,0,512);n.addColorStop(0,"#0a0a0c"),n.addColorStop(.36,"#3a3a40"),n.addColorStop(.47,"#f4f1ec"),n.addColorStop(.53,"#c9c4bd"),n.addColorStop(.6,"#2a1210"),n.addColorStop(1,"#050303"),e.fillStyle=n,e.fillRect(0,0,1024,512);const r=(l,c,h,d)=>{const u=e.createRadialGradient(l,c,0,l,c,h);u.addColorStop(0,d),u.addColorStop(1,"rgba(0,0,0,0)"),e.fillStyle=u,e.fillRect(l-h,c-h,h*2,h*2)};r(220,250,230,"rgba(255,26,10,.95)"),r(820,300,260,"rgba(225,6,0,.8)"),r(520,120,200,"rgba(255,255,255,.55)"),e.fillStyle="#ffffff";for(let l=0;l<9;l++)e.fillRect(40+l*118,150+l%3*14,46,150);e.fillStyle="#060606";for(let l=0;l<26;l++)e.fillRect(l*41+8,226,5,62);e.fillRect(0,262,1024,5);const s=new Rf(t);s.mapping=303,s.colorSpace=Se;const a=new Fr(i),o=a.fromEquirectangular(s).texture;return a.dispose(),s.dispose(),o}class Md{constructor(t,{calmo:e}){this.r=t,this.calmo=e,this.cena=new Da,this.cena.environment=xd(t),this.cam=new be(30,1,.1,40),this.tudo=new Bn,this.cena.add(this.tudo);const n=_d/Ir.largura,r=new Va({color:15921906,metalness:1,roughness:.07,envMapIntensity:1.15,transparent:!0}),s=new od({color:14223104,metalness:.35,roughness:.28,clearcoat:1,clearcoatRoughness:.12,envMapIntensity:1.1,transparent:!0});this.mats=[r,s],this.letras=Ir.letras.map(a=>{const o=new fd;for(const[p,...g]of a.d)p==="M"?o.moveTo(g[0],g[1]):p==="L"?o.lineTo(g[0],g[1]):p==="Q"?o.quadraticCurveTo(g[0],g[1],g[2],g[3]):p==="C"&&o.bezierCurveTo(...g);const l=new Jr(o.toShapes(!1),{depth:96,bevelEnabled:!0,bevelThickness:54,bevelSize:34,bevelSegments:12,curveSegments:14});l.computeBoundingBox();const c=l.boundingBox,h=(c.min.x+c.max.x)/2,d=(c.min.y+c.max.y)/2;l.translate(-h,-d,-48),l.scale(n,n,n);const u=new Le(l,this.mats);return u.userData.casa=new I((a.x+h-Ir.largura/2)*n,0,0),this.tudo.add(u),u}),this.olhar={x:0,y:0,vx:0,vy:0},this.mouse={x:0,y:0,dentro:!1},this._move=a=>{a.pointerType==="mouse"&&(this.mouse.x=a.clientX/innerWidth-.5,this.mouse.y=a.clientY/innerHeight-.5,this.mouse.dentro=!0)},this._sai=()=>{this.mouse.dentro=!1},addEventListener("pointermove",this._move,{passive:!0}),document.documentElement.addEventListener("pointerleave",this._sai)}medir(t,e){const n=t/e<.9;this.em_pe=n,this.fimAntes=-1,this.cam.aspect=t/e,this.cam.position.set(0,0,n?8.4:4.9),this.cam.updateProjectionMatrix(),this.cam.projectionMatrix.elements[8]=n?0:-.5,this.cam.projectionMatrix.elements[9]=n?-.56:-.06,this.cam.projectionMatrixInverse.copy(this.cam.projectionMatrix).invert()}quadro(t,e,{dispersa:n,monta:r,fim:s=0}){this.em_pe&&Math.abs(s-this.fimAntes)>.002&&(this.fimAntes=s,this.cam.position.z=8.4+s*4.2,this.cam.updateProjectionMatrix(),this.cam.projectionMatrix.elements[9]=-.56-s*.13,this.cam.projectionMatrixInverse.copy(this.cam.projectionMatrix).invert());const a=this.olhar,o=this.mouse,l=this.calmo?0:1,c=o.dentro?o.x:0,h=o.dentro?o.y:0;a.vx+=((c-a.x)*30-a.vx*6.5)*e,a.vy+=((h-a.y)*30-a.vy*6.5)*e,a.x+=a.vx*e,a.y+=a.vy*e,this.tudo.rotation.set(.1+a.y*.7*l,(Math.sin(t*.45)*.28+a.x*1.1)*l-.22,-a.x*.08*l);const d=Math.max(n,1-r);this.letras.forEach((p,g)=>{const _=Math.min(1,Math.max(0,d*1.35-g*.12)),m=_*_*(3-2*_),f=vd[g];p.position.set(p.userData.casa.x+f[0]*m*1.6,f[1]*m*1.3+Math.sin(t*.9+g*2.1)*.035*l,f[2]*m*1.5),p.rotation.set(m*(2.4+g),m*(3.1-g*.8)+Math.sin(t*.6+g)*.05*l,m*1.2),p.scale.setScalar(Math.max(1e-4,1-m*.85))});const u=1-Math.min(1,Math.max(0,(d-.55)/.4));this.mats.forEach(p=>{p.opacity=u})}desenha(){const t=this.r;t.autoClear=!1,t.clearDepth(),t.render(this.cena,this.cam),t.autoClear=!0}destruir(){removeEventListener("pointermove",this._move),document.documentElement.removeEventListener("pointerleave",this._sai),this.cena.environment?.dispose(),this.letras.forEach(t=>t.geometry.dispose()),this.mats.forEach(t=>t.dispose())}}const oe=4.6,ue=2.7,Sd=`
 attribute float aFace;
