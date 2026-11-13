@@ -25,10 +25,12 @@
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="../../favicon.svg" type="image/svg+xml">
 <link rel="preload" href="fontes/bowlby-one-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="estilo.css">
+<link rel="stylesheet" href="estilo.css?v=20261113">
 <link rel="stylesheet" href="../assinatura.css">
 <script src="comum.js" defer></script>
-<script src="cliente.js" defer></script>
+<script src="cliente.js?v=20261113" defer></script>
+<script src="efeitos.js?v=20261113" defer></script>
+<script type="module" src="titulo.js?v=20261113"></script>
 </head>
 <body class="salao">
 <aside class="faixa" aria-label="Aviso de demonstração">
@@ -36,18 +38,39 @@
   <button type="button" id="restaurar">Restaurar dados de exemplo</button>
 </aside>
 <div class="toldo" aria-hidden="true"></div>
-<header class="placa">
-  <div>
-    <h1>Pacu Gordo</h1>
-    <p>Boteco de beira de rio em Cuiabá. Peça da mesa, a cozinha recebe na hora.</p>
-    <a class="ir-cozinha" href="cozinha.html" target="_blank" rel="noopener">Abrir a tela da cozinha em outra aba</a>
+<header class="placa" id="topo">
+  <div class="moldura" aria-hidden="true">
+    <span class="mo mo-e1">01 a 04</span><span class="mo mo-e2">Cuiabá · Mato Grosso</span>
+    <span class="mo mo-d1">Petiscos, pratos, bebidas e doces</span><span class="mo mo-d2">Boteco de beira de rio</span>
   </div>
+  <h1 class="nome" id="nome-casa"><span class="nome-l" data-letras>Pacu</span> <span class="nome-l" data-letras>Gordo</span></h1>
   <figure class="foto-placa" aria-hidden="true"><img src="img/pacu-hero.webp" width="1200" height="800" alt="" decoding="async" fetchpriority="high"></figure>
+  <p class="etiqueta" aria-hidden="true">Peça da mesa</p>
+  <svg class="selo" viewBox="0 0 200 200" aria-hidden="true" focusable="false">
+    <defs><path id="selo-volta" d="M100 100m-74 0a74 74 0 1 1 148 0a74 74 0 1 1-148 0"/></defs>
+    <circle class="selo-fundo" cx="100" cy="100" r="98"/>
+    <g class="selo-gira"><text class="selo-texto"><textPath href="#selo-volta" textLength="452" lengthAdjust="spacing">A COZINHA RECEBE NA HORA • PACU GORDO •</textPath></text></g>
+    <path class="selo-peixe" d="M62 100c12-17 34-24 55-17 8 3 15 8 20 14l14-12v30l-14-12c-5 6-12 11-20 14-21 7-43 0-55-17Zm20-5a4 4 0 1 0 0 .1Z"/>
+  </svg>
+  <div class="placa-pe">
+    <p class="placa-texto">Boteco de beira de rio em Cuiabá. Peça da mesa, a cozinha recebe na hora.</p>
+    <div class="placa-acoes">
+      <p class="agora"><i aria-hidden="true"></i>Demonstração: nenhum pedido é cobrado</p>
+      <a class="botao" href="#menu">Ver o cardápio</a>
+      <a class="ir-cozinha" href="cozinha.html" target="_blank" rel="noopener">Abrir a tela da cozinha em outra aba</a>
+    </div>
+  </div>
 </header>
+<div class="faixas" aria-hidden="true">
+  <div class="fx fx-a"><div class="fx-trilho" data-faixa="pratos"></div></div>
+  <div class="fx fx-b"><div class="fx-trilho" data-faixa="pratos" data-inverso></div></div>
+</div>
 <nav class="categorias" id="categorias" aria-label="Categorias do cardápio"></nav>
 <main class="salao-grade">
   <div id="menu" class="menu"></div>
   <aside id="pedido" class="pedido" aria-labelledby="t-pedido">
+   <div class="pedido-rolo">
+    <p class="cm-topo" aria-hidden="true"><b>Pacu Gordo</b><span>Comanda</span></p>
     <h2 id="t-pedido">Seu pedido</h2>
     <div id="carrinho"></div>
     <form id="form-pedido" novalidate>
@@ -61,6 +84,8 @@
     </form>
     <h2 class="acomp">Acompanhar</h2>
     <div id="acompanhar" aria-live="polite"></div>
+    <p class="cm-fim" aria-hidden="true">Obrigado. Volte com fome.</p>
+   </div>
   </aside>
 </main>
 <a class="barra-pedido" id="barra" href="#pedido" hidden></a>
@@ -72,6 +97,10 @@
     <div><h3>O que a versão real precisaria a mais</h3><p>Servidor para ligar aparelhos diferentes, já que este canal só funciona no mesmo navegador, além de login da equipe, impressora de comanda, pagamento online e controle de estoque.</p></div>
   </div>
 </section>
+<div class="fecho" aria-hidden="true">
+  <div class="fx fx-c"><div class="fx-trilho" data-faixa="fecho"></div></div>
+  <p class="fecho-nome">Pacu Gordo</p>
+</div>
 <footer class="rodape-mil">
   <div>
     <p class="rm-marca"><a href="../../">mil e uma linhas<b>!</b></a></p>

@@ -33,11 +33,14 @@
     var nav = $('categorias'), menu = $('menu');
     CATEGORIAS.forEach(function (c) {
       nav.append(h('a', { href: '#cat-' + c.id, text: c.nome }));
-      var s = h('section', { id: 'cat-' + c.id, 'aria-labelledby': 't-' + c.id }, h('h2', { id: 't-' + c.id, text: c.nome }));
+      var s = h('section', { id: 'cat-' + c.id, 'data-nome': c.nome, 'aria-labelledby': 't-' + c.id }, h('h2', { id: 't-' + c.id, 'data-letras': '', text: c.nome }));
+      var g = h('div', { class: 'pratos' });
+      s.append(g);
       c.pratos.forEach(function (p) {
-        s.append(h('button', { type: 'button', class: 'prato', 'data-prato': p.id, onclick: function () { abrir(p); } },
-          h('span', { class: 'topo-prato' }, h('span', { text: p.nome }), h('span', { class: 'pontos' }), h('span', { text: reais(p.preco) })),
-          h('small', { text: p.desc })));
+        g.append(h('button', { type: 'button', class: 'prato', 'data-prato': p.id, onclick: function () { abrir(p); } },
+          h('span', { class: 'p-nome', text: p.nome }),
+          h('small', { text: p.desc }),
+          h('span', { class: 'p-pe' }, h('span', { class: 'p-preco', text: reais(p.preco) }), h('span', { class: 'p-mais', 'aria-hidden': 'true', text: '+' }))));
       });
       menu.append(s);
     });
