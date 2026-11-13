@@ -1,0 +1,75 @@
+/* Mil e Uma Linhas!  Estilo das ilhas em React (js/ilhas.js). Tudo aqui só vale no tema ASCII, marcado por html.ilhas-on.
+   Componentes: palco em shader (Topografia e Pontilhado), linha de comando, esteira, rodapé em retícula,
+   rastro de pixels e desfoque progressivo nos cartões de projeto. */
+
+/* ---------- palco no topo das abas ---------- */
+.ilhas-on .folhas { position: relative; isolation: isolate; }
+.ilha-palco { position: absolute; top: 0; left: 0; right: 0; height: 470px; z-index: -1; pointer-events: none; overflow: hidden; }
+.palco-gl { position: absolute; inset: 0; background: var(--fundo);
+  -webkit-mask-image: linear-gradient(#000 30%, rgba(0,0,0,.55) 70%, transparent 100%); mask-image: linear-gradient(#000 30%, rgba(0,0,0,.55) 70%, transparent 100%); }
+.palco-gl[hidden] { display: none; }
+.palco-gl canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.palco-topografia canvas { opacity: 1; }
+.palco-pontilhado canvas { image-rendering: pixelated; }
+@media (max-width: 760px) {
+  .ilha-palco { height: 400px; }
+  .palco-topografia canvas { opacity: .8; }
+  .palco-pontilhado canvas { opacity: .5; }
+}
+
+/* ---------- linha de comando acima do título ---------- */
+.ilhas-on .aba-cab { position: relative; }
+.ilha-comando { position: absolute; left: 0; bottom: 100%; margin: 0 0 10px; font-family: var(--mono); font-size: 13px; line-height: 20px; color: var(--verde); white-space: nowrap; pointer-events: none; }
+.ilha-comando span { color: var(--cinza); }
+.ilha-comando i { font-style: normal; opacity: 0; }
+.ilha-comando b { display: inline-block; width: 8px; height: 15px; margin-left: 2px; vertical-align: -2px; background: var(--verde); animation: ilha-pisca 1.1s steps(2, jump-none) infinite; }
+@keyframes ilha-pisca { 50% { opacity: 0; } }
+
+/* ---------- esteira de serviços e automações (início) ---------- */
+.ilha-esteira { margin: calc(var(--lin) * 2) 0 0; }
+.ilha-esteira:empty { display: none; }
+.esteira { display: flex; flex-direction: column; gap: 16px; overflow: hidden;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 9%, #000 91%, transparent); mask-image: linear-gradient(90deg, transparent, #000 9%, #000 91%, transparent); }
+.esteira__row { display: flex; gap: 16px; width: max-content; will-change: transform; }
+.esteira-card { flex: none; display: flex; flex-direction: column; gap: 8px; width: 320px; padding: 18px 20px 20px; border: 1px solid var(--traco); border-radius: 4px; background: var(--painel); }
+.esteira-kicker { font-family: var(--mono); font-size: 12.5px; line-height: 18px; color: var(--verde); }
+.esteira-title { font-size: 21px; line-height: 1.1; letter-spacing: -.02em; }
+.esteira-post { margin: 0; font-size: 15px; line-height: 1.45; color: var(--cinza); }
+@media (max-width: 760px) { .esteira-card { width: 268px; padding: 16px; } .esteira-title { font-size: 19px; } }
+
+/* ---------- rodapé em retícula (substitui a marca d'água antiga do fim do início) ---------- */
+.ilhas-on .apres::after { display: none; }
+.ilha-rodape:empty { display: none; }
+.pe { position: relative; isolation: isolate; overflow: hidden; margin-top: calc(var(--lin) * 2); padding: 0 clamp(16px, 4vw, 48px) clamp(150px, 24vw, 330px); border-top: 1px solid var(--traco); }
+.pe canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; max-width: none; z-index: -1; }
+.pe-topo { display: grid; grid-template-columns: minmax(0, 1.4fr) repeat(2, minmax(0, 1fr)); gap: 24px; max-width: 1024px; margin: 0 auto; padding-top: calc(var(--lin) * 1.25); font-size: 15px; line-height: 1.5; }
+.pe-nome { margin: 0; }
+.pe-nome strong { display: block; font-family: var(--titulo); font-weight: 800; font-size: 19px; letter-spacing: -.02em; }
+.pe-nome span { color: var(--cinza); }
+.pe ul { list-style: none; margin: 0; padding: 0; }
+.pe a, .pe button { display: inline-flex; align-items: center; min-height: 36px; padding: 0; border: 0; color: var(--papel); font: inherit; text-decoration: none; cursor: pointer;
+  background: linear-gradient(var(--verde), var(--verde)) 0 calc(100% - 7px) / 0 1px no-repeat; transition: background-size .25s; }
+.pe a:hover, .pe button:hover, .pe a:focus-visible, .pe button:focus-visible { background-size: 100% 1px; color: var(--verde); }
+.pe-fio { max-width: 1024px; margin: var(--lin) auto 0; font-family: var(--mono); font-size: 13px; }
+@media (max-width: 620px) { .pe-topo { grid-template-columns: 1fr 1fr; } .pe-nome { grid-column: 1 / -1; } }
+
+/* ---------- rastro de pixels ---------- */
+.ilha-rastro { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
+html:not(.ilhas-on) .ilha-rastro { display: none; }
+
+/* ---------- desfoque progressivo nos cartões de projeto ---------- */
+.ilha-borrao, .ilha-seta { display: none; }
+.ilhas-on a.vit-img, .ilhas-on a.proj-img { position: relative; }
+.ilhas-on .ilha-borrao { display: block; position: absolute; left: 0; right: 0; bottom: 0; height: 40%; pointer-events: none; -webkit-backdrop-filter: blur(7px); backdrop-filter: blur(7px);
+  background: linear-gradient(to top, rgba(16,20,24,.55), transparent);
+  -webkit-mask-image: linear-gradient(to top, #000 0%, #000 55%, rgba(0,0,0,.6) 78%, transparent 100%); mask-image: linear-gradient(to top, #000 0%, #000 55%, rgba(0,0,0,.6) 78%, transparent 100%); }
+.ilhas-on .ilha-seta { display: block; position: absolute; right: 12px; bottom: 12px; width: 34px; height: 34px; border: 1px solid rgba(244,241,232,.6); border-radius: 50%; background: rgba(16,20,24,.35); transition: background-color .25s, border-color .25s, translate .3s var(--suave); }
+.ilhas-on .ilha-seta::before { content: ""; position: absolute; left: 11px; top: 12px; width: 9px; height: 9px; border-top: 2px solid var(--papel); border-right: 2px solid var(--papel); transition: border-color .25s; }
+.ilhas-on .vit-card:hover .ilha-seta, .ilhas-on a.proj-img:hover .ilha-seta, .ilhas-on a.vit-img:focus-visible .ilha-seta, .ilhas-on a.proj-img:focus-visible .ilha-seta { background: var(--verde); border-color: var(--verde); translate: 2px -2px; }
+.ilhas-on .vit-card:hover .ilha-seta::before, .ilhas-on a.proj-img:hover .ilha-seta::before, .ilhas-on a.vit-img:focus-visible .ilha-seta::before, .ilhas-on a.proj-img:focus-visible .ilha-seta::before { border-color: var(--fundo); }
+
+@media (prefers-reduced-motion: reduce) {
+  .ilha-comando b { animation: none; }
+  .ilha-comando i { opacity: 1; }
+  .ilhas-on .ilha-seta { transition: none; }
+}
