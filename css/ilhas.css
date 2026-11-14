@@ -60,9 +60,10 @@
 .pe { position: relative; isolation: isolate; overflow: hidden; margin-top: calc(var(--lin) * 2); padding: 0 clamp(16px, 4vw, 48px) clamp(150px, 24vw, 330px); border-top: 1px solid var(--traco); }
 .pe canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; max-width: none; z-index: -1; }
 .pe-topo { display: grid; grid-template-columns: minmax(0, 1.4fr) repeat(2, minmax(0, 1fr)); gap: 24px; max-width: 1024px; margin: 0 auto; padding-top: calc(var(--lin) * 1.25); font-size: 15px; line-height: 1.5; }
-.pe-nome { margin: 0; }
-.pe-nome strong { display: block; font-family: var(--titulo); font-weight: 800; font-size: 19px; letter-spacing: -.02em; }
-.pe-nome span { color: var(--cinza); }
+.pe-nome { margin: 0; align-self: start; display: flex; align-items: center; gap: 18px; }
+.pe-cromo { display: block; height: 58px; width: auto; }
+.pe-por { display: flex; align-items: center; height: 46px; padding-left: 18px; border-left: 1px solid var(--traco); }
+.pe-por img { display: block; height: 34px; width: auto; }
 .pe ul { list-style: none; margin: 0; padding: 0; }
 .pe a, .pe button { display: inline-flex; align-items: center; min-height: 36px; padding: 0; border: 0; color: var(--papel); font: inherit; text-decoration: none; cursor: pointer;
   background: linear-gradient(var(--verde), var(--verde)) 0 calc(100% - 7px) / 0 1px no-repeat; transition: background-size .25s; }
