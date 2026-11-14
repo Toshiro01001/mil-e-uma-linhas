@@ -5,8 +5,8 @@
   var $ = function (s, r) { return (r || document).querySelector(s); };
   var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
   var calmo = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var ABAS = ['inicio', 'servicos', 'projetos', 'demos', 'linguagens', 'orcamento', 'contato'];
-  var ROTULO = { inicio: '1:início', servicos: '2:serviços', projetos: '3:projetos', demos: '4:demos', linguagens: '5:linguagens', orcamento: '6:orçamento', contato: '7:contato' };
+  var ABAS = ['inicio', 'servicos', 'projetos', 'demos', 'linguagens', 'orcamento', 'contato', 'm1l'];
+  var ROTULO = { inicio: '1:início', servicos: '2:serviços', projetos: '3:projetos', demos: '4:demos', linguagens: '5:linguagens', orcamento: '6:orçamento', contato: '7:contato', m1l: '8:M1L!' };
   var main = $('main');
   var calha = $('.calha');
   var abaAtual = null;
@@ -442,7 +442,7 @@
     parede: 'Parede de Desejos: site com IA e chave protegida', nex: 'Calculadora de NEX: ferramenta de mesa'
   };
   var DEMOS = { pedidos: 1, atendimento: 1, funil: 1, pagina: 1, banco: 1, linguagens: 1, ascii: 1 };
-  var TEMAS = { ascii: 1, empresa: 1, loja: 1, painel: 1, agenda: 1 };
+  var TEMAS = { marca: 1, ascii: 1, empresa: 1, loja: 1, painel: 1, agenda: 1 };
 
   function linha(txt, cls) {
     var d = document.createElement('div');
@@ -470,7 +470,7 @@
   var AJUDA = [
     'ajuda              esta lista',
     'ls                 o que tem neste site',
-    'tema <nome>        ascii, empresa, loja, painel ou agenda',
+    'tema <nome>        marca, ascii, empresa, loja, painel ou agenda',
     'orcamento          abre o montador de orçamento',
     'linguagens         o que cada linguagem faz',
     'cd <aba>           vai para início, serviços, projetos, demos, linguagens, orçamento ou contato',
@@ -505,7 +505,7 @@
     if (ABAS.indexOf(c) >= 0 && c !== 'contato' && c !== 'servicos' && c !== 'projetos') { ir('#' + c); return void linha('Aba ' + ROTULO[c] + ' aberta.'); }
     if (c === 'tema') {
       if (TEMAS[a] && window.MUL_TEMAS) { window.MUL_TEMAS.trocar(a); return void linha('Aparência: ' + a + '.'); }
-      return void linha('Aparências: ascii, empresa, loja, painel e agenda.', 'err');
+      return void linha('Aparências: marca, ascii, empresa, loja, painel e agenda.', 'err');
     }
     if (c === 'linguagens') { ir('#linguagens'); return void linha(window.MUL_ORC.LINGUAGENS.map(function (l) { return l.nome; }).join('  ')); }
     if (c === 'servicos') { ir('#servicos'); return void linha('escolher  sites  ecommerce  sistemas  vendas  trafego'); }
@@ -566,7 +566,7 @@
     if ((e.key === '/' || e.key === ':') && temaAscii()) { e.preventDefault(); abrirT(); return; }
     if (e.key === 'Escape' && !term.hidden) { fecharT(); return; }
     var n = parseInt(e.key, 10);
-    if (temaAscii() && n >= 1 && n <= 7) { location.hash = '#' + ABAS[n - 1]; }
+    if (temaAscii() && n >= 1 && n <= 8) { location.hash = '#' + ABAS[n - 1]; }
   });
 
   /* ---------- troca de aparência ---------- */
