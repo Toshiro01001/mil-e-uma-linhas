@@ -1,4 +1,4 @@
-/* As 5 aparências. Trocar só muda um atributo no <html>; o código de cada capa só roda quando ela é aberta. */
+/* As 6 aparências. Trocar só muda um atributo no <html>; o código de cada capa só roda quando ela é aberta. */
 window.MUL_TEMAS = (function () {
   'use strict';
   var $ = function (s) { return document.querySelector(s); };
@@ -194,6 +194,6 @@ window.MUL_TEMAS = (function () {
   }
 
   var CAPAS = { empresa: empresa, loja: loja, painel: painel, agenda: agenda };
-  trocar(raiz.getAttribute('data-tema') || 'ascii', true);
+  trocar(raiz.getAttribute('data-tema') || 'marca', true);
   return { trocar: trocar };
 })();

@@ -12,7 +12,9 @@ Site estático em HTML, CSS e JavaScript puro, sem dependências. Cookies e requ
 | `css/site.css` | Aparência |
 | Trecho no início do `index.html` | Roda antes de a página ser desenhada: aplica a aparência escolhida e impede que o site seja embutido em outro. Fica dentro da página para não custar um arquivo a mais, e a política de segurança só o aceita pelo código de conferência (`sha256`). Mudou o trecho? Gere o código de novo |
 | `js/app.js` | Abas, logo em ASCII, números de linha e terminal |
-| `js/temas.js` | As 5 aparências e suas capas interativas |
+| `js/temas.js` | As 6 aparências e suas capas interativas |
+| `css/marca.css` e `js/marca.js` | Aparência "Marca" (a padrão), com a identidade do KIT Branding, o fio verde e a aba M1L! |
+| `img/marca/` | Peças da marca vindas do KIT: logo, símbolo, cromados, assinatura RTJ e as duas cenas de exemplo |
 | `js/orcamento.js` | Montador do pedido e carrinho (fica salvo no aparelho do cliente). **O site não mostra preços:** a lista `PEDIDOS` tem os serviços, planos, adicionais e prazos, e `LINGUAGENS` alimenta a aba que explica cada linguagem. A tabela de preços fica só no servidor de cobranças, que é privado. Mudou a lista `PEDIDOS`? Gere de novo o catálogo do servidor (veja o README dele) |
 | `js/pedido.js` | Tela de finalização: confere o carrinho, pede nome, e-mail e WhatsApp, e uma descrição de 500 a 3.000 caracteres do que o cliente quer. Envia ao meu servidor; se ele estiver fora, oferece o e-mail com tudo escrito |
 | `js/guia.js` | Aba que explica o que cada linguagem faz. É só informação: quem escolhe a linguagem de cada projeto sou eu |

@@ -1,5 +1,5 @@
 /* Mil e Uma Linhas!  Barra de abas em telas médias.
-   Mede se as sete abas cabem na barra. Se não couberem, liga os degraus .ap1 a .ap5 (css/site.css), um por vez,
+   Mede se as oito abas cabem na barra. Se não couberem, liga os degraus .ap1 a .ap5 (css/site.css), um por vez,
    até caber. Refaz a conta quando a janela muda de tamanho, a aparência troca, as fontes chegam
    ou o botão "Meu pedido" aparece. No celular (até 900 px) a barra tem o próprio desenho e nada é ligado. */
 (function () {
