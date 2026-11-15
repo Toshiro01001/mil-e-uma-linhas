@@ -63,7 +63,7 @@
 .pe-nome { margin: 0; align-self: start; display: flex; align-items: center; gap: 18px; }
 .pe-cromo { display: block; height: 58px; width: auto; }
 .pe-por { display: flex; align-items: center; height: 46px; padding-left: 18px; border-left: 1px solid var(--traco); }
-.pe-por img { display: block; height: 34px; width: auto; }
+.pe-por img { display: block; height: 38px; width: auto; }
 .pe ul { list-style: none; margin: 0; padding: 0; }
 .pe a, .pe button { display: inline-flex; align-items: center; min-height: 36px; padding: 0; border: 0; color: var(--papel); font: inherit; text-decoration: none; cursor: pointer;
   background: linear-gradient(var(--verde), var(--verde)) 0 calc(100% - 7px) / 0 1px no-repeat; transition: background-size .25s; }
