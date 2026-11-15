@@ -222,3 +222,12 @@ html #m1l .botao.cheio:hover { box-shadow: 0 0 0 1px var(--verde), 0 0 28px var(
 .rtj-vivo { position: relative; display: inline-block; line-height: 0; touch-action: pan-y; }
 .rtj-vivo canvas { position: absolute; inset: 0; width: 100%; height: 100%; -webkit-mask: url(../img/marca/rtj.svg) center / 100% 100% no-repeat; mask: url(../img/marca/rtj.svg) center / 100% 100% no-repeat; }
 .rtj-vivo.rtj-on img { visibility: hidden; }
+
+/* ---------- assinatura no fim das páginas, na aparência Marca ---------- */
+.assina { display: none; }
+[data-tema="marca"] .assina { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 20px 32px; max-width: 1120px; margin: 0 auto; padding: 36px clamp(16px, 4vw, 48px) 56px; border-top: 1px solid var(--traco); }
+.assina-marcas { display: flex; align-items: center; gap: 18px; margin: 0; max-width: none; }
+.assina-cromo { display: block; height: 58px; width: auto; }
+.assina-rtj { display: flex; align-items: center; height: 46px; padding-left: 18px; border-left: 1px solid var(--traco); }
+.assina-rtj img { display: block; height: 38px; width: auto; }
+.assina-frase { margin: 0; max-width: none; font-family: var(--mono); font-size: 13.5px; line-height: 20px; color: var(--cinza); }
