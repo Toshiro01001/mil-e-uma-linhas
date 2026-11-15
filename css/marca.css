@@ -217,3 +217,8 @@ html #m1l .botao.cheio:hover { box-shadow: 0 0 0 1px var(--verde), 0 0 28px var(
   [data-tema="marca"] .botao, [data-tema="marca"] .ap-mostra a, .mm-creio li { transition: none; }
   [data-tema="marca"] .ap-mostra a:hover { transform: none; }
 }
+
+/* ---------- assinatura RTJ viva (js/assinatura.js) ---------- */
+.rtj-vivo { position: relative; display: inline-block; line-height: 0; touch-action: pan-y; }
+.rtj-vivo canvas { position: absolute; inset: 0; width: 100%; height: 100%; -webkit-mask: url(../img/marca/rtj.svg) center / 100% 100% no-repeat; mask: url(../img/marca/rtj.svg) center / 100% 100% no-repeat; }
+.rtj-vivo.rtj-on img { visibility: hidden; }
