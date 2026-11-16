@@ -90,6 +90,7 @@
 .ilha-fantasma { position: fixed; inset: 0; z-index: 60; pointer-events: none; overflow: hidden; }
 .ilha-fantasma svg { position: absolute; left: 0; top: 0; display: block; opacity: 0; will-change: transform, opacity; }
 html:not(.ilhas-on) .ilha-fantasma { display: none; }
+html.mul-leve .ilha-fantasma { display: none; }
 
 /* ---------- desfoque progressivo nos cartões de projeto ---------- */
 .ilha-borrao, .ilha-seta { display: none; }

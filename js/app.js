@@ -163,7 +163,7 @@
 
   /* ---------- o logo feito de código ---------- */
   var campo = (function () {
-    var cv = $('#campo'), ctx = cv.getContext('2d', { alpha: false });
+    var cv = $('#campo'), ctx = cv.getContext('2d');   /* com transparência: a parte de baixo some no próprio desenho */
     var base = document.createElement('canvas'), bctx = base.getContext('2d', { alpha: false });
     var FUNDO = '#101418', DIM = '#28313a', PAPEL = '#F4F1E8', VERDE = '#B8F34A';
     function lerVerde() { var v = getComputedStyle(document.documentElement).getPropertyValue('--verde').trim(); if (/^#[0-9a-f]{6}$/i.test(v)) VERDE = v; }
@@ -263,7 +263,20 @@
         }
       }
     }
-    function blit() { ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.drawImage(base, 0, 0); ctx.setTransform(dpr, 0, 0, dpr, 0, 0); }
+    /* O sumiço das letras na parte de baixo era uma máscara do CSS, que obrigava o navegador a recompor o início inteiro
+       a cada quadro. Agora o próprio desenho fica transparente embaixo: mesmo visual, sem a máscara. */
+    function esmaecer(a, b) {
+      var g = ctx.createLinearGradient(0, 0, 0, H);
+      g.addColorStop(0, 'rgba(0,0,0,1)'); g.addColorStop(0.45, 'rgba(0,0,0,1)'); g.addColorStop(0.95, 'rgba(0,0,0,0)'); g.addColorStop(1, 'rgba(0,0,0,0)');
+      /* "destination-in" apaga tudo o que fica fora da área pintada: o recorte limita o efeito ao pedaço redesenhado */
+      ctx.save(); ctx.beginPath();
+      if (a) ctx.rect(a[0], a[1], a[2], a[3]); else ctx.rect(0, 0, W, H);
+      if (b) ctx.rect(b[0], b[1], b[2], b[3]);
+      ctx.clip();
+      ctx.globalCompositeOperation = 'destination-in'; ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+      ctx.restore();
+    }
+    function blit() { ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.drawImage(base, 0, 0); ctx.setTransform(dpr, 0, 0, dpr, 0, 0); esmaecer(); }
 
     function calcularExcl() {
       // o ponto de exclamação começa depois dos dígitos: é a última coluna contínua do logo
@@ -308,13 +321,20 @@
         x0 = Math.max(0, Math.floor((ponteiro.x - R - 20) / cw)); x1 = Math.min(cols - 1, Math.ceil((ponteiro.x + R + 20) / cw));
         y0 = Math.max(0, Math.floor((ponteiro.y - R - 20) / ch)); y1 = Math.min(rows - 1, Math.ceil((ponteiro.y + R + 20) / ch));
       }
-      if (sujo) { ctx.setTransform(1, 0, 0, 1, 0, 0); var s = sujo; ctx.drawImage(base, s[0] * dpr, s[1] * dpr, s[2] * dpr, s[3] * dpr, s[0] * dpr, s[1] * dpr, s[2] * dpr, s[3] * dpr); ctx.setTransform(dpr, 0, 0, dpr, 0, 0); }
+      var antes = sujo;
       var rx = x0 * cw, ry = y0 * ch, rw = (x1 - x0 + 1) * cw + 2, rh = (y1 - y0 + 1) * ch + 2;
-      ctx.fillStyle = FUNDO; ctx.fillRect(rx, ry, rw, rh);
-      sujo = [Math.max(0, rx - 2), Math.max(0, ry - 2), Math.min(W - Math.max(0, rx - 2), rw + 4), Math.min(H - Math.max(0, ry - 2), rh + 4)];
+      /* pedaço mexido, com folga para as letras empurradas e arredondado para pixels inteiros (sem emenda borrada) */
+      var sx0 = Math.floor(Math.max(0, rx - 18) * dpr) / dpr, sy0 = Math.floor(Math.max(0, ry - 18) * dpr) / dpr;
+      var sx1 = Math.ceil(Math.min(W, rx + rw + 18) * dpr) / dpr, sy1 = Math.ceil(Math.min(H, ry + rh + 18) * dpr) / dpr;
+      sujo = [sx0, sy0, sx1 - sx0, sy1 - sy0];
+      /* devolve a imagem de base no pedaço mexido no quadro anterior e no pedaço deste quadro */
+      ctx.setTransform(1, 0, 0, 1, 0, 0);
+      [antes, sujo].forEach(function (s) { if (s) ctx.drawImage(base, s[0] * dpr, s[1] * dpr, s[2] * dpr, s[3] * dpr, s[0] * dpr, s[1] * dpr, s[2] * dpr, s[3] * dpr); });
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
-      var forte = false;
-      ctx.font = '400 ' + fs + 'px "' + FONTE + '", monospace';
+      /* Só as letras que o mouse ou a onda tirou do lugar são redesenhadas: o resto já está certo na imagem de base.
+         Elas são juntadas por peso e cor, para o navegador trocar de fonte e de tinta poucas vezes por quadro. */
+      var limpa = [], grupos = {}, ordem = [];
       for (var y = y0; y <= y1; y++) {
         for (var x = x0; x <= x1; x++) {
           var k = cel[y * cols + x], px = x * cw + cw / 2, py = y * ch + ch / 2, f = 0, dx = 0, dy = 0;
@@ -330,20 +350,35 @@
               if (q > f) { f = q; dx = ax; dy = ay; }
             }
           }
-          var ch0 = k.c, cor = k.cor, ox = 0, oy = 0;
-          if (f > 0.03) {
-            var n = Math.sqrt(dx * dx + dy * dy) || 1;
-            ox = dx / n * f * 16; oy = dy / n * f * 16;
-            if (f > 0.14) { var h = (x * 31 + y * 17 + (tique >> 1) * 7) % RUIDO.length; ch0 = RUIDO.charAt(h); }
-            if (f > 0.22) cor = VERDE;
-            else if (!k.dentro && f > 0.06) cor = '#6f7c88';
-          }
+          if (f <= 0.03) continue;
+          var ch0 = k.c, cor = k.cor;
+          var n = Math.sqrt(dx * dx + dy * dy) || 1;
+          var ox = dx / n * f * 16, oy = dy / n * f * 16;
+          if (f > 0.14) { var h = (x * 31 + y * 17 + (tique >> 1) * 7) % RUIDO.length; ch0 = RUIDO.charAt(h); }
+          if (f > 0.22) cor = VERDE;
+          else if (!k.dentro && f > 0.06) cor = '#6f7c88';
+          limpa.push(x, y);
           if (ch0 === ' ') continue;
-          if (k.dentro !== forte) { forte = k.dentro; ctx.font = (forte ? '700 ' : '400 ') + fs + 'px "' + FONTE + '", monospace'; }
-          ctx.fillStyle = cor;
-          ctx.fillText(ch0, x * cw + ox, y * ch + oy);
+          var chave = (k.dentro ? '7' : '4') + cor, lista = grupos[chave];
+          if (!lista) { lista = grupos[chave] = []; ordem.push(chave); }
+          lista.push(ch0, x * cw + ox, y * ch + oy);
         }
       }
+      if (limpa.length) {
+        ctx.fillStyle = FUNDO; ctx.beginPath();
+        for (var i = 0; i < limpa.length; i += 2) {
+          var ex = Math.floor(limpa[i] * cw * dpr) / dpr, ey = Math.floor(limpa[i + 1] * ch * dpr) / dpr;
+          ctx.rect(ex, ey, Math.ceil((limpa[i] + 1) * cw * dpr) / dpr - ex, Math.ceil((limpa[i + 1] + 1) * ch * dpr) / dpr - ey);
+        }
+        ctx.fill();
+        for (var j = 0; j < ordem.length; j++) {
+          var c = ordem[j], l = grupos[c];
+          ctx.font = (c.charAt(0) === '7' ? '700 ' : '400 ') + fs + 'px "' + FONTE + '", monospace';
+          ctx.fillStyle = c.slice(1);
+          for (var m = 0; m < l.length; m += 3) ctx.fillText(l[m], l[m + 1], l[m + 2]);
+        }
+      }
+      esmaecer(sujo, antes);
       raf = requestAnimationFrame(quadro);
     }
     function acordar() { if (!animando && pronto && visivel && !calmo) { animando = true; raf = requestAnimationFrame(quadro); } }
