@@ -24,6 +24,29 @@
     document.addEventListener('visibilitychange', conferir);
   }
 
+  /* ---------- 0. fiscal de fluidez ----------
+     Mede o tempo entre os quadros. Se a página ficar lenta de verdade por uns dois segundos seguidos (aparelho fraco,
+     placa de vídeo ocupada), liga o modo leve: a classe "mul-leve" no <html> e o aviso "mul:leve". Quem ouve tira o
+     enfeite que mais pesa (luz parada, sem rastro do cursor, sem desfoque na barra). Vale até a página ser recarregada. */
+  (function () {
+    if (calmo) return;
+    var ant = 0, lentos = 0, vistos = 0, pronto = false;
+    setTimeout(function () { pronto = true; }, 4000);                 /* o carregamento não conta */
+    function medir(t) {
+      if (raiz.classList.contains('mul-leve')) return;
+      requestAnimationFrame(medir);
+      var dt = ant ? t - ant : 0; ant = t;
+      if (!pronto || document.hidden || dt <= 0 || dt > 400) { lentos = 0; vistos = 0; return; }   /* pausa longa é troca de aba, não lentidão */
+      vistos++; if (dt > 42) lentos++;                                 /* abaixo de 24 quadros por segundo */
+      if (vistos >= 40) {
+        if (lentos >= 28) { raiz.classList.add('mul-leve'); try { window.dispatchEvent(new Event('mul:leve')); } catch (e) {} return; }
+        lentos = 0; vistos = 0;
+      }
+    }
+    document.addEventListener('visibilitychange', function () { ant = 0; lentos = 0; vistos = 0; });
+    requestAnimationFrame(medir);
+  })();
+
   /* ---------- 1. luz do início ---------- */
   (function () {
     var hero = document.querySelector('#inicio .hero'), campo = document.getElementById('campo');
@@ -65,7 +88,8 @@
       'vec3 frio=mix(c,vec3(.45,.62,.95),.7);',
       'vec3 col=c*i1+frio*i2;float al=clamp(i1+i2,0.,1.);',
       'float n=(h12(gl_FragCoord.xy)+h12(gl_FragCoord.xy+41.7)-1.)/255.;',  /* tira as faixas do degradê */
-      'gl_FragColor=vec4(col+n,al);}'
+      'float fim=clamp(uv.y/.45,0.,1.);',                              /* some embaixo (antes era uma máscara do CSS) */
+      'gl_FragColor=vec4(col+n,al)*fim;}'
     ].join('\n');
     function sh(tipo, src) { var s = gl.createShader(tipo); gl.shaderSource(s, src); gl.compileShader(s); return gl.getShaderParameter(s, gl.COMPILE_STATUS) ? s : null; }
     var v = sh(gl.VERTEX_SHADER, VS), f = sh(gl.FRAGMENT_SHADER, FS), prog = gl.createProgram();
@@ -106,10 +130,12 @@
       pos.x += (alvo.x - pos.x) * .04; pos.y += (alvo.y - pos.y) * .04;
       pintar();
     }
-    function ligar() { if (calmo || economia) { pintar(); return; } if (!raf) { ultimo = 0; raf = requestAnimationFrame(quadro); } }
+    var leve = false;
+    function ligar() { if (calmo || economia || leve) { pintar(); return; } if (!raf) { ultimo = 0; raf = requestAnimationFrame(quadro); } }
     function desligar() { if (raf) cancelAnimationFrame(raf); raf = 0; }
     cv.addEventListener('webglcontextlost', function (e) { e.preventDefault(); perdido = true; desligar(); cv.style.display = 'none'; hero.classList.add('luz-fixa'); });
     window.addEventListener('mul:acento', function () { lerCor(); if (!raf) pintar(); });
+    window.addEventListener('mul:leve', function () { leve = true; desligar(); pintar(); });   /* modo leve: a luz fica parada */
     window.addEventListener('resize', function () { centro(); if (!raf) pintar(); });
     /* no computador a luz se inclina de leve para onde o mouse está */
     if (window.matchMedia('(hover: hover) and (pointer: fine)').matches && !calmo) {

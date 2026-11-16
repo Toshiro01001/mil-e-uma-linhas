@@ -13,6 +13,8 @@ Site estático em HTML, CSS e JavaScript puro, sem dependências. Cookies e requ
 | Trecho no início do `index.html` | Roda antes de a página ser desenhada: aplica a aparência escolhida e impede que o site seja embutido em outro. Fica dentro da página para não custar um arquivo a mais, e a política de segurança só o aceita pelo código de conferência (`sha256`). Mudou o trecho? Gere o código de novo |
 | `js/app.js` | Abas, logo em ASCII, números de linha e terminal |
 | `js/temas.js` | As 6 aparências e suas capas interativas |
+| `js/vivo.js` | Luz do início, mural de projetos e títulos animados. Tem também o fiscal de fluidez: se a página ficar lenta no aparelho de quem visita, ele liga o modo leve (luz parada, sem rastro do cursor e sem desfoque nas barras) |
+| `js/ilhas.js` e `css/ilhas.css` | Componentes em React da aparência ASCII (rodapé em pontos, esteira, pastas, montador do pedido). São a versão compilada; o código-fonte fica fora deste repositório |
 | `css/marca.css` e `js/marca.js` | Aparência "Marca" (a padrão), com a identidade do KIT Branding, o fio verde e a aba M1L! |
 | `js/assinatura.js` | Assinatura RTJ viva: fibras vermelhas dentro das letras, que reagem ao mouse e ao dedo |
 | `img/marca/` | Peças da marca vindas do KIT: logo, símbolo, cromados, assinatura RTJ e as duas cenas de exemplo |

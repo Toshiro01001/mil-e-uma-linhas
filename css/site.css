@@ -106,7 +106,7 @@ p { margin: 0 0 var(--lin); max-width: 62ch; text-wrap: pretty; }
 
 /* início */
 .hero { position: relative; display: block; padding: clamp(40px, 7vh, 84px) clamp(16px, 4vw, 48px) 0; overflow: hidden; touch-action: pan-y; }
-#campo { position: absolute; inset: 0; width: 100%; height: 100%; display: block; opacity: .16; -webkit-mask-image: linear-gradient(180deg, #000 0%, #000 45%, transparent 95%); mask-image: linear-gradient(180deg, #000 0%, #000 45%, transparent 95%); }
+#campo { position: absolute; inset: 0; width: 100%; height: 100%; display: block; opacity: .16; } /* o sumiço embaixo é desenhado pelo próprio js/app.js */
 .hero-texto { position: relative; max-width: 1120px; margin: 0 auto; pointer-events: none; }
 .hero-texto a { pointer-events: auto; }
 .slogan { font-size: clamp(56px, 11vw, 168px); line-height: .88; letter-spacing: -.045em; margin-bottom: 36px; font-variation-settings: "opsz" 96; }
@@ -1020,6 +1020,8 @@ button.link:disabled { color: var(--cinza); text-decoration: none; cursor: not-a
 [data-tema="ascii"] main, [data-tema="ascii"] .abas, [data-tema="ascii"] .status { position: relative; z-index: 1; }
 [data-tema="ascii"] .abas { background: rgba(27,34,41,.82); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); }
 [data-tema="ascii"] .status { background: rgba(27,34,41,.86); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); }
+/* modo leve (o fiscal de fluidez de js/vivo.js achou a página lenta): as barras ficam sem desfoque */
+html.mul-leve[data-tema="ascii"] .abas, html.mul-leve[data-tema="ascii"] .status { background: rgba(27,34,41,.97); backdrop-filter: none; -webkit-backdrop-filter: none; }
 [data-tema="ascii"] .calha { background: rgba(16,20,24,.35); }
 /* o conteúdo lê sobre um vidro escuro: a aurora em caracteres fica forte nas margens e calma atrás do texto */
 [data-tema="ascii"] .folha:not(#inicio), [data-tema="ascii"] .apres { background: rgba(16,20,24,.5); }
@@ -1487,7 +1489,7 @@ html.js[data-tema="loja"] .ap-seg .check li::before { content: "\2713"; left: 13
 }
 
 /* ---------- movimento: luz do início, mural de projetos e entrada dos títulos (js/vivo.js) ---------- */
-.hero .luz { position: absolute; inset: 0; width: 100%; height: 100%; display: block; pointer-events: none; -webkit-mask-image: linear-gradient(180deg, #000 0%, #000 55%, transparent 100%); mask-image: linear-gradient(180deg, #000 0%, #000 55%, transparent 100%); }
+.hero .luz { position: absolute; inset: 0; width: 100%; height: 100%; display: block; pointer-events: none; } /* o sumiço embaixo é feito pelo próprio js/vivo.js */
 .hero.luz-fixa::before { content: ""; position: absolute; inset: 0; pointer-events: none; background: radial-gradient(60% 70% at 68% 40%, rgba(var(--verde-rgb), .2), transparent 70%); }
 html.js:not([data-tema="ascii"]) .hero .luz { display: none; }
 
