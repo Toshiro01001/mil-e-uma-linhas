@@ -231,3 +231,122 @@ html #m1l .botao.cheio:hover { box-shadow: 0 0 0 1px var(--verde), 0 0 28px var(
 .assina-rtj { display: flex; align-items: center; height: 46px; padding-left: 18px; border-left: 1px solid var(--traco); }
 .assina-rtj img { display: block; height: 38px; width: auto; }
 .assina-frase { margin: 0; max-width: none; font-family: var(--mono); font-size: 13.5px; line-height: 20px; color: var(--cinza); }
+
+/* ==========================================================================
+   Retoque premium da aparência Marca (17/11/2026)
+   Matéria no fundo, superfícies em degraus, cromo na abertura e o verde só no fio,
+   no "!" e no botão principal. Tudo vale só com data-tema="marca".
+   ========================================================================== */
+[data-tema="marca"] { --sup-1: #0E1216; --sup-2: #141A1F; --sup-3: #1A2127; --fio-1: rgba(244, 241, 232, .08); --fio-2: rgba(244, 241, 232, .16); --curva: cubic-bezier(.22, .8, .24, 1); }
+
+/* ---------- matéria: grão fino e uma luz neutra vinda de cima ---------- */
+html[data-tema="marca"] body { background-color: var(--preto); background-image: url("../img/marca/grao.png"), radial-gradient(120% 620px at 50% -120px, rgba(174, 183, 192, .13), rgba(174, 183, 192, 0) 70%); background-repeat: repeat, no-repeat; background-size: 96px 96px, 100% 900px; }
+html.js[data-tema="marca"] .hero { background: none; }
+[data-tema="marca"] [tabindex="-1"]:focus-visible { outline: none; }
+
+/* ---------- barra de abas: vidro escuro com fio claro ---------- */
+[data-tema="marca"] .abas { background: rgba(10, 13, 16, .78); -webkit-backdrop-filter: blur(14px) saturate(1.3); backdrop-filter: blur(14px) saturate(1.3); border-bottom-color: var(--fio-1); }
+[data-tema="marca"] .abas nav a { color: var(--cinza); }
+[data-tema="marca"] .abas nav a:hover { color: var(--papel); }
+
+/* ---------- botões: peso de peça, sem brilho colorido ---------- */
+[data-tema="marca"] .botao { background: rgba(244, 241, 232, .03); border-color: var(--fio-2); box-shadow: inset 0 1px 0 rgba(244, 241, 232, .05); }
+[data-tema="marca"] .botao:hover { background: rgba(244, 241, 232, .08); border-color: rgba(244, 241, 232, .42); }
+[data-tema="marca"] .botao.cheio { background: linear-gradient(180deg, #C6F765, #B0EC3F); border-color: #A5DE38; box-shadow: inset 0 1px 0 rgba(255, 255, 255, .5), inset 0 -1px 0 rgba(10, 13, 16, .18), 0 1px 2px rgba(0, 0, 0, .4); }
+[data-tema="marca"] .botao.cheio:hover { background: linear-gradient(180deg, #D2FA7E, #B8F34A); border-color: #B8F34A; box-shadow: inset 0 1px 0 rgba(255, 255, 255, .6), inset 0 -1px 0 rgba(10, 13, 16, .18), 0 6px 20px rgba(0, 0, 0, .45); }
+[data-tema="marca"] .botao.cheio.desligado { background: none; box-shadow: none; }
+
+/* ---------- cabeçalho de cada aba: rótulo em mono e contagem ---------- */
+[data-tema="marca"] .aba-cab { position: relative; padding-top: clamp(16px, 3vw, 32px); }
+[data-tema="marca"] .aba-cab::before { display: block; margin-bottom: 20px; font-family: var(--mono); font-size: 13.5px; line-height: 20px; color: var(--grafite); }
+[data-tema="marca"] .aba-cab::after { position: absolute; right: 0; top: clamp(16px, 3vw, 32px); font-family: var(--mono); font-size: 13.5px; line-height: 20px; color: var(--grafite); font-variant-numeric: tabular-nums; }
+[data-tema="marca"] #servicos .aba-cab::before { content: "// serviços"; }
+[data-tema="marca"] #servicos .aba-cab::after { content: "02 / 07"; }
+[data-tema="marca"] #projetos .aba-cab::before { content: "// projetos"; }
+[data-tema="marca"] #projetos .aba-cab::after { content: "03 / 07"; }
+[data-tema="marca"] #demos .aba-cab::before { content: "// demos"; }
+[data-tema="marca"] #demos .aba-cab::after { content: "04 / 07"; }
+[data-tema="marca"] #linguagens .aba-cab::before { content: "// linguagens"; }
+[data-tema="marca"] #linguagens .aba-cab::after { content: "05 / 07"; }
+[data-tema="marca"] #orcamento .aba-cab::before { content: "// orçamento"; }
+[data-tema="marca"] #orcamento .aba-cab::after { content: "06 / 07"; }
+[data-tema="marca"] #contato .aba-cab::before { content: "// contato"; }
+[data-tema="marca"] #contato .aba-cab::after { content: "07 / 07"; }
+[data-tema="marca"] .aba-cab h2 { margin-bottom: 28px; }
+[data-tema="marca"] .aba-linha::before { background: var(--fio-1); }
+[data-tema="marca"] .aba-cab .intro { color: var(--cinza); font-size: 17.5px; line-height: 1.5; }
+
+/* ---------- abertura: o cromo é a peça da tela ---------- */
+[data-tema="marca"] .hero-texto { position: relative; }
+@media (min-width: 1040px) {
+  [data-tema="marca"] .hero-texto::after { content: ""; position: absolute; right: 0; top: clamp(10px, 2.2vw, 32px); width: clamp(230px, 24vw, 330px); aspect-ratio: 1000 / 431; background: url("../img/marca/cromo-m1l.webp") center / contain no-repeat; filter: drop-shadow(0 28px 34px rgba(0, 0, 0, .6)); pointer-events: none; }
+}
+[data-tema="marca"] .hero-linha > p { color: var(--cinza); }
+[data-tema="marca"] .hero-palco .monitor { background: linear-gradient(180deg, var(--sup-3), var(--sup-2)); border-color: var(--fio-2); box-shadow: inset 0 1px 0 rgba(244, 241, 232, .08), 0 -40px 120px rgba(0, 0, 0, .55); }
+[data-tema="marca"] .hero-palco .fone { border-color: var(--fio-2); box-shadow: inset 0 1px 0 rgba(244, 241, 232, .1), -24px 0 60px rgba(0, 0, 0, .55); }
+
+/* ---------- superfícies: degraus de aço escuro, fio claro e luz na borda de cima ---------- */
+[data-tema="marca"] .lang, [data-tema="marca"] .orc-plano, [data-tema="marca"] .orc-resumo, [data-tema="marca"] .canal, [data-tema="marca"] .coluna, [data-tema="marca"] .ap-mostra a, [data-tema="marca"] .ap-processo, [data-tema="marca"] .ap-quem, [data-tema="marca"] .proj-img, [data-tema="marca"] .vit-card, [data-tema="marca"] .mm-jeito li {
+  background: linear-gradient(180deg, var(--sup-3), var(--sup-2)); border: 1px solid var(--fio-1); border-radius: 14px; box-shadow: inset 0 1px 0 rgba(244, 241, 232, .06), 0 1px 0 rgba(0, 0, 0, .5); }
+[data-tema="marca"] .ped { background: var(--sup-1); border-color: var(--fio-1); border-radius: 8px; }
+[data-tema="marca"] .coluna { padding: 6px; }
+[data-tema="marca"] .canal { padding: 24px; }
+[data-tema="marca"] .lang { padding: 22px 24px; transition: border-color .15s ease; }
+[data-tema="marca"] .lang:hover { border-color: var(--fio-2); }
+[data-tema="marca"] .orc-plano { transition: border-color .15s ease, background-color .15s ease; }
+[data-tema="marca"] .orc-plano[aria-pressed="true"], [data-tema="marca"] .orc-plano[aria-checked="true"] { border-color: var(--verde); background: linear-gradient(180deg, #1F2830, var(--sup-3)); }
+[data-tema="marca"] .canal-principal { border-color: var(--fio-2); }
+[data-tema="marca"] .canal-principal .email { display: block; font-size: clamp(19px, 2.2vw, 26px); line-height: 1.15; letter-spacing: -.02em; font-weight: 800; color: var(--papel); overflow-wrap: anywhere; text-decoration-color: var(--verde); text-decoration-thickness: 2px; text-underline-offset: 7px; }
+[data-tema="marca"] .canal-wip { border-color: rgba(255, 138, 107, .45); border-style: dashed; }
+
+/* campos de formulário */
+[data-tema="marca"] input:not([type="range"]):not([type="checkbox"]):not([type="radio"]):not([type="file"]), [data-tema="marca"] select, [data-tema="marca"] textarea { background-color: var(--sup-1); border-color: var(--fio-2); box-shadow: inset 0 1px 2px rgba(0, 0, 0, .5); transition: border-color .15s ease; }
+[data-tema="marca"] input:not([type="range"]):not([type="checkbox"]):not([type="radio"]):not([type="file"]):hover, [data-tema="marca"] select:hover, [data-tema="marca"] textarea:hover { border-color: rgba(244, 241, 232, .34); }
+
+/* filtros: um trilho só, com a opção escolhida em papel */
+[data-tema="marca"] .pilulas { display: inline-flex; gap: 4px; padding: 4px; background: var(--sup-1); border: 1px solid var(--fio-1); border-radius: 22px; max-width: 100%; }
+[data-tema="marca"] .pilulas .pilula { border-color: transparent; background: none; color: var(--cinza); padding: 7px 14px; transition: color .15s ease, background-color .15s ease; }
+[data-tema="marca"] .pilulas .pilula:hover { color: var(--papel); background: rgba(244, 241, 232, .06); }
+[data-tema="marca"] .pilulas .pilula[aria-pressed="true"], [data-tema="marca"] .pilulas .pilula[aria-selected="true"] { background: var(--papel); color: var(--preto); box-shadow: 0 1px 2px rgba(0, 0, 0, .5); }
+
+/* serviços: a árvore vira um índice de ficha */
+@media (min-width: 761px) {
+  [data-tema="marca"] .arvore-grade { grid-template-columns: 232px minmax(0, 1fr); gap: 0; background: linear-gradient(180deg, var(--sup-3), var(--sup-2)); border: 1px solid var(--fio-1); border-radius: 16px; box-shadow: inset 0 1px 0 rgba(244, 241, 232, .06); overflow: hidden; }
+  [data-tema="marca"] .arvore { padding: 20px 12px; background: var(--sup-1); border-right: 1px solid var(--fio-1); font-family: inherit; font-size: 15.5px; gap: 2px; }
+  [data-tema="marca"] .arvore .raiz { font-family: var(--mono); font-size: 13px; color: var(--grafite); padding: 4px 12px 10px; }
+  [data-tema="marca"] .arvore button { padding: 9px 12px; border-left: 0; border-radius: 8px; color: var(--cinza); transition: color .15s ease, background-color .15s ease; }
+  [data-tema="marca"] .arvore button:hover { color: var(--papel); background: rgba(244, 241, 232, .05); }
+  [data-tema="marca"] .arvore button[aria-selected="true"] { position: relative; background: rgba(244, 241, 232, .08); color: var(--papel); font-weight: 700; }
+  [data-tema="marca"] .arvore button[aria-selected="true"]::before { content: ""; position: absolute; left: -12px; top: 9px; bottom: 9px; width: 2px; border-radius: 2px; background: var(--verde); }
+  [data-tema="marca"] .paineis { padding: clamp(24px, 3.4vw, 40px); min-width: 0; }
+}
+[data-tema="marca"] .paineis h3 { font-size: clamp(28px, 3.2vw, 40px); line-height: 1.05; letter-spacing: -.03em; font-weight: 800; }
+
+/* projetos: quadros com moldura e resposta discreta */
+[data-tema="marca"] .proj-img { overflow: hidden; transition: border-color .15s ease, transform .2s var(--curva); }
+[data-tema="marca"] .proj-img:hover { border-color: rgba(244, 241, 232, .42); transform: translateY(-2px); }
+
+/* contato: linhas largas com seta */
+[data-tema="marca"] .contatos { border-top-color: var(--fio-1); }
+[data-tema="marca"] .contatos a { position: relative; padding: 18px 40px 18px 4px; border-bottom-color: var(--fio-1); transition: padding-left .2s var(--curva), background-color .15s ease; }
+[data-tema="marca"] .contatos a::after { content: "→"; position: absolute; right: 6px; top: 50%; transform: translateY(-50%); color: var(--grafite); transition: color .15s ease, transform .2s var(--curva); }
+[data-tema="marca"] .contatos a:hover { background: rgba(244, 241, 232, .03); padding-left: 12px; }
+[data-tema="marca"] .contatos a:hover b { color: var(--papel); }
+[data-tema="marca"] .contatos a:hover::after { color: var(--verde); transform: translate(3px, -50%); }
+[data-tema="marca"] .contatos span { font-family: var(--mono); color: var(--grafite); }
+
+/* uma entrada só por aba */
+@media (prefers-reduced-motion: no-preference) {
+  [data-tema="marca"] .folha > .aba-cab { animation: mc-sobe .5s var(--curva) both; }
+  [data-tema="marca"] .folha > .aba-cab ~ * { animation: mc-sobe .5s var(--curva) .08s both; }
+  @keyframes mc-sobe { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+}
+@media (max-width: 760px) {
+  [data-tema="marca"] .aba-cab::after { position: static; display: none; }
+  [data-tema="marca"] .pilulas { display: flex; border-radius: 18px; }
+  [data-tema="marca"] .canal { padding: 20px; }
+}
+@media (max-width: 760px) {
+  [data-tema="marca"] .arvore button { border-color: var(--fio-1); background: var(--sup-1); color: var(--cinza); }
+  [data-tema="marca"] .arvore button[aria-selected="true"] { background: var(--papel); border-color: var(--papel); color: var(--preto); font-weight: 700; }
+}
