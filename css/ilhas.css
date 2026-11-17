@@ -707,9 +707,9 @@ canvas.gf-sheet-art[data-ready] { opacity: 1; filter: none; }
 .ilha-ancora .offer__quote p { color: var(--papel); }
 @media (max-width: 900px) { .ilha-ancora .offer { border-radius: 14px; } .ilha-ancora .offer__promise { min-height: 4.6em; } }
 /* com o Âncora, o montador vira uma coluna só: o card em cima, o pedido embaixo */
-.ilhas-on .orc-grade.com-ancora { display: block; }
-.ilhas-on .orc-grade.com-ancora .orc-resumo { position: relative; top: auto; margin-top: calc(var(--lin) * 1.5); }
+.orc-grade.com-ancora { display: block; }
+.orc-grade.com-ancora .orc-resumo { position: relative; top: auto; margin-top: calc(var(--lin) * 1.5); }
 .ilha-ancora .offer__cols { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
 .ilha-ancora .offer__add-price { white-space: normal; max-width: 11em; }
 @media (max-width: 900px) { .ilha-ancora .offer__cols { grid-template-columns: minmax(0, 1fr); } }
-.ilhas-on .orc-grade.com-ancora .orc-resumo > .moldura { opacity: .5; }
+.orc-grade.com-ancora .orc-resumo > .moldura { opacity: .5; }
