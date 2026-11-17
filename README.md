@@ -66,6 +66,8 @@ Na página de pagamento, a chave Pix, o nome e a cidade ficam fixos no código. 
 
 No pedido, nome, e-mail, WhatsApp e texto do cliente vão por HTTPS direto ao meu servidor, que os cifra (AES-256-GCM) antes de gravar. A CSP agora permite só o script do Turnstile (`challenges.cloudflare.com`) além do próprio site.
 
+Vistoria de 17/11/2026: depois de ligar o Google Analytics ao Google Ads, o Analytics passou a enviar os dados por `analytics.google.com`, `www.google.com`, `stats.g.doubleclick.net` e `www.google.com.br`, que a CSP da página inicial bloqueava, e nenhuma visita era contada. Liberei só esses quatro endereços (`connect-src` e `img-src`), mantive o resto fechado e testei em 1366 px, iPhone 13 e 320 px: os endereços novos passam e os não listados continuam bloqueados. A medição segue ligando só depois do Aceitar, e a Política de Privacidade passou a dizer que o Google também recebe o aviso de visita e de pedido para os anúncios.
+
 Os arquivos anexados vão em um envio por arquivo, com um token de envio que vale 24 horas e só serve para aquele pedido. O servidor recusa executáveis e scripts, confere tamanho e quantidade, e guarda tudo em um bucket privado (Cloudflare R2), sem endereço público. Só eu, logado no painel, consigo baixar.
 
 ## Projetos com imagens
