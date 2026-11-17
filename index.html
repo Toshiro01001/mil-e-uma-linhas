@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'sha256-Ny8K+77paJ3H2dVANzWUIIJl0wVflvmSFH9QoqXMUXU=' https://challenges.cloudflare.com https://www.googletagmanager.com https://connect.facebook.net; frame-src https://challenges.cloudflare.com; style-src 'self'; img-src 'self' data: https://www.facebook.com https://*.google-analytics.com https://*.googletagmanager.com https://www.google.com https://www.google.com.br; font-src 'self'; connect-src https://cobrancas.contato-aea.workers.dev https://*.google-analytics.com https://*.analytics.google.com https://analytics.google.com https://*.googletagmanager.com https://www.google.com https://stats.g.doubleclick.net https://www.facebook.com; manifest-src 'none'; media-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'; upgrade-insecure-requests">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'sha256-Ny8K+77paJ3H2dVANzWUIIJl0wVflvmSFH9QoqXMUXU=' https://challenges.cloudflare.com https://www.googletagmanager.com https://connect.facebook.net; frame-src https://challenges.cloudflare.com; style-src 'self'; img-src 'self' data: blob: https://www.facebook.com https://*.google-analytics.com https://*.googletagmanager.com https://www.google.com https://www.google.com.br; font-src 'self'; connect-src https://cobrancas.contato-aea.workers.dev https://*.google-analytics.com https://*.analytics.google.com https://analytics.google.com https://*.googletagmanager.com https://www.google.com https://stats.g.doubleclick.net https://www.facebook.com; manifest-src 'none'; media-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'; upgrade-insecure-requests">
 <meta name="referrer" content="no-referrer">
 <title>Sites e sistemas para todo o Brasil | Mil e Uma Linhas!</title>
 <meta name="description" content="Faço sites, sistemas e automação de vendas para empresas de todo o Brasil, com vistoria de segurança em cada entrega. Teste as demonstrações.">
@@ -27,8 +27,8 @@
 <link rel="icon" href="favicon.svg?v=20261114" type="image/svg+xml">
 <link rel="preload" href="fonts/bricolage.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="css/site.css?v=20261116a">
-<link rel="stylesheet" href="css/marca.css?v=20261117a">
-<link rel="stylesheet" href="css/ilhas.css?v=20261116a">
+<link rel="stylesheet" href="css/marca.css?v=20261117b">
+<link rel="stylesheet" href="css/ilhas.css?v=20261117a">
 <script>(function(){if(window.top!==window.self){try{window.top.location=window.self.location.href}catch(e){document.documentElement.classList.add('embutido')}}var r=document.documentElement,t='marca';try{var s=localStorage.getItem('mul-tema');if(/^(marca|ascii|empresa|loja|painel|agenda)$/.test(s))t=s}catch(e){}r.setAttribute('data-tema',t);r.classList.add('js')})();</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"ProfessionalService","name":"Mil e Uma Linhas!","slogan":"Meu código, seu site.","url":"https://mileumalinhas.com.br/","description":"Sites, sistemas, automação de vendas e redes sociais e tráfego pago.","email":"contato@mileumalinhas.com.br","image":"https://mileumalinhas.com.br/og.png","address":{"@type":"PostalAddress","addressLocality":"Cuiabá","addressRegion":"MT","addressCountry":"BR"},"areaServed":{"@type":"Country","name":"Brasil"},"founder":{"@type":"Person","name":"Rodrigo Terroso Junior"},"sameAs":["https://www.instagram.com/mileumalinhas/","https://www.linkedin.com/in/rodrigo-terroso-junior-9b900935b","https://github.com/Toshiro01001"]}</script>
 <script src="js/linguagens.js" defer></script>
@@ -44,7 +44,8 @@
 <script src="js/assinatura.js?v=20261115a" defer></script>
 <script src="js/barra.js?v=20261111b" defer></script>
 <script src="js/medicao.js?v=20261112b" defer></script>
-<script type="module" src="js/ilhas.js?v=20261116a"></script>
+<script type="module" src="js/ilhas.js?v=20261117a"></script>
+<script type="module" src="js/marca-premium/premium.js?v=20261117a"></script>
 </head>
 <body>
 <a class="pular" href="#conteudo">Pular para o conteúdo</a>
@@ -133,15 +134,16 @@
   <div class="hero">
     <canvas id="campo" aria-hidden="true"></canvas>
     <div class="hero-texto">
-      <h2 class="slogan"><span>Meu código,</span> <span class="fino">seu site.</span></h2>
+      <h2 class="slogan"><span>Meu código,</span> <span class="fino">seu site.<i class="mc-cromo" data-texto="seu site." data-mascara="img/marca/cromo-seu-site.png" aria-hidden="true"></i></span></h2>
       <div class="hero-linha">
         <p>Sites, sistemas e projetos sob medida para empresas de todo o Brasil. Você monta o pedido, vê o prazo e recebe o orçamento por escrito.</p>
         <div class="acoes">
-          <a class="botao cheio" href="#orcamento">Montar meu pedido</a>
+          <a class="botao cheio mc-botao" href="#orcamento"><i class="mc-anel" aria-hidden="true"></i><span class="mc-rotulo">Montar meu pedido</span><i class="mc-orbe" aria-hidden="true"></i></a>
           <a class="botao" href="#demos">Testar uma demonstração</a>
         </div>
       </div>
       <p class="dica"><span class="so-mouse">O logo reage ao mouse e ao clique. Aperte <kbd>/</kbd> para abrir o terminal.</span><span class="so-toque">Toque no logo. O terminal fica no botão lá embaixo.</span></p>
+      <div class="mc-3d" aria-hidden="true"></div>
     </div>
   
     <div class="hero-palco" aria-hidden="true">
