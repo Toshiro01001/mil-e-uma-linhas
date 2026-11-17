@@ -14,13 +14,14 @@ Site estático em HTML, CSS e JavaScript puro, sem dependências. Cookies e requ
 | `js/app.js` | Abas, logo em ASCII, números de linha e terminal |
 | `js/temas.js` | As 6 aparências e suas capas interativas |
 | `js/vivo.js` | Luz do início, mural de projetos e títulos animados. Tem também o fiscal de fluidez: se a página ficar lenta no aparelho de quem visita, ele liga o modo leve (luz parada, sem rastro do cursor e sem desfoque nas barras) |
-| `js/ilhas.js` e `css/ilhas.css` | Componentes em React da aparência ASCII (rodapé em pontos, esteira, pastas, montador do pedido). São a versão compilada; o código-fonte fica fora deste repositório |
+| `js/ilhas.js` e `css/ilhas.css` | Componentes em React (o montador do pedido em todas as aparências, com o cartão Âncora na Marca, e os efeitos da aparência ASCII) (rodapé em pontos, esteira, pastas, montador do pedido). São a versão compilada; o código-fonte fica fora deste repositório |
 | `css/marca.css` e `js/marca.js` | Aparência "Marca" (a padrão), com a identidade do KIT Branding, o fio verde e a aba M1L! |
 | `js/assinatura.js` | Assinatura RTJ viva: fibras vermelhas dentro das letras, que reagem ao mouse e ao dedo |
 | `img/marca/` | Peças da marca vindas do KIT: logo, símbolo, cromados, assinatura RTJ e as duas cenas de exemplo |
 | `js/orcamento.js` | Montador do pedido e carrinho (fica salvo no aparelho do cliente). **O site não mostra preços:** a lista `PEDIDOS` tem os serviços, planos, adicionais e prazos, e `LINGUAGENS` alimenta a aba que explica cada linguagem. A tabela de preços fica só no servidor de cobranças, que é privado. Mudou a lista `PEDIDOS`? Gere de novo o catálogo do servidor (veja o README dele) |
 | `js/pedido.js` | Tela de finalização: confere o carrinho, pede nome, e-mail e WhatsApp, e uma descrição de 500 a 3.000 caracteres do que o cliente quer. Envia ao meu servidor; se ele estiver fora, oferece o e-mail com tudo escrito |
 | `js/guia.js` | Aba que explica o que cada linguagem faz. É só informação: quem escolhe a linguagem de cada projeto sou eu |
+| `js/marca-premium/` | Componentes premium da aparência Marca, na abertura: "seu site." em metal líquido (Cromo), anel de metal no botão principal (Mercúrio) e o símbolo 10/01! em 3D. São arquivos compilados: a fonte fica no repositório privado, em `vitrines-fonte/m1l-marca-premium/`. Entram um por vez depois que a página carrega; em aparelho lento, no celular (o 3D), sem WebGL ou com "menos movimento" fica a versão parada. Licenças em `js/licencas/` |
 | `js/medicao.js` | Aviso de consentimento e medição de visitas. Os IDs do Google Analytics e do Pixel da Meta ficam no topo do arquivo; sem eles, o arquivo não faz nada. Os dois só são carregados depois do toque em **Aceitar**, e o botão **Medição**, no rodapé, deixa a pessoa mudar a escolha |
 | `js/demos.js` | As demonstrações. Tudo roda no navegador de quem usa |
 | `js/linguagens.js` | A mesma regra em 16 linguagens; cada programa foi compilado ou executado de verdade |
@@ -67,6 +68,8 @@ Na página de pagamento, a chave Pix, o nome e a cidade ficam fixos no código. 
 No pedido, nome, e-mail, WhatsApp e texto do cliente vão por HTTPS direto ao meu servidor, que os cifra (AES-256-GCM) antes de gravar. A CSP agora permite só o script do Turnstile (`challenges.cloudflare.com`) além do próprio site.
 
 Vistoria de 17/11/2026: depois de ligar o Google Analytics ao Google Ads, o Analytics passou a enviar os dados por `analytics.google.com`, `www.google.com`, `stats.g.doubleclick.net` e `www.google.com.br`, que a CSP da página inicial bloqueava, e nenhuma visita era contada. Liberei só esses quatro endereços (`connect-src` e `img-src`), mantive o resto fechado e testei em 1366 px, iPhone 13 e 320 px: os endereços novos passam e os não listados continuam bloqueados. A medição segue ligando só depois do Aceitar, e a Política de Privacidade passou a dizer que o Google também recebe o aviso de visita e de pedido para os anúncios.
+
+Vistoria de 17/11/2026, componentes premium da Marca: three.js e Paper Shaders são servidos do próprio site, sem CDN. A CSP ganhou só `blob:` em `img-src`, usado pela máscara do anel de metal do botão, que é desenhada no próprio navegador. Nenhum dado sai da página por causa deles. Testado em 1366 px, iPhone 13 e 320 px, com menos movimento e trocando de aparência: sem bloqueio da CSP e sem erro de página. A chave `m1l-marca-modo` do `localStorage` guarda por 7 dias só a palavra "leve" ou "cheio" e a data.
 
 Os arquivos anexados vão em um envio por arquivo, com um token de envio que vale 24 horas e só serve para aquele pedido. O servidor recusa executáveis e scripts, confere tamanho e quantidade, e guarda tudo em um bucket privado (Cloudflare R2), sem endereço público. Só eu, logado no painel, consigo baixar.
 

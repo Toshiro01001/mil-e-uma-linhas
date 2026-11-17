@@ -279,8 +279,13 @@ html.js[data-tema="marca"] .hero { background: none; }
 /* ---------- abertura: o cromo é a peça da tela ---------- */
 [data-tema="marca"] .hero-texto { position: relative; }
 @media (min-width: 1040px) {
-  [data-tema="marca"] .hero-texto::after { content: ""; position: absolute; right: 0; top: clamp(10px, 2.2vw, 32px); width: clamp(230px, 24vw, 330px); aspect-ratio: 1000 / 431; background: url("../img/marca/cromo-m1l.webp") center / contain no-repeat; filter: drop-shadow(0 28px 34px rgba(0, 0, 0, .6)); pointer-events: none; }
+  [data-tema="marca"] .hero-texto::after, [data-tema="marca"] .hero .mc-3d { content: ""; display: block; position: absolute; right: 0; top: 0; width: clamp(200px, 19vw, 270px); aspect-ratio: 1474 / 1620; pointer-events: none; }
+  [data-tema="marca"] .hero-texto::after { background: url("../img/marca/cromo-simbolo.webp") center / contain no-repeat; filter: drop-shadow(0 28px 34px rgba(0, 0, 0, .6)); transition: opacity .5s ease; }
+  html.mc-3d-vivo[data-tema="marca"] .hero-texto::after { opacity: 0; }
+  [data-tema="marca"] .hero .mc-3d { right: -40px; top: -44px; width: calc(clamp(200px, 19vw, 270px) + 80px); filter: drop-shadow(0 28px 34px rgba(0, 0, 0, .55)); }
+  [data-tema="marca"] .hero .mc-3d canvas { display: block; width: 100%; height: 100%; }
 }
+
 [data-tema="marca"] .hero-linha > p { color: var(--cinza); }
 [data-tema="marca"] .hero-palco .monitor { background: linear-gradient(180deg, var(--sup-3), var(--sup-2)); border-color: var(--fio-2); box-shadow: inset 0 1px 0 rgba(244, 241, 232, .08), 0 -40px 120px rgba(0, 0, 0, .55); }
 [data-tema="marca"] .hero-palco .fone { border-color: var(--fio-2); box-shadow: inset 0 1px 0 rgba(244, 241, 232, .1), -24px 0 60px rgba(0, 0, 0, .55); }
@@ -350,3 +355,20 @@ html.js[data-tema="marca"] .hero { background: none; }
   [data-tema="marca"] .arvore button { border-color: var(--fio-1); background: var(--sup-1); color: var(--cinza); }
   [data-tema="marca"] .arvore button[aria-selected="true"] { background: var(--papel); border-color: var(--papel); color: var(--preto); font-weight: 700; }
 }
+
+/* ---------- componentes premium da abertura (js/marca-premium): Cromo, Mercúrio e o símbolo em 3D ---------- */
+.mc-cromo, .mc-anel, .mc-orbe, .mc-3d { display: none; }
+.mc-rotulo { display: contents; }
+[data-tema="marca"] .hero .mc-cromo { display: block; position: absolute; left: -.2em; top: 50%; width: calc(100% + .4em); height: 1.4em; transform: translateY(-50%); opacity: 0; pointer-events: none; transition: opacity .8s ease; }
+[data-tema="marca"] .hero .mc-cromo[data-ready] { opacity: 1; }
+[data-tema="marca"] .hero .mc-cromo canvas, [data-tema="marca"] .hero .mc-anel canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+/* o metal soma luz por cima da palavra, que continua ali em cinza: nenhuma faixa escura apaga a leitura */
+html.mc-tem-cromo[data-tema="marca"] .hero .slogan .fino { color: #7f8993; transition: color .8s ease; }
+[data-tema="marca"] .hero .mc-cromo { mix-blend-mode: screen; }
+[data-tema="marca"] .hero .mc-botao { position: relative; isolation: isolate; display: inline-flex; align-items: center; justify-content: space-between; gap: 14px; border-radius: 999px; padding: 8px 8px 8px 26px; }
+[data-tema="marca"] .hero .mc-anel { display: block; position: absolute; inset: -4px; z-index: -1; border-radius: inherit; opacity: 0; transition: opacity .8s ease; }
+[data-tema="marca"] .hero .mc-anel.is-ready { opacity: 1; }
+[data-tema="marca"] .hero .mc-orbe { display: grid; place-items: center; flex: none; width: 36px; height: 36px; border-radius: 50%; background: var(--preto); color: var(--papel); font-style: normal; font-size: 17px; line-height: 1; box-shadow: inset 0 1px 0 rgba(244, 241, 232, .18); overflow: hidden; }
+[data-tema="marca"] .hero .mc-orbe::before { content: "\2192"; transition: transform .25s var(--curva); }
+@media (hover: hover) { [data-tema="marca"] .hero .mc-botao:hover .mc-orbe::before { transform: translateX(3px); } }
+@media (prefers-reduced-motion: reduce) { [data-tema="marca"] .hero .mc-orbe::before { transition: none; } }
