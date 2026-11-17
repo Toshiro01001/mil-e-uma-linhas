@@ -125,7 +125,7 @@ kbd { font-family: var(--ui); border: 1px solid var(--traco); padding: 0 5px; bo
 .hero-palco .barra { display: flex; gap: 6px; margin-bottom: 10px; }
 .hero-palco .barra i { width: 9px; height: 9px; border-radius: 50%; background: var(--traco); display: block; }
 .hero-palco .monitor img { width: 100%; height: 100%; object-fit: cover; object-position: top; border-radius: 6px 6px 0 0; display: block; }
-.hero-palco .fone { position: absolute; right: 6%; bottom: -2px; width: clamp(140px, 16vw, 220px); height: 118%; background: var(--fundo); border: 1px solid var(--traco); border-bottom: 0; border-radius: 30px 30px 0 0; padding: 10px 10px 0; box-shadow: 0 40px 80px -20px rgba(0,0,0,.7); overflow: hidden; }
+.hero-palco .fone { position: absolute; right: 6%; bottom: -2px; width: clamp(140px, 16vw, 220px); height: 108%; background: var(--fundo); border: 1px solid var(--traco); border-bottom: 0; border-radius: 30px 30px 0 0; padding: 10px 10px 0; box-shadow: 0 40px 80px -20px rgba(0,0,0,.7); overflow: hidden; }
 .hero-palco .fone img { width: 100%; height: 100%; object-fit: cover; object-position: top; border-radius: 22px 22px 0 0; display: block; }
 @media (prefers-reduced-motion: no-preference) {
   .slogan span { animation: subir .7s cubic-bezier(.2,.7,.2,1) both; }
