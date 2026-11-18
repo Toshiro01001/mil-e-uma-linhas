@@ -4,7 +4,6 @@
 @font-face{font-family:Bowlby;src:url(cardapio/fontes/bowlby-one-latin-400-normal.woff2) format("woff2");font-display:swap}
 @font-face{font-family:Archivo;src:url(funil/fontes/archivo-latin-wdth-normal.woff2) format("woff2");font-weight:100 900;font-stretch:62% 125%;font-display:swap}
 @font-face{font-family:Plex;src:url(trafego/fontes/ibm-plex-sans-latin-400-normal.woff2) format("woff2");font-weight:400;font-display:swap}
-@font-face{font-family:Bodoni;src:url(relogios/fontes/bodoni-moda-latin-opsz-normal.woff2) format("woff2");font-weight:400 900;font-display:swap}
 :root{--fundo:#101418;--painel:#1B2229;--papel:#F4F1E8;--verde:#B8F34A;--cinza:#AEB7C0;--traco:#38424C;--gutter:clamp(16px,4vw,48px)}
 *{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}
